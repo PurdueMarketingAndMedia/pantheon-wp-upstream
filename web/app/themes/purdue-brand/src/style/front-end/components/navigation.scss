@@ -1,0 +1,269 @@
+.purdue-navbar-black{
+  padding:1.75rem 3.25rem;
+  align-items:center !important;
+  position:relative;
+  @include touch{
+    padding:1.5rem 1.5rem;
+  }
+  .navbar-brand{
+    .navbar-item{
+      padding:0;
+      img{
+      
+        width:243.47px;
+        max-height:44.18px;
+        @include touch{
+          max-height:33px;
+          width:181.89px;
+        }
+    }
+  }
+  }
+  .navbar-end{
+    display:flex;
+    align-items:center !important;
+    flex-direction:row;
+    @include touch{
+      flex-direction:column-reverse;
+      margin-top: 1rem;
+      display:none;
+    }
+    ul{
+      display:flex;
+      flex-direction:row;
+      @include touch{
+        width:100%;
+        justify-content:space-around;
+        margin-top: 1rem;
+      }
+      li{
+        @include touch{
+          flex:1 1 auto;  
+          &:not(:first-child){
+            padding-left:1rem;
+          }          
+         }
+        a{
+          padding:0 0.75rem;
+          color:inherit;
+          font-family:$acumin-pro;
+          font-size:1.125rem;
+          @include touch{
+            display:block;
+            width:100%;
+            text-align:center; 
+            background-color:$boiler-gold;
+            font-weight:500;
+            font-size:1rem; 
+            color:#000; 
+            padding:0.5rem;   
+           }
+        }
+        &:not(:first-child){
+          border-left:1px solid #fff;
+          @include touch{
+            border:none;
+          }
+        }
+      }
+    }
+    .search-box{
+      margin-left: 3rem;
+      @include touch{
+        width:100%;
+        margin-left:0;
+      }
+      form{
+          display:flex;
+          flex-direction:row;
+          input:focus,
+          button:focus {
+              outline: none;
+          }
+          input[type="search"] {
+              width:200px;
+              font-size:1rem;
+              line-height: 2rem;
+              border-radius: 0;
+              height:2rem;
+              border:none;
+              padding:0.5rem 1rem;
+              background:#ededed;
+              -webkit-appearance: textfield;
+              @include touch{
+                  width:100%;
+                  height:2.5rem;
+                  line-height: 2.5rem;
+                  background:#fff;
+              }
+          }
+          .search-button{
+              background: #ededed;
+              border: none;
+              font-size: 1rem;
+              padding: 0 0.75rem 0 0;
+              @include touch{
+                background:#fff;
+            }
+              .search-icon{
+                  cursor: pointer;
+              }
+          }
+      }
+    }
+  }
+}
+
+.purdue-navbar-white{
+  padding:0 2.5rem;
+  text-transform: uppercase;
+  box-shadow:0px 1px 6px 1px rgba(38,38,38,0.2) !important;
+  @include touch{
+    padding:0;
+    display:none;
+    background-color:$black !important;
+    box-shadow:none;
+  }
+  .navbar-menu{
+    @include touch{
+      padding: 0;
+      background-color:$black !important;
+    }
+    width:100%;
+    .navbar-start{
+      flex-wrap:wrap;
+    }
+  }
+  .submenu{
+    text-transform: none;
+    @include touch{
+      padding-top:0.5rem !important;
+    }
+      &:hover > .navbar-dropdown-submenu {
+        display: block;
+      }
+      .navbar-dropdown-submenu {
+        top: -0.6rem;
+        margin-left: 100%;
+        background-color: #fff;
+        box-shadow: 0 8px 8px rgba(10,10,10,.1);
+        padding-bottom: .5rem;
+        padding-top: .5rem;
+        display: none;
+        left: 0;
+        min-width: 12rem;
+        padding-top: 4px;
+        position: absolute;
+        z-index: 20;
+        @include touch{
+          top: 0;
+          margin-left: 0;
+          background-color: inherit;
+          box-shadow: none;
+          padding-bottom: 0;
+          display: block;
+          left:initial;
+          position:relative;
+          .navbar-item{
+            padding-bottom:0;
+          }
+        }
+        a{
+          color:$black;
+          font-size:1rem;
+        }
+      }
+      .navbar-link-submenu{
+        color: $black;
+        line-height: 1.5;
+        position:relative;
+        width:100%;
+        &:after {
+          border-color:$black !important;
+          border: 3px solid transparent;
+          border-radius: 2px;
+          border-left: 0;
+          border-top: 0;
+          content: " ";
+          display: block;
+          height: 0.625em;
+          margin-top: -0.4375em;
+          pointer-events: none;
+          position: absolute;
+          top: 60%;
+          right:0;
+          transform: rotate(-45deg);
+          transform-origin: center;
+          width: 0.625em;
+          @include touch{
+            display:none;
+            border-color:#fff !important;
+          }
+          }
+        a{
+          color:#fff;
+        }
+      }
+    }
+  .navbar-item{
+    @include touch{
+      border-top:1px solid #2e2e2e;
+      padding: 0.5rem 1.5rem;
+    }
+    a{
+      color:$black;
+      font-size:1.125rem;
+      @include touch{
+        font-size:1rem;
+      }
+    }
+    &:hover{
+      .navbar-dropdown{
+        display:block;
+      } 
+    }
+    @include touch{
+      a{
+        color:#fff;
+      }
+    }
+  }
+  .navbar-dropdown{
+    @include touch{
+      display:none;
+      padding-top:0 !important;
+    }
+    .navbar-item{
+      @include touch{
+        border-top:none;
+        padding-bottom:0 !important;
+        &:first-child{
+          padding-top:0 !important;
+        }
+      }
+      a{
+        color:$black;
+        font-size:1rem;
+        @include touch{
+          color:#fff;
+        }
+      }
+    }
+  }
+  a.navbar-link{
+    &:hover{
+      background-color:#fff !important;
+      @include touch{
+        background-color:$black !important;
+      }
+    }
+    &:after{
+      border-color: $black !important;
+      @include touch{
+        border-color:#fff !important;
+      }
+    }
+  }
+
+}
+

@@ -1,0 +1,23 @@
+.print-publication-articles {
+    .articles-heading {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+
+        @include mobile {
+            align-items: stretch;
+        }
+
+        h2 {
+            font-size: 2.8125rem;
+            font-family: $acumin-pro-semicondensed;
+            font-weight: 700;
+            align-self: center;
+        }
+
+        .category-filter {
+            padding: 1rem 0 0;
+        }
+    }
+}
