@@ -1,0 +1,15 @@
+{
+    "name": "alquemie/gravityformszapier",
+    "description": "GravityForms Plugin Zapier Add-On",
+    "type": "wordpress-plugin",
+    "require": {
+        "php": ">=5.6"
+    },
+    "license": "GPLv2",
+    "authors": [
+        {
+            "name": "Rocketgenius, Inc.",
+            "email": "kevin@rocketgenius.com"
+        }
+    ]
+}

@@ -2,6 +2,13 @@
 
 Relevant changes to the Alquemie Config project are documented below as a resource for users.
 
+## [0.1.6] - 2020-03-20
+### Added
+- Plugin Control for Pantheon Environments
+
+### Changed
+- New Holiday Messages
+
 ## [0.1.2] - 2018-10-19
 ### Changed
 - Context Fixes

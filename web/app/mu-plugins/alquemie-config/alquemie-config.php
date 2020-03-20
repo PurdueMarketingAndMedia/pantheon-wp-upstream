@@ -2,7 +2,7 @@
 /*
 Plugin Name: Alquemie Config
 Description: Wordpress Configuration Best Practices as defined by Chris Carrel
-Version: 0.1.5
+Version: 0.1.6
 Author: Chris Carrel
 Author URI: https://www.linkedin.com/in/chriscarrel
 License:     GPL3
