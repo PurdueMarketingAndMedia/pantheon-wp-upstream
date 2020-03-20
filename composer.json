@@ -73,8 +73,8 @@
   },
   "scripts": {
     "post-update-cmd": [
-      "rm web/cms/composer.*",
-      "rm -rf web/cms/wp-content/"
+      "if [ -f web/cms/composer.json ]; then rm web/cms/composer.json; fi",
+      "if [ -d web/cms/wp-content ]; then rm -rf web/cms/wp-content; fi"
     ]
   }
 }
