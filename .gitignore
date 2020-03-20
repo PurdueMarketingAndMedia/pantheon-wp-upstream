@@ -1,3 +1,7 @@
+# Composer #
+############
+/vendor
+
 # WordPress #
 ############
 wp-config-local.php
