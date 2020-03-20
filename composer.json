@@ -39,7 +39,7 @@
     "wpackagist-plugin/wp-saml-auth": "1.0.0",
     "wpackagist-plugin/wp-native-php-sessions": "1.0.0",
     "alquemie/advanced-custom-fields-pro": "5.8.8",
-    "alquemie/alquemie-config": "0.1.6",
+    "alquemie/alquemie-config": "0.1.8",
     "alquemie/gravityforms": "2.4.17.14",
     "alquemie/gravityformsdebug": "1.0.beta12",
     "alquemie/gravityformsgutenberg": "1.0-rc-1.4",
