@@ -43,7 +43,8 @@
     "alquemie/gravityforms": "2.4.17.14",
     "alquemie/gravityformsdebug": "1.0.beta12",
     "alquemie/gravityformsgutenberg": "1.0-rc-1.4",
-    "alquemie/gravityformszapier": "3.2.1"
+    "alquemie/gravityformszapier": "3.2.1",
+    "purdue/brandfonts": "1.1.1"
   },
   "config": {
     "vendor-dir": "vendor",
