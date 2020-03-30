@@ -9,13 +9,13 @@ if (isset($_ENV['PANTHEON_ENVIRONMENT']) && php_sapi_name() != 'cli') {
   // Redirect to https://$primary_domain in the Live environment
 
   if ($_ENV['PANTHEON_ENVIRONMENT'] === 'live') {
-    // $primary_domain = 'www.sample.com';
+    // $primary_domain = 'subdomain.purdue.edu';
   } 
   elseif ($_ENV['PANTHEON_ENVIRONMENT'] === 'test') {
-    // $primary_domain = 'test.sample.com';
+    // $primary_domain = 'subdomain.test.purdue.ede';
   } 
   elseif ($_ENV['PANTHEON_ENVIRONMENT'] === 'dev') {
-    // $primary_domain = 'dev.sample.com';
+    // $primary_domain = 'subdomain.dev.purdue.edu';
   } 
 
   if ($_SERVER['HTTP_HOST'] != $primary_domain
