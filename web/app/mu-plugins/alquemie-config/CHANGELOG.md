@@ -1,6 +1,9 @@
 # Changelog
 
 Relevant changes to the Alquemie Config project are documented below as a resource for users.
+## [0.1.9] - 2020-03-29
+### Added
+- Force Non-Production emails to route to Purdue Digital Marketing Team
 
 ## [0.1.8] - 2020-03-20
 ### Added
