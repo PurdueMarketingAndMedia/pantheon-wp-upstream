@@ -28,7 +28,7 @@
     "rvtraveller/qs-composer-installer": "^1.1",
     "wpackagist-theme/twentytwenty":"~1.2",
     "wpackagist-plugin/autodescription": "4.0.5",
-    "wpackagist-plugin/duracelltomi-google-tag-manager": "1.11.3",
+    "wpackagist-plugin/duracelltomi-google-tag-manager": "1.11.4",
     "wpackagist-plugin/hyperdb":"1.6",
     "wpackagist-plugin/pantheon-advanced-page-cache": "1.0.0",
     "wpackagist-plugin/pantheon-hud": "0.3.1",
