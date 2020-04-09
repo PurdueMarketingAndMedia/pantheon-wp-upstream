@@ -33,6 +33,10 @@ if ( ! class_exists( 'PurdueBrandFonts' ) ) :
             add_action( 'wp_enqueue_scripts', array( __CLASS__, 'adobeFonts' ) );
             add_action( 'wp_enqueue_scripts', array( __CLASS__, 'unitedsansFont' ) );
             add_action( 'wp_head', array( __CLASS__, 'add_header_icons' ) );
+            add_action( 'login_enqueue_scripts', array( __CLASS__, 'my_login_logo') );
+            add_filter( 'login_headerurl', array( __CLASS__, 'my_login_logo_url') );
+            add_filter( 'login_headertitle', array( __CLASS__, 'my_login_logo_url_title') );
+
         }
         
         public static function adobeFonts() {
@@ -69,7 +73,75 @@ if ( ! class_exists( 'PurdueBrandFonts' ) ) :
             <meta name="theme-color" content="#ffffff">
             <?php
         }
+
+        public static function my_login_logo_url_title() {
+            return 'Purdue University';
+        }
+
+        public static function my_login_logo_url() {
+            return 'https://www.purdue.edu/';
+        }
+
+        public static function my_login_logo() { ?>
+            <style type="text/css">
+            #login h1 a, .login h1 a {
+                background-image: url(<?php echo  esc_url( plugins_url( 'img/purdue-logo.png', __FILE__ ) );?>) !important;
+                height:57px !important;
+                width:320px !important;
+                background-size: 320px 57px !important;
+                background-repeat: no-repeat !important;
+                padding-bottom: 20px !important;
+                padding-left: 10px !important;
+            }
+            
+            body.login {
+                background: #f0f0f0 !important;
+            }
+            
+            .login #login_error, .login .message {
+                border-left: 4px solid #98700D !important;
+            }
+            
+            body.login div#login p#nav a, body.login div#login p#backtoblog a {
+                color: #000000 !important;
+            }
+        
+            body.login div#login p#nav a:hover, body.login div#login p#backtoblog a:hover {
+                color: #C28E0E !important;
+            }
+            
+            .wp-core-ui .button-primary {
+                background-color: #98700D !important;
+                background: #98700D !important;
+                border-color: #98700D !important;
+                border-bottom-color: #98700D !important;
+                box-shadow: rgba(0, 0, 0, 0.3) 1px 1px 0 !important;
+                text-shadow: rgba(0, 0, 0, 0.3) 0 -1px 0 !important;
+                font-weight: bold !important;
+            }
+            
+            .wp-core-ui .button-primary:hover {
+                background-color: #C28E0E !important;
+                background: #C28E0E !important;
+                border-color: #98700D !important;
+                box-shadow: rgba(0, 0, 0, 0.3) 1px 1px 0 !important;
+                text-shadow: rgba(0, 0, 0, 0.3) 0 -1px 0 !important;
+                font-weight: bold !important;
+            }
+            
+            .login input:focus {
+                border-color: #C28E0E !important;
+                box-shadow: 0 0 2px rgba(194, 142, 14, 0.8) !important;
+            }
+            
+            .login input[type=checkbox]:checked:before {
+                color: #000000 !important;
+            }
+            </style>
+        <?php }
     }
 
     new PurdueBrandFonts();
 endif;
+
+

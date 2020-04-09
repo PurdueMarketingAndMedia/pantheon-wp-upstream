@@ -1,6 +1,6 @@
 {
     "name": "purdue/brandfonts",
-    "description": "Wordpress Must-Use Plugin that adds Purdue brand fonts and favicons",
+    "description": "Wordpress Must-Use Plugin that adds Purdue brand fonts, favicons and branded login screen",
     "authors": [
         {
             "name": "Purdue Marketing and Media",
@@ -11,8 +11,5 @@
     "type": "wordpress-muplugin",
     "require": {
         "php": ">=7.0"
-    },
-    "config": {
-        "vendor-dir": "lib"
     }
 }
