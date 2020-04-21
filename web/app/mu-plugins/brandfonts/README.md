@@ -1,4 +1,4 @@
-# Purdue Brand Fonts Plugin
+# Purdue Branding Plugin
 
 Used to add Purdue University brand fonts, favicons and branded login form to WordPress websites
 
@@ -21,11 +21,14 @@ Provide a consistent method of managing the Purdue brand across multiple WordPre
 }
 
 "require": {
-    "purdue/brandfonts": "1.2.0"
+    "purdue/brandfonts": "1.3.0"
 }
 ```
 
 ## Change Log
+#### [1.3.0] - 2020-04-21
+- ADD: Source Serif Pro font replaces Farnham Text
+
 #### [1.2.0] - 2020-04-09
 - ADD: Branded Login Page
 

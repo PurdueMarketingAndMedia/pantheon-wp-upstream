@@ -1,10 +1,10 @@
 <?php
 
 /*
-   Plugin Name: Purdue Brand Fonts
+   Plugin Name: Purdue Branding 
    Plugin URI: http://www.purdue.edu
-   description: Add the Purdue Brand Fonts to WordPress Sites
-   Version: 1.1.1
+   description: Add the Purdue Brand Fonts and brand icons to WordPress Sites
+   Version: 1.3.0
    Author: Marketing and Media
    Author URI: https://brand.purdue.edu
 */
@@ -32,6 +32,7 @@ if ( ! class_exists( 'PurdueBrandFonts' ) ) :
 		private static function hooks() {
             add_action( 'wp_enqueue_scripts', array( __CLASS__, 'adobeFonts' ) );
             add_action( 'wp_enqueue_scripts', array( __CLASS__, 'unitedsansFont' ) );
+            add_action( 'wp_enqueue_scripts', array( __CLASS__, 'sourceSerifPro' ) );
             add_action( 'wp_head', array( __CLASS__, 'add_header_icons' ) );
             add_action( 'login_enqueue_scripts', array( __CLASS__, 'my_login_logo') );
             add_filter( 'login_headerurl', array( __CLASS__, 'my_login_logo_url') );
@@ -51,6 +52,12 @@ if ( ! class_exists( 'PurdueBrandFonts' ) ) :
             );
         }
         
+        public static function sourceSerifPro() {
+            wp_enqueue_style( 
+                'sourceserif', 'https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@400;600;700&display=swap'
+            );
+        }
+
         public static function add_header_icons() {
             ?>
             <link rel="shortcut icon" href="<?php echo esc_url( plugins_url( 'favicon/favicon.ico', __FILE__ ) ); ?>" type="image/x-icon" />
