@@ -1,6 +1,6 @@
 {
-    "name": "purdue/brandfonts",
-    "description": "Wordpress Must-Use Plugin that adds Purdue brand fonts, favicons and branded login screen",
+    "name": "purdue/boilerup-wp",
+    "description": "Wordpress Must-Use Plugin that provides Purdue brand assets",
     "authors": [
         {
             "name": "Purdue Marketing and Media",

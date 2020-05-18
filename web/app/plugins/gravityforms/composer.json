@@ -1,6 +1,6 @@
 {
-    "name": "alquemie/gravityforms",
-    "description": "GravityForms Plugin",
+    "name": "purdue/gravityforms",
+    "description": "GravityForms Plugin by Rocketgenius, Inc.",
     "type": "wordpress-plugin",
     "require": {
         "php": ">=5.6"
@@ -8,11 +8,8 @@
     "license": "GPLv3",
     "authors": [
         {
-        	"name": "Rocketgenius, Inc."
-        },
-        {
-            "name": "Chris Carrel",
-            "email": "chris@alquemie.net"
+            "name": "Rocketgenius, Inc.",
+            "homepage": "http://www.gravityforms.com"
         }
     ]
 }

@@ -17,7 +17,7 @@
     },
     {
       "type": "composer",
-      "url": "https://alquemie.bitbucket.io"
+      "url": "https://purdue.github.io"
     }
   ],
   "require": {
@@ -26,26 +26,23 @@
     "psy/psysh" : "~0.6",
     "roots/wp-password-bcrypt": "~1.0.0",
     "rvtraveller/qs-composer-installer": "^1.1",
-    "wpackagist-theme/twentytwenty":"~1.2",
     "wpackagist-plugin/autodescription": "4.0.5",
     "wpackagist-plugin/duracelltomi-google-tag-manager": "1.11.4",
     "wpackagist-plugin/hyperdb":"1.6",
     "wpackagist-plugin/pantheon-advanced-page-cache": "1.0.0",
     "wpackagist-plugin/pantheon-hud": "0.3.1",
     "wpackagist-plugin/post-smtp": "2.0.11",
-    "wpackagist-plugin/post-type-switcher": "3.2.0",
     "wpackagist-plugin/stream": "3.4.3",
     "wpackagist-plugin/wordpress-importer": "~0.7",
     "wpackagist-plugin/wp-redis": "1.0.1",
-    "wpackagist-plugin/wp-saml-auth": "1.0.0",
     "wpackagist-plugin/wp-native-php-sessions": "1.0.0",
-    "alquemie/advanced-custom-fields-pro": "5.8.9",
     "alquemie/alquemie-config": "~0.1.8",
-    "alquemie/gravityforms": "2.4.17.14",
-    "alquemie/gravityformsdebug": "1.0.beta12",
-    "alquemie/gravityformsgutenberg": "1.0-rc-1.4",
-    "alquemie/gravityformszapier": "3.2.1",
-    "purdue/brandfonts": "1.3.0"
+    "purdue/advanced-custom-fields-pro": "5.8.11",
+    "purdue/boilerup-wp": "1.3.1",
+    "purdue/gravityforms": "2.4.18",
+    "purdue/gravityformsdebug": "1.0.beta12",
+    "purdue/gravityformszapier": "3.2.1",
+    "wpackagist-theme/twentytwenty":"~1.3"
   },
   "config": {
     "vendor-dir": "vendor",
@@ -67,7 +64,6 @@
       "web/app/mu-plugins/stream/": ["wpackagist-plugin/stream"],
       "web/app/mu-plugins/wp-native-php-sessions/": ["wpackagist-plugin/wp-native-php-sessions"],
       "web/app/mu-plugins/wp-password-bcrypt/": ["roots/wp-password-bcrypt"],
-      "web/app/mu-plugins/wp-saml-auth/": ["wpackagist-plugin/wp-saml-auth"],
       "web/app/mu-plugins/{$name}/": ["type:wordpress-muplugin"],
       "web/app/plugins/{$name}/": ["type:wordpress-plugin"],
       "web/app/themes/{$name}/": ["type:wordpress-theme"],

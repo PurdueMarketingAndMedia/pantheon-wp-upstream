@@ -1,15 +1,15 @@
 {
-    "name": "alquemie/gravityformsdebug",
-    "description": "GravityForms Plugin Debug Add-On",
+    "name": "purdue/gravityformsdebug",
+    "description": "GravityForms Plugin Debug Add On by Rocketgenius, Inc.",
     "type": "wordpress-plugin",
     "require": {
         "php": ">=5.6"
     },
-    "license": "GPLv2",
+    "license": "GPLv3",
     "authors": [
         {
             "name": "Rocketgenius, Inc.",
-            "email": "kevin@rocketgenius.com"
+            "homepage": "http://www.gravityforms.com"
         }
     ]
 }
