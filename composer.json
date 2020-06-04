@@ -2,11 +2,12 @@
   "name": "purdue/pantheon-wp-upstream",
   "type": "website",
   "description": "WordPress Setup for Pantheon",
-  "license": "GPL-3.0",
+  "license": "GPLv3",
   "authors": [
     {
-      "name": "Chris Carrel",
-      "email": "cjcarrel@purdue.edu"
+      "name": "Purdue Marketing and Media",
+      "email": "digital-marketing@groups.purdue.edu",
+      "homepage": "https://brand.purdue.edu"
     }
   ],
   "minimum-stability": "stable",
@@ -65,14 +66,5 @@
       "web/app/themes/{$name}/": ["type:wordpress-theme"],
       "web/private/scripts/quicksilver/{$name}/": ["type:quicksilver-script"]
     }
-  },
-  "scripts": {
-    "post-update-cmd": [
-      "if [ -f web/cms/composer.json ]; then rm web/cms/composer.json; fi",
-      "if [ -d web/cms/wp-content ]; then rm -rf web/cms/wp-content; fi",
-      "if [ -d web/app/mu-plugins ]; then rm -rf web/app/themes/**/.git; fi",
-      "if [ -d web/app/mu-plugins ]; then rm -rf web/app/mu-plugins/**/.git; fi",
-      "if [ -d web/app/plugins ]; then rm -rf web/app/plugins/**/.git; fi"
-    ]
   }
 }
