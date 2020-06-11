@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c48a8f00ad8492d75fdb8d54316ba3f8",
+    "content-hash": "675dad2d7e1480b496b37a4060f3cbf3",
     "packages": [
         {
             "name": "alquemie/alquemie-config",
@@ -508,7 +508,7 @@
             "version": "1.3.1",
             "source": {
                 "type": "git",
-                "url": "git@github.com:Purdue/boilerup-wp.git",
+                "url": "https://github.com/Purdue/boilerup-wp.git",
                 "reference": "1cbc882cf7c429bc70cd6a94b8f6f597df904924"
             },
             "dist": {
@@ -609,17 +609,17 @@
         },
         {
             "name": "purdue/purdue-wp-theme",
-            "version": "1.0.7",
+            "version": "1.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Purdue/purdue-wp-theme.git",
-                "reference": "3084285f609a371e0b976e0ae7d29ac2b936d914"
+                "reference": "539e10449d982477634c92344862dacbbdd28587"
             },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Purdue/purdue-wp-theme/zipball/3084285f609a371e0b976e0ae7d29ac2b936d914",
-                "reference": "3084285f609a371e0b976e0ae7d29ac2b936d914",
-                "shasum": ""
+                "type": "tar",
+                "url": "https://purdue.github.io/dist/purdue/purdue-wp-theme/purdue-purdue-wp-theme-539e10449d982477634c92344862dacbbdd28587-zip-f50fd5.tar",
+                "reference": "539e10449d982477634c92344862dacbbdd28587",
+                "shasum": "e796037775fd58beac7e2dc70aaac152d97fb890"
             },
             "require": {
                 "php": ">=7.0",
@@ -640,10 +640,10 @@
             ],
             "description": "WordPress theme based on Purdue University digital brand standards ",
             "support": {
-                "source": "https://github.com/Purdue/purdue-wp-theme/tree/1.0.7",
+                "source": "https://github.com/Purdue/purdue-wp-theme/tree/1.0.8",
                 "issues": "https://github.com/Purdue/purdue-wp-theme/issues"
             },
-            "time": "2020-06-02T18:09:01+00:00"
+            "time": "2020-06-11T09:52:31+00:00"
         },
         {
             "name": "roots/wp-password-bcrypt",
