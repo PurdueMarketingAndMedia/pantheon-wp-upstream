@@ -5,6 +5,7 @@
 /web/app/plugins/**/.git
 /web/app/mu-plugins/**/.git
 /web/app/themes/**/.git
+/web/app/**/.github/
 
 # WordPress #
 ############
