@@ -17,10 +17,16 @@
 
             .image {
                 width: 160px;
+                display: block;
+                box-sizing: border-box;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
             }
         }
         &-content{
             font-weight: 600;
+            max-width:100%;
         }
     }
 }
