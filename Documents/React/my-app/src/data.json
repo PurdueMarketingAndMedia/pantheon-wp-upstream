@@ -1,0 +1,22 @@
+const productData = [
+    {
+        id:1,
+        question: "Question 1",
+        punchline:"Punchline 1"
+    },
+    {
+        id:2,
+        question: "Question 2",
+        punchline:"Punchline 2"
+    },
+    {
+        id:3,
+        question: "Question 3",
+        punchline:"Punchline 3"
+    },
+    {
+        id:4,
+        question: "Question 4",
+        punchline:"Punchline 4"
+    }
+]
