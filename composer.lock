@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0b04498e397193523e7c2e4fe3c22a8d",
+    "content-hash": "3ffa96db8f797524bb65c26e7d2f6ca2",
     "packages": [
         {
             "name": "alquemie/alquemie-config",
@@ -1780,15 +1780,15 @@
         },
         {
             "name": "wpackagist-plugin/wp-redis",
-            "version": "1.0.1",
+            "version": "1.1.0",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/wp-redis/",
-                "reference": "tags/1.0.1"
+                "reference": "tags/1.1.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wp-redis.1.0.1.zip"
+                "url": "https://downloads.wordpress.org/plugin/wp-redis.1.1.0.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
