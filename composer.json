@@ -26,6 +26,7 @@
     "johnpbloch/wordpress": "5.4.2",
     "psy/psysh" : "~0.6",
     "roots/wp-password-bcrypt": "~1.0.0",
+    "roots/soil": "3.9.0",
     "rvtraveller/qs-composer-installer": "^1.1",
     "wpackagist-plugin/autodescription": "4.*",
     "wpackagist-plugin/duracelltomi-google-tag-manager": "1.11.*",
@@ -38,7 +39,7 @@
     "wpackagist-plugin/wp-redis": "1.0.*",
     "wpackagist-plugin/wp-native-php-sessions": "1.*",
     "alquemie/alquemie-config": "0.1.*",
-    "purdue/purdue-wp-theme": "1.0.9",
+    "purdue/purdue-wp-theme": "1.1.1",
     "wpackagist-theme/twentytwenty":"1.*"
   },
   "config": {
@@ -58,6 +59,7 @@
       "web/app/mu-plugins/hyperdb/": ["wpackagist-plugin/hyperdb"],
       "web/app/mu-plugins/pantheon-advanced-page-cache/": ["wpackagist-plugin/pantheon-advanced-page-cache"],
       "web/app/mu-plugins/post-smtp/": ["wpackagist-plugin/post-smtp"],
+      "web/app/mu-plugins/soil/": ["roots/soil"],
       "web/app/mu-plugins/stream/": ["wpackagist-plugin/stream"],
       "web/app/mu-plugins/wp-native-php-sessions/": ["wpackagist-plugin/wp-native-php-sessions"],
       "web/app/mu-plugins/wp-password-bcrypt/": ["roots/wp-password-bcrypt"],
