@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3ffa96db8f797524bb65c26e7d2f6ca2",
+    "content-hash": "f102ad524a0d3637d28f8ce3ad7a71f4",
     "packages": [
         {
             "name": "alquemie/alquemie-config",
@@ -574,17 +574,17 @@
         },
         {
             "name": "purdue/purdue-blocks",
-            "version": "1.6.0",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Purdue/purdue-blocks.git",
-                "reference": "c4696f05afea0eed100954abe69b4a73eace258d"
+                "reference": "382909ad1c646f523b6a934d24de315f0f4e4ca9"
             },
             "dist": {
                 "type": "tar",
-                "url": "https://purdue.github.io/dist/purdue/purdue-blocks/purdue-purdue-blocks-c4696f05afea0eed100954abe69b4a73eace258d-zip-d41b64.tar",
-                "reference": "c4696f05afea0eed100954abe69b4a73eace258d",
-                "shasum": "d65ea75ee018c680cf0490f6c075569cb1548e84"
+                "url": "https://purdue.github.io/dist/purdue/purdue-blocks/purdue-purdue-blocks-382909ad1c646f523b6a934d24de315f0f4e4ca9-zip-4f32a8.tar",
+                "reference": "382909ad1c646f523b6a934d24de315f0f4e4ca9",
+                "shasum": "e579350f1ad2eff405939cfa94c8a3e880f1e8eb"
             },
             "require": {
                 "php": ">=7.0"
@@ -602,10 +602,10 @@
             ],
             "description": "Adds Gutenberg blocks based on Purdue brand elements",
             "support": {
-                "source": "https://github.com/Purdue/purdue-blocks/tree/1.6.0",
+                "source": "https://github.com/Purdue/purdue-blocks/tree/1.7.0",
                 "issues": "https://github.com/Purdue/purdue-blocks/issues"
             },
-            "time": "2020-07-16T20:44:16+00:00"
+            "time": "2020-07-22T16:08:41+00:00"
         },
         {
             "name": "purdue/purdue-wp-theme",
