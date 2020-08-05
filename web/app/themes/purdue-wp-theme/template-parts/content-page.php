@@ -11,17 +11,16 @@
 
 <?php if (!is_front_page() && !is_page() && !has_block('purdue-blocks/cta-hero') && !has_block('purdue-blocks/site-hero') && !has_block('purdue-blocks/title-hero')) { ?>
 
-<section class="section">
-    <div class="container">
-        <div class="content">
-            <?php purdueBrand_the_title('is-1', false); ?>
+    <section class="section">
+        <div class="container">
+            <div class="content">
+                <?php purdueBrand_the_title('is-1', false); ?>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
 <?php } ?>
 
 <?php
 the_content();
 ?>
-

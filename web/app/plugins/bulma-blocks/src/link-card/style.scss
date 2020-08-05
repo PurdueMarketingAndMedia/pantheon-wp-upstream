@@ -42,6 +42,8 @@
    box-shadow: 0 0.5em 1em -0.125em rgba(0, 0, 0, 0.1), 0 0px 0 1px rgba(0, 0, 0, 0.02);
    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
    text-decoration: none;
+   padding:1rem;
+   align-items:center !important;
    &:hover,
    &:focus {
      box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
@@ -58,15 +60,17 @@
    }
    .media-left{
      width:128px;
-     height:128px;
+     .image{
+      img{
+        display:block;
+      }
+    }
    }
    .media-content{
-     height:128px;
      display:flex;
      flex-direction:column;
      align-items:center;
      justify-content:center;
-     padding:0 1rem 0 0;
      @media (max-width:768px){
        overflow:hidden;
      }
@@ -94,7 +98,8 @@
            content: "\f105";
            display: inline-block;
            font-family: "Font Awesome 5 Free";
-           margin-left: 1rem;
+           margin-left: 0.7rem;
+           bottom:-4px;
            position:absolute;
          }
        }
