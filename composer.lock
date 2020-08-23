@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fe7bd908944a1d28cea12bb5ff9ee789",
+    "content-hash": "7a67ca9a60da3777714f89f216f711e5",
     "packages": [
         {
             "name": "alquemie/alquemie-config",
@@ -202,20 +202,20 @@
         },
         {
             "name": "johnpbloch/wordpress",
-            "version": "5.4.2",
+            "version": "5.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/johnpbloch/wordpress.git",
-                "reference": "18c41a328193d6f7425a3cea4e01faa220e90218"
+                "reference": "d8a952dd4aa7f7d4d8be6fa145840fde4e248450"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/johnpbloch/wordpress/zipball/18c41a328193d6f7425a3cea4e01faa220e90218",
-                "reference": "18c41a328193d6f7425a3cea4e01faa220e90218",
+                "url": "https://api.github.com/repos/johnpbloch/wordpress/zipball/d8a952dd4aa7f7d4d8be6fa145840fde4e248450",
+                "reference": "d8a952dd4aa7f7d4d8be6fa145840fde4e248450",
                 "shasum": ""
             },
             "require": {
-                "johnpbloch/wordpress-core": "5.4.2",
+                "johnpbloch/wordpress-core": "5.5.0",
                 "johnpbloch/wordpress-core-installer": "^1.0 || ^2.0",
                 "php": ">=5.6.20"
             },
@@ -237,20 +237,20 @@
                 "cms",
                 "wordpress"
             ],
-            "time": "2020-06-10T22:05:43+00:00"
+            "time": "2020-08-11T18:47:19+00:00"
         },
         {
             "name": "johnpbloch/wordpress-core",
-            "version": "5.4.2",
+            "version": "5.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/johnpbloch/wordpress-core.git",
-                "reference": "3e67d8b6ee6c11e8ce404da4627117fb7fbf9266"
+                "reference": "c49d46de4e4c8972b8ed2aebe3e850f4f218186f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/johnpbloch/wordpress-core/zipball/3e67d8b6ee6c11e8ce404da4627117fb7fbf9266",
-                "reference": "3e67d8b6ee6c11e8ce404da4627117fb7fbf9266",
+                "url": "https://api.github.com/repos/johnpbloch/wordpress-core/zipball/c49d46de4e4c8972b8ed2aebe3e850f4f218186f",
+                "reference": "c49d46de4e4c8972b8ed2aebe3e850f4f218186f",
                 "shasum": ""
             },
             "require": {
@@ -258,7 +258,7 @@
                 "php": ">=5.6.20"
             },
             "provide": {
-                "wordpress/core-implementation": "5.4.2"
+                "wordpress/core-implementation": "5.5.0"
             },
             "type": "wordpress-core",
             "notification-url": "https://packagist.org/downloads/",
@@ -278,7 +278,7 @@
                 "cms",
                 "wordpress"
             ],
-            "time": "2020-06-10T22:05:38+00:00"
+            "time": "2020-08-11T18:47:13+00:00"
         },
         {
             "name": "johnpbloch/wordpress-core-installer",
@@ -332,16 +332,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v4.7.0",
+            "version": "v4.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "21dce06dfbf0365c6a7cc8fdbdc995926c6a9300"
+                "reference": "aaee038b912e567780949787d5fe1977be11a778"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/21dce06dfbf0365c6a7cc8fdbdc995926c6a9300",
-                "reference": "21dce06dfbf0365c6a7cc8fdbdc995926c6a9300",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/aaee038b912e567780949787d5fe1977be11a778",
+                "reference": "aaee038b912e567780949787d5fe1977be11a778",
                 "shasum": ""
             },
             "require": {
@@ -349,8 +349,8 @@
                 "php": ">=7.0"
             },
             "require-dev": {
-                "ircmaxell/php-yacc": "0.0.5",
-                "phpunit/phpunit": "^6.5 || ^7.0 || ^8.0"
+                "ircmaxell/php-yacc": "^0.0.7",
+                "phpunit/phpunit": "^6.5 || ^7.0 || ^8.0 || ^9.0"
             },
             "bin": [
                 "bin/php-parse"
@@ -358,7 +358,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.7-dev"
+                    "dev-master": "4.9-dev"
                 }
             },
             "autoload": {
@@ -380,7 +380,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2020-07-25T13:18:53+00:00"
+            "time": "2020-08-18T19:48:01+00:00"
         },
         {
             "name": "psr/container",
@@ -574,17 +574,17 @@
         },
         {
             "name": "purdue/purdue-blocks",
-            "version": "1.7.1",
+            "version": "1.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Purdue/purdue-blocks.git",
-                "reference": "db203b4670529ffcb588cf1c4ad74f3d868e7516"
+                "reference": "dcf6e7fcd0d57ec32d70f466d37b592e57782c95"
             },
             "dist": {
                 "type": "tar",
-                "url": "https://purdue.github.io/dist/purdue/purdue-blocks/purdue-purdue-blocks-db203b4670529ffcb588cf1c4ad74f3d868e7516-zip-1c0af2.tar",
-                "reference": "db203b4670529ffcb588cf1c4ad74f3d868e7516",
-                "shasum": "74c620fc585176f0f98d2c8a30f4c879b39e9152"
+                "url": "https://purdue.github.io/dist/purdue/purdue-blocks/purdue-purdue-blocks-dcf6e7fcd0d57ec32d70f466d37b592e57782c95-zip-107989.tar",
+                "reference": "dcf6e7fcd0d57ec32d70f466d37b592e57782c95",
+                "shasum": "c702cf33d0392f2c7d6cdc5fb7f76886f2ebd787"
             },
             "require": {
                 "php": ">=7.0"
@@ -602,24 +602,24 @@
             ],
             "description": "Adds Gutenberg blocks based on Purdue brand elements",
             "support": {
-                "source": "https://github.com/Purdue/purdue-blocks/tree/1.7.1",
+                "source": "https://github.com/Purdue/purdue-blocks/tree/1.7.3",
                 "issues": "https://github.com/Purdue/purdue-blocks/issues"
             },
-            "time": "2020-07-30T20:50:07+00:00"
+            "time": "2020-08-19T19:10:51+00:00"
         },
         {
             "name": "purdue/purdue-wp-theme",
-            "version": "1.1.3",
+            "version": "1.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Purdue/purdue-wp-theme.git",
-                "reference": "248f9a4c2dd2581dc3ca695c70edb8b1bb769596"
+                "reference": "01e20404837877257e7b8dc949e3a172fba45062"
             },
             "dist": {
                 "type": "tar",
-                "url": "https://purdue.github.io/dist/purdue/purdue-wp-theme/purdue-purdue-wp-theme-248f9a4c2dd2581dc3ca695c70edb8b1bb769596-zip-3bb107.tar",
-                "reference": "248f9a4c2dd2581dc3ca695c70edb8b1bb769596",
-                "shasum": "1d8250a621411d1976a2f13d9268ea81429a1133"
+                "url": "https://purdue.github.io/dist/purdue/purdue-wp-theme/purdue-purdue-wp-theme-01e20404837877257e7b8dc949e3a172fba45062-zip-f4d5ac.tar",
+                "reference": "01e20404837877257e7b8dc949e3a172fba45062",
+                "shasum": "7d2a450b8b3ca506d5b199aaea0d0a5cef55c658"
             },
             "require": {
                 "php": ">=7.0",
@@ -640,10 +640,10 @@
             ],
             "description": "WordPress theme based on Purdue University digital brand standards ",
             "support": {
-                "source": "https://github.com/Purdue/purdue-wp-theme/tree/1.1.3",
+                "source": "https://github.com/Purdue/purdue-wp-theme/tree/1.1.4",
                 "issues": "https://github.com/Purdue/purdue-wp-theme/issues"
             },
-            "time": "2020-07-30T20:20:16+00:00"
+            "time": "2020-08-21T20:15:42+00:00"
         },
         {
             "name": "roots/soil",
@@ -1618,15 +1618,15 @@
         },
         {
             "name": "wpackagist-plugin/autodescription",
-            "version": "4.0.7",
+            "version": "4.1.0",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/autodescription/",
-                "reference": "tags/4.0.7"
+                "reference": "trunk"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/autodescription.4.0.7.zip"
+                "url": "https://downloads.wordpress.org/plugin/autodescription.zip?timestamp=1596958291"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -1708,15 +1708,15 @@
         },
         {
             "name": "wpackagist-plugin/post-smtp",
-            "version": "2.0.12",
+            "version": "2.0.15",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/post-smtp/",
-                "reference": "tags/2.0.12"
+                "reference": "tags/2.0.15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/post-smtp.2.0.12.zip"
+                "url": "https://downloads.wordpress.org/plugin/post-smtp.2.0.15.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -1726,15 +1726,15 @@
         },
         {
             "name": "wpackagist-plugin/stream",
-            "version": "3.5.0",
+            "version": "3.5.1",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/stream/",
-                "reference": "tags/3.5.0"
+                "reference": "tags/3.5.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/stream.3.5.0.zip"
+                "url": "https://downloads.wordpress.org/plugin/stream.3.5.1.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -1780,15 +1780,15 @@
         },
         {
             "name": "wpackagist-plugin/wp-redis",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/wp-redis/",
-                "reference": "tags/1.1.0"
+                "reference": "tags/1.1.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wp-redis.1.1.0.zip"
+                "url": "https://downloads.wordpress.org/plugin/wp-redis.1.1.1.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -1798,15 +1798,15 @@
         },
         {
             "name": "wpackagist-theme/twentytwenty",
-            "version": "1.4",
+            "version": "1.5",
             "source": {
                 "type": "svn",
                 "url": "https://themes.svn.wordpress.org/twentytwenty/",
-                "reference": "1.4"
+                "reference": "1.5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/theme/twentytwenty.1.4.zip"
+                "url": "https://downloads.wordpress.org/theme/twentytwenty.1.5.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
