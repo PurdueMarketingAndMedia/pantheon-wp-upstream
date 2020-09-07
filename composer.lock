@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c6c18610e03cf76a5a756bf6b85b8b26",
+    "content-hash": "0fa33966225b667f832b1d418201b3a3",
     "packages": [
         {
             "name": "alquemie/alquemie-config",
@@ -609,20 +609,19 @@
         },
         {
             "name": "purdue/purdue-wp-theme",
-            "version": "1.1.4",
+            "version": "1.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Purdue/purdue-wp-theme.git",
-                "reference": "01e20404837877257e7b8dc949e3a172fba45062"
+                "reference": "fc49f57c7a22a68c482f9372dc7f4d365fe81079"
             },
             "dist": {
                 "type": "tar",
-                "url": "https://purdue.github.io/dist/purdue/purdue-wp-theme/purdue-purdue-wp-theme-01e20404837877257e7b8dc949e3a172fba45062-zip-f4d5ac.tar",
-                "reference": "01e20404837877257e7b8dc949e3a172fba45062",
-                "shasum": "7d2a450b8b3ca506d5b199aaea0d0a5cef55c658"
+                "url": "https://purdue.github.io/dist/purdue/purdue-wp-theme/purdue-purdue-wp-theme-fc49f57c7a22a68c482f9372dc7f4d365fe81079-zip-a7fa8c.tar",
+                "reference": "fc49f57c7a22a68c482f9372dc7f4d365fe81079",
+                "shasum": "a96bce17e2f395cdd41ec9d2cf4ba5e860b36ec7"
             },
             "require": {
-                "php": ">=7.0",
                 "purdue/boilerup-wp": "1.*",
                 "purdue/bulma-blocks": ">=1.2.1",
                 "purdue/purdue-blocks": ">=1.2.0"
@@ -640,10 +639,10 @@
             ],
             "description": "WordPress theme based on Purdue University digital brand standards ",
             "support": {
-                "source": "https://github.com/Purdue/purdue-wp-theme/tree/1.1.4",
+                "source": "https://github.com/Purdue/purdue-wp-theme/tree/1.1.5",
                 "issues": "https://github.com/Purdue/purdue-wp-theme/issues"
             },
-            "time": "2020-08-21T20:15:42+00:00"
+            "time": "2020-09-07T19:01:22+00:00"
         },
         {
             "name": "roots/soil",
@@ -1618,7 +1617,7 @@
         },
         {
             "name": "wpackagist-plugin/autodescription",
-            "version": "4.1.0",
+            "version": "4.1.1",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/autodescription/",
@@ -1626,7 +1625,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/autodescription.zip?timestamp=1596958291"
+                "url": "https://downloads.wordpress.org/plugin/autodescription.zip?timestamp=1599248291"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -1636,15 +1635,15 @@
         },
         {
             "name": "wpackagist-plugin/duracelltomi-google-tag-manager",
-            "version": "1.11.4",
+            "version": "1.11.5",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/duracelltomi-google-tag-manager/",
-                "reference": "tags/1.11.4"
+                "reference": "tags/1.11.5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/duracelltomi-google-tag-manager.1.11.4.zip"
+                "url": "https://downloads.wordpress.org/plugin/duracelltomi-google-tag-manager.1.11.5.zip"
             },
             "require": {
                 "composer/installers": "~1.0"

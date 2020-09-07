@@ -567,13 +567,12 @@ $GLOBALS['gtm4wp_integratefieldtexts'] = array(
 		'description' => sprintf(
 			__(
 				'Enter a comma separated list of Google Optimize container IDs that you would like to use on your site.<br />' .
-				'This plugin will add the <a href="%s">page-hiding snippet</a> to your pages.<br /><br />' .
-				'The Google Optimize container will be only loaded if you provide your Google Analytics property ID bellow as well.',
+				'This plugin will add the <a href="%s">page-hiding snippet</a> to your pages.<br /><br />',
 				'duracelltomi-google-tag-manager'
 			),
 			'https://developers.google.com/optimize/#the_page-hiding_snippet_code'
 		) .
-			'<br /><span class="goid_validation_error">' . __( 'This does not seems to be a valid Google Optimize ID! Valid format: GTM-XXXXXX where X can be numbers and capital letters. Use comma without any space (,) to enter multpile IDs.', 'duracelltomi-google-tag-manager' ) . '</span>',
+			'<br /><span class="goid_validation_error">' . __( 'This does not seems to be a valid Google Optimize ID! Valid format: GTM-XXXXXX or OPT-XXXXXX where X can be numbers and capital letters. Use comma without any space (,) to enter multpile IDs.', 'duracelltomi-google-tag-manager' ) . '</span>',
 		'phase'       => GTM4WP_PHASE_EXPERIMENTAL,
 	),
 	GTM4WP_OPTION_INTEGRATE_GOOGLEOPTIMIZETIMEOUT => array(
@@ -581,13 +580,6 @@ $GLOBALS['gtm4wp_integratefieldtexts'] = array(
 		'description' => __( 'Enter here the amount of time in milliseconds that the page-hiding snippet should wait before page content gets visible even if Google Optimize has not been completely loaded yet.', 'duracelltomi-google-tag-manager' ),
 		'phase'       => GTM4WP_PHASE_EXPERIMENTAL,
 	),
-	GTM4WP_OPTION_INTEGRATE_GOOGLEOPTIMIZEGAID    => array(
-		'label'       => __( 'Google Optimize - Google Analytics property ID', 'duracelltomi-google-tag-manager' ),
-		'description' => __( 'If you enter your Google Analytics property ID here as well (UA-NNNNNN-N), this plugin will also load your Google Optimize container itself. Leave this blank to only load the page hiding snippet.', 'duracelltomi-google-tag-manager' ) .
-			'<br /><span class="goid_ga_validation_error">' . __( 'This does not seems to be a valid Google Analytics property ID! Valid format: UA-NNNNNN-N where N can be numbers. Enter a single property ID here.', 'duracelltomi-google-tag-manager' ) . '</span>',
-		'phase'       => GTM4WP_PHASE_EXPERIMENTAL,
-	),
-
 	GTM4WP_OPTION_INTEGRATE_AMPID                 => array(
 		'label'         => __( "Google Tag Manager 'AMP' Container ID", 'duracelltomi-google-tag-manager' ),
 		'description'   => sprintf( __( 'Enter a comma separated list of Google Tag Manager container IDs that you would like to use on your site. This plugin will add the <a href="%s">AMP GTM snippet</a> to your AMP pages.', 'duracelltomi-google-tag-manager' ), 'https://support.google.com/tagmanager/answer/6103696?hl=en' ) .
@@ -913,32 +905,15 @@ function gtm4wp_sanitize_options( $options ) {
 			$_goid_haserror = false;
 
 			foreach ( $_goid_list as $one_go_id ) {
-				$_goid_haserror = $_goid_haserror || ! preg_match( '/^GTM-[A-Z0-9]+$/', $one_go_id );
+				$_goid_haserror = $_goid_haserror || ! preg_match( '/^(GTM|OPT)-[A-Z0-9]+$/', $one_go_id );
 			}
 
 			if ( $_goid_haserror && ( count( $_goid_list ) > 0 ) ) {
-				add_settings_error( GTM4WP_ADMIN_GROUP, GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_INTEGRATE_GOOGLEOPTIMIZEIDS . ']', __( 'Invalid Google Optimize ID. Valid ID format: GTM-XXXXX. Use comma without additional space (,) to enter more than one ID.', 'duracelltomi-google-tag-manager' ) );
+				add_settings_error( GTM4WP_ADMIN_GROUP, GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_INTEGRATE_GOOGLEOPTIMIZEIDS . ']', __( 'Invalid Google Optimize ID. Valid ID format: GTM-XXXXX or OPT-XXXXX. Use comma without additional space (,) to enter more than one ID.', 'duracelltomi-google-tag-manager' ) );
 			} else {
 				$output[ $optionname ] = $newoptionvalue;
 			}
-		} elseif ( $optionname == GTM4WP_OPTION_INTEGRATE_GOOGLEOPTIMIZEGAID ) {
-			$_gaid_val = trim( $newoptionvalue );
-			if ( '' == $_gaid_val ) {
-				$_gaid_list = array();
-			} else {
-				$_gaid_list = explode( ',', $_gaid_val );
-			}
-			$_gaid_haserror = false;
 
-			foreach ( $_gaid_list as $one_ga_id ) {
-				$_gaid_haserror = $_gaid_haserror || ! preg_match( '/^UA-[0-9]+-[0-9]+$/', $one_ga_id );
-			}
-
-			if ( $_gaid_haserror && ( count( $_gaid_list ) > 0 ) ) {
-				add_settings_error( GTM4WP_ADMIN_GROUP, GTM4WP_OPTIONS . '[' . GTM4WP_OPTION_INTEGRATE_GOOGLEOPTIMIZEIDS . ']', __( 'Invalid Google Analytics property ID. Valid ID format: UA-NNNNNN-N.', 'duracelltomi-google-tag-manager' ) );
-			} else {
-				$output[ $optionname ] = $newoptionvalue;
-			}
 		} elseif ( $optionname == GTM4WP_OPTION_INTEGRATE_GOOGLEOPTIMIZETIMEOUT ) {
 			$output[ $optionname ] = (int) $newoptionvalue;
 
@@ -1364,7 +1339,7 @@ function gtm4wp_admin_head() {
 
 		jQuery( "#gtm4wp-options\\\\[integrate-google-optimize-idlist\\\\]" )
 			.bind( "blur", function() {
-				var goid_regex = /^GTM-[A-Z0-9]+$/;
+				var goid_regex = /^(GTM|OPT)-[A-Z0-9]+$/;
 				var goid_val  = jQuery( this ).val().trim();
 				if ( "" == goid_val ) {
 					goid_list = [];

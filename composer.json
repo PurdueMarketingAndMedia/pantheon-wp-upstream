@@ -42,7 +42,7 @@
     "purdue/boilerup-wp": "1.3.1",
     "purdue/bulma-blocks": "1.3.4",
     "purdue/purdue-blocks": "1.7.3",
-    "purdue/purdue-wp-theme": "1.1.4",
+    "purdue/purdue-wp-theme": "1.1.5",
     "wpackagist-theme/twentytwenty":"1.*"
   },
   "config": {
