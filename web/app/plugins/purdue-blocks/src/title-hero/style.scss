@@ -4,8 +4,6 @@
  * CSS for both Frontend+Backend.
  */
 
-@import "../scss/bulma-utilities";
-
 .pu-title-hero {
   .hero {
     position: relative;
@@ -21,13 +19,14 @@
       display: flex;
       align-items: flex-end;
       justify-content: flex-end;
-      padding: 17.25rem 1.5rem 3.75rem !important;
+      padding: 17.25rem $side-padding-desktop 3.75rem !important;
       margin: 0 !important;
 
       @include touch {
         height: auto;
         align-items: flex-start;
         justify-content: flex-start;
+        padding: 17.25rem $side-padding-tablet 3.75rem !important;
       }
 
       @include mobile { 
@@ -77,7 +76,7 @@
           order: 2;
           width: 100%;
           background-color: black;
-          padding: 2.1875rem 1.5rem;
+          padding: 2.1875rem $side-padding-mobile;
         }
       }
 
@@ -96,7 +95,7 @@
         }
 
         h1 {
-          font-family: "United Sans";
+          font-family: $united-sans;
           font-weight: 500;
           font-size: 5rem;
           text-transform: uppercase;
@@ -115,7 +114,7 @@
         }
 
         p {
-          font-family: acumin-pro;
+          font-family: $acumin-pro;
           font-weight: 300;
           font-size: 1.125rem;
           color: white;
@@ -126,8 +125,8 @@
   }
 
   &__button {
-    min-width: 250px;
-    font-family: "United Sans";
+    min-width: 15.625rem;
+    font-family: $united-sans;
     font-weight: 700;
     font-size: 1.125rem;
     text-transform: uppercase;
@@ -135,15 +134,15 @@
     justify-content: center;
     padding: 0.75rem 1rem;
     background: transparent;
-    border: 2px solid #cfb991;
+    border: 2px solid $boiler-gold;
     color: white;
     text-decoration: none;
     transition: all ease 0.2s;
 
     &:hover {
       cursor: pointer;
-      background: #cfb991;
-      color: black;
+      background: $boiler-gold;
+      color: $black;
     }
   }
 }

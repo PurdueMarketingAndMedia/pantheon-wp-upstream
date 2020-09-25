@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0fa33966225b667f832b1d418201b3a3",
+    "content-hash": "7a0a2ba203234b48fec62d289a31d3f0",
     "packages": [
         {
             "name": "alquemie/alquemie-config",
@@ -332,16 +332,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v4.9.1",
+            "version": "v4.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "88e519766fc58bd46b8265561fb79b54e2e00b28"
+                "reference": "1b479e7592812411c20c34d9ed33db3957bde66e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/88e519766fc58bd46b8265561fb79b54e2e00b28",
-                "reference": "88e519766fc58bd46b8265561fb79b54e2e00b28",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/1b479e7592812411c20c34d9ed33db3957bde66e",
+                "reference": "1b479e7592812411c20c34d9ed33db3957bde66e",
                 "shasum": ""
             },
             "require": {
@@ -380,7 +380,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2020-08-30T16:15:20+00:00"
+            "time": "2020-09-23T18:23:49+00:00"
         },
         {
             "name": "psr/container",
@@ -539,17 +539,17 @@
         },
         {
             "name": "purdue/bulma-blocks",
-            "version": "1.3.4",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Purdue/bulma-blocks.git",
-                "reference": "5b7c01fbe8f6d02bad858ef4f3e72012fb53e057"
+                "reference": "b105e205f2fbb52f85edcf9abf5504c7677c163d"
             },
             "dist": {
                 "type": "tar",
-                "url": "https://purdue.github.io/dist/purdue/bulma-blocks/purdue-bulma-blocks-5b7c01fbe8f6d02bad858ef4f3e72012fb53e057-zip-d5bed6.tar",
-                "reference": "5b7c01fbe8f6d02bad858ef4f3e72012fb53e057",
-                "shasum": "cded0bd09bb03247e40a967a7210128ea43dd2bb"
+                "url": "https://purdue.github.io/dist/purdue/bulma-blocks/purdue-bulma-blocks-b105e205f2fbb52f85edcf9abf5504c7677c163d-zip-9959d1.tar",
+                "reference": "b105e205f2fbb52f85edcf9abf5504c7677c163d",
+                "shasum": "bf443c2d62205dffad8a176642763d36149699e2"
             },
             "require": {
                 "php": ">=7.0"
@@ -567,24 +567,24 @@
             ],
             "description": "Adds Gutenberg blocks based on Bulma.io CSS framework",
             "support": {
-                "source": "https://github.com/Purdue/bulma-blocks/tree/1.3.4",
+                "source": "https://github.com/Purdue/bulma-blocks/tree/1.4.0",
                 "issues": "https://github.com/Purdue/bulma-blocks/issues"
             },
-            "time": "2020-09-01T13:56:47+00:00"
+            "time": "2020-09-25T13:39:58+00:00"
         },
         {
             "name": "purdue/purdue-blocks",
-            "version": "1.7.3",
+            "version": "1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Purdue/purdue-blocks.git",
-                "reference": "dcf6e7fcd0d57ec32d70f466d37b592e57782c95"
+                "reference": "730f9b0208554bd6ba9cfcef0fb125969767b864"
             },
             "dist": {
                 "type": "tar",
-                "url": "https://purdue.github.io/dist/purdue/purdue-blocks/purdue-purdue-blocks-dcf6e7fcd0d57ec32d70f466d37b592e57782c95-zip-107989.tar",
-                "reference": "dcf6e7fcd0d57ec32d70f466d37b592e57782c95",
-                "shasum": "c702cf33d0392f2c7d6cdc5fb7f76886f2ebd787"
+                "url": "https://purdue.github.io/dist/purdue/purdue-blocks/purdue-purdue-blocks-730f9b0208554bd6ba9cfcef0fb125969767b864-zip-349242.tar",
+                "reference": "730f9b0208554bd6ba9cfcef0fb125969767b864",
+                "shasum": "b2d8d84f398797538c5d47913cff0800d74b0b6d"
             },
             "require": {
                 "php": ">=7.0"
@@ -602,24 +602,24 @@
             ],
             "description": "Adds Gutenberg blocks based on Purdue brand elements",
             "support": {
-                "source": "https://github.com/Purdue/purdue-blocks/tree/1.7.3",
+                "source": "https://github.com/Purdue/purdue-blocks/tree/1.10.0",
                 "issues": "https://github.com/Purdue/purdue-blocks/issues"
             },
-            "time": "2020-08-19T19:10:51+00:00"
+            "time": "2020-09-25T13:46:37+00:00"
         },
         {
             "name": "purdue/purdue-wp-theme",
-            "version": "1.1.5",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Purdue/purdue-wp-theme.git",
-                "reference": "fc49f57c7a22a68c482f9372dc7f4d365fe81079"
+                "reference": "e4f7be248213914f4952b44ada258788fa69a9b3"
             },
             "dist": {
                 "type": "tar",
-                "url": "https://purdue.github.io/dist/purdue/purdue-wp-theme/purdue-purdue-wp-theme-fc49f57c7a22a68c482f9372dc7f4d365fe81079-zip-a7fa8c.tar",
-                "reference": "fc49f57c7a22a68c482f9372dc7f4d365fe81079",
-                "shasum": "a96bce17e2f395cdd41ec9d2cf4ba5e860b36ec7"
+                "url": "https://purdue.github.io/dist/purdue/purdue-wp-theme/purdue-purdue-wp-theme-e4f7be248213914f4952b44ada258788fa69a9b3-zip-cccdc5.tar",
+                "reference": "e4f7be248213914f4952b44ada258788fa69a9b3",
+                "shasum": "a78e310f2766aca390ad40573af9e35242bf3413"
             },
             "require": {
                 "purdue/boilerup-wp": "1.*",
@@ -639,36 +639,60 @@
             ],
             "description": "WordPress theme based on Purdue University digital brand standards ",
             "support": {
-                "source": "https://github.com/Purdue/purdue-wp-theme/tree/1.1.5",
+                "source": "https://github.com/Purdue/purdue-wp-theme/tree/1.2.0",
                 "issues": "https://github.com/Purdue/purdue-wp-theme/issues"
             },
-            "time": "2020-09-07T19:01:22+00:00"
+            "time": "2020-09-25T13:48:46+00:00"
         },
         {
             "name": "roots/soil",
-            "version": "3.9.0",
+            "version": "4.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/roots/soil.git",
-                "reference": "63dcd6e1754a4c806ce3d3077b44d908c58b374e"
+                "reference": "6b3aab8ea41877136f53757ef85449f2484bfd83"
             },
             "dist": {
                 "type": "tar",
-                "url": "https://purdue.github.io/dist/roots/soil/roots-soil-63dcd6e1754a4c806ce3d3077b44d908c58b374e-zip-a9b020.tar",
-                "reference": "63dcd6e1754a4c806ce3d3077b44d908c58b374e",
-                "shasum": "b1b113452b6d66b2b0ae526e4961373dea521225"
+                "url": "https://purdue.github.io/dist/roots/soil/roots-soil-6b3aab8ea41877136f53757ef85449f2484bfd83-zip-29c7f3.tar",
+                "reference": "6b3aab8ea41877136f53757ef85449f2484bfd83",
+                "shasum": "ed6b909e44f6e5e84fd3b0b19cf63fb5a44530f7"
             },
             "require": {
-                "composer/installers": "~1.0",
-                "php": ">=5.4.0"
+                "php": ">=5.6.0"
             },
             "require-dev": {
-                "squizlabs/php_codesniffer": "^2.5.1"
+                "brain/monkey": "^2.4",
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
+                "mockery/mockery": "^1.3 | ^1.4",
+                "phpcompatibility/php-compatibility": "^9.3",
+                "phpunit/phpunit": "<= 9.3",
+                "squizlabs/php_codesniffer": "^3.5"
             },
             "type": "wordpress-plugin",
+            "autoload": {
+                "psr-4": {
+                    "Roots\\Soil\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Roots\\Soil\\Tests\\": "tests/",
+                    "Roots\\Soil\\Tests\\Fixtures\\Modules\\": "tests/__fixtures__/modules/"
+                },
+                "exclude-from-classmap": [
+                    "/tests/TestCase56.php"
+                ]
+            },
             "scripts": {
                 "test": [
-                    "vendor/bin/phpcs --extensions=php --ignore=vendor/ -n -s ."
+                    "phpunit"
+                ],
+                "lint": [
+                    "phpcs"
                 ]
             },
             "license": [
@@ -684,6 +708,11 @@
                     "name": "Scott Walkinshaw",
                     "email": "scott.walkinshaw@gmail.com",
                     "homepage": "https://github.com/swalkinshaw"
+                },
+                {
+                    "name": "QWp6t",
+                    "email": "craig@roots.io",
+                    "homepage": "https://github.com/qwp6t"
                 }
             ],
             "description": "A WordPress plugin which contains a collection of modules to apply theme-agnostic front-end modifications",
@@ -694,7 +723,7 @@
             "support": {
                 "issues": "https://github.com/roots/soil/issues",
                 "forum": "https://discourse.roots.io/",
-                "source": "https://github.com/roots/soil/tree/3.9.0"
+                "source": "https://github.com/roots/soil/tree/4.0.4"
             },
             "funding": [
                 {
@@ -706,7 +735,7 @@
                     "url": "https://roots.io/plugins/soil/"
                 }
             ],
-            "time": "2019-12-07T22:25:02+00:00"
+            "time": "2020-09-11T00:46:10+00:00"
         },
         {
             "name": "roots/wp-password-bcrypt",
@@ -1366,16 +1395,16 @@
         },
         {
             "name": "symfony/service-contracts",
-            "version": "v2.1.3",
+            "version": "v2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/service-contracts.git",
-                "reference": "58c7475e5457c5492c26cc740cc0ad7464be9442"
+                "reference": "d15da7ba4957ffb8f1747218be9e1a121fd298a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/service-contracts/zipball/58c7475e5457c5492c26cc740cc0ad7464be9442",
-                "reference": "58c7475e5457c5492c26cc740cc0ad7464be9442",
+                "url": "https://api.github.com/repos/symfony/service-contracts/zipball/d15da7ba4957ffb8f1747218be9e1a121fd298a1",
+                "reference": "d15da7ba4957ffb8f1747218be9e1a121fd298a1",
                 "shasum": ""
             },
             "require": {
@@ -1388,7 +1417,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1-dev"
+                    "dev-master": "2.2-dev"
                 },
                 "thanks": {
                     "name": "symfony/contracts",
@@ -1438,7 +1467,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-07-06T13:23:11+00:00"
+            "time": "2020-09-07T11:33:47+00:00"
         },
         {
             "name": "symfony/string",
@@ -1761,15 +1790,15 @@
         },
         {
             "name": "wpackagist-plugin/wp-native-php-sessions",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/wp-native-php-sessions/",
-                "reference": "tags/1.2.0"
+                "reference": "tags/1.2.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wp-native-php-sessions.1.2.0.zip"
+                "url": "https://downloads.wordpress.org/plugin/wp-native-php-sessions.1.2.1.zip"
             },
             "require": {
                 "composer/installers": "~1.0"

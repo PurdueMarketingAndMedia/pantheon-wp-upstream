@@ -1,3 +1,20 @@
+### 4.0.4: September 10th, 2020
+* Fix Google Analytics options: correctly support non-array default option
+
+### 4.0.3: September 8th, 2020
+* Relative URLs module: Ensure `srcset` value is array
+
+### 4.0.2: September 8th, 2020
+* Cleanup module: Fix notice for self-closing tags on site icon meta
+
+### 4.0.1: August 31st, 2020
+* Add fallback autoloader when Composer isn't present
+
+### 4.0.0: August 29th, 2020
+* BREAKING CHANGE - Refactor entire code base
+* Add options support for modules
+* Remove oEmbed wrapper due to incompatibility with Gutenberg
+
 ### 3.9.0: December 7th, 2019
 * Enable beacon tracking for Google Analytics ([#243](https://github.com/roots/soil/pull/243))
 * Add support for GitHub Updater plugin ([#241](https://github.com/roots/soil/pull/241))

@@ -4,8 +4,6 @@
  * CSS for both Frontend+Backend.
  */
 
- @import "../../node_modules/bulma/bulma.sass";
-
  .bulma-blocks-40-60-hero {
    .hero {
      position: relative;
@@ -22,17 +20,19 @@
        align-items: flex-end;
        justify-content: flex-end;
        margin: 0 !important;
-       padding:2.3125rem 1.5rem 8.4375rem !important;
+       padding:2.3125rem $side-padding-desktop 8.4375rem !important;
 
        @include touch {
          order: 2;
          height: auto;
          align-items: flex-start;
          justify-content: flex-start;
-         padding:2.1875rem 1.5rem 2.8125rem !important;
-         box-shadow: 0 0.5em 1em -0.125em rgba(0, 0, 0, 0.1), 0 0px 0 1px rgba(0, 0, 0, 0.02);
+         padding:2.1875rem $side-padding-tablet 2.8125rem !important;
+         box-shadow: $box-shadow;
        }
- 
+       @include mobile {
+        padding:2.1875rem $side-padding-mobile 2.8125rem !important;
+      }
        @include desktop {
          order: 1;
          justify-content: flex-end;
@@ -92,18 +92,18 @@
            font-weight: 700;
            font-size: 2.8125rem;
            color: black !important;
-           line-height:50px;
+           line-height:3.125rem;
             width:100%;
            @include tablet {
                font-size: 4.0625rem !important;
-               line-height:70px;
+               line-height:4.375rem;
            }
          }
  
          p {
           font-size: 1.5625rem;
-          line-height:40px;
-           font-family: "United Sans";
+          line-height:2.5rem;
+           font-family: $united-sans;
            text-transform: uppercase;
            width: 85%;
            &:last-of-type{
@@ -112,7 +112,7 @@
  
            @include mobile {
              font-size: 1.25rem;
-             line-height:30px;
+             line-height:1.875rem;
            }
          }
        }
@@ -153,7 +153,7 @@
       width: 40%;
       height: 100%;
       z-index: 1;
-      box-shadow: 0 0.5em 1em -0.125em rgba(0, 0, 0, 0.1), 0 0px 0 1px rgba(0, 0, 0, 0.02);
+      box-shadow: $box-shadow;
       @include mobile {
         display:none;
       }
@@ -161,11 +161,11 @@
     }
    }
    .jump-button {
-     font-family: "United Sans";
+     font-family: $united-sans;
      font-weight: 400;
      font-size: 1.25rem;
      text-transform: capitalize;
-     color: #8e6f3e !important;
+     color: $aged-gold !important;
      text-decoration:none;
      margin-top:1.5rem;
      display:block;
@@ -197,11 +197,15 @@
        display: flex;
        align-items: center;
        z-index: 2;
-       padding: 7rem 1.5rem !important;
+       padding: 7rem $side-padding-desktop !important;
        @include touch {
          order: 2;
-         padding: 1rem 1.5rem 2.8125rem !important;
+         padding: 1rem $side-padding-tablet 2.8125rem !important;
        }
+       @include mobile {
+        order: 2;
+        padding: 1rem $side-padding-mobile 2.8125rem !important;
+      }
       .container{
         width:100%;
       }
@@ -216,20 +220,20 @@
          }
  
          h1 {
-           font-family: acumin-pro-semi-condensed;
+           font-family: $acumin-pro-semicondensed;
            color: white !important;
            font-size: 1.875rem;
            font-weight:700;
-           line-height: 35px;
+           line-height: 2.1875rem;
            @include tablet {
              font-size: 2.8125rem !important;
-             line-height: 50px;
+             line-height: 3.125rem;
            }
          }
  
          p {
            font-size: 1.25rem;
-           font-family: acumin-pro;
+           font-family: $acumin-pro;
            &:last-of-type{
              margin-bottom:0;
            }
@@ -299,11 +303,11 @@
      }
    }
    .jump-button {
-     font-family: "United Sans";
+     font-family: $united-sans;
      font-weight: 400;
      font-size: 1.25rem;
      text-transform: capitalize;
-     color: #CEB991 !important;
+     color: $boiler-gold !important;
      text-decoration:none;
      margin-top:1.5rem;
      display:block;
