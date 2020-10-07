@@ -20,6 +20,7 @@ const {
   TextareaControl,
   Button,
   RadioControl,
+  CheckboxControl,
 } = wp.components;
 const { InspectorControls, MediaUploadCheck, MediaUpload } = wp.blockEditor;
 const { select } = wp.data;
@@ -41,21 +42,7 @@ registerBlockType( 'purdue-blocks/cta-banner', {
   // Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
   title: __( 'CTA Banner' ), // Block title.
   icon: (
-    <svg
-      aria-hidden="true"
-      focusable="false"
-      data-prefix="fas"
-      data-icon="object-group"
-      className="svg-inline--fa fa-object-group fa-w-16"
-      role="img"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 512 512"
-    >
-      <path
-        fill="#8E6F3E"
-        d="M480 128V96h20c6.627 0 12-5.373 12-12V44c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v20H64V44c0-6.627-5.373-12-12-12H12C5.373 32 0 37.373 0 44v40c0 6.627 5.373 12 12 12h20v320H12c-6.627 0-12 5.373-12 12v40c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12v-20h384v20c0 6.627 5.373 12 12 12h40c6.627 0 12-5.373 12-12v-40c0-6.627-5.373-12-12-12h-20V128zM96 276V140c0-6.627 5.373-12 12-12h168c6.627 0 12 5.373 12 12v136c0 6.627-5.373 12-12 12H108c-6.627 0-12-5.373-12-12zm320 96c0 6.627-5.373 12-12 12H236c-6.627 0-12-5.373-12-12v-52h72c13.255 0 24-10.745 24-24v-72h84c6.627 0 12 5.373 12 12v136z"
-      ></path>
-    </svg>
+    <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75 100"><defs></defs><g id="Bookmark" class="cls-1"><g class="cls-1"><path class="cls-2" d="M87.5,9.37V100L50,78.12,12.5,100V9.37A9.38,9.38,0,0,1,21.87,0H78.13A9.38,9.38,0,0,1,87.5,9.37Zm-9.37,1.18A1.18,1.18,0,0,0,77,9.37H23.05a1.18,1.18,0,0,0-1.18,1.18V83.68L50,67.27,78.13,83.68Z" transform="translate(-12.5 0)"/></g></g></svg>
   ), // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
   category: 'purdue-blocks', // Block category — Group blocks together based on common traits E.g. common, formatting, layout widgets, embed.
   keywords: [],
@@ -79,6 +66,7 @@ registerBlockType( 'purdue-blocks/cta-banner', {
     ctaDesc: { type: 'string', default: '' },
     ctaUrl: { type: 'string', default: '' },
     ctaText: { type: 'string', default: '' },
+    external: { type: 'boolean', default: false },
   },
 
   supports: {
@@ -121,6 +109,18 @@ registerBlockType( 'purdue-blocks/cta-banner', {
               />
             </PanelRow>
           </PanelBody> ) : '' }
+          <PanelBody>
+          <h2>CTA Button Link setting</h2>
+            <PanelRow>
+              <CheckboxControl
+                label="Open link in new tab?"
+                checked={ props.attributes.external }
+                onChange={ () =>
+                  props.setAttributes( { external: ! props.attributes.external } )
+                }
+              />
+            </PanelRow>
+          </PanelBody>
       </InspectorControls>,
 
       <div className={ 'pu-blocks-editor-cta-banner' }>
@@ -246,13 +246,15 @@ registerBlockType( 'purdue-blocks/cta-banner', {
     const returned = (
       <div className={ `pu-cta-banner${ props.attributes.type === 'gold' ? ' pu-cta-banner-gold' : '' }${ props.attributes.type === 'black' ? ' pu-cta-banner-black' : '' }
       ${ props.attributes.type === 'gray' ? ' pu-cta-banner-gray' : '' }${ props.attributes.type === 'image' ? ' pu-cta-banner-image' : '' }` }
-        style={ props.attributes.type === 'image' && props.attributes.imgUrl ? { backgroundImage: `url(${ props.attributes.imgUrl })` } : '' }
+        style={ props.attributes.type === 'image' && props.attributes.imgUrl ? { backgroundImage: `url(${ props.attributes.imgUrl })` } : {} }
         aria-label={ props.attributes.type === 'image' && props.attributes.altText ? props.attributes.altText : '' }>
         <div className="container">
           { props.attributes.type === 'gray' ? (
             <a
               href={ props.attributes.ctaUrl }
               className="pu-cta-banner-gray__desc"
+              target={ props.attributes.external ? '_blank' : '_self' }
+              rel="noopener noreferrer"
             >
               { props.attributes.ctaDesc }
             </a> ) : '' }
@@ -260,16 +262,20 @@ registerBlockType( 'purdue-blocks/cta-banner', {
             <a
               href={ props.attributes.ctaUrl }
               className="pu-cta-banner-image__button"
+              target={ props.attributes.external ? '_blank' : '_self' }
+              rel="noopener noreferrer"
             >
               { props.attributes.ctaText }
             </a> ) : '' }
           { props.attributes.type === 'gold' ? (
             <p className="pu-cta-banner-gold__desc">{ props.attributes.ctaDesc }</p>
           ) : '' }
-          { props.attributes.type === 'gold' ? (
+          {props.attributes.type === 'gold' ? (
             <a
               href={ props.attributes.ctaUrl }
               className="pu-cta-banner-gold__button"
+              target={ props.attributes.external ? '_blank' : '_self' }
+              rel="noopener noreferrer"
             >
               { props.attributes.ctaText }
             </a> ) : '' }
@@ -280,6 +286,8 @@ registerBlockType( 'purdue-blocks/cta-banner', {
             <a
               href={ props.attributes.ctaUrl }
               className="pu-cta-banner-black__button"
+              target={ props.attributes.external ? '_blank' : '_self' }
+              rel="noopener noreferrer"
             >
               { props.attributes.ctaText }
             </a> ) : '' }

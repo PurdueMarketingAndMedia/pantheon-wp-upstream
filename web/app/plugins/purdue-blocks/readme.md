@@ -6,6 +6,16 @@ Adds Purdue University branded Gutenberg blocks to the editor
 
 Relevant changes are documented below.
 
+### [1.12.0] 2020-10-06
+#### Added
+- New Icons for all Purdue Blocks
+
+### [1.11.0] 2020-10-06
+#### Added
+- Page Layout Block
+- Image Toggle Block
+- Sidebar CTA Block
+
 ### [1.10.0] 2020-09-25
 #### Added
 - Anchor link navigation block
