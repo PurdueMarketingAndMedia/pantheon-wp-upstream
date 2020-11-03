@@ -4,15 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "04618c051ddb839abf463bf20fc545cb",
+    "content-hash": "b9c0bfa28eab4b08fde3f7899e195841",
     "packages": [
         {
             "name": "alquemie/alquemie-config",
-            "version": "0.1.9",
+            "version": "0.1.10",
             "source": {
                 "type": "git",
                 "url": "git@bitbucket.org:alquemie/alquemie-config/",
-                "reference": "08602708604c2ef39df2fd8ef0959e532672a34e"
+                "reference": "3c556de7965066d8674437e2840f5abc46ad8e44"
+            },
+            "dist": {
+                "type": "tar",
+                "url": "https://purdue.github.io/dist/alquemie/alquemie-config/alquemie-alquemie-config-0.1.10-19a89d.tar",
+                "reference": "3c556de7965066d8674437e2840f5abc46ad8e44",
+                "shasum": "b30d41cd259ec277b74f9ec542e50aff1a524930"
             },
             "require": {
                 "php": ">=7.0"
@@ -28,7 +34,7 @@
                 }
             ],
             "description": "Wordpress Must-Use Plugin that tweaks site based on best practices as defined by Chris Carrel",
-            "time": "2020-03-30T02:37:21+00:00"
+            "time": "2020-11-03T01:57:39+00:00"
         },
         {
             "name": "composer/installers",
@@ -539,17 +545,17 @@
         },
         {
             "name": "purdue/bulma-blocks",
-            "version": "1.4.0",
+            "version": "1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Purdue/bulma-blocks.git",
-                "reference": "b105e205f2fbb52f85edcf9abf5504c7677c163d"
+                "reference": "eace87afdc75d6d867d409129b9c28efc22f246c"
             },
             "dist": {
                 "type": "tar",
-                "url": "https://purdue.github.io/dist/purdue/bulma-blocks/purdue-bulma-blocks-b105e205f2fbb52f85edcf9abf5504c7677c163d-zip-9959d1.tar",
-                "reference": "b105e205f2fbb52f85edcf9abf5504c7677c163d",
-                "shasum": "bf443c2d62205dffad8a176642763d36149699e2"
+                "url": "https://purdue.github.io/dist/purdue/bulma-blocks/purdue-bulma-blocks-eace87afdc75d6d867d409129b9c28efc22f246c-zip-8424b6.tar",
+                "reference": "eace87afdc75d6d867d409129b9c28efc22f246c",
+                "shasum": "cc07a23034af91333615fa39f9c8d6f63ef97099"
             },
             "require": {
                 "php": ">=7.0"
@@ -567,24 +573,24 @@
             ],
             "description": "Adds Gutenberg blocks based on Bulma.io CSS framework",
             "support": {
-                "source": "https://github.com/Purdue/bulma-blocks/tree/1.4.0",
+                "source": "https://github.com/Purdue/bulma-blocks/tree/1.4.1",
                 "issues": "https://github.com/Purdue/bulma-blocks/issues"
             },
-            "time": "2020-09-25T13:39:58+00:00"
+            "time": "2020-11-02T18:45:48+00:00"
         },
         {
             "name": "purdue/purdue-blocks",
-            "version": "1.13.0",
+            "version": "1.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Purdue/purdue-blocks.git",
-                "reference": "6c8e9a388b383c77071b79299dbb088986438a15"
+                "reference": "aec17da1c998ca69d4999273f13782fc2fe37a55"
             },
             "dist": {
                 "type": "tar",
-                "url": "https://purdue.github.io/dist/purdue/purdue-blocks/purdue-purdue-blocks-6c8e9a388b383c77071b79299dbb088986438a15-zip-1f172d.tar",
-                "reference": "6c8e9a388b383c77071b79299dbb088986438a15",
-                "shasum": "eee47c5e69e198e513968e618b3b3f08f2762690"
+                "url": "https://purdue.github.io/dist/purdue/purdue-blocks/purdue-purdue-blocks-aec17da1c998ca69d4999273f13782fc2fe37a55-zip-c885ef.tar",
+                "reference": "aec17da1c998ca69d4999273f13782fc2fe37a55",
+                "shasum": "99bd507c0a5bd62c585dbb12121e2e9ee40f3332"
             },
             "require": {
                 "php": ">=7.0"
@@ -602,24 +608,24 @@
             ],
             "description": "Adds Gutenberg blocks based on Purdue brand elements",
             "support": {
-                "source": "https://github.com/Purdue/purdue-blocks/tree/1.13.0",
+                "source": "https://github.com/Purdue/purdue-blocks/tree/1.13.1",
                 "issues": "https://github.com/Purdue/purdue-blocks/issues"
             },
-            "time": "2020-10-16T14:22:14+00:00"
+            "time": "2020-11-02T19:20:20+00:00"
         },
         {
             "name": "purdue/purdue-wp-theme",
-            "version": "1.4.0",
+            "version": "1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Purdue/purdue-wp-theme.git",
-                "reference": "e1c846c3e60ebcb7289c84d55b8ab39defb5d6df"
+                "reference": "28921a0bbdfb2921e7bbae272f2964a90a038bdd"
             },
             "dist": {
                 "type": "tar",
-                "url": "https://purdue.github.io/dist/purdue/purdue-wp-theme/purdue-purdue-wp-theme-e1c846c3e60ebcb7289c84d55b8ab39defb5d6df-zip-ba87f0.tar",
-                "reference": "e1c846c3e60ebcb7289c84d55b8ab39defb5d6df",
-                "shasum": "70d99dc08a9f4aa2bda205250fef025775b36965"
+                "url": "https://purdue.github.io/dist/purdue/purdue-wp-theme/purdue-purdue-wp-theme-28921a0bbdfb2921e7bbae272f2964a90a038bdd-zip-02d12b.tar",
+                "reference": "28921a0bbdfb2921e7bbae272f2964a90a038bdd",
+                "shasum": "5614cc237de9fa26af148111371dd664c1283d0d"
             },
             "require": {
                 "purdue/boilerup-wp": "1.*",
@@ -639,10 +645,10 @@
             ],
             "description": "WordPress theme based on Purdue University digital brand standards ",
             "support": {
-                "source": "https://github.com/Purdue/purdue-wp-theme/tree/1.4.0",
+                "source": "https://github.com/Purdue/purdue-wp-theme/tree/1.4.2",
                 "issues": "https://github.com/Purdue/purdue-wp-theme/issues"
             },
-            "time": "2020-10-19T14:19:38+00:00"
+            "time": "2020-11-02T20:41:55+00:00"
         },
         {
             "name": "roots/soil",

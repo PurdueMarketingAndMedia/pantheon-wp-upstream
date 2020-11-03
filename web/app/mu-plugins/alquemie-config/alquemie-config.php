@@ -2,7 +2,7 @@
 /*
 Plugin Name: Alquemie Config
 Description: Wordpress Configuration Best Practices as defined by Chris Carrel
-Version: 0.1.9
+Version: 0.1.10
 Author: Chris Carrel
 Author URI: https://www.linkedin.com/in/chriscarrel
 License:     GPL3
@@ -64,6 +64,10 @@ if ( ! class_exists( 'Alquemie_Config' ) ) :
                 add_filter('the_generator', '__return_empty_string');
             }
 
+            if (!checked(1, get_option('alquemie-config-responsive-embeds'), false)) {
+                add_theme_support( 'responsive-embeds' );
+            }
+            
             add_filter('admin_footer_text', array( __CLASS__, 'remove_footer_admin' )) ;
             add_filter('gettext', array(__CLASS__, 'howdy_message'), 10, 3);
             add_action('wp_head', array(__CLASS__, 'kill_ie_compatiblity'), 0 );
