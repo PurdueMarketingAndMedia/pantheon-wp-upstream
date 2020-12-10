@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7d6f18d06b4f8f89a1b8b3c3099d6807",
+    "content-hash": "79a5fea59b66bb1c76b986030d34a21a",
     "packages": [
         {
             "name": "alquemie/alquemie-config",
@@ -208,20 +208,20 @@
         },
         {
             "name": "johnpbloch/wordpress",
-            "version": "5.5.3",
+            "version": "5.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/johnpbloch/wordpress.git",
-                "reference": "f706595a0be04446e1c6c4ff984be414d1a3064b"
+                "reference": "3055975734646c8d0b8caf7b5af168ced6ec4309"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/johnpbloch/wordpress/zipball/f706595a0be04446e1c6c4ff984be414d1a3064b",
-                "reference": "f706595a0be04446e1c6c4ff984be414d1a3064b",
+                "url": "https://api.github.com/repos/johnpbloch/wordpress/zipball/3055975734646c8d0b8caf7b5af168ced6ec4309",
+                "reference": "3055975734646c8d0b8caf7b5af168ced6ec4309",
                 "shasum": ""
             },
             "require": {
-                "johnpbloch/wordpress-core": "5.5.3",
+                "johnpbloch/wordpress-core": "5.6.0",
                 "johnpbloch/wordpress-core-installer": "^1.0 || ^2.0",
                 "php": ">=5.6.20"
             },
@@ -243,20 +243,20 @@
                 "cms",
                 "wordpress"
             ],
-            "time": "2020-10-30T20:48:17+00:00"
+            "time": "2020-12-08T22:34:35+00:00"
         },
         {
             "name": "johnpbloch/wordpress-core",
-            "version": "5.5.3",
+            "version": "5.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/johnpbloch/wordpress-core.git",
-                "reference": "6f25ae53f3d4058f8dd702c097d5a4a45667af61"
+                "reference": "f074617dd69f466302836d1ae5de75c0bd7b6dfd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/johnpbloch/wordpress-core/zipball/6f25ae53f3d4058f8dd702c097d5a4a45667af61",
-                "reference": "6f25ae53f3d4058f8dd702c097d5a4a45667af61",
+                "url": "https://api.github.com/repos/johnpbloch/wordpress-core/zipball/f074617dd69f466302836d1ae5de75c0bd7b6dfd",
+                "reference": "f074617dd69f466302836d1ae5de75c0bd7b6dfd",
                 "shasum": ""
             },
             "require": {
@@ -264,7 +264,7 @@
                 "php": ">=5.6.20"
             },
             "provide": {
-                "wordpress/core-implementation": "5.5.3"
+                "wordpress/core-implementation": "5.6.0"
             },
             "type": "wordpress-core",
             "notification-url": "https://packagist.org/downloads/",
@@ -284,7 +284,7 @@
                 "cms",
                 "wordpress"
             ],
-            "time": "2020-10-30T20:48:12+00:00"
+            "time": "2020-12-08T22:34:23+00:00"
         },
         {
             "name": "johnpbloch/wordpress-core-installer",
@@ -338,16 +338,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v4.10.2",
+            "version": "v4.10.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "658f1be311a230e0907f5dfe0213742aff0596de"
+                "reference": "dbe56d23de8fcb157bbc0cfb3ad7c7de0cfb0984"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/658f1be311a230e0907f5dfe0213742aff0596de",
-                "reference": "658f1be311a230e0907f5dfe0213742aff0596de",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/dbe56d23de8fcb157bbc0cfb3ad7c7de0cfb0984",
+                "reference": "dbe56d23de8fcb157bbc0cfb3ad7c7de0cfb0984",
                 "shasum": ""
             },
             "require": {
@@ -386,7 +386,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2020-09-26T10:30:38+00:00"
+            "time": "2020-12-03T17:45:45+00:00"
         },
         {
             "name": "psr/container",
@@ -439,16 +439,16 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.10.4",
+            "version": "v0.10.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "a8aec1b2981ab66882a01cce36a49b6317dc3560"
+                "reference": "7c710551d4a2653afa259c544508dc18a9098956"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/a8aec1b2981ab66882a01cce36a49b6317dc3560",
-                "reference": "a8aec1b2981ab66882a01cce36a49b6317dc3560",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/7c710551d4a2653afa259c544508dc18a9098956",
+                "reference": "7c710551d4a2653afa259c544508dc18a9098956",
                 "shasum": ""
             },
             "require": {
@@ -507,21 +507,21 @@
                 "interactive",
                 "shell"
             ],
-            "time": "2020-05-03T19:32:03+00:00"
+            "time": "2020-12-04T02:51:30+00:00"
         },
         {
             "name": "purdue/boilerup-wp",
-            "version": "1.3.1",
+            "version": "1.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Purdue/boilerup-wp.git",
-                "reference": "1cbc882cf7c429bc70cd6a94b8f6f597df904924"
+                "reference": "26587b175f180f37b4ef1ad1ac57bf54ebe6b9e2"
             },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Purdue/boilerup-wp/zipball/1cbc882cf7c429bc70cd6a94b8f6f597df904924",
-                "reference": "1cbc882cf7c429bc70cd6a94b8f6f597df904924",
-                "shasum": ""
+                "type": "tar",
+                "url": "https://purdue.github.io/dist/purdue/boilerup-wp/purdue-boilerup-wp-26587b175f180f37b4ef1ad1ac57bf54ebe6b9e2-zip-8ac705.tar",
+                "reference": "26587b175f180f37b4ef1ad1ac57bf54ebe6b9e2",
+                "shasum": "1188b6afbddd6f0c7bdcc4c6d8ca5ff3329db489"
             },
             "require": {
                 "php": ">=7.0"
@@ -538,10 +538,10 @@
             ],
             "description": "Wordpress Must-Use Plugin that provides Purdue brand assets",
             "support": {
-                "source": "https://github.com/Purdue/boilerup-wp/tree/1.3.1",
+                "source": "https://github.com/Purdue/boilerup-wp/tree/1.4.3",
                 "issues": "https://github.com/Purdue/boilerup-wp/issues"
             },
-            "time": "2020-05-13T06:24:04+00:00"
+            "time": "2020-12-02T15:03:06+00:00"
         },
         {
             "name": "purdue/bulma-blocks",
@@ -615,17 +615,17 @@
         },
         {
             "name": "purdue/purdue-wp-theme",
-            "version": "1.4.6",
+            "version": "1.4.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Purdue/purdue-wp-theme.git",
-                "reference": "6abc9768e1b14651bc5ba14e019ab42ef9e01605"
+                "reference": "712dc6a05d5baf4a2da65009cffd55337f39af6b"
             },
             "dist": {
                 "type": "tar",
-                "url": "https://purdue.github.io/dist/purdue/purdue-wp-theme/purdue-purdue-wp-theme-6abc9768e1b14651bc5ba14e019ab42ef9e01605-zip-f5bd6f.tar",
-                "reference": "6abc9768e1b14651bc5ba14e019ab42ef9e01605",
-                "shasum": "df48705d4dab3ace8c4e017450b69ed2a29403ca"
+                "url": "https://purdue.github.io/dist/purdue/purdue-wp-theme/purdue-purdue-wp-theme-712dc6a05d5baf4a2da65009cffd55337f39af6b-zip-3c6018.tar",
+                "reference": "712dc6a05d5baf4a2da65009cffd55337f39af6b",
+                "shasum": "a54b372b498b225c18db855823d1385f4da0f85d"
             },
             "require": {
                 "purdue/boilerup-wp": "1.*",
@@ -645,10 +645,10 @@
             ],
             "description": "WordPress theme based on Purdue University digital brand standards ",
             "support": {
-                "source": "https://github.com/Purdue/purdue-wp-theme/tree/1.4.6",
+                "source": "https://github.com/Purdue/purdue-wp-theme/tree/1.4.7",
                 "issues": "https://github.com/Purdue/purdue-wp-theme/issues"
             },
-            "time": "2020-11-13T14:09:26+00:00"
+            "time": "2020-12-08T20:49:18+00:00"
         },
         {
             "name": "roots/soil",
@@ -840,16 +840,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v5.1.8",
+            "version": "v5.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "e0b2c29c0fa6a69089209bbe8fcff4df2a313d0e"
+                "reference": "3e0564fb08d44a98bd5f1960204c958e57bd586b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/e0b2c29c0fa6a69089209bbe8fcff4df2a313d0e",
-                "reference": "e0b2c29c0fa6a69089209bbe8fcff4df2a313d0e",
+                "url": "https://api.github.com/repos/symfony/console/zipball/3e0564fb08d44a98bd5f1960204c958e57bd586b",
+                "reference": "3e0564fb08d44a98bd5f1960204c958e57bd586b",
                 "shasum": ""
             },
             "require": {
@@ -910,6 +910,12 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
+            "keywords": [
+                "cli",
+                "command line",
+                "console",
+                "terminal"
+            ],
             "funding": [
                 {
                     "url": "https://symfony.com/sponsor",
@@ -924,7 +930,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-24T12:01:57+00:00"
+            "time": "2020-11-28T11:24:18+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -1472,16 +1478,16 @@
         },
         {
             "name": "symfony/string",
-            "version": "v5.1.8",
+            "version": "v5.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/string.git",
-                "reference": "a97573e960303db71be0dd8fda9be3bca5e0feea"
+                "reference": "40e975edadd4e32cd16f3753b3bad65d9ac48242"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/string/zipball/a97573e960303db71be0dd8fda9be3bca5e0feea",
-                "reference": "a97573e960303db71be0dd8fda9be3bca5e0feea",
+                "url": "https://api.github.com/repos/symfony/string/zipball/40e975edadd4e32cd16f3753b3bad65d9ac48242",
+                "reference": "40e975edadd4e32cd16f3753b3bad65d9ac48242",
                 "shasum": ""
             },
             "require": {
@@ -1548,20 +1554,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-24T12:01:57+00:00"
+            "time": "2020-10-24T12:08:07+00:00"
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v5.1.8",
+            "version": "v5.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "4e13f3fcefb1fcaaa5efb5403581406f4e840b9a"
+                "reference": "173a79c462b1c81e1fa26129f71e41333d846b26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/4e13f3fcefb1fcaaa5efb5403581406f4e840b9a",
-                "reference": "4e13f3fcefb1fcaaa5efb5403581406f4e840b9a",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/173a79c462b1c81e1fa26129f71e41333d846b26",
+                "reference": "173a79c462b1c81e1fa26129f71e41333d846b26",
                 "shasum": ""
             },
             "require": {
@@ -1633,11 +1639,11 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-27T10:11:13+00:00"
+            "time": "2020-11-27T00:39:34+00:00"
         },
         {
             "name": "wpackagist-plugin/autodescription",
-            "version": "4.1.1",
+            "version": "4.1.2",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/autodescription/",
@@ -1645,7 +1651,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/autodescription.zip?timestamp=1599248291"
+                "url": "https://downloads.wordpress.org/plugin/autodescription.zip?timestamp=1606880304"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -1655,15 +1661,15 @@
         },
         {
             "name": "wpackagist-plugin/duracelltomi-google-tag-manager",
-            "version": "1.11.5",
+            "version": "1.11.6",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/duracelltomi-google-tag-manager/",
-                "reference": "tags/1.11.5"
+                "reference": "tags/1.11.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/duracelltomi-google-tag-manager.1.11.5.zip"
+                "url": "https://downloads.wordpress.org/plugin/duracelltomi-google-tag-manager.1.11.6.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -1817,21 +1823,39 @@
         },
         {
             "name": "wpackagist-theme/twentytwenty",
-            "version": "1.5",
+            "version": "1.6",
             "source": {
                 "type": "svn",
                 "url": "https://themes.svn.wordpress.org/twentytwenty/",
-                "reference": "1.5"
+                "reference": "1.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/theme/twentytwenty.1.5.zip"
+                "url": "https://downloads.wordpress.org/theme/twentytwenty.1.6.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
             },
             "type": "wordpress-theme",
             "homepage": "https://wordpress.org/themes/twentytwenty/"
+        },
+        {
+            "name": "wpackagist-theme/twentytwentyone",
+            "version": "1.0",
+            "source": {
+                "type": "svn",
+                "url": "https://themes.svn.wordpress.org/twentytwentyone/",
+                "reference": "1.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/theme/twentytwentyone.1.0.zip"
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "type": "wordpress-theme",
+            "homepage": "https://wordpress.org/themes/twentytwentyone/"
         }
     ],
     "packages-dev": [],

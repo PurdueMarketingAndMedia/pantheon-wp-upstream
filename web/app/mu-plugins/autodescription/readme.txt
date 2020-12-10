@@ -1,10 +1,11 @@
 === The SEO Framework ===
 Contributors: Cybr
+Donate link: https://github.com/sponsors/sybrew
 Tags: seo, xml sitemap, google search, open graph, schema.org, twitter card, performance
 Requires at least: 5.1.0
-Tested up to: 5.5
+Tested up to: 5.6
 Requires PHP: 5.6.0
-Stable tag: 4.1.1
+Stable tag: 4.1.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -243,6 +244,12 @@ The SEO Framework does not provide the display of breadcrumbs. This is theme-ter
 If you wish to display breadcrumbs, then your theme should provide this. Alternatively, there are [other plugins](https://wordpress.org/plugins/search/breadcrumbs/) that help you do this.
 
 == Changelog ==
+
+= 4.1.2 =
+
+In this minor update, we ensured compatibility with PHP 8 and WP 5.6. TSF now fully integrates with WordPress Core Sitemaps, which you can configure via the SEO settings. If you decide to keep using TSF's optimized sitemap, you can now enjoy prerendering, DoS protection, and full Polylang integration. You'll also find various accessibility improvements, and we fixed [about a dozen bugs](https://theseoframework.com/?p=3650).
+
+We included a single-line self-destructing notification about our [Cyber Monday sale](https://theseoframework.com/?p=3527). We hope you'll opt to support our continuous efforts. But we're also kindly asking you to understand we must promote our premium extensions to make TSF possible. We are apprehensive about any embedded advertising and self-promotion in the plugin, so we must rely on notifications until a better system is available in WordPress.
 
 = 4.1.1 =
 

@@ -4,8 +4,8 @@ Donate link: https://gtm4wp.com/
 Tags: google tag manager, tag manager, gtm, google, adwords, google adwords, google ads, adwords remarketing, google ads remarketing, remarketing, google analytics, analytics, facebook ads, facebook remarketing, facebook pixel, google optimize, personalisation
 Requires at least: 3.4.0
 Requires PHP: 5.6
-Tested up to: 5.5
-Stable tag: 1.11.5
+Tested up to: 5.6
+Stable tag: 1.11.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 
@@ -257,6 +257,14 @@ If you or your social plugin inserts the Facebook buttons using IFRAMEs (like So
 6. Scroll tracking
 
 == Changelog ==
+
+= 1.11.6 =
+
+* Fixed: do not track hidden products in the cart in WooCommerce shops
+* Fixed: do not fire add to cart event if button is in a disabled state
+* Fixed: fixed translation of an admin text
+* Fixed: needs_shipping_address() calls were sometimes broken in WooCommerce shops, added additional checks to prevent
+* Updated: removed the body_class method of adding the iframe/noscript container code (page builders and the standard wp_body_open hook remains supported)
 
 = 1.11.5 =
 
@@ -669,6 +677,10 @@ Please report all bugs found in my plugin using the [contact form on my website]
 * First beta release
 
 == Upgrade Notice ==
+
+= 1.11.6 =
+
+Bugfix release
 
 = 1.11.5 =
 
