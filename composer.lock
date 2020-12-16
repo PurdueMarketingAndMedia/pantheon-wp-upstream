@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "79a5fea59b66bb1c76b986030d34a21a",
+    "content-hash": "bde554e77931966a44bc99ed1d58483b",
     "packages": [
         {
             "name": "alquemie/alquemie-config",
@@ -615,17 +615,17 @@
         },
         {
             "name": "purdue/purdue-wp-theme",
-            "version": "1.4.7",
+            "version": "1.4.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Purdue/purdue-wp-theme.git",
-                "reference": "712dc6a05d5baf4a2da65009cffd55337f39af6b"
+                "reference": "fb96f106811c5339b510e59cc15261797506eff4"
             },
             "dist": {
                 "type": "tar",
-                "url": "https://purdue.github.io/dist/purdue/purdue-wp-theme/purdue-purdue-wp-theme-712dc6a05d5baf4a2da65009cffd55337f39af6b-zip-3c6018.tar",
-                "reference": "712dc6a05d5baf4a2da65009cffd55337f39af6b",
-                "shasum": "a54b372b498b225c18db855823d1385f4da0f85d"
+                "url": "https://purdue.github.io/dist/purdue/purdue-wp-theme/purdue-purdue-wp-theme-fb96f106811c5339b510e59cc15261797506eff4-zip-c40317.tar",
+                "reference": "fb96f106811c5339b510e59cc15261797506eff4",
+                "shasum": "5af4724fbde36d57159cdb4ff07fddbb1baa7a68"
             },
             "require": {
                 "purdue/boilerup-wp": "1.*",
@@ -645,10 +645,10 @@
             ],
             "description": "WordPress theme based on Purdue University digital brand standards ",
             "support": {
-                "source": "https://github.com/Purdue/purdue-wp-theme/tree/1.4.7",
+                "source": "https://github.com/Purdue/purdue-wp-theme/tree/1.4.8",
                 "issues": "https://github.com/Purdue/purdue-wp-theme/issues"
             },
-            "time": "2020-12-08T20:49:18+00:00"
+            "time": "2020-12-16T04:16:55+00:00"
         },
         {
             "name": "roots/soil",
@@ -1733,15 +1733,15 @@
         },
         {
             "name": "wpackagist-plugin/post-smtp",
-            "version": "2.0.15",
+            "version": "2.0.16",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/post-smtp/",
-                "reference": "tags/2.0.15"
+                "reference": "tags/2.0.16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/post-smtp.2.0.15.zip"
+                "url": "https://downloads.wordpress.org/plugin/post-smtp.2.0.16.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
