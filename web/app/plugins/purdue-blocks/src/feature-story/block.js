@@ -21,7 +21,6 @@ const {
   Button,
   RadioControl,
   CheckboxControl,
-  SelectControl
 } = wp.components;
 const { InspectorControls, MediaUploadCheck, MediaUpload, InnerBlocks } = wp.blockEditor;
 
@@ -71,7 +70,6 @@ registerBlockType( 'purdue-blocks/feature-story', {
     ctaUrl: { type: 'string', default: '' },
     ctaText: { type: 'string', default: '' },
     external: { type: 'boolean', default: false },
-    headerLevel: { type: 'string', default: 'h2' },
   },
 
   supports: {
@@ -119,23 +117,6 @@ registerBlockType( 'purdue-blocks/feature-story', {
               ] }
               onChange={ ( option ) => {
                 props.setAttributes( { contentAlign: option } )
-              } }
-            />
-          </PanelRow>
-          <PanelRow>
-            <SelectControl
-              label="Heading level of the header"
-              value={ props.attributes.headerLevel }
-              options={ [
-                { label: 'H1', value: 'h1' },
-                { label: 'H2', value: 'h2' },
-                { label: 'H3', value: 'h3' },
-                { label: 'H4', value: 'h4' },
-                { label: 'H5', value: 'h5' },
-                { label: 'H6', value: 'h6' },
-              ] }
-              onChange={ ( headerLevel ) => {
-                props.setAttributes( { headerLevel } )
               } }
             />
           </PanelRow>
@@ -309,30 +290,10 @@ registerBlockType( 'purdue-blocks/feature-story', {
             <div className={ `content${
               props.attributes.contentAlign === 'left' ? '' : ' content-reversed'
             }` }>
-              { props.attributes.header&&props.attributes.headerLevel==='h1' ? 
-                <h1 class="featured-story-header">
-                  { props.attributes.header }
-                </h1> :'' }
-                { props.attributes.header&&props.attributes.headerLevel==='h2' ? 
+              { ! props.attributes.header ? '' : (
                 <h2>
                   { props.attributes.header }
-                </h2> :'' }
-                { props.attributes.header&&props.attributes.headerLevel==='h3' ? 
-                <h3 class="featured-story-header">
-                  { props.attributes.header }
-                </h3> :'' }
-                { props.attributes.header&&props.attributes.headerLevel==='h4' ? 
-                <h4 class="featured-story-header">
-                  { props.attributes.header }
-                </h4> :'' }
-                { props.attributes.header&&props.attributes.headerLevel==='h5' ? 
-                <h5 class="featured-story-header">
-                  { props.attributes.header }
-                </h5> :'' }
-                { props.attributes.header&&props.attributes.headerLevel==='h6' ? 
-                <h6 class="featured-story-header">
-                  { props.attributes.header }
-                </h6> :'' }
+                </h2> ) }
               <InnerBlocks.Content />
               { ( ! props.attributes.ctaUrl || ! props.attributes.ctaText ) ? '' : (
                 <a
@@ -359,30 +320,10 @@ registerBlockType( 'purdue-blocks/feature-story', {
             aria-label={ props.attributes.altText }
           ></div>
           <div className="story-content">
-          { props.attributes.header&&props.attributes.headerLevel==='h1' ? 
-                <h1 class="featured-story-header">
-                  { props.attributes.header }
-                </h1> :'' }
-                { props.attributes.header&&props.attributes.headerLevel==='h2' ? 
-                <h2>
-                  { props.attributes.header }
-                </h2> :'' }
-                { props.attributes.header&&props.attributes.headerLevel==='h3' ? 
-                <h3 class="featured-story-header">
-                  { props.attributes.header }
-                </h3> :'' }
-                { props.attributes.header&&props.attributes.headerLevel==='h4' ? 
-                <h4 class="featured-story-header">
-                  { props.attributes.header }
-                </h4> :'' }
-                { props.attributes.header&&props.attributes.headerLevel==='h5' ? 
-                <h5 class="featured-story-header">
-                  { props.attributes.header }
-                </h5> :'' }
-                { props.attributes.header&&props.attributes.headerLevel==='h6' ? 
-                <h6 class="featured-story-header">
-                  { props.attributes.header }
-                </h6> :'' }
+            { ! props.attributes.header ? '' : (
+              <h2>
+                { props.attributes.header }
+              </h2> ) }
             <InnerBlocks.Content />
             { ( ! props.attributes.ctaUrl || ! props.attributes.ctaText ) ? '' : (
               <a

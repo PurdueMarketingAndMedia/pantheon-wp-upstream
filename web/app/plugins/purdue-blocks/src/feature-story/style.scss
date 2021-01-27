@@ -6,13 +6,11 @@
 
 .pu-feature-story {
   background-color:$white;
-  h2,.featured-story-header {
+  h2 {
     font-weight:600;
     font-size: 2rem !important;
-    font-family:$acumin-pro-semicondensed;
     margin-bottom: 3.125rem !important;
     line-height:2.375rem !important;
-    color:$aged-gold !important;
     @include touch{
       font-size:1.875rem !important;
       margin-bottom:2.1875rem !important;
@@ -210,8 +208,7 @@
     transition: all ease 0.2s;
     margin-top:2rem;
     letter-spacing:0.9px;
-    min-width: #{"min(14.375rem,100%)"};
-    text-align:center;
+    min-width: 14.375rem;
     &:hover {
       cursor: pointer;
       background: $white;

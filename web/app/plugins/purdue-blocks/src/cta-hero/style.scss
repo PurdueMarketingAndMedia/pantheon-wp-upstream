@@ -99,7 +99,7 @@
           font-weight: 700;
           font-size: 5rem;
           color: white !important;
-          margin-bottom: 2.2rem;
+          margin-bottom: 3.75rem;
           line-height:5.3125rem;
 
           @include touch {
@@ -108,20 +108,19 @@
 
           @include mobile {
             font-size: 2.8125rem;
-            margin-bottom: 1rem;
+            margin-bottom: 2.1875rem;
             line-height:3.125rem;
           }
         }
 
         p {
-          font-size: 1.25rem;
-          font-family: $acumin-pro;
-          width: auto;
-          color: white;
-          margin-bottom: 3.5rem;
+          font-size: 1.5rem;
+          font-family: $united-sans;
+          text-transform: uppercase;
+          width: 85%;
 
           @include mobile {
-            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
           }
         }
       }

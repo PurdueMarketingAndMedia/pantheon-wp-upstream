@@ -37,8 +37,9 @@ if(anchorLinkBlocks&&anchorLinkBlocks.length>0&&anchorHeaders&&anchorHeaders.len
         })
     })
     window.addEventListener('scroll', () => {
+        const scrollPos = document.documentElement.scrollTop || document.body.scrollTop;
         anchorHeaders.forEach((header)=>{
-            if ( header.getBoundingClientRect().top <= 20 ) {
+            if ( header.offsetTop <= scrollPos ) {
                 const id = "#"+header.id
                 links.forEach((el)=>{
                     el.hash===id?el.classList.add("is-active"):el.classList.remove("is-active")
