@@ -574,7 +574,7 @@
             "dist": {
                 "type": "path",
                 "url": "upstream-config",
-                "reference": "44e3396302f41e2c74c555cc62462974e1cf4710"
+                "reference": "b6134826e7914f23e39a9da34530e8d8b7a35645"
             },
             "require": {
                 "alquemie/alquemie-config": "0.1.*",
@@ -590,7 +590,7 @@
                 "roots/wp-password-bcrypt": "^1.0.0",
                 "vlucas/phpdotenv": "^3.1.0",
                 "wp-coding-standards/wpcs": "1.2.1",
-                "wpackagist-plugin/authorizer": "2.10.0",
+                "wpackagist-plugin/authorizer": "3.0.5",
                 "wpackagist-plugin/autodescription": "4.1.3",
                 "wpackagist-plugin/duracelltomi-google-tag-manager": "1.11.6",
                 "wpackagist-plugin/hyperdb": "1.7",
@@ -1038,15 +1038,15 @@
         },
         {
             "name": "wpackagist-plugin/authorizer",
-            "version": "2.10.0",
+            "version": "3.0.5",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/authorizer/",
-                "reference": "tags/2.10.0"
+                "reference": "tags/3.0.5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/authorizer.2.10.0.zip"
+                "url": "https://downloads.wordpress.org/plugin/authorizer.3.0.5.zip"
             },
             "require": {
                 "composer/installers": "~1.0"

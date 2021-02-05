@@ -2,7 +2,7 @@
 Contributors: figureone, the_magician, pkarjala, aargh-a-knot, elarequi, jojaba
 Tags: cas, ldap, google, google plus, login, authentication, authorization, access, education, limit login attempts, oauth
 Requires at least: 4.4
-Tested up to: 5.5.1
+Tested up to: 5.6
 Requires PHP: 5.6.20
 Stable tag: trunk
 License: GPLv2 or later
@@ -14,7 +14,7 @@ Authorizer limits login attempts, restricts access to specified users, and authe
 
 *Authorizer* restricts access to a WordPress site to specific users, typically students enrolled in a university course. It maintains a list of approved users that you can edit to determine who has access. It also replaces the default WordPress login/authorization system with one relying on an external server, such as Google, CAS, or LDAP. Finally, *Authorizer* lets you limit invalid login attempts to prevent bots from compromising your users' accounts.
 
-View or contribute to the plugin source on Github: [https://github.com/uhm-coe/authorizer](https://github.com/uhm-coe/authorizer)
+View or contribute to the plugin source on GitHub: [https://github.com/uhm-coe/authorizer](https://github.com/uhm-coe/authorizer)
 
 *Authorizer* requires the following:
 
@@ -62,6 +62,39 @@ The [University of Hawai'i][uh], which provides authentication for student, facu
 12. Authorizer Option overridden by a Network Admin Option.
 
 == Changelog ==
+
+= 3.0.5 =
+* Fix REST API access restriction (allow app passwords introduced in WordPress 5.6).
+
+= 3.0.4 =
+* PHP 8 compatibility.
+* Fix warnings about uninitialized oauth2 options.
+* Update Google API PHP Client from 2.8.1 to 2.8.3 (composer update google/apiclient).
+* Update Google API PHP Client Services from 0.152 to 0.156 (composer update google/apiclient-services).
+* Update composer dependencies (monolog 2.1.1 => 2.2.0; phpseclib 2.0.29 => 2.0.30).
+
+= 3.0.3 =
+* Fix php errors causing authorizer.js and some vendor assets not to load on network admin. Props @julienlusson for finding this bug!
+
+= 3.0.2 =
+* Add tenant-specific configuration option to Microsoft Azure oauth2 provider.
+
+= 3.0.1 =
+* Add Microsoft Azure oauth2 provider.
+* Updated French translations. Props @julienlusson for the [pull request](https://github.com/uhm-coe/authorizer/pull/96)!
+
+= 3.0.0 =
+* Authenticate with more providers via OAuth2. Let us [know](https://github.com/uhm-coe/authorizer/issues) if you have any troubles integrating your OAuth2 provider.
+* Add filter `authorizer_oauth2_generic_authorization_parameters` for targeting the specifics of generic oauth2 providers. Provide an array with options, such as `array( 'scope' => 'user:email' )`, to customize your generic oauth2 provider.
+* Add filter `authorizer_oauth2_generic_authenticated_email` for manually inspecting the results returned from the oauth2 provider to find the resource owner's email to give to WordPress for the authenticated user. Use this for oauth2 providers that release email addresses in nonstandard places.
+* Fix first/last names not getting updated for admins on a CAS or LDAP login.
+* Fix PHP warning if invalid login attempt settings are empty (also prevent the “Authorizer lockout triggered for 0 seconds on user after the 0th invalid attempt” simple history log message).
+* Fix update usermeta button disappearing in Approved Users list after clicking it.
+* Fix serialization of usermeta in Approved Users list for unregistered users.
+* Remove bootstrap dependency (replace glyphicons with WordPress dashicons).
+* Update translatable strings.
+* Update phpCAS from 1.3.6 to 1.3.8.
+* Update Google API PHP Client from 2.7.1 to 2.8.1.
 
 = 2.10.0 =
 * Update google-api-php-client from v2.2.4 to v2.7.1. Note: extra Google Services have been removed from the vendor library to support hosts that don't like the large vendor library (12,659 files were removed). If you have any problems with your Google sign-ins, please downgrade to 2.9.14 and open a support request!

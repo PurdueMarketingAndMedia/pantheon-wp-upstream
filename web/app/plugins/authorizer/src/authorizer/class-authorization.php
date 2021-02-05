@@ -24,7 +24,8 @@ class Authorization extends Singleton {
 	 * @param WP_User $user        User to check.
 	 * @param array   $user_emails Array of user's plaintext emails (in case current user doesn't have a WP account).
 	 * @param array   $user_data   Array of keys for email, username, first_name, last_name,
-	 *                             authenticated_by, google_attributes, cas_attributes, ldap_attributes.
+	 *                             authenticated_by, google_attributes, cas_attributes, ldap_attributes,
+	 *                             oauth2_attributes.
 	 * @return WP_Error|WP_User
 	 *                             WP_Error if there was an error on user creation / adding user to blog.
 	 *                             WP_Error / wp_die() if user does not have access.
@@ -45,6 +46,39 @@ class Authorization extends Singleton {
 				$auth_settings_access_users_approved_multi
 			)
 		);
+
+		// Detect whether this user's first and last name should be updated below
+		// (if the external CAS/LDAP service provides a different value, the option
+		// is set to update it, and it's empty if the option to only set it if empty
+		// is enabled).
+		$should_update_first_name =
+			! empty( $user_data['first_name'] ) && $user_data['first_name'] !== $user->first_name &&
+			(
+				(
+					! empty( $user_data['authenticated_by'] ) && 'cas' === $user_data['authenticated_by'] &&
+					! empty( $auth_settings['cas_attr_update_on_login'] ) &&
+					( '1' === $auth_settings['cas_attr_update_on_login'] || ( 'update-if-empty' === $auth_settings['cas_attr_update_on_login'] && empty( $user->first_name ) ) )
+				) || (
+					! empty( $user_data['authenticated_by'] ) && 'ldap' === $user_data['authenticated_by'] &&
+					! empty( $auth_settings['ldap_attr_update_on_login'] ) &&
+					( '1' === $auth_settings['ldap_attr_update_on_login'] || ( 'update-if-empty' === $auth_settings['ldap_attr_update_on_login'] && empty( $user->first_name ) ) )
+				)
+			)
+		;
+		$should_update_last_name =
+			! empty( $user_data['last_name'] ) && $user_data['last_name'] !== $user->last_name &&
+			(
+				(
+					! empty( $user_data['authenticated_by'] ) && 'cas' === $user_data['authenticated_by'] &&
+					! empty( $auth_settings['cas_attr_update_on_login'] ) &&
+					( '1' === $auth_settings['cas_attr_update_on_login'] || ( 'update-if-empty' === $auth_settings['cas_attr_update_on_login'] && empty( $user->last_name ) ) )
+				) || (
+					! empty( $user_data['authenticated_by'] ) && 'ldap' === $user_data['authenticated_by'] &&
+					! empty( $auth_settings['ldap_attr_update_on_login'] ) &&
+					( '1' === $auth_settings['ldap_attr_update_on_login'] || ( 'update-if-empty' === $auth_settings['ldap_attr_update_on_login'] && empty( $user->last_name ) ) )
+				)
+			)
+		;
 
 		/**
 		 * Filter whether to block the currently logging in user based on any of
@@ -104,6 +138,20 @@ class Authorization extends Singleton {
 			}
 		}
 
+		// If this externally-authenticated user is an existing administrator (admin
+		// in single site mode, or super admin in network mode), and isn't blocked,
+		// let them in. Update their first/last name if needed (CAS/LDAP).
+		if ( $user && is_super_admin( $user->ID ) ) {
+			if ( $should_update_first_name ) {
+				update_user_meta( $user->ID, 'first_name', $user_data['first_name'] );
+			}
+			if ( $should_update_last_name ) {
+				update_user_meta( $user->ID, 'last_name', $user_data['last_name'] );
+			}
+
+			return $user;
+		}
+
 		// Get the default role for this user (or their current role, if they
 		// already have an account).
 		$default_role = $user && is_array( $user->roles ) && count( $user->roles ) > 0 ? $user->roles[0] : $auth_settings['access_default_role'];
@@ -134,13 +182,6 @@ class Authorization extends Singleton {
 		reset( $user_emails );
 		foreach ( $user_emails as $user_email ) {
 			$is_newly_approved_user = false;
-
-			// If this externally authenticated user is an existing administrator
-			// (administrator in single site mode, or super admin in network mode),
-			// and is not in the blocked list, let them in.
-			if ( $user && is_super_admin( $user->ID ) ) {
-				return $user;
-			}
 
 			// If this externally authenticated user isn't in the approved list
 			// and login access is set to "All authenticated users," or if they were
@@ -321,35 +362,12 @@ class Authorization extends Singleton {
 						}
 					}
 				} else {
-					// Update first name from CAS/LDAP if the external service provides a
-					// different value and the option is set to update it (if the option
-					// says to only update if empty, also check that it is empty before
-					// updating).
-					if ( ! empty( $user_data['first_name'] ) && $user_data['first_name'] !== $user->first_name && (
-						! empty( $user_data['authenticated_by'] ) && 'cas' === $user_data['authenticated_by'] && ! empty( $auth_settings['cas_attr_update_on_login'] ) && ( '1' === $auth_settings['cas_attr_update_on_login'] || ( 'update-if-empty' === $auth_settings['cas_attr_update_on_login'] && empty( $user->first_name ) ) ) ||
-						! empty( $user_data['authenticated_by'] ) && 'ldap' === $user_data['authenticated_by'] && ! empty( $auth_settings['ldap_attr_update_on_login'] ) && ( '1' === $auth_settings['ldap_attr_update_on_login'] || ( 'update-if-empty' === $auth_settings['ldap_attr_update_on_login'] && empty( $user->first_name ) ) )
-					) ) {
-						wp_update_user(
-							array(
-								'ID'         => $user->ID,
-								'first_name' => $user_data['first_name'],
-							)
-						);
+					// Update first/last name from CAS/LDAP if needed.
+					if ( $should_update_first_name ) {
+						update_user_meta( $user->ID, 'first_name', $user_data['first_name'] );
 					}
-					// Update last name from CAS/LDAP if the external service provides a
-					// different value and the option is set to update it (if the option
-					// says to only update if empty, also check that it is empty before
-					// updating).
-					if ( ! empty( $user_data['last_name'] ) && $user_data['last_name'] !== $user->last_name && (
-						! empty( $user_data['authenticated_by'] ) && 'cas' === $user_data['authenticated_by'] && ! empty( $auth_settings['cas_attr_update_on_login'] ) && ( '1' === $auth_settings['cas_attr_update_on_login'] || ( 'update-if-empty' === $auth_settings['cas_attr_update_on_login'] && empty( $user->last_name ) ) ) ||
-						! empty( $user_data['authenticated_by'] ) && 'ldap' === $user_data['authenticated_by'] && ! empty( $auth_settings['ldap_attr_update_on_login'] ) && ( '1' === $auth_settings['ldap_attr_update_on_login'] || ( 'update-if-empty' === $auth_settings['ldap_attr_update_on_login'] && empty( $user->last_name ) ) )
-					) ) {
-						wp_update_user(
-							array(
-								'ID'        => $user->ID,
-								'last_name' => $user_data['last_name'],
-							)
-						);
+					if ( $should_update_last_name ) {
+						update_user_meta( $user->ID, 'last_name', $user_data['last_name'] );
 					}
 
 					// Update this user's role if it was modified in the
@@ -486,13 +504,9 @@ class Authorization extends Singleton {
 			( 'everyone' === $auth_settings['access_who_can_view'] ) ||
 			// Allow access to approved external users and logged in users if option is set to 'logged_in_users'.
 			( 'logged_in_users' === $auth_settings['access_who_can_view'] && Helper::is_user_logged_in_and_blog_user() && $this->is_email_in_list( $current_user->user_email, 'approved' ) ) ||
-			// Allow access for requests to /wp-json/oauth1 so oauth clients can authenticate to use the REST API.
-			( property_exists( $wp, 'matched_query' ) && stripos( $wp->matched_query, 'rest_oauth1=' ) === 0 ) ||
-			// Allow access for non-GET requests to /wp-json/*, since REST API authentication already covers them.
-			( property_exists( $wp, 'matched_query' ) && 0 === stripos( $wp->matched_query, 'rest_route=' ) && isset( $_SERVER['REQUEST_METHOD'] ) && 'GET' !== $_SERVER['REQUEST_METHOD'] ) ||
-			// Allow access for GET requests to /wp-json/ (root), since REST API discovery calls rely on this.
-			( property_exists( $wp, 'matched_query' ) && 'rest_route=/' === $wp->matched_query )
-			// Note that GET requests to a rest endpoint will be restricted by authorizer. In that case, error messages will be returned as JSON.
+			// Allow REST API requests (access is determined later in the rest_authentication_errors hook).
+			// See: https://github.com/WordPress/WordPress/blob/8e41746cb11271d063608a63e3f6091a8685e677/wp-includes/rest-api.php#L131-L133
+			( ! empty( $GLOBALS['wp']->query_vars['rest_route'] ) )
 		);
 
 		/**
@@ -632,6 +646,45 @@ class Authorization extends Singleton {
 
 		// Sanity check: we should never get here.
 		wp_die( '<p>Access denied.</p>', 'Site Access Restricted' );
+	}
+
+
+	/**
+	 * Prevent REST API access if user isn't authenticated and "only logged in
+	 * users can see the site" is enabled.
+	 *
+	 * Filter: rest_authentication_errors
+	 *
+	 * @param  WP_Error|null|true $errors WP_Error if authentication error, null if authentication method wasn't used, true if authentication succeeded.
+	 * @return WP_Error|null|true         WP_Error if not logged in and "only logged in users can see the site" is enabled.
+	 */
+	public function restrict_rest_api( $errors ) {
+		// If there is already an error, just return that.
+		if ( ! empty( $errors ) ) {
+			return $errors;
+		}
+
+		// If user isn't logged in, check for "only logged in users can see the site."
+		if ( ! is_user_logged_in() ) {
+			// Grab plugin settings.
+			$options       = Options::get_instance();
+			$auth_settings = $options->get_all( Helper::SINGLE_CONTEXT, 'allow override' );
+
+			if (
+				'logged_in_users' === $auth_settings['access_who_can_view'] &&
+				false === apply_filters( 'authorizer_has_access', false, $GLOBALS['wp'] )
+			) {
+				return new \WP_Error(
+					'rest_cannot_view',
+					wp_strip_all_tags( $auth_settings['access_redirect_to_message'] ),
+					array(
+						'status' => 401,
+					)
+				);
+			}
+		}
+
+		return $errors;
 	}
 
 
