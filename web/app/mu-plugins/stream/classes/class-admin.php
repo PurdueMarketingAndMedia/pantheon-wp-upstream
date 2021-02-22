@@ -746,10 +746,11 @@ class Admin {
 			return;
 		}
 
+		$defaults = $this->plugin->settings->get_defaults();
 		if ( is_multisite() && $this->plugin->is_network_activated() ) {
-			$options = (array) get_site_option( 'wp_stream_network', array() );
+			$options = (array) get_site_option( 'wp_stream_network', $defaults );
 		} else {
-			$options = (array) get_option( 'wp_stream', array() );
+			$options = (array) get_option( 'wp_stream', $defaults );
 		}
 
 		if ( ! empty( $options['general_keep_records_indefinitely'] ) || ! isset( $options['general_records_ttl'] ) ) {
