@@ -574,7 +574,7 @@
             "dist": {
                 "type": "path",
                 "url": "upstream-config",
-                "reference": "83db7824d7a0e436b021300d47791bfc651e5a57"
+                "reference": "703479b04fec8f0e0e169f56e9a6d8af4ea20608"
             },
             "require": {
                 "alquemie/alquemie-config": "0.1.*",
@@ -586,9 +586,9 @@
                 "roots/soil": "4.*",
                 "roots/wp-password-bcrypt": "^1.0.0",
                 "vlucas/phpdotenv": "^3.1.0",
-                "wp-coding-standards/wpcs": "1.2.1",
+                "wp-coding-standards/wpcs": "1.*",
                 "wpackagist-plugin/authorizer": "3.0.*",
-                "wpackagist-plugin/autodescription": "4.1.3",
+                "wpackagist-plugin/autodescription": "4.*",
                 "wpackagist-plugin/duracelltomi-google-tag-manager": "1.11.6",
                 "wpackagist-plugin/hyperdb": "1.7",
                 "wpackagist-plugin/lh-hsts": "1.25",
