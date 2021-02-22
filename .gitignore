@@ -1,11 +1,11 @@
 # Composer #
 ############
 /vendor/
-composer.lock
 /web/app/plugins/**/.git
 /web/app/mu-plugins/**/.git
 /web/app/themes/**/.git
 /web/app/**/.github/
+composer.lock
 
 # WordPress #
 ############
