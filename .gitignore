@@ -1,7 +1,7 @@
 # Composer #
 ############
 /vendor/
-/composer.lock
+composer.lock
 /web/app/plugins/**/.git
 /web/app/mu-plugins/**/.git
 /web/app/themes/**/.git
