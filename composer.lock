@@ -533,17 +533,17 @@
         },
         {
             "name": "purdue/purdue-wp-theme",
-            "version": "1.5.2",
+            "version": "1.5.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Purdue/purdue-wp-theme.git",
-                "reference": "48b74744806517ca65580051336640f927f4a6a6"
+                "reference": "fb3bda143818003966423daf449d292e8542a4e3"
             },
             "dist": {
                 "type": "tar",
-                "url": "https://purdue.github.io/dist/purdue/purdue-wp-theme/purdue-purdue-wp-theme-48b74744806517ca65580051336640f927f4a6a6-zip-6d23f1.tar",
-                "reference": "48b74744806517ca65580051336640f927f4a6a6",
-                "shasum": "909ca23fedbf5fa0cd3fa7e1ac7e8d7dc09fb998"
+                "url": "https://purdue.github.io/dist/purdue/purdue-wp-theme/purdue-purdue-wp-theme-fb3bda143818003966423daf449d292e8542a4e3-zip-da1b79.tar",
+                "reference": "fb3bda143818003966423daf449d292e8542a4e3",
+                "shasum": "9109f114884186b94f7b4be5f1112fee831709a5"
             },
             "require": {
                 "purdue/boilerup-wp": "1.*",
@@ -563,10 +563,10 @@
             ],
             "description": "WordPress theme based on Purdue University digital brand standards ",
             "support": {
-                "source": "https://github.com/Purdue/purdue-wp-theme/tree/1.5.2",
+                "source": "https://github.com/Purdue/purdue-wp-theme/tree/1.5.3.1",
                 "issues": "https://github.com/Purdue/purdue-wp-theme/issues"
             },
-            "time": "2021-01-29T22:05:20+00:00"
+            "time": "2021-02-25T20:55:37+00:00"
         },
         {
             "name": "purdue/upstream-config",
@@ -574,14 +574,14 @@
             "dist": {
                 "type": "path",
                 "url": "upstream-config",
-                "reference": "274d58b73c4002996983e03a1413bc253e140af2"
+                "reference": "53e7d9f17f14a3a4cc0445a40ea3244ab7244909"
             },
             "require": {
                 "alquemie/alquemie-config": "0.1.11",
                 "composer/installers": "^1.3.0",
                 "johnpbloch/wordpress": "5.6.2",
                 "pantheon-systems/quicksilver-pushback": "^2",
-                "purdue/purdue-wp-theme": "1.5.2",
+                "purdue/purdue-wp-theme": "1.5.3.1",
                 "roots/soil": "4.0.4",
                 "roots/wp-password-bcrypt": "^1.0.0",
                 "vlucas/phpdotenv": "^3.1.0",
