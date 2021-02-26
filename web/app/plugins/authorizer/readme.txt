@@ -2,7 +2,7 @@
 Contributors: figureone, the_magician, pkarjala, aargh-a-knot, elarequi, jojaba
 Tags: cas, ldap, google, google plus, login, authentication, authorization, access, education, limit login attempts, oauth
 Requires at least: 4.4
-Tested up to: 5.6
+Tested up to: 5.7
 Requires PHP: 5.6.20
 Stable tag: trunk
 License: GPLv2 or later
@@ -62,6 +62,10 @@ The [University of Hawai'i][uh], which provides authentication for student, facu
 12. Authorizer Option overridden by a Network Admin Option.
 
 == Changelog ==
+
+= 3.0.7 =
+* Fix jQuery deprecation notices in WordPress 5.7.
+* Tested up to WordPress 5.7.
 
 = 3.0.6 =
 * Restore PHP 5.6 compatibility.
