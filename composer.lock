@@ -182,127 +182,28 @@
             "time": "2021-01-14T11:07:16+00:00"
         },
         {
-            "name": "johnpbloch/wordpress",
-            "version": "5.6.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/johnpbloch/wordpress.git",
-                "reference": "784b3440c9a11c3b65b988cc441db332ab0e6c49"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/johnpbloch/wordpress/zipball/784b3440c9a11c3b65b988cc441db332ab0e6c49",
-                "reference": "784b3440c9a11c3b65b988cc441db332ab0e6c49",
-                "shasum": ""
-            },
-            "require": {
-                "johnpbloch/wordpress-core": "5.6.2",
-                "johnpbloch/wordpress-core-installer": "^1.0 || ^2.0",
-                "php": ">=5.6.20"
-            },
-            "type": "package",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "authors": [
-                {
-                    "name": "WordPress Community",
-                    "homepage": "http://wordpress.org/about/"
-                }
-            ],
-            "description": "WordPress is open source software you can use to create a beautiful website, blog, or app.",
-            "homepage": "http://wordpress.org/",
-            "keywords": [
-                "blog",
-                "cms",
-                "wordpress"
-            ],
-            "support": {
-                "forum": "http://wordpress.org/support/",
-                "irc": "irc://irc.freenode.net/wordpress",
-                "issues": "http://core.trac.wordpress.org/",
-                "source": "http://core.trac.wordpress.org/browser",
-                "wiki": "http://codex.wordpress.org/"
-            },
-            "time": "2021-02-22T15:30:37+00:00"
-        },
-        {
-            "name": "johnpbloch/wordpress-core",
-            "version": "5.6.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/johnpbloch/wordpress-core.git",
-                "reference": "e48e723c0d7e38c5580631e6ffea29a4388c5dd0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/johnpbloch/wordpress-core/zipball/e48e723c0d7e38c5580631e6ffea29a4388c5dd0",
-                "reference": "e48e723c0d7e38c5580631e6ffea29a4388c5dd0",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "php": ">=5.6.20"
-            },
-            "provide": {
-                "wordpress/core-implementation": "5.6.2"
-            },
-            "type": "wordpress-core",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "WordPress Community",
-                    "homepage": "https://wordpress.org/about/"
-                }
-            ],
-            "description": "WordPress is open source software you can use to create a beautiful website, blog, or app.",
-            "homepage": "https://wordpress.org/",
-            "keywords": [
-                "blog",
-                "cms",
-                "wordpress"
-            ],
-            "support": {
-                "forum": "https://wordpress.org/support/",
-                "irc": "irc://irc.freenode.net/wordpress",
-                "issues": "https://core.trac.wordpress.org/",
-                "source": "https://core.trac.wordpress.org/browser",
-                "wiki": "https://codex.wordpress.org/"
-            },
-            "time": "2021-02-22T15:30:31+00:00"
-        },
-        {
             "name": "johnpbloch/wordpress-core-installer",
-            "version": "2.0.0",
+            "version": "0.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/johnpbloch/wordpress-core-installer.git",
-                "reference": "237faae9a60a4a2e1d45dce1a5836ffa616de63e"
+                "reference": "8a7a8b91c27778199cfd4f0c17266fe8a2ca8ffd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/johnpbloch/wordpress-core-installer/zipball/237faae9a60a4a2e1d45dce1a5836ffa616de63e",
-                "reference": "237faae9a60a4a2e1d45dce1a5836ffa616de63e",
+                "url": "https://api.github.com/repos/johnpbloch/wordpress-core-installer/zipball/8a7a8b91c27778199cfd4f0c17266fe8a2ca8ffd",
+                "reference": "8a7a8b91c27778199cfd4f0c17266fe8a2ca8ffd",
                 "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^1.0 || ^2.0",
-                "php": ">=5.6.0"
             },
             "conflict": {
                 "composer/installers": "<1.0.6"
             },
             "require-dev": {
-                "composer/composer": "^1.0 || ^2.0",
-                "phpunit/phpunit": ">=5.7.27"
+                "composer/composer": "1.0.*@dev"
             },
-            "type": "composer-plugin",
+            "type": "composer-installer",
             "extra": {
-                "class": "johnpbloch\\Composer\\WordPressCorePlugin"
+                "class": "johnpbloch\\Composer\\WordPressCoreInstaller"
             },
             "autoload": {
                 "psr-0": {
@@ -311,7 +212,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "GPL-2.0-or-later"
+                "GPL-2.0+"
             ],
             "authors": [
                 {
@@ -320,14 +221,11 @@
                 }
             ],
             "description": "A custom installer to handle deploying WordPress with composer",
-            "keywords": [
-                "wordpress"
-            ],
             "support": {
                 "issues": "https://github.com/johnpbloch/wordpress-core-installer/issues",
-                "source": "https://github.com/johnpbloch/wordpress-core-installer/tree/master"
+                "source": "https://github.com/johnpbloch/wordpress-core-installer/tree/0.1.2"
             },
-            "time": "2020-04-16T21:44:57+00:00"
+            "time": "2013-09-09T15:03:37+00:00"
         },
         {
             "name": "pantheon-systems/quicksilver-pushback",
@@ -357,6 +255,41 @@
                 "source": "https://github.com/pantheon-systems/quicksilver-pushback/tree/master"
             },
             "time": "2020-08-20T22:12:09+00:00"
+        },
+        {
+            "name": "pantheon-systems/wordpress-composer",
+            "version": "5.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pantheon-systems/wordpress-composer.git",
+                "reference": "1c41c51f6ec3758b7809bfb82f0db297d9d1235f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pantheon-systems/wordpress-composer/zipball/1c41c51f6ec3758b7809bfb82f0db297d9d1235f",
+                "reference": "1c41c51f6ec3758b7809bfb82f0db297d9d1235f",
+                "shasum": ""
+            },
+            "require": {
+                "johnpbloch/wordpress-core-installer": "~0.1"
+            },
+            "type": "wordpress-core",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.x-dev"
+                },
+                "wordpress-install-dir": "web/wp"
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "description": "WordPress for Pantheon with a composer.json file.",
+            "support": {
+                "issues": "https://github.com/pantheon-systems/wordpress-composer/issues",
+                "source": "https://github.com/pantheon-systems/wordpress-composer/tree/5.7"
+            },
+            "time": "2021-03-10T02:11:15+00:00"
         },
         {
             "name": "phpoption/phpoption",
@@ -429,20 +362,17 @@
         },
         {
             "name": "purdue/boilerup-wp",
-            "version": "1.4.3",
+            "version": "1.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Purdue/boilerup-wp.git",
-                "reference": "26587b175f180f37b4ef1ad1ac57bf54ebe6b9e2"
+                "reference": "6eb525fbed3728b50ca10a86d14f09611cba6421"
             },
             "dist": {
                 "type": "tar",
-                "url": "https://purdue.github.io/dist/purdue/boilerup-wp/purdue-boilerup-wp-26587b175f180f37b4ef1ad1ac57bf54ebe6b9e2-zip-8ac705.tar",
-                "reference": "26587b175f180f37b4ef1ad1ac57bf54ebe6b9e2",
-                "shasum": "1188b6afbddd6f0c7bdcc4c6d8ca5ff3329db489"
-            },
-            "require": {
-                "php": ">=7.0"
+                "url": "https://purdue.github.io/dist/purdue/boilerup-wp/purdue-boilerup-wp-6eb525fbed3728b50ca10a86d14f09611cba6421-zip-18ad66.tar",
+                "reference": "6eb525fbed3728b50ca10a86d14f09611cba6421",
+                "shasum": "a88f426181ad62c4e68ca2a6181f9204c593a2f0"
             },
             "type": "wordpress-muplugin",
             "license": [
@@ -450,30 +380,30 @@
             ],
             "authors": [
                 {
-                    "name": "Purdue Marketing and Media",
+                    "name": "Purdue Marketing and Communicatons",
                     "email": "digitalmarketing@groups.purdue.edu"
                 }
             ],
             "description": "Wordpress Must-Use Plugin that provides Purdue brand assets",
             "support": {
-                "source": "https://github.com/Purdue/boilerup-wp/tree/1.4.3",
+                "source": "https://github.com/Purdue/boilerup-wp/tree/1.5.1",
                 "issues": "https://github.com/Purdue/boilerup-wp/issues"
             },
-            "time": "2020-12-02T15:03:06+00:00"
+            "time": "2021-03-12T08:43:41+00:00"
         },
         {
             "name": "purdue/bulma-blocks",
-            "version": "1.4.6",
+            "version": "1.4.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Purdue/bulma-blocks.git",
-                "reference": "9f1d0b10ee89c11cd86e68e946518850059ccbcf"
+                "reference": "ef2206f2d64954a790f4ff5c6234b25a4488f715"
             },
             "dist": {
                 "type": "tar",
-                "url": "https://purdue.github.io/dist/purdue/bulma-blocks/purdue-bulma-blocks-9f1d0b10ee89c11cd86e68e946518850059ccbcf-zip-cc3ac2.tar",
-                "reference": "9f1d0b10ee89c11cd86e68e946518850059ccbcf",
-                "shasum": "dd607c2e591049017bf1b82b7c3dad25c08fccd8"
+                "url": "https://purdue.github.io/dist/purdue/bulma-blocks/purdue-bulma-blocks-ef2206f2d64954a790f4ff5c6234b25a4488f715-zip-213d69.tar",
+                "reference": "ef2206f2d64954a790f4ff5c6234b25a4488f715",
+                "shasum": "3e388bf52e8ce3427c9ad05c6cdfb560742a5e3b"
             },
             "require": {
                 "php": ">=7.0"
@@ -484,31 +414,31 @@
             ],
             "authors": [
                 {
-                    "name": "Purdue Marketing and Media",
+                    "name": "Purdue Marketing and Communications",
                     "email": "digital-marketing@groups.purdue.edu",
-                    "homepage": "https://brand.purdue.edu"
+                    "homepage": "https://marcom.purdue.edu"
                 }
             ],
             "description": "Adds Gutenberg blocks based on Bulma.io CSS framework",
             "support": {
-                "source": "https://github.com/Purdue/bulma-blocks/tree/1.4.6",
+                "source": "https://github.com/Purdue/bulma-blocks/tree/1.4.6.1",
                 "issues": "https://github.com/Purdue/bulma-blocks/issues"
             },
-            "time": "2021-01-12T14:45:28+00:00"
+            "time": "2021-03-12T14:55:14+00:00"
         },
         {
             "name": "purdue/purdue-blocks",
-            "version": "1.15.2",
+            "version": "1.15.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Purdue/purdue-blocks.git",
-                "reference": "b0f8280987bd0c47d5836ac53ed126fbf6a97f7c"
+                "reference": "1bcd16e7cf78093c16504c26cd4a54a2773085bb"
             },
             "dist": {
                 "type": "tar",
-                "url": "https://purdue.github.io/dist/purdue/purdue-blocks/purdue-purdue-blocks-b0f8280987bd0c47d5836ac53ed126fbf6a97f7c-zip-6e7bf0.tar",
-                "reference": "b0f8280987bd0c47d5836ac53ed126fbf6a97f7c",
-                "shasum": "dc391e75e9856e3c8194d87b7f0e47dcb222538b"
+                "url": "https://purdue.github.io/dist/purdue/purdue-blocks/purdue-purdue-blocks-1bcd16e7cf78093c16504c26cd4a54a2773085bb-zip-621e2f.tar",
+                "reference": "1bcd16e7cf78093c16504c26cd4a54a2773085bb",
+                "shasum": "9fc5f7863cbf1a53d30e4ba38b17d7054984b20b"
             },
             "require": {
                 "php": ">=7.0"
@@ -526,29 +456,29 @@
             ],
             "description": "Adds Gutenberg blocks based on Purdue brand elements",
             "support": {
-                "source": "https://github.com/Purdue/purdue-blocks/tree/1.15.2",
+                "source": "https://github.com/Purdue/purdue-blocks/tree/1.15.5",
                 "issues": "https://github.com/Purdue/purdue-blocks/issues"
             },
-            "time": "2021-02-02T20:09:38+00:00"
+            "time": "2021-03-12T15:45:50+00:00"
         },
         {
             "name": "purdue/purdue-wp-theme",
-            "version": "1.5.3.2",
+            "version": "1.5.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Purdue/purdue-wp-theme.git",
-                "reference": "d1c92eb6f109ed81eb468cfb67e492f734314312"
+                "reference": "08d1c37646cd5a4d56e782a1524e2c6a4c52c29b"
             },
             "dist": {
                 "type": "tar",
-                "url": "https://purdue.github.io/dist/purdue/purdue-wp-theme/purdue-purdue-wp-theme-d1c92eb6f109ed81eb468cfb67e492f734314312-zip-157151.tar",
-                "reference": "d1c92eb6f109ed81eb468cfb67e492f734314312",
-                "shasum": "b8fbcd66d399a43f82bce69d14b47f7415da699e"
+                "url": "https://purdue.github.io/dist/purdue/purdue-wp-theme/purdue-purdue-wp-theme-08d1c37646cd5a4d56e782a1524e2c6a4c52c29b-zip-24d8bd.tar",
+                "reference": "08d1c37646cd5a4d56e782a1524e2c6a4c52c29b",
+                "shasum": "39ce49c821eb89e0330f463d057e8ac3a274a54c"
             },
             "require": {
-                "purdue/boilerup-wp": "1.4.3",
-                "purdue/bulma-blocks": ">=1.2.1",
-                "purdue/purdue-blocks": ">=1.2.0"
+                "purdue/boilerup-wp": "*",
+                "purdue/bulma-blocks": "*",
+                "purdue/purdue-blocks": "*"
             },
             "type": "wordpress-theme",
             "license": [
@@ -563,43 +493,44 @@
             ],
             "description": "WordPress theme based on Purdue University digital brand standards ",
             "support": {
-                "source": "https://github.com/Purdue/purdue-wp-theme/tree/1.5.3.2",
+                "source": "https://github.com/Purdue/purdue-wp-theme/tree/1.5.4.0",
                 "issues": "https://github.com/Purdue/purdue-wp-theme/issues"
             },
-            "time": "2021-02-26T22:01:57+00:00"
+            "time": "2021-03-12T16:48:17+00:00"
         },
         {
             "name": "purdue/upstream-config",
-            "version": "1.0.4.5",
+            "version": "1.0.10",
             "dist": {
                 "type": "path",
                 "url": "upstream-config",
-                "reference": "04fe2fd9f86ebfe8f4a3dfddc07da451787d3f06"
+                "reference": "727aaa75072a98fb0d9f6237aef130d2aefd4750"
             },
             "require": {
-                "alquemie/alquemie-config": "0.1.11",
+                "alquemie/alquemie-config": "0.1.*",
                 "composer/installers": "^1.3.0",
-                "johnpbloch/wordpress": "5.6.2",
                 "pantheon-systems/quicksilver-pushback": "^2",
-                "purdue/purdue-wp-theme": "1.5.3.2",
-                "roots/soil": "4.0.4",
+                "pantheon-systems/wordpress-composer": "*",
+                "php": ">=7.4",
+                "purdue/purdue-wp-theme": "1.5.4.0",
+                "roots/soil": "4.*",
                 "roots/wp-password-bcrypt": "^1.0.0",
                 "vlucas/phpdotenv": "^3.1.0",
-                "wp-coding-standards/wpcs": "2.3.0",
+                "wp-coding-standards/wpcs": "^1.2.1",
                 "wpackagist-plugin/authorizer": "3.0.7",
-                "wpackagist-plugin/autodescription": "4.1.3",
-                "wpackagist-plugin/duracelltomi-google-tag-manager": "1.11.6",
+                "wpackagist-plugin/autodescription": "4.*",
+                "wpackagist-plugin/duracelltomi-google-tag-manager": "1.11.*",
                 "wpackagist-plugin/hyperdb": "1.7",
-                "wpackagist-plugin/lh-hsts": "1.25",
-                "wpackagist-plugin/pantheon-advanced-page-cache": "1.0.0",
-                "wpackagist-plugin/pantheon-hud": "0.3.1",
-                "wpackagist-plugin/post-smtp": "2.0.22",
+                "wpackagist-plugin/lh-hsts": "^1.24",
+                "wpackagist-plugin/pantheon-advanced-page-cache": ">=0.3.0",
+                "wpackagist-plugin/pantheon-hud": "0.3.*",
+                "wpackagist-plugin/post-smtp": "2.*",
                 "wpackagist-plugin/siteimprove": "1.2.1",
-                "wpackagist-plugin/stream": "3.6.2",
-                "wpackagist-plugin/wordpress-importer": "0.7",
-                "wpackagist-plugin/wp-native-php-sessions": "1.2.1",
-                "wpackagist-plugin/wp-redis": "1.1.1",
-                "wpackagist-theme/twentytwentyone": "1.1"
+                "wpackagist-plugin/stream": "3.*",
+                "wpackagist-plugin/wordpress-importer": "0.*",
+                "wpackagist-plugin/wp-native-php-sessions": ">=0.6.9",
+                "wpackagist-plugin/wp-redis": "1.1.*",
+                "wpackagist-theme/twentytwentyone": "1.*"
             },
             "require-dev": {
                 "behat/mink-goutte-driver": "^1.2.1",
@@ -986,30 +917,27 @@
         },
         {
             "name": "wp-coding-standards/wpcs",
-            "version": "2.3.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/WordPress/WordPress-Coding-Standards.git",
-                "reference": "7da1894633f168fe244afc6de00d141f27517b62"
+                "reference": "f328bcafd97377e8e5e5d7b244d5ddbf301a3a5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WordPress/WordPress-Coding-Standards/zipball/7da1894633f168fe244afc6de00d141f27517b62",
-                "reference": "7da1894633f168fe244afc6de00d141f27517b62",
+                "url": "https://api.github.com/repos/WordPress/WordPress-Coding-Standards/zipball/f328bcafd97377e8e5e5d7b244d5ddbf301a3a5c",
+                "reference": "f328bcafd97377e8e5e5d7b244d5ddbf301a3a5c",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.4",
-                "squizlabs/php_codesniffer": "^3.3.1"
+                "php": ">=5.3",
+                "squizlabs/php_codesniffer": "^2.9.0 || ^3.0.2"
             },
             "require-dev": {
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.5 || ^0.6",
-                "phpcompatibility/php-compatibility": "^9.0",
-                "phpcsstandards/phpcsdevtools": "^1.0",
-                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0"
+                "phpcompatibility/php-compatibility": "^9.0"
             },
             "suggest": {
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.6 || This Composer plugin will sort out the PHPCS 'installed_paths' automatically."
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.4.3 || This Composer plugin will sort out the PHPCS 'installed_paths' automatically."
             },
             "type": "phpcodesniffer-standard",
             "notification-url": "https://packagist.org/downloads/",
@@ -1019,7 +947,7 @@
             "authors": [
                 {
                     "name": "Contributors",
-                    "homepage": "https://github.com/WordPress/WordPress-Coding-Standards/graphs/contributors"
+                    "homepage": "https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/graphs/contributors"
                 }
             ],
             "description": "PHP_CodeSniffer rules (sniffs) to enforce WordPress coding conventions",
@@ -1029,11 +957,11 @@
                 "wordpress"
             ],
             "support": {
-                "issues": "https://github.com/WordPress/WordPress-Coding-Standards/issues",
-                "source": "https://github.com/WordPress/WordPress-Coding-Standards",
-                "wiki": "https://github.com/WordPress/WordPress-Coding-Standards/wiki"
+                "issues": "https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/issues",
+                "source": "https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards",
+                "wiki": "https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/wiki"
             },
-            "time": "2020-05-13T23:57:56+00:00"
+            "time": "2018-12-18T09:43:51+00:00"
         },
         {
             "name": "wpackagist-plugin/authorizer",
@@ -1271,15 +1199,15 @@
         },
         {
             "name": "wpackagist-theme/twentytwentyone",
-            "version": "1.1",
+            "version": "1.2",
             "source": {
                 "type": "svn",
                 "url": "https://themes.svn.wordpress.org/twentytwentyone/",
-                "reference": "1.1"
+                "reference": "1.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/theme/twentytwentyone.1.1.zip"
+                "url": "https://downloads.wordpress.org/theme/twentytwentyone.1.2.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
