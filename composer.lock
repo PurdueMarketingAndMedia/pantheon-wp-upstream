@@ -500,11 +500,11 @@
         },
         {
             "name": "purdue/upstream-config",
-            "version": "1.0.10",
+            "version": "1.0.11",
             "dist": {
                 "type": "path",
                 "url": "upstream-config",
-                "reference": "2aa1cf209d5a2ba8034019bca48ead97a6ddbbd6"
+                "reference": "d3ef66332c34c08f92cbfd314c987353ecd21596"
             },
             "require": {
                 "alquemie/alquemie-config": "0.1.*",
