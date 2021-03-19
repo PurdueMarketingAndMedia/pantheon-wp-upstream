@@ -22,7 +22,8 @@ if (isset($_ENV['PANTHEON_ENVIRONMENT']) && php_sapi_name() != 'cli') {
             'wp-reroute-email/wp-reroute-email.php'
         */
         # Only email end users from live environment
-        add_filter('wp_mail', function( $parms ){ $parms['to'] ='digital-marketing@groups.purdue.edu'; return $parms; });
+        $admin_email = get_bloginfo('admin_email');
+        add_filter('wp_mail', function( $parms ){ $parms['to'] = $admin_email; return $parms; });
     }
 
     # Live-specific configs

@@ -1,6 +1,10 @@
 # Changelog
 
 Relevant changes to the Alquemie Config project are documented below as a resource for users.
+## [0.1.12] - 2021-03-19
+### Updated
+- Force Non-Production emails to route to WP Admin Email
+
 ## [0.1.9] - 2020-03-29
 ### Added
 - Force Non-Production emails to route to Purdue Digital Marketing Team
