@@ -1,6 +1,9 @@
 // Authorizer Settings (wp-admin) styles.
-// Compiles to: authorizer.css via `lessc authorizer.scss authorizer.css`.
+// Compiles to: authorizer.css via `sass css/authorizer.scss css/authorizer.css`.
 
+// Import WordPress 5.7 admin colors.
+// See: https://make.wordpress.org/core/2021/02/23/standardization-of-wp-admin-colors-in-wordpress-5-7/
+@import 'wp-admin-colors';
 
 // Target just the Dashboard > Authorizer, and Network Dashboard > Authorizer.
 .toplevel_page_authorizer,
@@ -15,7 +18,7 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		opacity: 0.2;
+		opacity: 0;
 		z-index: -1;
 		transition: opacity 1s ease;
 	}
@@ -290,20 +293,20 @@
 	// Colors for user lists.
 	#list_auth_settings_access_users_pending {
 		.auth-email {
-			border-color: #ecf195;
-			background-color: #f5f8c4;
+			background-color: $color-yellow-5;
+			border-color: $color-yellow-20;
 		}
 	}
 	#list_auth_settings_access_users_approved {
 		.auth-email {
-			background-color: #dcf0be;
-			border-color: #8dc33c;
+			background-color: $color-green-5;
+			border-color: $color-green-20;
 		}
 	}
 	#list_auth_settings_access_users_blocked {
 		.auth-email {
-			background-color: #facbc5;
-			border-color: #ea7e70;
+			background-color: $color-red-5;
+			border-color: $color-red-20;
 		}
 	}
 
@@ -319,15 +322,20 @@
 	}
 
 	// Multisite overlays.
+	form table.form-table td {
+		position: relative;
+	}
 	.auth_multisite_override_overlay {
 		.overlay-note {
-			background: white;
-			border: 1px solid #aaa;
+			background: $color-white;
+			border: 1px solid $color-gray-30;
 			cursor: default;
 			margin: 11px 15em;
 			opacity: 0;
 			padding: 8px;
 			position: absolute;
+			top: 0;
+			left: 0;
 			-webkit-transition: opacity 0.1s ease-in-out;
 			-moz-transition: opacity 0.1s ease-in-out;
 			transition: opacity 0.1s ease-in-out;
