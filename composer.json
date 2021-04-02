@@ -40,19 +40,51 @@
   "extra": {
     "wordpress-install-dir": "web/cms",
     "installer-paths": {
-      "web/app/mu-plugins/autodescription/": ["wpackagist-plugin/autodescription"],
-      "web/app/mu-plugins/duracelltomi-google-tag-manager/": ["wpackagist-plugin/duracelltomi-google-tag-manager"],
-      "web/app/mu-plugins/hyperdb/": ["wpackagist-plugin/hyperdb"],
-      "web/app/mu-plugins/pantheon-advanced-page-cache/": ["wpackagist-plugin/pantheon-advanced-page-cache"],
-      "web/app/mu-plugins/post-smtp/": ["wpackagist-plugin/post-smtp"],
       "web/app/mu-plugins/soil/": ["roots/soil"],
-      "web/app/mu-plugins/stream/": ["wpackagist-plugin/stream"],
-      "web/app/mu-plugins/wp-native-php-sessions/": ["wpackagist-plugin/wp-native-php-sessions"],
       "web/app/mu-plugins/wp-password-bcrypt/": ["roots/wp-password-bcrypt"],
       "web/app/mu-plugins/{$name}/": ["type:wordpress-muplugin"],
       "web/app/plugins/{$name}/": ["type:wordpress-plugin"],
       "web/app/themes/{$name}/": ["type:wordpress-theme"],
       "web/private/scripts/quicksilver/{$name}/": ["type:quicksilver-script"]
     }
+  },
+  "autoload": {
+    "classmap": [
+      "scripts/composer/ScriptHandler.php"
+    ],
+    "psr-4": { "PantheonSystems\\WordHatHelpers\\": "tests/behat/helper_classes/" }
+  },
+  "scripts": {
+    "cleanup": [
+      "./scripts/composer/cleanup-composer"
+    ],
+    "codeinstall": [
+      "./scripts/composer/install-code"
+    ],
+    "post-install-cmd": [
+      "@cleanup",
+      "@codeinstall",
+      "WordPressProject\\composer\\ScriptHandler::createRequiredFiles",
+      "WordPressProject\\composer\\ScriptHandler::forcePlugins"
+    ],
+    "post-update-cmd": [
+      "@cleanup",
+      "@codeinstall",
+      "WordPressProject\\composer\\ScriptHandler::createRequiredFiles",
+      "WordPressProject\\composer\\ScriptHandler::forcePlugins"
+    ],
+    "post-create-project-cmd": [
+      "@cleanup",
+      "@codeinstall",
+      "WordPressProject\\composer\\ScriptHandler::createRequiredFiles",
+      "WordPressProject\\composer\\ScriptHandler::forcePlugins"
+    ],
+    "code-sniff": [
+      "./vendor/bin/phpcs --standard=WordPress ./web/app"
+    ],
+    "unit-test": [
+      "./vendor/bin/phpunit tests/unit/*"
+    ],
+    "lint": "find web/app -name '*.php' -exec php -l {} \\;"
   }
 }
