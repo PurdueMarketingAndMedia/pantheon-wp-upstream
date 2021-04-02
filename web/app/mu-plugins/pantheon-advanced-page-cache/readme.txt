@@ -2,7 +2,7 @@
 Contributors: getpantheon, danielbachhuber
 Tags: pantheon, cdn, cache
 Requires at least: 4.7
-Tested up to: 5.4
+Tested up to: 5.7
 Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -168,6 +168,8 @@ A direct way of inspecting headers is with `curl -I`. This command will make a r
 Piping to `grep` will filter the output down to just the `Surrogate-Key-Raw` header:
 
     curl -IH "Pantheon-Debug:1" https://scalewp.io/ | grep -i Surrogate-Key-Raw
+
+Tada!
 
 == Emitted Keys and Purge Events =
 

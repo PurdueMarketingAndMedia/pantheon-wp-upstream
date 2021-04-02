@@ -49,6 +49,7 @@ class ScriptHandler
   }
 
   public static function forcePlugins() {
+    /*
     $pantheonmu = [
       "autodescription",
       "pantheon-advanced-page-cache",
@@ -58,7 +59,15 @@ class ScriptHandler
       "pantheon-hud",
       "wp-redis"
     ];
+    */
+    $pantheonmu = [];
+    $pantheonplugin = [];
     $muplugins = [
+      "autodescription",
+      "pantheon-advanced-page-cache",
+      "pantheon",
+      "pantheon-hud",
+      "wp-redis",
       "duracelltomi-google-tag-manager",
       "hyperdb",
       "post-smtp",
