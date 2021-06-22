@@ -1,7 +1,7 @@
 {
     "name": "purdue/upstream-config",
     "type": "project",
-    "version": "1.0.26",
+    "version": "1.0.27",
     "repositories": [
         {
             "type": "composer",
@@ -20,7 +20,7 @@
         "wpackagist-plugin/wp-native-php-sessions": ">=0.6.9",
         "wp-coding-standards/wpcs": "^1.2.1",
         "roots/soil": "4.*",
-        "wpackagist-plugin/authorizer":"3.0.10",
+        "wpackagist-plugin/authorizer":"3.1.1",
         "wpackagist-plugin/autodescription": "4.*",
         "wpackagist-plugin/duracelltomi-google-tag-manager": "1.11.*",
         "wpackagist-plugin/hyperdb":"1.7",
@@ -30,7 +30,7 @@
         "wpackagist-plugin/stream": "3.*",
         "wpackagist-plugin/wordpress-importer": "0.*",
         "wpackagist-plugin/wp-redis": "1.1.*",
-        "purdue/purdue-wp-theme": "1.5.10",
+        "purdue/purdue-wp-theme": "1.5.11",
         "wpackagist-theme/twentytwentyone":"1.*"
     },
     "require-dev": {
