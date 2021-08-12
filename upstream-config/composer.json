@@ -1,7 +1,7 @@
 {
     "name": "purdue/upstream-config",
     "type": "project",
-    "version": "1.0.27",
+    "version": "1.0.28",
     "repositories": [
         {
             "type": "composer",
@@ -30,7 +30,7 @@
         "wpackagist-plugin/stream": "3.*",
         "wpackagist-plugin/wordpress-importer": "0.*",
         "wpackagist-plugin/wp-redis": "1.1.*",
-        "purdue/purdue-wp-theme": "1.5.11",
+        "purdue/purdue-wp-theme": "1.6.0",
         "wpackagist-theme/twentytwentyone":"1.*"
     },
     "require-dev": {
