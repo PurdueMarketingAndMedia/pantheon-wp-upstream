@@ -1,3 +1,7 @@
+### 4.0.5: July 27th, 2021
+* Fix fallback autoloader compatibility with similarly named class names in other namespaces
+* Google Analytics module: support checking production environment type via `wp_get_environment_type()`
+
 ### 4.0.4: September 10th, 2020
 * Fix Google Analytics options: correctly support non-array default option
 

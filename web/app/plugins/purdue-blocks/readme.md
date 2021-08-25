@@ -5,6 +5,60 @@ Adds Purdue University branded Gutenberg blocks to the editor
 ## Changelog
 
 Relevant changes are documented below.
+
+### [1.21.1] 2021-8-16
+#### Fixed
+  - Tabs block issue on Purdue WordPress server
+
+### [1.21.0] 2021-8-11
+#### Minor Version Update
+  - Added Video Hero Block
+  - Added Shape Seperator Block
+#### Fixed
+  - Row of columns block number of columns were resetting to one on page reload
+
+
+### [1.20.0] 2021-7-20
+#### Minor Version Update
+  - Added Tabs block
+  - Added background image options to Columns Row block
+
+### [1.19.3] 2021-7-6
+#### Fix
+  - Added missing missing TextControl reference
+  - Fixed custom rest api error
+
+### [1.19.2] 2021-6-24
+#### Updated
+  - Updated Custom side menu block: adjust the height of the gray bar when there is no to top button.
+
+### [1.19.1] 2021-6-22
+#### Updated
+  - Updated quote block: Remove remove button when there is only one quote.
+
+### [1.19.0] 2021-6-21
+#### Minor Version Update
+  - Added Columns Row block
+  - Added Quote block
+  - Added Alert strip block
+  - Updated featured story Block to add border and background clor options
+
+### [1.18.2] 2021-6-14
+#### Updated
+  - Resolve Falcuty Profile Card block overflow issue.
+
+### [1.18.1] 2021-6-3
+#### Updated
+  - Resolve issues in the Profile Galelry Block with the modal not being scrollable on mobile or if window height was too short.
+
+### [1.18.0] 2021-6-2
+#### Minor Version Update
+  - Added Mini Hero Block
+
+### [1.17.0] 2021-6-1
+#### Minor Version Update
+  - Added Profile Gallery Block
+
 ### [1.16.0] 2021-4-29
 #### Minor Version Update
 This version includes many UX improvements and other look & feel updates to Purdue Blocks.

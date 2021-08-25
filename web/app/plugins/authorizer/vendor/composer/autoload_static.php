@@ -11,12 +11,13 @@ class ComposerStaticInit3afe4a77f11b1a9be67c8c9e1abad910
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
-        '25072dd6e2470089de65ae7bf11d3109' => __DIR__ . '/..' . '/symfony/polyfill-php72/bootstrap.php',
-        '023d27dca8066ef29e6739335ea73bad' => __DIR__ . '/..' . '/symfony/polyfill-php70/bootstrap.php',
         'e69f7f6ee287b969198c3c9d6777bd38' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/bootstrap.php',
+        '023d27dca8066ef29e6739335ea73bad' => __DIR__ . '/..' . '/symfony/polyfill-php70/bootstrap.php',
+        '25072dd6e2470089de65ae7bf11d3109' => __DIR__ . '/..' . '/symfony/polyfill-php72/bootstrap.php',
         'f598d06aa772fa33d905e87be6398fb1' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/bootstrap.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         'decc78cc4436b1292c6c0d151b19445c' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
+        '1f87db08236948d07391152dccb70f04' => __DIR__ . '/..' . '/google/apiclient-services/autoload.php',
         'a8d3953fd9959404dd22d3dfcd0a79f0' => __DIR__ . '/..' . '/google/apiclient/src/aliases.php',
     );
 
@@ -55,6 +56,7 @@ class ComposerStaticInit3afe4a77f11b1a9be67c8c9e1abad910
             'GuzzleHttp\\Psr7\\' => 16,
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
+            'Google\\Service\\' => 15,
             'Google\\Auth\\' => 12,
             'Google\\' => 7,
         ),
@@ -122,6 +124,10 @@ class ComposerStaticInit3afe4a77f11b1a9be67c8c9e1abad910
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
         ),
+        'Google\\Service\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/google/apiclient-services/src',
+        ),
         'Google\\Auth\\' => 
         array (
             0 => __DIR__ . '/..' . '/google/auth/src',
@@ -133,16 +139,6 @@ class ComposerStaticInit3afe4a77f11b1a9be67c8c9e1abad910
         'Firebase\\JWT\\' => 
         array (
             0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
-        ),
-    );
-
-    public static $prefixesPsr0 = array (
-        'G' => 
-        array (
-            'Google_Service_' => 
-            array (
-                0 => __DIR__ . '/..' . '/google/apiclient-services/src',
-            ),
         ),
     );
 
@@ -159,10 +155,12 @@ class ComposerStaticInit3afe4a77f11b1a9be67c8c9e1abad910
         'CAS_Languages_ChineseSimplified' => __DIR__ . '/..' . '/apereo/phpcas/source/CAS/Languages/ChineseSimplified.php',
         'CAS_Languages_English' => __DIR__ . '/..' . '/apereo/phpcas/source/CAS/Languages/English.php',
         'CAS_Languages_French' => __DIR__ . '/..' . '/apereo/phpcas/source/CAS/Languages/French.php',
+        'CAS_Languages_Galego' => __DIR__ . '/..' . '/apereo/phpcas/source/CAS/Languages/Galego.php',
         'CAS_Languages_German' => __DIR__ . '/..' . '/apereo/phpcas/source/CAS/Languages/German.php',
         'CAS_Languages_Greek' => __DIR__ . '/..' . '/apereo/phpcas/source/CAS/Languages/Greek.php',
         'CAS_Languages_Japanese' => __DIR__ . '/..' . '/apereo/phpcas/source/CAS/Languages/Japanese.php',
         'CAS_Languages_LanguageInterface' => __DIR__ . '/..' . '/apereo/phpcas/source/CAS/Languages/LanguageInterface.php',
+        'CAS_Languages_Portuguese' => __DIR__ . '/..' . '/apereo/phpcas/source/CAS/Languages/Portuguese.php',
         'CAS_Languages_Spanish' => __DIR__ . '/..' . '/apereo/phpcas/source/CAS/Languages/Spanish.php',
         'CAS_OutOfSequenceBeforeAuthenticationCallException' => __DIR__ . '/..' . '/apereo/phpcas/source/CAS/OutOfSequenceBeforeAuthenticationCallException.php',
         'CAS_OutOfSequenceBeforeClientException' => __DIR__ . '/..' . '/apereo/phpcas/source/CAS/OutOfSequenceBeforeClientException.php',
@@ -192,6 +190,7 @@ class ComposerStaticInit3afe4a77f11b1a9be67c8c9e1abad910
         'CAS_Request_Exception' => __DIR__ . '/..' . '/apereo/phpcas/source/CAS/Request/Exception.php',
         'CAS_Request_MultiRequestInterface' => __DIR__ . '/..' . '/apereo/phpcas/source/CAS/Request/MultiRequestInterface.php',
         'CAS_Request_RequestInterface' => __DIR__ . '/..' . '/apereo/phpcas/source/CAS/Request/RequestInterface.php',
+        'CAS_Session_PhpSession' => __DIR__ . '/..' . '/apereo/phpcas/source/CAS/Session/PhpSession.php',
         'CAS_TypeMismatchException' => __DIR__ . '/..' . '/apereo/phpcas/source/CAS/TypeMismatchException.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'DivisionByZeroError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/DivisionByZeroError.php',
@@ -229,7 +228,6 @@ class ComposerStaticInit3afe4a77f11b1a9be67c8c9e1abad910
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit3afe4a77f11b1a9be67c8c9e1abad910::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit3afe4a77f11b1a9be67c8c9e1abad910::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit3afe4a77f11b1a9be67c8c9e1abad910::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit3afe4a77f11b1a9be67c8c9e1abad910::$classMap;
 
         }, null, ClassLoader::class);
