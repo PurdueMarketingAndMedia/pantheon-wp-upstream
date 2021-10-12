@@ -5,6 +5,27 @@ Adds Purdue University branded Gutenberg blocks to the editor
 ## Changelog
 
 Relevant changes are documented below.
+### [1.22.5] 2021-9-27
+#### Modified
+  - Added ID attribute to Accordion block and opens it when the id is in the URL
+
+### [1.22.3] 2021-9-17
+#### Modified
+  - Added lightbox to Large featured story block
+
+### [1.22.0] 2021-9-2
+#### Added:
+  - Story line block
+  - Large featured story block
+  - Large text block
+
+### Modified:
+  - Faculty card block
+  - Row of columns
+  - Video hero
+  - Reason to believe
+  - Purdue Button
+  - Accordion
 
 ### [1.21.1] 2021-8-16
 #### Fixed

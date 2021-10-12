@@ -298,6 +298,7 @@ class Post_Data extends Detect {
 			if ( $value || ( \is_string( $value ) && \strlen( $value ) ) ) {
 				\update_post_meta( $post->ID, $field, $value );
 			} else {
+				// All empty values are deleted here, even if they never existed... is this the best way to handle this?
 				// This is fine for as long as we merge the getter values with the defaults.
 				\delete_post_meta( $post->ID, $field );
 			}
@@ -557,10 +558,10 @@ class Post_Data extends Detect {
 			];
 		}
 
-		foreach ( $values as $t => $v ) {
+		foreach ( $values as $_taxonomy => $v ) {
 			if ( ! isset( $_POST[ $v['name'] ] ) ) continue;
 			if ( \wp_verify_nonce( $_POST[ $v['name'] ], $v['action'] ) ) { // Redundant. Fortified.
-				$this->update_primary_term_id( $post->ID, $t, $v['value'] );
+				$this->update_primary_term_id( $post->ID, $_taxonomy, $v['value'] );
 			}
 		}
 	}
@@ -820,22 +821,36 @@ class Post_Data extends Detect {
 	 * Returns the primary term for post.
 	 *
 	 * @since 3.0.0
+	 * @since 4.1.5   1. Added memoization.
+	 *                2. The first and second parameters are now required.
+	 * @since 4.1.5.1 1. No longer causes a PHP warning in the unlikely event a post's taxonomy gets deleted.
+	 *                2. This method now converts the post meta to an integer, making the comparison work again.
 	 *
-	 * @param int|null $post_id  The post ID.
-	 * @param string   $taxonomy The taxonomy name.
+	 * @param int    $post_id  The post ID.
+	 * @param string $taxonomy The taxonomy name.
 	 * @return \WP_Term|false The primary term. False if not set.
 	 */
-	public function get_primary_term( $post_id = null, $taxonomy = '' ) {
+	public function get_primary_term( $post_id, $taxonomy ) {
 
-		$primary_id = $this->get_primary_term_id( $post_id, $taxonomy );
+		static $primary_terms = [];
 
-		if ( ! $primary_id ) return false;
+		if ( isset( $primary_terms[ $post_id ][ $taxonomy ] ) )
+			return $primary_terms[ $post_id ][ $taxonomy ];
+
+		$primary_id = (int) \get_post_meta( $post_id, '_primary_term_' . $taxonomy, true ) ?: 0;
+
+		if ( ! $primary_id ) return $primary_terms[ $post_id ][ $taxonomy ] = false;
 
 		// Users can alter the term list via quick/bulk edit, but cannot set a primary term that way.
 		// Users can also delete a term from the site that was previously assigned as primary.
 		// So, test if the term still exists for the post.
+		// Although 'get_the_terms()' is an expensive function, it memoizes, and
+		// is always called by WP before we fetch a primary term. So, 0 overhead here.
 		$terms        = \get_the_terms( $post_id, $taxonomy );
 		$primary_term = false;
+
+		// Test for otherwise foreach emits a PHP warning in the unlikely event a post's taxonomy is gone.
+		if ( ! \is_array( $terms ) ) return $primary_terms[ $post_id ][ $taxonomy ] = false;
 
 		foreach ( $terms as $term ) {
 			if ( $primary_id === (int) $term->term_id ) {
@@ -844,20 +859,23 @@ class Post_Data extends Detect {
 			}
 		}
 
-		return $primary_term;
+		return $primary_terms[ $post_id ][ $taxonomy ] = $primary_term;
 	}
 
 	/**
 	 * Returns the primary term ID for post.
 	 *
 	 * @since 3.0.0
+	 * @since 4.1.5 1. Now validates if the stored term ID's term exists (for the post or at all).
+	 *              2. The first and second parameters are now required.
 	 *
-	 * @param int|null $post_id  The post ID.
-	 * @param string   $taxonomy The taxonomy name.
-	 * @return int     The primary term ID. 0 if not set.
+	 * @param int    $post_id  The post ID.
+	 * @param string $taxonomy The taxonomy name.
+	 * @return int   The primary term ID. 0 if not found.
 	 */
-	public function get_primary_term_id( $post_id = null, $taxonomy = '' ) {
-		return (int) \get_post_meta( $post_id, '_primary_term_' . $taxonomy, true ) ?: 0;
+	public function get_primary_term_id( $post_id, $taxonomy ) {
+		$primary_term = $this->get_primary_term( $post_id, $taxonomy );
+		return isset( $primary_term->term_id ) ? $primary_term->term_id : 0;
 	}
 
 	/**
@@ -871,7 +889,7 @@ class Post_Data extends Detect {
 	 * @return bool True on success, false on failure.
 	 */
 	public function update_primary_term_id( $post_id = null, $taxonomy = '', $value = 0 ) {
-		if ( empty( $value ) ) {
+		if ( ! $value ) {
 			$success = \delete_post_meta( $post_id, '_primary_term_' . $taxonomy );
 		} else {
 			$success = \update_post_meta( $post_id, '_primary_term_' . $taxonomy, $value );

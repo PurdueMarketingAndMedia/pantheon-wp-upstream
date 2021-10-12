@@ -23,12 +23,18 @@
      margin-left:0;
      margin-right:0;
    }
+   &__height{
+     height:100%;
+   }
    &__white{
      background-color:$white;
      color:$black;
      p.pu-proofpoint__source{
        color:$steel-gray
      }
+     p.pu-proofpoint__highlighted,p.pu-proofpoint__content{
+      color:$black;
+    }
    }
    &__black{
      background-color:$black;
