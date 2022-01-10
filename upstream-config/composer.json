@@ -1,7 +1,7 @@
 {
     "name": "purdue/upstream-config",
     "type": "project",
-    "version": "1.0.36",
+    "version": "1.0.37",
     "repositories": [
         {
             "type": "composer",
@@ -20,7 +20,7 @@
         "wpackagist-plugin/wp-native-php-sessions": ">=0.6.9",
         "wp-coding-standards/wpcs": "^1.2.1",
         "roots/soil": "4.*",
-        "wpackagist-plugin/authorizer":"3.2.1",
+        "wpackagist-plugin/authorizer":"3.2.2",
         "wpackagist-plugin/autodescription": "4.*",
         "wpackagist-plugin/duracelltomi-google-tag-manager": "1.11.*",
         "wpackagist-plugin/hyperdb":"1.7",
