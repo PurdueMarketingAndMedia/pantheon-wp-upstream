@@ -1,7 +1,7 @@
 {
     "name": "purdue/upstream-config",
     "type": "project",
-    "version": "1.0.39",
+    "version": "1.0.40",
     "repositories": [
         {
             "type": "composer",
@@ -20,17 +20,17 @@
         "wpackagist-plugin/wp-native-php-sessions": ">=0.6.9",
         "wp-coding-standards/wpcs": "^1.2.1",
         "roots/soil": "4.*",
-        "wpackagist-plugin/authorizer":"3.2.2",
+        "wpackagist-plugin/authorizer":"^3.2.2",
         "wpackagist-plugin/autodescription": "4.*",
-        "wpackagist-plugin/duracelltomi-google-tag-manager": "1.11.*",
-        "wpackagist-plugin/hyperdb":"1.7",
+        "wpackagist-plugin/duracelltomi-google-tag-manager": "^1.14.2",
+        "wpackagist-plugin/hyperdb":"^1.7",
         "wpackagist-plugin/pantheon-hud": "0.3.*",
         "wpackagist-plugin/post-smtp": "2.*",
-        "wpackagist-plugin/siteimprove":"1.2.1",
+        "wpackagist-plugin/siteimprove":"^1.2.1",
         "wpackagist-plugin/stream": "3.*",
         "wpackagist-plugin/wordpress-importer": "0.*",
-        "wpackagist-plugin/wp-redis": "1.1.*",
-        "purdue/purdue-wp-theme": "1.6.13",
+        "wpackagist-plugin/wp-redis": "^1.2.0",
+        "purdue/purdue-wp-theme": "^1.6.13",
         "wpackagist-theme/twentytwentyone":"1.*",
         "wpackagist-plugin/wp101":"5.*"
     },
