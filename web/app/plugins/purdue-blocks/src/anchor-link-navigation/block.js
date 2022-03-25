@@ -60,7 +60,15 @@ registerBlockType( 'purdue-blocks/anchor-link-navigation', {
    * @returns {Mixed} JSX Component.
    */
 
-  attributes: {},
+  attributes: {
+    accordion: { type: 'boolean', default: false },
+    includeH2: { type: 'boolean', default: true },
+    includeH3: { type: 'boolean', default: false },
+    includeH4: { type: 'boolean', default: false },
+    includeH5: { type: 'boolean', default: false },
+    includeH6: { type: 'boolean', default: false },
+    range: { type: 'string', default: "page" },
+  },
 
   supports: {
     className: false,
@@ -68,11 +76,83 @@ registerBlockType( 'purdue-blocks/anchor-link-navigation', {
 
   // Block description in side panel
   description: __(
-    'Create a menu from the headers that have an HTML anchor.'
+    'Create a single level menu from the headers that have an HTML anchor.'
   ),
 
   edit: ( props ) => {
     return [
+      <InspectorControls>
+        <PanelBody>
+          <PanelRow>
+          <CheckboxControl
+            label="Include Headings on accordion block?"
+            checked={ props.attributes.accordion }
+            onChange={ () =>
+              props.setAttributes( { accordion: ! props.attributes.accordion } )
+            }
+          />
+          </PanelRow>
+          <PanelRow>
+          <CheckboxControl
+            label="Pull H2 heading level only?"
+            checked={ props.attributes.includeH2 }
+            onChange={ () =>
+              props.setAttributes( { includeH2: ! props.attributes.includeH2 } )
+            }
+          />
+          </PanelRow>
+          <PanelRow>
+          <CheckboxControl
+            label="Pull H3 heading level only?"
+            checked={ props.attributes.includeH3 }
+            onChange={ () =>
+              props.setAttributes( { includeH3: ! props.attributes.includeH3 } )
+            }
+          />
+          </PanelRow>
+          <PanelRow>
+          <CheckboxControl
+            label="Pull H4 heading level only?"
+            checked={ props.attributes.includeH4 }
+            onChange={ () =>
+              props.setAttributes( { includeH4: ! props.attributes.includeH4 } )
+            }
+          />
+          </PanelRow>
+          <PanelRow>
+          <CheckboxControl
+            label="Pull H5 heading level only?"
+            checked={ props.attributes.includeH5 }
+            onChange={ () =>
+              props.setAttributes( { includeH5: ! props.attributes.includeH5 } )
+            }
+          />
+          </PanelRow>
+          <PanelRow>
+          <CheckboxControl
+            label="Pull H6 heading level only?"
+            checked={ props.attributes.includeH6 }
+            onChange={ () =>
+              props.setAttributes( { includeH6: ! props.attributes.includeH6 } )
+            }
+          />
+        </PanelRow>
+        <PanelRow>
+          <RadioControl
+            label="Where to pull the headings?"
+            help="The block needs to be placed in a columns block or content page layout block in order to use 'This Section' option."
+            selected={ props.attributes.range }
+            options={ [
+              { label: 'This Section', value: 'section' },
+              { label: 'Whole Page', value: 'page' },
+            ] }
+            onChange={ ( option ) => {
+              props.setAttributes( { range: option } )
+            } }
+          />
+        </PanelRow>
+      </PanelBody>
+    </InspectorControls>,    
       <div className="anchor-link-block-editor">
             Preview/Publish the page to see the anchor link navigation menu.
       </div>,
@@ -93,7 +173,15 @@ registerBlockType( 'purdue-blocks/anchor-link-navigation', {
   save: ( props ) => {
     const returned = (
       <div className="anchor-link-block">
-        <div class="anchor-link-block-links"></div>
+        <div class={`anchor-link-block-links
+        ${props.attributes.accordion?" has-accordion":""}
+        ${props.attributes.includeH2?"":" no-H2"}
+        ${props.attributes.includeH3?" has-H3":""}
+        ${props.attributes.includeH4?" has-H4":""}
+        ${props.attributes.includeH5?" has-H5":""}
+        ${props.attributes.includeH6?" has-H6":""}
+        ${props.attributes.range==="page"?"":" pull-from-section"}
+        `}></div>
         <button id="to-top-sidebar" class="to-top-sidebar"><span>Back To Top</span></button>
       </div>
     );

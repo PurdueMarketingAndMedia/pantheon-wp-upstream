@@ -175,6 +175,7 @@ class Options extends Singleton {
 				$auth_settings['ldap_port']                 = $auth_multisite_settings['ldap_port'];
 				$auth_settings['ldap_tls']                  = $auth_multisite_settings['ldap_tls'];
 				$auth_settings['ldap_search_base']          = $auth_multisite_settings['ldap_search_base'];
+				$auth_settings['ldap_search_filter']        = $auth_multisite_settings['ldap_search_filter'];
 				$auth_settings['ldap_uid']                  = $auth_multisite_settings['ldap_uid'];
 				$auth_settings['ldap_attr_email']           = $auth_multisite_settings['ldap_attr_email'];
 				$auth_settings['ldap_user']                 = $auth_multisite_settings['ldap_user'];
@@ -183,6 +184,7 @@ class Options extends Singleton {
 				$auth_settings['ldap_attr_first_name']      = $auth_multisite_settings['ldap_attr_first_name'];
 				$auth_settings['ldap_attr_last_name']       = $auth_multisite_settings['ldap_attr_last_name'];
 				$auth_settings['ldap_attr_update_on_login'] = $auth_multisite_settings['ldap_attr_update_on_login'];
+				$auth_settings['ldap_test_user']            = $auth_multisite_settings['ldap_test_user'];
 
 				// Override access_who_can_login and access_who_can_view.
 				$auth_settings['access_who_can_login'] = $auth_multisite_settings['access_who_can_login'];
@@ -403,6 +405,9 @@ class Options extends Singleton {
 		if ( ! array_key_exists( 'ldap_search_base', $auth_settings ) ) {
 			$auth_settings['ldap_search_base'] = '';
 		}
+		if ( ! array_key_exists( 'ldap_search_filter', $auth_settings ) ) {
+			$auth_settings['ldap_search_filter'] = '';
+		}
 		if ( ! array_key_exists( 'ldap_uid', $auth_settings ) ) {
 			$auth_settings['ldap_uid'] = 'uid';
 		}
@@ -426,6 +431,9 @@ class Options extends Singleton {
 		}
 		if ( ! array_key_exists( 'ldap_attr_update_on_login', $auth_settings ) ) {
 			$auth_settings['ldap_attr_update_on_login'] = '';
+		}
+		if ( ! array_key_exists( 'ldap_test_user', $auth_settings ) ) {
+			$auth_settings['ldap_test_user'] = '';
 		}
 
 		// Advanced defaults.
@@ -603,6 +611,9 @@ class Options extends Singleton {
 			if ( ! array_key_exists( 'ldap_search_base', $auth_multisite_settings ) ) {
 				$auth_multisite_settings['ldap_search_base'] = '';
 			}
+			if ( ! array_key_exists( 'ldap_search_filter', $auth_multisite_settings ) ) {
+				$auth_multisite_settings['ldap_search_filter'] = '';
+			}
 			if ( ! array_key_exists( 'ldap_uid', $auth_multisite_settings ) ) {
 				$auth_multisite_settings['ldap_uid'] = 'uid';
 			}
@@ -626,6 +637,9 @@ class Options extends Singleton {
 			}
 			if ( ! array_key_exists( 'ldap_attr_update_on_login', $auth_multisite_settings ) ) {
 				$auth_multisite_settings['ldap_attr_update_on_login'] = '';
+			}
+			if ( ! array_key_exists( 'ldap_test_user', $auth_multisite_settings ) ) {
+				$auth_multisite_settings['ldap_test_user'] = '';
 			}
 			// Advanced defaults.
 			if ( ! array_key_exists( 'advanced_lockouts', $auth_multisite_settings ) ) {
