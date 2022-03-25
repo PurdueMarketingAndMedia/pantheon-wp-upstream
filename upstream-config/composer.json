@@ -30,7 +30,7 @@
         "wpackagist-plugin/stream": "3.*",
         "wpackagist-plugin/wordpress-importer": "0.*",
         "wpackagist-plugin/wp-redis": "^1.2.0",
-        "purdue/purdue-wp-theme": "1.6.18",
+        "purdue/purdue-wp-theme": "1.6.19",
         "wpackagist-theme/twentytwentyone":"1.*",
         "wpackagist-plugin/wp101":"5.*"
     },
