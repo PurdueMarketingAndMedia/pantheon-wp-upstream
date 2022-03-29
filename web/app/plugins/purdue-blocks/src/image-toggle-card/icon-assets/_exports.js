@@ -46,6 +46,8 @@ let purdueRss =
 let sidebarCta =
   '<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 97.47"><defs></defs><g id="Arrow-right" class="cls-1"><g class="cls-1"><path class="cls-2" d="M47.47,2.84a5.34,5.34,0,0,1,7.57,0L98.43,46.21a5.34,5.34,0,0,1,0,7.56L55,97.16a5.34,5.34,0,0,1-7.57,0l-4.95-5a5.35,5.35,0,0,1,.09-7.65L69.5,58.93H5.36A5.35,5.35,0,0,1,0,53.57V46.43a5.35,5.35,0,0,1,5.36-5.36H69.5L42.61,15.45a5.31,5.31,0,0,1-.09-7.65Z" transform="translate(0 -1.27)"/></g></g></svg>';
 
+let infoBoxHero = '<svg id="beee9f3b-cb8c-4d24-a612-41eb8927e111" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><style>.e149ff59-54ba-4d7a-be69-bfce58ad0af2{fill:#fff;}</style></defs><rect width="100" height="100" rx="8.55"/><g id="b8e37998-d6c2-43d8-bc0b-0305d6f0a794" data-name="Window-maximize"><path class="e149ff59-54ba-4d7a-be69-bfce58ad0af2" d="M93.5037,20.09555v59.8176a8.16129,8.16129,0,0,1-8.15259,8.15259H14.64889A8.16128,8.16128,0,0,1,6.4963,79.91315V20.09555a8.16128,8.16128,0,0,1,8.15259-8.16129H85.35111A8.16129,8.16129,0,0,1,93.5037,20.09555ZM85.35111,39.12407H14.64889V78.88646a1.02669,1.02669,0,0,0,1.02669,1.02669H84.32443a1.02669,1.02669,0,0,0,1.02668-1.02669h0Z"/></g></svg>'
+
 let siteHero =
   '<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 87.5"><defs></defs><g id="Window-maximize" class="cls-1"><g class="cls-1"><path class="color-d9ab28" d="M100,16.62V85.37a9.38,9.38,0,0,1-9.37,9.37H9.37A9.38,9.38,0,0,1,0,85.37V16.62A9.38,9.38,0,0,1,9.37,7.24H90.63A9.38,9.38,0,0,1,100,16.62ZM90.63,38.49H9.37v45.7a1.18,1.18,0,0,0,1.18,1.18h78.9a1.18,1.18,0,0,0,1.18-1.18Z" transform="translate(0 -7.24)"/></g></g></svg>';
 
@@ -59,7 +61,7 @@ let titleNav =
   '<svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="ellipsis-h" className="svg-inline--fa fa-ellipsis-h fa-w-12" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#8E6F3E" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path></svg>';
 
 let latestPosts =
-  '<svg version="1.1" id="Layer_1" data-bg="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 87.5" style="enable-background:new 0 0 100 87.5;" xml:space="preserve"><g class="color-black"><path d="M100,9.4v68.8c0,5.2-4.2,9.4-9.4,9.4H9.4c-5.2,0-9.4-4.2-9.4-9.4V9.4C0,4.2,4.2,0,9.4,0h81.2C95.8,0,100,4.2,100,9.4zM90.6,76.9V10.6c0-0.6-0.5-1.2-1.2-1.2H10.6c-0.6,0-1.2,0.5-1.2,1.2v66.4c0,0.7,0.5,1.2,1.1,1.2c0,0,0,0,0,0h78.9C90.1,78.2,90.6,77.6,90.6,76.9C90.6,77,90.6,77,90.6,76.9L90.6,76.9z"/><rect x="37.5" y="29.7" width="43.7" height="9.4"/><rect x="20.3" y="29.7" width="9.4" height="9.4"/><rect x="37.5"y="48.4" width="43.7" height="9.4"/><rect x="20.3" y="48.4" width="9.4" height="9.4"/></g></svg>';
+  '<svg version="1.1" id="Layer_1" data-bg="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 87.5" style="enable-background:new 0 0 100 87.5;" xml:space="preserve"><g class="color-black"><path d="M100,9.4v68.8c0,5.2-4.2,9.4-9.4,9.4H9.4c-5.2,0-9.4-4.2-9.4-9.4V9.4C0,4.2,4.2,0,9.4,0h81.2C95.8,0,100,4.2,100,9.4zM90.6,76.9V10.6c0-0.6-0.5-1.2-1.2-1.2H10.6c-0.6,0-1.2,0.5-1.2,1.2v66.4c0,0.7,0.5,1.2,1.1,1.2c0,0,0,0,0,0h78.9C90.1,78.2,90.6,77.6,90.6,76.9C90.6,77,90.6,77,90.6,76.9L90.6,76.9z"/><rect x="37.5" y="29.7" width="43.7" height="9.4"/><rect x="20.3" y="29.7" width="9.4" height="9.4"/><rect x="37.5" y="48.4" width="43.7" height="9.4"/><rect x="20.3" y="48.4" width="9.4" height="9.4"/></g></svg>';
 
 let linkCard =
   '<svg version="1.1" id="Layer_1" data-bg="true" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve"><path class="color-bulma" d="M100,89.3c0,5.9-4.8,10.7-10.7,10.7H10.7C4.8,100,0,95.2,0,89.3V10.7C0,4.8,4.8,0,10.7,0h78.6C95.2,0,100,4.8,100,10.7V89.3z M55.4,14.3c-3,0-5.4,2.4-5.4,5.4c0,1.4,0.6,2.8,1.6,3.8l7.1,7.1L15.1,74.2c-1,1-1,2.7,0,3.8l6.9,6.9c1,1,2.7,1,3.8,0l43.7-43.6l7.1,7.1c2.1,2.1,5.5,2.1,7.6,0c1-1,1.6-2.4,1.6-3.8v-25c0-3-2.4-5.4-5.3-5.4L55.4,14.3z"/></svg>';
@@ -68,6 +70,7 @@ export {
   siteHero,
   ctaHero,
   titleHero,
+  infoBoxHero,
   list,
   sidebarCta,
   anchorLinkNavigation,

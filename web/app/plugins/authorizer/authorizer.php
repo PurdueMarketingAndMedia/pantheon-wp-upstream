@@ -7,7 +7,7 @@
  * Text Domain: authorizer
  * Domain Path: /languages
  * License: GPL2
- * Version: 3.0.8
+ * Version: 3.1.1
  *
  * Portions forked from Restricted Site Access plugin:
  *   http://wordpress.org/plugins/restricted-site-access/
@@ -55,15 +55,6 @@ require_once dirname( __FILE__ ) . '/src/authorizer/options/class-advanced.php';
  * Add composer libraries.
  */
 require_once dirname( __FILE__ ) . '/vendor/autoload.php';
-
-/**
- * Add phpCAS library (registers the phpCAS constants).
- *
- * @see https://wiki.jasig.org/display/CASC/phpCAS+installation+guide
- */
-if ( ! defined( 'PHPCAS_VERSION' ) ) {
-	require_once dirname( __FILE__ ) . '/vendor/apereo/phpcas/CAS.php';
-}
 
 /**
  * Helper function to always return the path to the plugin's entry point. Used
