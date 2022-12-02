@@ -4,7 +4,7 @@
 set -ex
 
 if [ -d "web/cms/wp-content/mu-plugins/" ]; then
-  rsync -r web/cms/wp-content/mu-plugins/* web/app/mu-plugins/
+  rsync -r web/cms/wp-content/mu-plugins/* web/app/mu-plugins/ --exclude 'pantheon'
 fi
 
 if [ -f "web/cms/wp-config.php" ]; then
