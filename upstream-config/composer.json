@@ -1,7 +1,7 @@
 {
     "name": "purdue/upstream-config",
     "type": "project",
-    "version": "1.0.71",
+    "version": "1.0.72",
     "repositories": [
         {
             "type": "composer",
@@ -26,7 +26,7 @@
         "wpackagist-plugin/hyperdb":"1.7",
         "wpackagist-plugin/pantheon-hud": "0.3.*",
         "wpackagist-plugin/post-smtp": "2.*",
-        "wpackagist-plugin/siteimprove":"^1.2.1",
+        "wpackagist-plugin/siteimprove":"^2.0.1",
         "wpackagist-plugin/stream": "3.*",
         "wpackagist-plugin/wordpress-importer": "0.*",
         "wpackagist-plugin/wp-redis": "^1.2.0",
