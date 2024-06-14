@@ -20,7 +20,7 @@
         "wpackagist-plugin/wp-native-php-sessions": ">=0.6.9",
         "wp-coding-standards/wpcs": "^1.2.1",
         "wpackagist-plugin/authorizer":"^3.2.2",
-        "wpackagist-plugin/autodescription": "4.*",
+        "wpackagist-plugin/autodescription": "*",
         "wpackagist-plugin/duracelltomi-google-tag-manager": "^1.14.2",
         "wpackagist-plugin/hyperdb":"1.7",
         "wpackagist-plugin/pantheon-hud": "0.3.*",
@@ -29,6 +29,7 @@
         "wpackagist-plugin/wordpress-importer": "0.*",
         "wpackagist-plugin/wp-redis": "^1.2.0",
         "purdue/purdue-wp-theme-updated": "*",
+         "purdue/purdue-wp-theme": "*",
         "purdue/purdue-home-theme": "^1.0.0",
         "wpackagist-theme/twentytwentyone":"1.*",
         "wpackagist-plugin/wp101":"5.*"
