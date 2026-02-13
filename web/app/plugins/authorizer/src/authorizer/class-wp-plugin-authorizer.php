@@ -88,8 +88,9 @@ class WP_Plugin_Authorizer extends Singleton {
 		// Enqueue javascript and css on the plugin's options page, the
 		// dashboard (for the widget), and the network admin.
 		add_action( 'load-settings_page_authorizer', array( Admin_Page::get_instance(), 'load_options_page' ) );
-		add_action( 'admin_head-index.php', array( Admin_Page::get_instance(), 'load_options_page' ) );
 		add_action( 'load-toplevel_page_authorizer', array( Admin_Page::get_instance(), 'load_options_page' ) );
+		add_action( 'admin_head-index.php', array( Admin_Page::get_instance(), 'load_options_page' ) );
+		add_action( 'admin_head-index.php', array( Dashboard_Widget::get_instance(), 'widget_scripts' ) );
 
 		// Add custom css and js to wp-login.php.
 		add_action( 'login_enqueue_scripts', array( Login_Form::get_instance(), 'login_enqueue_scripts_and_styles' ) );
@@ -133,6 +134,9 @@ class WP_Plugin_Authorizer extends Singleton {
 		// AJAX: Refresh approved user list.
 		add_action( 'wp_ajax_refresh_approved_user_list', array( Ajax_Endpoints::get_instance(), 'ajax_refresh_approved_user_list' ) );
 
+		// AJAX: Test LDAP user.
+		add_action( 'wp_ajax_auth_settings_ldap_test_user', array( Ajax_Endpoints::get_instance(), 'ajax_auth_settings_ldap_test_user' ) );
+
 		// Add dashboard widget so instructors can add/edit users with access.
 		// Hint: For Multisite Network Admin Dashboard use wp_network_dashboard_setup instead of wp_dashboard_setup.
 		add_action( 'wp_dashboard_setup', array( Dashboard_Widget::get_instance(), 'add_dashboard_widgets' ) );
@@ -143,6 +147,9 @@ class WP_Plugin_Authorizer extends Singleton {
 			add_action( 'admin_notices', array( Admin_Page::get_instance(), 'show_advanced_admin_notice' ) );
 			add_action( 'network_admin_notices', array( Admin_Page::get_instance(), 'show_advanced_admin_notice' ) );
 		}
+
+		// Add [authorizer_login_form] shortcode to render the login form.
+		add_shortcode( 'authorizer_login_form', array( Login_Form::get_instance(), 'shortcode_authorizer_login_form' ) );
 
 		// Load custom javascript for the main site (e.g., for displaying alerts).
 		add_action( 'wp_enqueue_scripts', array( Login_Form::get_instance(), 'auth_public_scripts' ), 20 );
@@ -210,7 +217,7 @@ class WP_Plugin_Authorizer extends Singleton {
 					$approved_user = array(
 						'email'      => Helper::lowercase( $user->user_email ),
 						'role'       => count( $user->roles ) > 0 ? $user->roles[0] : 'administrator',
-						'date_added' => date( 'M Y', strtotime( $user->user_registered ) ),
+						'date_added' => wp_date( 'M Y', strtotime( $user->user_registered ) ),
 						'local_user' => true,
 					);
 					array_push( $auth_multisite_settings_access_users_approved, $approved_user );

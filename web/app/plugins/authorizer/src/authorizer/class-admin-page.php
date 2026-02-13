@@ -36,7 +36,7 @@ class Admin_Page extends Singleton {
 		$screen = get_current_screen();
 
 		// Don't print any help items if not on the Authorizer Settings page.
-		if ( empty( $screen->id ) || ! in_array( $screen->id, array( 'toplevel_page_authorizer-network', 'toplevel_page_authorizer', 'settings_page_authorizer' ) ) ) {
+		if ( empty( $screen->id ) || ! in_array( $screen->id, array( 'toplevel_page_authorizer-network', 'toplevel_page_authorizer', 'settings_page_authorizer' ), true ) ) {
 			return;
 		}
 
@@ -95,11 +95,11 @@ class Admin_Page extends Singleton {
 			<p>' . __( '<strong>Default role for new CAS users</strong>: Specify which role new external users will get by default. Be sure to choose a role with limited permissions!', 'authorizer' ) . '</p>
 			<p><strong><em>' . __( 'If you enable OAuth2 logins:', 'authorizer' ) . '</em></strong></p>
 			<ul>
-				<li>' . __( "<strong>Client ID</strong>: You can generate this ID following the instructions for your specific provider.", 'authorizer' ) . '</li>
-				<li>' . __( "<strong>Client Secret</strong>: You can generate this secret by following the instructions for your specific provider.", 'authorizer' ) . '</li>
-				<li>' . __( "<strong>Authorization URL</strong>: For the generic OAuth2 provider, you will need to specify the 3 endpoints required for the oauth2 authentication flow. This is the first: the endpoint first contacted to initiate the authentication.", 'authorizer' ) . '</li>
-				<li>' . __( "<strong>Access Token URL</strong>: For the generic OAuth2 provider, you will need to specify the 3 endpoints required for the oauth2 authentication flow. This is the second: the endpoint that is contacted after initiation to retrieve an access token for the user that just authenticated.", 'authorizer' ) . '</li>
-				<li>' . __( "<strong>Resource Owner URL</strong>: For the generic OAuth2 provider, you will need to specify the 3 endpoints required for the oauth2 authentication flow. This is the third: the endpoint that is contacted after successfully receiving an authentication token to retrieve details on the user that just authenticated.", 'authorizer' ) . '</li>
+				<li>' . __( '<strong>Client ID</strong>: You can generate this ID following the instructions for your specific provider.', 'authorizer' ) . '</li>
+				<li>' . __( '<strong>Client Secret</strong>: You can generate this secret by following the instructions for your specific provider.', 'authorizer' ) . '</li>
+				<li>' . __( '<strong>Authorization URL</strong>: For the generic OAuth2 provider, you will need to specify the 3 endpoints required for the oauth2 authentication flow. This is the first: the endpoint first contacted to initiate the authentication.', 'authorizer' ) . '</li>
+				<li>' . __( '<strong>Access Token URL</strong>: For the generic OAuth2 provider, you will need to specify the 3 endpoints required for the oauth2 authentication flow. This is the second: the endpoint that is contacted after initiation to retrieve an access token for the user that just authenticated.', 'authorizer' ) . '</li>
+				<li>' . __( '<strong>Resource Owner URL</strong>: For the generic OAuth2 provider, you will need to specify the 3 endpoints required for the oauth2 authentication flow. This is the third: the endpoint that is contacted after successfully receiving an authentication token to retrieve details on the user that just authenticated.', 'authorizer' ) . '</li>
 			</ul>
 			<p><strong><em>' . __( 'If you enable Google logins:', 'authorizer' ) . '</em></strong></p>
 			<ul>
@@ -120,6 +120,7 @@ class Admin_Page extends Singleton {
 				<li>' . __( '<strong>LDAP Host</strong>: Enter the URL of the LDAP server you authenticate against.', 'authorizer' ) . '</li>
 				<li>' . __( '<strong>LDAP Port</strong>: Enter the port number that the LDAP server listens on.', 'authorizer' ) . '</li>
 				<li>' . __( '<strong>LDAP Search Base</strong>: Enter the LDAP string that represents the search base, e.g., ou=people,dc=example,dc=edu', 'authorizer' ) . '</li>
+				<li>' . __( '<strong>LDAP Search Filter</strong>: Enter the optional LDAP string that represents the search filter, e.g., (memberOf=cn=wp_users,ou=people,dc=example,dc=edu)', 'authorizer' ) . '</li>
 				<li>' . __( '<strong>LDAP attribute containing username</strong>: Enter the name of the LDAP attribute that contains the usernames used by those attempting to log in. The plugin will search on this attribute to find the cn to bind against for login attempts.', 'authorizer' ) . '</li>
 				<li>' . __( '<strong>LDAP Directory User</strong>: Enter the name of the LDAP user that has permissions to browse the directory.', 'authorizer' ) . '</li>
 				<li>' . __( '<strong>LDAP Directory User Password</strong>: Enter the password for the LDAP user that has permission to browse the directory.', 'authorizer' ) . '</li>
@@ -612,6 +613,13 @@ class Admin_Page extends Singleton {
 			'auth_settings_external'
 		);
 		add_settings_field(
+			'auth_settings_ldap_search_filter',
+			__( 'LDAP Search Filter', 'authorizer' ),
+			array( Ldap::get_instance(), 'print_text_ldap_search_filter' ),
+			'authorizer',
+			'auth_settings_external'
+		);
+		add_settings_field(
 			'auth_settings_ldap_uid',
 			__( 'LDAP attribute containing username', 'authorizer' ),
 			array( Ldap::get_instance(), 'print_text_ldap_uid' ),
@@ -664,6 +672,13 @@ class Admin_Page extends Singleton {
 			'auth_settings_ldap_attr_update_on_login',
 			__( 'LDAP attribute update', 'authorizer' ),
 			array( Ldap::get_instance(), 'print_select_ldap_attr_update_on_login' ),
+			'authorizer',
+			'auth_settings_external'
+		);
+		add_settings_field(
+			'auth_settings_ldap_test_user',
+			__( 'LDAP test connection', 'authorizer' ),
+			array( Ldap::get_instance(), 'print_text_button_ldap_test_user' ),
 			'authorizer',
 			'auth_settings_external'
 		);
@@ -962,6 +977,10 @@ class Admin_Page extends Singleton {
 							<td><?php $ldap->print_text_ldap_search_base( array( 'context' => Helper::NETWORK_CONTEXT ) ); ?></td>
 						</tr>
 						<tr>
+							<th scope="row"><?php esc_html_e( 'LDAP Search Filter', 'authorizer' ); ?></th>
+							<td><?php $ldap->print_text_ldap_search_filter( array( 'context' => Helper::NETWORK_CONTEXT ) ); ?></td>
+						</tr>
+						<tr>
 							<th scope="row"><?php esc_html_e( 'LDAP attribute containing username', 'authorizer' ); ?></th>
 							<td><?php $ldap->print_text_ldap_uid( array( 'context' => Helper::NETWORK_CONTEXT ) ); ?></td>
 						</tr>
@@ -1097,7 +1116,7 @@ class Admin_Page extends Singleton {
 	 * Action: admin_head-index.php
 	 */
 	public function load_options_page() {
-		wp_enqueue_script( 'authorizer', plugins_url( 'js/authorizer.js', plugin_root() ), array( 'jquery-effects-shake' ), '3.1.0', true );
+		wp_enqueue_script( 'authorizer', plugins_url( 'js/authorizer.js', plugin_root() ), array( 'jquery-effects-shake' ), '3.3.0', true );
 		wp_localize_script(
 			'authorizer',
 			'authL10n',
@@ -1125,7 +1144,7 @@ class Admin_Page extends Singleton {
 
 		wp_enqueue_script( 'jquery.multi-select', plugins_url( 'vendor/components/multi-select/js/jquery.multi-select.min.js', plugin_root() ), array( 'jquery' ), '0.9.12', true );
 
-		wp_register_style( 'authorizer-css', plugins_url( 'css/authorizer.css', plugin_root() ), array(), '3.0.8' );
+		wp_register_style( 'authorizer-css', plugins_url( 'css/authorizer.css', plugin_root() ), array(), '3.3.0' );
 		wp_enqueue_style( 'authorizer-css' );
 
 		wp_register_style( 'jquery-multi-select-css', plugins_url( 'vendor/components/multi-select/css/multi-select.min.css', plugin_root() ), array(), '0.9.12' );

@@ -74,7 +74,7 @@ class Ajax_Endpoints extends Singleton {
 			$client::LIBVER >= '2.0.0'
 		) {
 			$google_hosteddomains = explode( "\n", str_replace( "\r", '', $auth_settings['google_hosteddomain'] ) );
-			$google_hosteddomain = trim( $google_hosteddomains[0] );
+			$google_hosteddomain  = trim( $google_hosteddomains[0] );
 			$client->setHostedDomain( $google_hosteddomain );
 		}
 
@@ -186,6 +186,7 @@ class Ajax_Endpoints extends Singleton {
 			'ldap_port',
 			'ldap_tls',
 			'ldap_search_base',
+			'ldap_search_filter',
 			'ldap_uid',
 			'ldap_attr_email',
 			'ldap_user',
@@ -295,7 +296,7 @@ class Ajax_Endpoints extends Singleton {
 		if ( in_array( $sort_by, array( 'email', 'role', 'date_added' ), true ) ) {
 			foreach ( $auth_settings_option as $key => $user ) {
 				if ( 'date_added' === $sort_by ) {
-					$sort_dimension[ $key ] = date( 'Ymd', strtotime( $user[ $sort_by ] ) );
+					$sort_dimension[ $key ] = wp_date( 'Ymd', strtotime( $user[ $sort_by ] ) );
 				} else {
 					$sort_dimension[ $key ] = strtolower( $user[ $sort_by ] );
 				}
@@ -583,7 +584,7 @@ class Ajax_Endpoints extends Singleton {
 									'first_name'      => '',
 									'last_name'       => '',
 									'user_email'      => Helper::lowercase( $approved_user['email'] ),
-									'user_registered' => date( 'Y-m-d H:i:s' ),
+									'user_registered' => wp_date( 'Y-m-d H:i:s' ),
 									'role'            => $approved_user['role'],
 								)
 							);
@@ -604,7 +605,7 @@ class Ajax_Endpoints extends Singleton {
 							$auth_multisite_settings_access_users_approved = $options->sanitize_user_list(
 								$options->get( 'access_users_approved', Helper::NETWORK_CONTEXT )
 							);
-							$approved_user['date_added']                   = date( 'M Y' );
+							$approved_user['date_added']                   = wp_date( 'M Y' );
 							array_push( $auth_multisite_settings_access_users_approved, $approved_user );
 							update_blog_option( get_network()->blog_id, 'auth_multisite_settings_access_users_approved', $auth_multisite_settings_access_users_approved );
 						} else {
@@ -615,7 +616,7 @@ class Ajax_Endpoints extends Singleton {
 							$auth_settings_access_users_approved = $options->sanitize_user_list(
 								$options->get( 'access_users_approved', Helper::SINGLE_CONTEXT )
 							);
-							$approved_user['date_added']         = date( 'M Y' );
+							$approved_user['date_added']         = wp_date( 'M Y' );
 							array_push( $auth_settings_access_users_approved, $approved_user );
 							update_option( 'auth_settings_access_users_approved', $auth_settings_access_users_approved );
 							// Edge case: if added user already exists in WordPress, make sure
@@ -774,7 +775,7 @@ class Ajax_Endpoints extends Singleton {
 						$auth_settings_access_users_blocked = $options->sanitize_user_list(
 							$options->get( 'access_users_blocked', Helper::SINGLE_CONTEXT )
 						);
-						$blocked_user['date_added']         = date( 'M Y' );
+						$blocked_user['date_added']         = wp_date( 'M Y' );
 						array_push( $auth_settings_access_users_blocked, $blocked_user );
 						update_option( 'auth_settings_access_users_blocked', $auth_settings_access_users_blocked );
 					} else {
@@ -808,6 +809,58 @@ class Ajax_Endpoints extends Singleton {
 		);
 		header( 'content-type: application/json' );
 		echo wp_json_encode( $response );
+		exit;
+	}
+
+
+
+	/**
+	 * Test LDAP settings by attempting to search for the provided LDAP user.
+	 *
+	 * Action: wp_ajax_auth_settings_ldap_test_user
+	 *
+	 * @return void
+	 */
+	public function ajax_auth_settings_ldap_test_user() {
+		// Fail silently if current user doesn't have permissions.
+		if ( ! current_user_can( 'create_users' ) ) {
+			die( '' );
+		}
+
+		// Nonce check.
+		if ( empty( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['nonce'] ), 'save_auth_settings' ) ) {
+			die( '' );
+		}
+
+		// Fail if required post data doesn't exist.
+		if ( ! array_key_exists( 'username', $_POST ) || ! array_key_exists( 'password', $_POST ) ) {
+			die( '' );
+		}
+
+		// Get defaults.
+		$success = true;
+		$message = '';
+
+		// Grab plugin settings.
+		$options       = Options::get_instance();
+		$auth_settings = $options->get_all( Helper::SINGLE_CONTEXT, 'allow override' );
+
+		// Attempt to authenticate in debug mode.
+		$username = sanitize_text_field( wp_unslash( $_POST['username'] ) );
+		$password = sanitize_text_field( wp_unslash( $_POST['password'] ) );
+		$debug    = array();
+		$result   = Authentication::get_instance()->custom_authenticate_ldap( $auth_settings, $username, $password, $debug );
+
+		// Parse results.
+		$success = is_array( $result ) && ! empty( $result['email'] );
+		$message = wp_kses_post( implode( PHP_EOL, $debug ) );
+
+		// Send response to client.
+		$response = array(
+			'success' => $success,
+			'message' => $message,
+		);
+		wp_send_json( $response );
 		exit;
 	}
 

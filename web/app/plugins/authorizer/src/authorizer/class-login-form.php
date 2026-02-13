@@ -18,26 +18,29 @@ use Authorizer\Options;
 class Login_Form extends Singleton {
 
 	/**
-	 * Load external resources for the public-facing site.
+	 * Load script to display message to anonymous users browing a site (only
+	 * enqueue if configured to only allow logged in users to view the site and
+	 * show a warning to anonymous users).
 	 *
 	 * Action: wp_enqueue_scripts
 	 */
 	public function auth_public_scripts() {
 		// Load (and localize) public scripts.
-		$options      = Options::get_instance();
-		$current_path = ! empty( $_SERVER['REQUEST_URI'] ) ? esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : home_url();
-		wp_enqueue_script( 'auth_public_scripts', plugins_url( '/js/authorizer-public.js', plugin_root() ), array( 'jquery' ), '2.8.0', false );
-		$auth_localized = array(
-			'wpLoginUrl'      => wp_login_url( $current_path ),
-			'publicWarning'   => get_option( 'auth_settings_advanced_public_notice' ),
-			'anonymousNotice' => $options->get( 'access_redirect_to_message' ),
-			'logIn'           => esc_html__( 'Log In', 'authorizer' ),
-		);
-		wp_localize_script( 'auth_public_scripts', 'auth', $auth_localized );
-
-		// Load public css.
-		wp_register_style( 'authorizer-public-css', plugins_url( 'css/authorizer-public.css', plugin_root() ), array(), '2.8.0' );
-		wp_enqueue_style( 'authorizer-public-css' );
+		$options = Options::get_instance();
+		if (
+			'logged_in_users' === $options->get( 'access_who_can_view' ) &&
+			'warning' === $options->get( 'access_public_warning' ) &&
+			get_option( 'auth_settings_advanced_public_notice' )
+		) {
+			$current_path = ! empty( $_SERVER['REQUEST_URI'] ) ? esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : home_url();
+			wp_enqueue_script( 'auth_public_scripts', plugins_url( '/js/authorizer-public.js', plugin_root() ), array( 'jquery' ), '3.2.2', false );
+			$auth_localized = array(
+				'wpLoginUrl'      => wp_login_url( $current_path ),
+				'anonymousNotice' => $options->get( 'access_redirect_to_message' ),
+				'logIn'           => esc_html__( 'Log In', 'authorizer' ),
+			);
+			wp_localize_script( 'auth_public_scripts', 'auth', $auth_localized );
+		}
 	}
 
 
@@ -57,7 +60,7 @@ class Login_Form extends Singleton {
 		wp_enqueue_script( 'auth_login_scripts', plugins_url( '/js/authorizer-login.js', plugin_root() ), array( 'jquery' ), '2.8.0', false );
 
 		// Enqueue styles appearing on wp-login.php.
-		wp_register_style( 'authorizer-login-css', plugins_url( '/css/authorizer-login.css', plugin_root() ), array(), '2.9.12' );
+		wp_register_style( 'authorizer-login-css', plugins_url( '/css/authorizer-login.css', plugin_root() ), array(), '3.2.0' );
 		wp_enqueue_style( 'authorizer-login-css' );
 
 		/**
@@ -151,6 +154,13 @@ function signInCallback( authResult ) { // jshint ignore:line
 
 			// Reload wp-login.php to continue the authentication process.
 			var newHref = authUpdateQuerystringParam( location.href, 'external', 'google' );
+
+			// If we have a login form embedded via [authorizer_login_form], we are
+			// not on wp-login.php, so change the location to wp-login.php.
+			if ( 'undefined' !== typeof auth && auth.hasOwnProperty( 'wpLoginUrl' ) ) {
+				newHref = authUpdateQuerystringParam( auth.wpLoginUrl, 'external', 'google' );
+			}
+
 			if ( location.href === newHref ) {
 				location.reload();
 			} else {
@@ -428,6 +438,24 @@ function signInCallback( authResult ) { // jshint ignore:line
 		delete_option( 'auth_settings_advanced_login_error' );
 		$errors = '    ' . $error . "<br />\n";
 		return $errors;
+	}
+
+
+	/**
+	 * Render the [authorizer_login_form] shortcode.
+	 *
+	 * Shortcode: authorizer_login_form
+	 */
+	public function shortcode_authorizer_login_form() {
+		ob_start();
+
+		$this->login_enqueue_scripts_and_styles();
+		$this->login_form_add_external_service_links();
+		$this->load_login_footer_js();
+
+		wp_login_form();
+
+		return ob_get_clean();
 	}
 
 }

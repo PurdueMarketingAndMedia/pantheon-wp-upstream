@@ -5,6 +5,60 @@ Adds Purdue University branded Gutenberg blocks to the editor
 ## Changelog
 
 Relevant changes are documented below.
+### [1.22.26] 2022-3-24
+#### Updated
+  - To Fontawesome 6.
+
+### [1.22.24] 2022-3-22
+#### Updated
+  - Allow CTA card small to have more links in the content body in addition to read more.
+
+### [1.22.23] 2022-3-21
+#### Updated
+  - Tabs block issue in new WordPress version.
+
+### [1.22.22] 2022-3-17
+#### Updated
+  - Remove Bulma dependency that's already added in theme.
+
+### [1.22.21] 2022-3-16
+#### Updated
+  - Align text on button vertically
+
+### [1.22.20] 2022-3-2
+#### Updated
+  - Anchor links block to accormodate changets from wp 5.9
+  - News and RSS block to use fetch_feed to pull feed.
+
+### [1.22.19] 2022-2-17
+#### Updated
+  - Anchor links block to accormodate changets from wp 5.9
+  - News and RSS block to use fetch_feed to pull feed.
+
+### [1.22.17] 2022-2-1
+#### Modified
+  - Content page layout block to overwrite column properties added from wp 5.9
+
+### [1.22.16] 2022-1-7
+#### Modified
+  - Specified font color on Accordion block
+
+### [1.22.12] 2021-11-4
+#### Added
+  - Contact Card block
+
+### [1.22.9] 2021-10-26
+#### Modified
+  - Anchor Link Block to add "Include accordion option" and specify background
+
+### [1.22.8] 2021-10-26
+#### Modified
+  - Unlocked template in accrodion centent area 
+
+### [1.22.7] 2021-10-25
+#### Added
+  - Sidebar box block
+
 ### [1.22.6] 2021-10-13
 #### Modified
   - Added full height and fax options to faculty card block
