@@ -1,0 +1,171 @@
+%shared-lists-styles {
+	font-size: 1rem;
+	padding-left: 2.5rem;
+	padding-bottom: 1.25rem;
+	li {
+		&::marker {
+			color: $aged-gold;
+			font-size: 1.125rem;
+		}
+
+		padding-bottom: 1rem;
+	}
+	@media (max-width: 767px) {
+		padding-left: 1.5rem;
+	}
+
+	ul,	ol {
+		padding-top: 1rem;
+		padding-bottom: 0;
+		li:last-child {
+			padding-bottom: 0.5rem;
+		}
+	}
+}
+%shared-default-ul {
+	list-style-type: square;
+	ul {
+		list-style-type: disc;
+	}
+}
+%shared-default-ol {
+	ol:not([type]) {
+		list-style-type: lower-alpha !important;
+		li {
+			ol:not([type]) {
+				list-style-type: lower-roman !important;
+			}
+		}
+	}
+}
+
+ul.wp-block-list, ol.wp-block-list {
+	@extend %shared-lists-styles;
+}
+ol.wp-block-list {
+	@extend %shared-default-ol;
+}
+ul.wp-block-list {
+	@extend %shared-default-ul;
+}
+
+
+.main-content {
+	ul,	ol {
+		@extend %shared-lists-styles;
+	}
+	ul {
+		@extend %shared-default-ul;
+	}
+	ol {
+		@extend %shared-default-ol;
+	}
+	.has-black-background ul > li {
+		&::marker{
+			color: $boiler-gold;
+		}
+	}
+}
+
+.has-black-background ul.wp-block-list li {
+	&::marker{
+		color: $boiler-gold;
+	}
+}
+
+ul.purdue-home-button-list {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	padding-left: 1.3rem;
+	padding-bottom: 0;
+	list-style: none;
+	flex-wrap: wrap;
+	list-style-type: none;
+	li {
+		padding-right: 0.5rem;
+		padding-bottom: 0.5rem;
+		@media (max-width: 500px) {
+			padding-right: 0;
+			width: 100%;
+			max-width: 280px;
+		}
+		.purdue-home-button {
+			width: 100%;
+		}
+	}
+}
+
+/*
+.main-content ol li {
+  ol:not([type]) {
+    list-style-type: lower-alpha !important;
+    li {
+      ol:not([type]) {
+        list-style-type: lower-roman !important;
+      }
+    }
+  }
+}
+.main-content {
+  ul,
+  ol {
+    font-size: 1rem;
+    padding-left: 2.5rem;
+    padding-bottom: 1.25rem;
+    li {
+      &::marker{
+        color: $aged-gold;
+        font-size:1.125rem;
+      }
+      padding-bottom: 1rem;
+    }
+    @media (max-width: 767px) {
+      padding-left: 1.5rem;
+    }
+    ul,
+    ol {
+      padding-top: 1rem;
+      padding-bottom: 0;
+      li:last-child {
+        padding-bottom: 0.5rem;
+      }
+    }
+  }
+  ul {
+    list-style-type: square;
+    ul {
+      list-style-type: disc;
+    }
+  }
+  .has-black-background ul > li {
+    &::marker{
+      color: $boiler-gold;
+    }
+  }
+}
+ul.purdue-home-button-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding-left: 1.3rem;
+  padding-bottom: 0;
+  list-style: none;
+  flex-wrap: wrap;
+  list-style-type: none;
+  li {
+    padding-right: 0.5rem;
+    padding-bottom: 0.5rem;
+    @media (max-width: 500px) {
+      padding-right: 0;
+      width: 100%;
+      max-width: 280px;
+    }
+    .purdue-home-button {
+      width: 100%;
+    }
+  }
+}
+*/

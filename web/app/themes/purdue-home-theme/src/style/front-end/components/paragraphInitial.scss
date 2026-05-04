@@ -1,0 +1,15 @@
+.purdue-initial-words-wrap {
+  margin-bottom: 1.875rem;
+  .purdue-initial-words {
+    margin-bottom: 0;
+    font-family: $united-sans;
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1;
+    display: inline;
+  }
+  .purdue-initial-words + p {
+    display: inline;
+  }
+}

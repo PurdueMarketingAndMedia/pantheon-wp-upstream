@@ -1,0 +1,161 @@
+@import "../../../src/style/front-end/overides/colors";
+@import "../../../src/style/front-end/overides/variables";
+@import "../../../node_modules/bulma/sass/utilities/mixins.sass";
+
+.purdue-home-flipping-cards {
+  overflow: hidden;
+  .flipping-cards-header,
+  .flipping-cards-intro {
+    text-align: center;
+    max-width: 888px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  p.flipping-cards-intro {
+    margin-bottom: 3rem !important;
+    @include mobile {
+      margin-bottom: 2rem !important;
+    }
+  }
+  .flipping-icon {
+    width: 52px;
+    height: 38px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    &.front {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='39' viewBox='0 0 52 39' fill='none'%3E%3Cg clip-path='url(%23clip0_9151_80)'%3E%3Cpath d='M18.4402 25.9649C11.5987 25.6001 6.48717 21.2208 6.48717 16.7142C6.48717 12.5259 11.3544 8.93234 17.7072 7.35589V4.52856C7.44498 6.57991 0 12.2982 0 19.0348C0 25.7715 7.93365 31.8202 18.4402 33.7051V38.9999L32.343 29.715L18.4402 20.4301V25.9649Z' fill='%23CFB991'/%3E%3Cpath d='M31.6338 4.07086V0L22.5957 6.03653L31.6338 12.0731V7.15767C38.4752 8.60683 43.6527 12.335 43.6527 16.7167C43.6527 20.0116 40.7915 22.9369 36.3935 24.8046L44.2807 29.9232C49.0282 27.1472 51.9969 23.2967 51.9969 19.0398C51.9969 11.7059 43.362 5.57877 31.6338 4.07576V4.07086Z' fill='%23CFB991'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_9151_80'%3E%3Crect width='52' height='39' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E");
+      &:hover {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='39' viewBox='0 0 52 39' fill='none'%3E%3Cg clip-path='url(%23clip0_9151_80)'%3E%3Cpath d='M18.4402 25.9649C11.5987 25.6001 6.48717 21.2208 6.48717 16.7142C6.48717 12.5259 11.3544 8.93234 17.7072 7.35589V4.52856C7.44498 6.57991 0 12.2982 0 19.0348C0 25.7715 7.93365 31.8202 18.4402 33.7051V38.9999L32.343 29.715L18.4402 20.4301V25.9649Z' fill='%23ffffff'/%3E%3Cpath d='M31.6338 4.07086V0L22.5957 6.03653L31.6338 12.0731V7.15767C38.4752 8.60683 43.6527 12.335 43.6527 16.7167C43.6527 20.0116 40.7915 22.9369 36.3935 24.8046L44.2807 29.9232C49.0282 27.1472 51.9969 23.2967 51.9969 19.0398C51.9969 11.7059 43.362 5.57877 31.6338 4.07576V4.07086Z' fill='%23ffffff'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_9151_80'%3E%3Crect width='52' height='39' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E");
+      }
+    }
+
+    &.back {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='39' viewBox='0 0 52 39' fill='none'%3E%3Cg clip-path='url(%23clip0_9151_80)'%3E%3Cpath d='M18.4402 25.9649C11.5987 25.6001 6.48717 21.2208 6.48717 16.7142C6.48717 12.5259 11.3544 8.93234 17.7072 7.35589V4.52856C7.44498 6.57991 0 12.2982 0 19.0348C0 25.7715 7.93365 31.8202 18.4402 33.7051V38.9999L32.343 29.715L18.4402 20.4301V25.9649Z' fill='%23ffffff'/%3E%3Cpath d='M31.6338 4.07086V0L22.5957 6.03653L31.6338 12.0731V7.15767C38.4752 8.60683 43.6527 12.335 43.6527 16.7167C43.6527 20.0116 40.7915 22.9369 36.3935 24.8046L44.2807 29.9232C49.0282 27.1472 51.9969 23.2967 51.9969 19.0398C51.9969 11.7059 43.362 5.57877 31.6338 4.07576V4.07086Z' fill='%23ffffff'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_9151_80'%3E%3Crect width='52' height='39' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E");
+      &:hover {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='39' viewBox='0 0 52 39' fill='none'%3E%3Cg clip-path='url(%23clip0_9151_80)'%3E%3Cpath d='M18.4402 25.9649C11.5987 25.6001 6.48717 21.2208 6.48717 16.7142C6.48717 12.5259 11.3544 8.93234 17.7072 7.35589V4.52856C7.44498 6.57991 0 12.2982 0 19.0348C0 25.7715 7.93365 31.8202 18.4402 33.7051V38.9999L32.343 29.715L18.4402 20.4301V25.9649Z' fill='%23CFB991'/%3E%3Cpath d='M31.6338 4.07086V0L22.5957 6.03653L31.6338 12.0731V7.15767C38.4752 8.60683 43.6527 12.335 43.6527 16.7167C43.6527 20.0116 40.7915 22.9369 36.3935 24.8046L44.2807 29.9232C49.0282 27.1472 51.9969 23.2967 51.9969 19.0398C51.9969 11.7059 43.362 5.57877 31.6338 4.07576V4.07086Z' fill='%23CFB991'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_9151_80'%3E%3Crect width='52' height='39' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E");
+      }
+    }
+  }
+  .image {
+    display: flex;
+    align-items: center;
+    img {
+      border-radius: 0;
+      object-fit: contain;
+      object-position: top center;
+    }
+  }
+  .flipping-card {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    &.flipped {
+      .flipping-card-inner {
+        transform: rotateY(180deg);
+        .flipping-icon.front {
+          z-index: 0;
+        }
+      }
+    }
+    &-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+    }
+    &-front,
+    &-back {
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+    }
+    &-front {
+      border-radius: 4px;
+      border: 3px solid $white;
+      background: $black;
+      position: absolute;
+      .image {
+        height: 100%;
+        padding: 4rem 1.25rem;
+        img {
+          max-height: 90%;
+        }
+      }
+      &__title {
+        background: $black;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        color: $white !important;
+        font-family: $united-sans-extended;
+        font-size: 1.25rem;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 1.5;
+        text-transform: uppercase;
+        padding: 1.5rem 1.25rem;
+        width: 100%;
+      }
+    }
+    &-back {
+      border-radius: 4px;
+      border: 3px solid $white;
+      transform: rotateY(180deg);
+      box-sizing: border-box;
+      overflow: hidden;
+      background: $black;
+      padding-top: calc(56px + 6.5%);
+      position: relative;
+      .image {
+        img {
+          height: 100%;
+        }
+      }
+      &__content {
+        padding: 0.5rem 1.25rem 1.25rem;
+        background: $black;
+      }
+      &__title {
+        font-family: $acumin-pro;
+        font-size: 2rem;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 1.18;
+        margin-bottom: 1rem;
+        margin-top: 1.25rem;
+        color: $boiler-gold !important;
+      }
+      &__subtitle {
+        font-family: $united-sans-condensed;
+        font-size: 1.25rem;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 1.3;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        margin-top: 1rem;
+        margin-bottom: 0;
+        color: $boiler-gold !important;
+      }
+      &__text {
+        font-family: $acumin-pro;
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.5;
+        color: $white !important;
+        &:not(:last-child) {
+          margin-bottom: 1rem;
+        }
+      }
+    }
+  }
+}

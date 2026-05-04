@@ -91,7 +91,7 @@ class Version extends Base
 
     public function getParts()
     {
-        $parts = explode('.', $this->value);
+        $parts = !is_null($this->value) ? explode('.', $this->value) : [];
 
         return (object) [
             'major' => !empty($parts[0]) ? intval($parts[0]) : 0,
@@ -251,7 +251,7 @@ class Version extends Base
                     }
                 }
 
-                $version .= implode($v, '.');
+                $version .= implode('.', $v);
 
                 if (array_key_exists(5, $match) && strlen($match[5])) {
                     $version .= $match[5] . (!empty($match[6]) ? $match[6] : '');

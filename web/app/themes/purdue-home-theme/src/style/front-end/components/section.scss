@@ -1,0 +1,71 @@
+.section {
+  padding: 3rem $side-padding-desktop;
+  @include touch {
+    padding: 3rem $side-padding-tablet;
+  }
+  @include mobile {
+    padding: 3rem $side-padding-mobile;
+  }
+  &.has-padding-exlarge {
+    padding-top: 12rem;
+    padding-bottom: 12rem;
+    @include mobile {
+      padding-top: 6rem;
+      padding-bottom: 6rem;
+    }
+  }
+  &.has-padding-top-large {
+    padding-top: 6rem;
+    @include mobile {
+      padding-top: 3rem;
+    }
+  }
+  &.has-padding-bottom-large {
+    padding-bottom: 6rem;
+    @include mobile {
+      padding-bottom: 3rem;
+    }
+  }
+  &.has-padding-top-small {
+    padding-top: 2rem;
+  }
+  &.has-padding-bottom-small {
+    padding-bottom: 2rem;
+  }
+  &.has-padding-bottom-none {
+    padding-bottom: 0;
+  }
+  &.has-padding-top-none {
+    padding-top: 0;
+  }
+  &.has-padding-left-none {
+    padding-left: 0;
+  }
+  &.has-no-sidepadding {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    &>.container{
+      max-width:100% !important;
+    }
+  }
+  &.has-small-sidepadding {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+  &.has-medium-sidepadding {
+    padding-left: 2.25rem;
+    padding-right: 2.25rem;
+    @include mobile {
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+    }
+  }
+  &.has-large-sidepadding {
+    padding-left: 3rem;
+    padding-right: 3rem;
+    @include mobile {
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+    }
+  }
+}

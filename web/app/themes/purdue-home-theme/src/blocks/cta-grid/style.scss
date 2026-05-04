@@ -1,0 +1,15 @@
+.purdue-home-cta-grid__cards {
+    &.align-center{
+        .columns{
+            justify-content: center;
+        }
+    }
+    &.align-left{
+        .columns{
+            justify-content: left;
+        }
+    }
+    .purdue-home-button-list{
+        padding-left: 0;
+    }
+}

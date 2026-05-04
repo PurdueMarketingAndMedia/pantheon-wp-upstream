@@ -1,0 +1,33 @@
+.purdue-home-link-cards{
+    .glide__slides {
+       display:flex;
+    }
+    .glide__slide {
+        padding: 0.2rem;
+        flex:1;
+        flex: 1 0 30%;
+    }
+
+    .columns.is-multiline{
+
+        .block-editor-inner-blocks, .block-editor-block-list__layout{
+            display: flex;
+            flex-grow: 1;
+            flex-wrap: wrap;
+           }
+
+           .purdue-home-cta-card{
+            .block-editor-inner-blocks, .block-editor-block-list__layout{
+                display: block;
+               }
+        }
+
+    }
+    
+    ul{
+        padding-left:0;
+    }
+    
+
+   
+}

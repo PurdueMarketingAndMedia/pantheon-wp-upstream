@@ -14,8 +14,15 @@
 
 <?php get_header(); ?>
 
-<?php if(function_exists('bcn_display')&&!has_block('bcn/breadcrumb-trail')) : ?>
-<div class="breadcrumbs" typeof="BreadcrumbList" vocab="https://schema.org/">   
+<?php
+if (function_exists('get_field')) {	
+	$breadCrumb = get_field('remove_breadcrumb_on_this_page')[0];
+	
+} else {	
+	$breadCrumb = "";
+}
+if(function_exists('bcn_display')&&!has_block('bcn/breadcrumb-trail')&&$breadCrumb!="Yes"): ?>
+<div class="breadcrumbs" typeof="BreadcrumbList" vocab="https://schema.org/" role="navigation">   
     <?php bcn_display();	?>
 </div>
 <?php endif; ?>
@@ -28,7 +35,6 @@
 
 		while ( have_posts() ) {
 			the_post();
-
 			get_template_part( 'template-parts/content-page', get_post_type() );
 		}
 	}
@@ -36,7 +42,7 @@
 	?>
 
 	<?php if (!has_block('purdue-blocks/anchor-link-navigation')&&!has_block('purdue-blocks/custom-side-menu')) { ?>
-		<button id="to-top" class="to-top-hidden" value="Back to Top Button">
+		<button id="to-top" class="to-top-hidden" aria-label="Back to Top Button">
 			<i class="fas fa-chevron-up" aria-hidden="true"></i>
 		</button>
 	<?php } ?>

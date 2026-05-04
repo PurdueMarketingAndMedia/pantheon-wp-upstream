@@ -1,0 +1,242 @@
+@import "../../../src/style/front-end/overides/colors";
+@import "../../../src/style/front-end/overides/variables";
+@import "../../../node_modules/bulma/sass/utilities/mixins.sass";
+
+.purdue-home-quote {
+  blockquote {
+    position: relative;
+    margin-bottom: 1.5rem;
+    padding: 0;
+    p {
+      font-family: $acumin-pro;
+      font-size: 1.75rem;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 1.21;
+      @include mobile {
+        font-size: 1.625rem;
+      }
+      &:first-child {
+        &:before {
+          content: "“";
+        }
+      }
+      &:last-of-type {
+        &:after {
+          content: "”";
+        }
+      }
+    }
+  }
+  &__name {
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1.56;
+    letter-spacing: 0.1rem;
+    text-transform: uppercase;
+    font-family: $acumin-pro-condensed;
+    margin-bottom: 0 !important;
+  }
+  &__title {
+    font-family: $acumin-pro;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.56;
+    margin-top: 0.5rem;
+  }
+  .section.align-center {
+    blockquote p,
+    .purdue-home-quote__name,
+    .purdue-home-quote__title {
+      text-align: center;
+    }
+  }
+  .purdue-home-quote-content {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .section.has-quote-mark,
+  .section.has-feature-image,
+  .has-slider {
+    position: relative;
+    margin-bottom: 3rem;
+    margin-top: 3rem;
+    @include touch {
+      margin-bottom: 2rem;
+      margin-top: 3rem;
+    }
+    .purdue-home-quote-content {
+      padding: 6.5rem 200px 5rem 200px;
+      position: relative;
+      @include mobile {
+        padding: 10rem 2.5rem 4rem 2.5rem;
+      }
+
+      blockquote {
+        position: relative;
+        &:before {
+          content: "";
+          background-image: url("data:image/svg+xml,%3Csvg width='104' height='96' viewBox='0 0 104 96' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M99 32.25H79.25V19.25L80.5 18H96.25V1.5H69.25L54.75 16V73.75H89M1.5 73.75V16L16 1.5H43V18H27.25L26 19.25V32.25H43V73.75H1.5Z' stroke='%23CFB991' stroke-width='3'/%3E%3Cline x1='83.6639' y1='95.5252' x2='102.567' y2='17.7905' stroke='black' stroke-width='2.75'/%3E%3C/svg%3E%0A");
+          width: 150px;
+          display: block;
+          width: 150px;
+          height: 100px;
+          background-repeat: no-repeat;
+          position: absolute;
+          left: -115px;
+          top: -25px;
+          @include mobile {
+            top: -6.5rem;
+            left: -1.5rem;
+          }
+        }
+        p {
+          &:first-child:before {
+            content: none;
+          }
+        }
+      }
+    }
+    &.has-black-background {
+      .purdue-home-quote-content {
+        blockquote:before {
+          background-image: url("data:image/svg+xml,%3Csvg width='105' height='96' viewBox='0 0 105 96' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M99.5 32.25H79.75V19.25L81 18H96.75V1.5H69.75L55.25 16V73.75H89.5M2 73.75V16L16.5 1.5H43.5V18H27.75L26.5 19.25V32.25H43.5V73.75H2Z' stroke='%23CFB991' stroke-width='3'/%3E%3Cline x1='84.1639' y1='95.5252' x2='103.067' y2='17.7905' stroke='white' stroke-width='2.75'/%3E%3C/svg%3E%0A");
+        }
+      }
+      &.has-slider {
+        .purdue-home-quote-content {
+          blockquote {
+            &:after {
+              background-image: url("data:image/svg+xml,%3Csvg width='104' height='96' viewBox='0 0 104 96' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4.90235 63.6001L24.6523 63.6001L24.6523 76.6001L23.4023 77.8501L7.65234 77.8501L7.65234 94.3501L34.6523 94.3501L49.1523 79.8501L49.1524 22.1001L14.9024 22.1001M102.402 22.1001L102.402 79.8501L87.9023 94.3501L60.9023 94.3501L60.9023 77.8501L76.6523 77.8501L77.9023 76.6001L77.9023 63.6001L60.9023 63.6001L60.9024 22.1001L102.402 22.1001Z' stroke='%23CFB991' stroke-width='3'/%3E%3Cline x1='20.2384' y1='0.32489' x2='1.3357' y2='78.0596' stroke='white' stroke-width='2.75'/%3E%3C/svg%3E%0A");
+            }
+          }
+        }
+      }
+    }
+    &.has-gold-background {
+      .purdue-home-quote-content {
+        blockquote:before {
+          background-image: url("data:image/svg+xml,%3Csvg width='105' height='96' viewBox='0 0 105 96' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M99.5 32.25H79.75V19.25L81 18H96.75V1.5H69.75L55.25 16V73.75H89.5M2 73.75V16L16.5 1.5H43.5V18H27.75L26.5 19.25V32.25H43.5V73.75H2Z' stroke='%23000000' stroke-width='3'/%3E%3Cline x1='84.1639' y1='95.5252' x2='103.067' y2='17.7905' stroke='black' stroke-width='2.75'/%3E%3C/svg%3E%0A");
+        }
+      }
+      &.has-slider {
+        .purdue-home-quote-content {
+          blockquote {
+            &:after {
+              background-image: url("data:image/svg+xml,%3Csvg width='104' height='96' viewBox='0 0 104 96' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4.90235 63.6001L24.6523 63.6001L24.6523 76.6001L23.4023 77.8501L7.65234 77.8501L7.65234 94.3501L34.6523 94.3501L49.1523 79.8501L49.1524 22.1001L14.9024 22.1001M102.402 22.1001L102.402 79.8501L87.9023 94.3501L60.9023 94.3501L60.9023 77.8501L76.6523 77.8501L77.9023 76.6001L77.9023 63.6001L60.9023 63.6001L60.9024 22.1001L102.402 22.1001Z' stroke='%23000000' stroke-width='3'/%3E%3Cline x1='20.2384' y1='0.32489' x2='1.3357' y2='78.0596' stroke='black' stroke-width='2.75'/%3E%3C/svg%3E%0A");
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  .has-slider {
+    p:last-of-type {
+      &:after {
+        content: none;
+      }
+    }
+  }
+  .section.has-quote-mark {
+    padding: 0;
+    .purdue-home-quote-content {
+      padding: 6.5rem 6rem 5rem 200px;
+      @include mobile {
+        padding: 10rem 2.5rem 4rem 2.5rem;
+      }
+    }
+  }
+  .section.has-feature-image {
+    padding: 0;
+    .purdue-home-quote-card {
+      .image {
+        position: absolute;
+        width: 58%;
+        height: 100%;
+        padding-top: 0;
+        border-radius: 4px;
+        overflow: hidden;
+        @include touch {
+          position: relative;
+          width: 100%;
+          padding-top: 56.25%;
+        }
+        img {
+          object-fit: cover;
+        }
+      }
+      .purdue-home-quote-content {
+        padding: 6.5rem 1.5rem 5rem 9.55rem;
+        width: 40%;
+        min-height: 500px;
+        right: 0;
+        margin-left: auto;
+        margin-right: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        @include touch {
+          width: 100%;
+          min-height: 1px;
+        }
+        @include mobile {
+          padding: 9rem 2.5rem 1rem 2.5rem;
+        }
+      }
+    }
+    &.has-feature-image--right {
+      .purdue-home-quote-content {
+        left: 0;
+        right: auto;
+        margin-left: 0;
+        margin-right: auto;
+      }
+      .image {
+        right: 0;
+        left: auto;
+      }
+    }
+  }
+  .has-slider {
+    padding: 0 0 4rem 0;
+    .purdue-home-quote-card {
+      @include mobile {
+        padding: 0 0 2rem 0;
+      }
+      .purdue-home-quote-content {
+        padding-bottom: 2rem;
+        @include mobile {
+          padding-bottom: 0;
+        }
+        blockquote {
+          &:after {
+            content: "";
+            display: block;
+            width: 150px;
+            height: 100px;
+            background-repeat: no-repeat;
+            position: absolute;
+            right: -150px;
+            bottom: -50px;
+            background-image: url("data:image/svg+xml,%3Csvg width='105' height='96' viewBox='0 0 105 96' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.40235 63.6001L25.1523 63.6001L25.1523 76.6001L23.9023 77.8501L8.15234 77.8501L8.15234 94.3501L35.1523 94.3501L49.6523 79.8501L49.6524 22.1001L15.4024 22.1001M102.902 22.1001L102.902 79.8501L88.4023 94.3501L61.4023 94.3501L61.4023 77.8501L77.1523 77.8501L78.4023 76.6001L78.4023 63.6001L61.4023 63.6001L61.4024 22.1001L102.902 22.1001Z' stroke='%23CFB991' stroke-width='3'/%3E%3Cline x1='20.7384' y1='0.32489' x2='1.8357' y2='78.0596' stroke='black' stroke-width='2.75'/%3E%3C/svg%3E%0A");
+          }
+          @include mobile {
+            &:after {
+              content: none;
+            }
+          }
+        }
+      }
+      .purdue-home-quote__cta {
+        margin-left: 200px;
+        @include mobile {
+          margin-left: 2.5rem;
+        }
+      }
+    }
+  }
+}

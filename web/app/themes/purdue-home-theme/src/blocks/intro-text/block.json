@@ -1,0 +1,71 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "purdue/intro-text",
+	"version": "1.1.01",
+	"title": "Intro Text",
+	"category": "purdue",
+	"description": "This block adds a intro text block.",
+	"supports": {
+		"html": false
+	},
+    "attributes": {
+        "background": {
+            "type": "string",
+            "default": "none"
+        },
+        "layout": {
+            "type": "string",
+            "default": "one-centered"
+        },
+        "header": {
+            "type": "string",
+            "default": ""
+        },
+        "headerLevel": {
+            "type": "string",
+            "default": "h2"
+        },
+        "headerType": {
+            "type": "string",
+            "default": "acumin"
+        },
+        "subheader": {
+            "type": "string",
+            "default": ""
+        },
+        "subheaderType": {
+            "type": "string",
+            "default": "plain"
+        },
+        "paddingTop": {
+            "type": "string",
+            "default": ""
+        },
+        "paddingBottom": {
+            "type": "string",
+            "default": ""
+        },
+        "removeSidePadding": {
+            "type": "boolean",
+            "default": false
+        },
+        "links": {
+            "type": "array",
+            "default": []
+        },
+        "id": {
+            "type": "string",
+            "default": ""
+        },
+        "className": {
+            "type": "string",
+            "default": ""
+        }
+    },
+	"textdomain": "intro-text",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php"
+}

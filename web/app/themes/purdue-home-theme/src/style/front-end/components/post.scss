@@ -1,0 +1,235 @@
+.post-content {
+  max-width: 900px;
+  @include touch {
+    width: 100%;
+  }
+  .purdue-home-quote .section.has-quote-mark{
+    border-radius:4px;
+  }
+  .purdue-home-post-grid{
+    .section{
+        padding-left:0;
+        padding-right:0;
+      .container{
+        @extend .alignwide;
+        @include touch{
+          padding-left:1.5rem;
+          padding-right:1.5rem;
+        }
+        @include mobile{
+          padding-left:1.25rem;
+          padding-right:1.25rem;
+        }
+      }
+    }
+  }
+  &__thumbnail {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    img {
+      width: 100%;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+    &--caption {
+      max-width: min(900px, calc(100% - 16px));
+      width: 100%;
+      margin: 1.5rem 0 0 1.5rem;
+      padding: 0 1.5rem 0 1.5rem;
+      border-left: 1px solid $steam-gray;
+      color: $steel-gray;
+      @include touch {
+        width: calc(100vw - 16px);
+        margin: 1.5rem 0 0 1.5rem;
+        padding: 0 2.25rem 0 1rem;
+      }
+      @include mobile{
+        margin-left: 0.5rem;
+      }
+    }
+    margin-bottom: 3rem;
+    @include mobile{
+      margin-bottom: 2rem;
+    }
+  }
+  &__video-hero{
+    margin-bottom: 3rem;
+    @include mobile{
+      margin-bottom: 2rem;
+    }
+  }
+  &__tag {
+    font-family: $acumin-pro;
+    color: $railway-gray;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 1.5;
+    letter-spacing: 0.15625rem;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  h1 {
+    margin-top: 0;
+  }
+  h1:not(:last-child) {
+    margin-bottom: 2.5rem;
+    @include mobile {
+      margin-bottom: 2rem;
+    }
+  }
+  &__subheading {
+    font-family: $acumin-pro;
+    font-size: 1.625rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 2.8rem !important;
+    @include mobile {
+      font-size: 1.25rem;
+      line-height: 1.2;
+    }
+  }
+  &__attribution {
+    color: $cool-gray;
+    padding-top: 3rem;
+    border-top: 1px solid $railway-gray;
+    margin-top: 3rem;
+    @include mobile {
+      margin-top: 2rem;
+      padding-top: 2rem;
+    }
+  }
+  &__byline {
+    padding-bottom:3rem;
+    border-bottom: 1px solid $railway-gray;
+    margin-bottom:3rem;
+    @include touch {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    @include mobile {
+      padding-bottom: 2rem;
+    }
+    &--date {
+      font-family: $united-sans-condensed;
+      font-size: 1rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 1.5;
+      letter-spacing: 0.09375rem;
+      text-transform: uppercase;
+      @include mobile{
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .post-author{
+        padding-left:0.75rem;
+        &:before{
+          content:"";
+          border-left: 2px solid $steam-gray;
+          left: -0.75rem;
+          position: relative;
+          height: 1rem;
+        }
+        @include mobile{
+          border-left: none;
+          padding-left:0;
+          &:before{
+            content:none;
+          }
+        }
+        &-individual{
+          color:$black;
+          text-decoration:none;
+          &:hover{
+            color:$black;
+          }
+          &:not(:first-child){
+            margin-left:0.25rem;
+          }
+        }
+      }
+    }
+    &--share {
+      @include touch {
+        margin-top: 1.5rem !important;
+      }
+      .level-item {
+        font-family: $united-sans-condensed;
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 1.5;
+        letter-spacing: -0.02144rem;
+        text-transform: uppercase;
+        &:not(:last-child) {
+          margin-right: 1.2rem !important;
+        }
+      }
+      a.icon.is-medium {
+        text-decoration: none;
+        color: $black;
+        i,
+        svg {
+          font-size: 1.75rem;
+        }
+        &:hover {
+          color: $aged-gold;
+          svg{
+            fill:$aged-gold;
+          }
+        }
+      }
+    }
+  }
+  &__body {
+    margin-top: 3rem;
+    @include mobile {
+      margin-top: 2rem;
+    }
+    &>.purdue-home-image-slider{
+      .glide__track{
+        overflow: visible;
+      }
+    }
+  }
+}
+.post-related-stories{
+  overflow: hidden;
+  h2{
+    text-align: center;
+  }
+  .purdue-home-link-cards__slider{
+    .glide__slide{
+      height:auto;
+      padding: 0.1rem;
+    }
+    .slider-controls{
+      margin-top:3rem;
+      justify-content: flex-start;
+      @include mobile{
+       margin-top:1.5rem;
+       justify-content: center;
+      }
+    }
+    .glide__track {
+      overflow: visible;
+    }
+  } 
+}
+.post-wrap{
+  overflow: hidden;
+}
+
+.purdue-home-buttons{
+  .purdue-home-button-list{
+      padding-left:0;
+  }
+  &.purdue-home-buttons--left{
+      ul.purdue-home-button-list {
+          justify-content: left;
+      }
+  }
+}

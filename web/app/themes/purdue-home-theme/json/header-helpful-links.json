@@ -1,0 +1,28 @@
+{
+    "links" : [
+        {
+            "link_text": "CURRENT STUDENTS",
+            "link_url": "https://www.purdue.edu/purdue/current_students/index.php/"
+        },
+        {
+            "link_text": "FACULTY AND STAFF",
+            "link_url": "https://www.purdue.edu/purdue/faculty_staff/index.php/"
+        },
+        {
+            "link_text": "Give",
+            "link_url": "https://giving.purdue.edu/west-lafayette/?appealcode=21008"
+        },
+        {
+            "link_text": "Events Calendar",
+            "link_url": "https://events.purdue.edu/"
+        },
+        {
+            "link_text": "Shop",
+            "link_url": "http://purdueteamstore.com/"
+        },
+        {
+            "link_text": "News",
+            "link_url": "https://www.purdue.edu/newsroom/"
+        }
+    ]
+}

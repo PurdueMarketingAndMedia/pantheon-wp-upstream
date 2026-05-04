@@ -1,0 +1,36 @@
+@import "../../../src/style/front-end/overides/colors";
+
+.purdue-home-quick-links.purdue-home-quick-links-editor{
+    position:relative;
+    top:0;
+    right:auto;
+    flex-direction:column;
+    .accordion__heading{
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+.purdue-home-quick-links-static{
+    .tagged-header-container{
+        margin-bottom: 2rem;
+        .tagged-header{
+            font-size: 1.125rem;            
+        }
+    }
+    
+    #quick-links-content{
+        padding-left: 0;
+        .quick-link__item{
+            border-bottom: 2px solid $steam-gray;
+            padding: 0.5rem 0;
+            .quick-link__link{
+                color: #000;
+                font-size: 1.25rem;
+                font-weight: 700;
+                text-decoration: none;
+            }
+        }
+    }
+}

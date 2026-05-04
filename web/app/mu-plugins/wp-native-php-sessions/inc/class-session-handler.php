@@ -23,6 +23,7 @@ class Session_Handler implements \SessionHandlerInterface {
 	 * @param string $session_name Name of the session.
 	 * @return boolean
 	 */
+	#[\ReturnTypeWillChange]
 	public function open( $save_path, $session_name ) {
 		return true;
 	}
@@ -34,6 +35,7 @@ class Session_Handler implements \SessionHandlerInterface {
 	 * @param string $session_data Session data.
 	 * @return boolean
 	 */
+	#[\ReturnTypeWillChange]
 	public function write( $session_id, $session_data ) {
 		$session = Session::get_by_sid( $session_id );
 
@@ -57,9 +59,12 @@ class Session_Handler implements \SessionHandlerInterface {
 	 * @param string $session_id Session id.
 	 * @return string
 	 */
+	#[\ReturnTypeWillChange]
 	public function read( $session_id ) {
-		// Handle the case of first time visitors and clients that don't store
-		// cookies (eg. web crawlers).
+		/**
+		 * Handle the case of first time visitors and clients that don't store
+		 * cookies (eg. web crawlers).
+		 */
 		$insecure_session_name = substr( session_name(), 1 );
 		if ( empty( $session_id )
 			|| ( ! isset( $_COOKIE[ session_name() ] ) && ! isset( $_COOKIE[ $insecure_session_name ] ) ) ) {
@@ -68,7 +73,7 @@ class Session_Handler implements \SessionHandlerInterface {
 
 		$session = Session::get_by_sid( $session_id );
 		if ( $session ) {
-			return $session->get_data();
+			return $session->get_data() ?: '';
 		} else {
 			return '';
 		}
@@ -79,6 +84,7 @@ class Session_Handler implements \SessionHandlerInterface {
 	 *
 	 * @param string $session_id Session id.
 	 */
+	#[\ReturnTypeWillChange]
 	public function destroy( $session_id ) {
 		$session = Session::get_by_sid( $session_id );
 		if ( ! $session ) {
@@ -95,16 +101,19 @@ class Session_Handler implements \SessionHandlerInterface {
 	 *
 	 * @param integer $maxlifetime Maximum lifetime in seconds.
 	 */
+	#[\ReturnTypeWillChange]
 	public function gc( $maxlifetime ) {
 		global $wpdb;
 
 		$wpdb = Session::restore_wpdb_if_null( $wpdb );
 
-		// Be sure to adjust 'php_value session.gc_maxlifetime' to a large enough
-		// value. For example, if you want user sessions to stay in your database
-		// for three weeks before deleting them, you need to set gc_maxlifetime
-		// to '1814400'. At that value, only after a user doesn't log in after
-		// three weeks (1814400 seconds) will his/her session be removed.
+		/**
+		 * Be sure to adjust 'php_value session.gc_maxlifetime' to a large enough
+		 * value. For example, if you want user sessions to stay in your database
+		 * for three weeks before deleting them, you need to set gc_maxlifetime
+		 * to '1814400'. At that value, only after a user doesn't log in after
+		 * three weeks (1814400 seconds) will his/her session be removed.
+		 */
 		$wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->pantheon_sessions WHERE `datetime` <= %s ", gmdate( 'Y-m-d H:i:s', time() - $maxlifetime ) ) );
 		return true;
 	}
@@ -114,8 +123,8 @@ class Session_Handler implements \SessionHandlerInterface {
 	 *
 	 * @return boolean
 	 */
+	#[\ReturnTypeWillChange]
 	public function close() {
 		return true;
 	}
-
 }

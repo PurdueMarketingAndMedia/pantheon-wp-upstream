@@ -1,0 +1,27 @@
+[
+    {
+        "link_text": "Prospective Students",
+        "link_url": "https://www.purdue.edu/purdue/prospective_students/index.php",
+        "external": false
+    },
+    {
+        "link_text": "Current Students",
+        "link_url": "https://www.purdue.edu/purdue/current_students/index.php",
+        "external": false
+    },
+    {
+        "link_text": "Faculty and Staff",
+        "link_url": "https://www.purdue.edu/purdue/faculty_staff/index.php",
+        "external": false
+    },
+    {
+        "link_text": "Alumni",
+        "link_url": "https://www.purdue.edu/purdue/alumni/index.php",
+        "external": false
+    },
+    {
+        "link_text": "Campus Map",
+        "link_url": "https://www.purdue.edu/campus-map/",
+        "external": false
+    }
+]

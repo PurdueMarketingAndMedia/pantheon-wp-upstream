@@ -1,0 +1,24 @@
+.sortable-posts {
+	width: 100%;
+	.components-panel__body {
+		background: #eee;
+		margin-bottom: 10px;
+	}
+
+	.buttons {
+		display: flex;
+	}
+}
+.components-panel__row {
+	min-height: 0 !important;
+}
+
+.purdue-home-cta-card--vertical{
+	.image{
+	  &.has-no-shade{
+		&:after{
+		  content:none;
+		}
+	  }
+	}
+  }

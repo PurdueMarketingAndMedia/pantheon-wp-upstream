@@ -1,0 +1,68 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "purdue/color-hero",
+	"version": "1.1.01",
+	"title": "Validation Hero",
+	"category": "purdue",
+	"description": "A Hero block with validation boxes",
+	"supports": {
+		"html": false
+	},
+    "keywords": ["hero", "color"],
+    "attributes": {
+		"header": {
+			"type": "string",
+			"default": ""
+		},
+		"subHeader": {
+			"type": "string",
+			"default": ""
+		},
+		"subText": {
+			"type": "string",
+			"default": ""
+		},
+		"rightColumnHeading": {
+			"type": "string",
+			"default": ""
+		},
+		"rightColumnStat1": {
+			"type": "string",
+			"default": ""
+		},
+		"rightColumnDescription1": {
+			"type": "string",
+			"default": ""
+		},
+		"rightColumnSource1": {
+			"type": "string",
+			"default": ""
+		},
+		"rightColumnStat2": {
+			"type": "string",
+			"default": ""
+		},
+		"rightColumnDescription2": {
+			"type": "string",
+			"default": ""
+		},
+		"rightColumnSource2": {
+			"type": "string",
+			"default": ""
+		},
+		"links": {
+			"type": "array",
+			"default": []
+		},
+		"className": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"textdomain": "color-hero",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php"
+}

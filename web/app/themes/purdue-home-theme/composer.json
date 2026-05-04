@@ -1,0 +1,22 @@
+{
+    "name": "purdue/purdue-home-theme",
+    "description": "WordPress theme based on Purdue University digital brand standards ",
+    "authors": [
+        {
+            "name": "Purdue Marketing and Communications",
+            "email": "digital-marketing@groups.purdue.edu",
+            "homepage": "https://marcom.purdue.edu"
+        }
+    ],
+    "license": "GPLv3",
+    "type": "wordpress-theme",
+    "repositories": [
+        {
+          "type": "composer",
+          "url": "https://purdue.github.io"
+        }
+    ],
+    "require": {
+        "purdue/boilerup-wp": "*"
+    }
+}

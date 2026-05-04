@@ -1,0 +1,52 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "purdue/mixed-rtb",
+    "version": "1.1.01",
+    "title": "Mosaic Cards",
+    "category": "purdue",
+    "description": "This block adds a few reason to believe cards. Add/manage cards on the right panel.",
+    "supports": {
+      "html": false
+    },
+	"attributes": {
+		"smallCards": {
+			"type": "array",
+			"default": []
+		},
+		"sliderCards": {
+			"type": "array",
+			"default": []
+		},
+		"background": {
+			"type": "string",
+			"default": "none"
+		},
+		"id": {
+			"type": "string",
+			"default": ""
+		},
+		"paddingTop": {
+			"type": "string",
+			"default": ""
+		},
+		"paddingBottom": {
+			"type": "string",
+			"default": ""
+		},
+		"className": {
+			"type": "string",
+			"default": ""
+		},
+		"rtbCSS": {
+			"type": "string",
+			"default": ""
+		}
+	},
+    "textdomain": "mixed-rtb",
+    "editorScript": "file:./index.js",
+	"viewScript": ["file:./frontend.js"],
+    "editorStyle": "file:./index.css",
+    "style": "file:./style-index.css",
+    "render": "file:./render.php"
+  }

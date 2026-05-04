@@ -1,0 +1,37 @@
+@import "../../../src/style/front-end/overides/colors";
+@import "../../../src/style/front-end/overides/variables";
+@import '../../../node_modules/bulma/sass/utilities/mixins.sass';
+
+.purdue-home-search-bar{
+  overflow:hidden;
+    &.has-black-background{
+      .purdue-home-search-bar__links{
+        color:$steam-gray;
+        ul li a{
+          color:$steam-gray;
+        }
+      }
+    }
+    hr{
+      background-color:$steam-gray;
+      height:1px;
+      margin: 0 auto;
+      width: 95%;
+      @include mobile{
+        width: 100%;
+      }
+    }
+    &__header{
+      font-family: $united-sans-condensed;
+      font-size: 1.5rem;
+      font-weight: 900;
+      letter-spacing: 1.85px;
+      line-height: 1.5;
+      text-align: center;
+      margin-bottom:2rem;
+      @include mobile{
+        font-size: 1.25rem;
+        margin-bottom:1.5rem;
+      }
+    }
+ }

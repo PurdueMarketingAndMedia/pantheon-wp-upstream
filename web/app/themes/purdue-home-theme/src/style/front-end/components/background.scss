@@ -1,0 +1,180 @@
+.has-white-background {
+  background: $white;
+  h1,
+  h2:not(.tagged-header),
+  h3:not(.tagged-header),
+  h4:not(.tagged-header),
+  h5:not(.tagged-header),
+  h6:not(.tagged-header),
+  p:not(.tagged-header) {
+    color: $black;
+  }
+}
+.has-none-background {
+  background: none;
+  h1,
+  h2:not(.tagged-header),
+  h3:not(.tagged-header),
+  h4:not(.tagged-header),
+  h5:not(.tagged-header),
+  h6:not(.tagged-header),
+  p:not(.tagged-header) {
+    color: $black;
+  }
+}
+.has-gray-background {
+  background: $grey-lighter;
+  h1,
+  h2:not(.tagged-header),
+  h3:not(.tagged-header),
+  h4:not(.tagged-header),
+  h5:not(.tagged-header),
+  h6:not(.tagged-header),
+  p:not(.tagged-header) {
+    color: $black;
+  }
+  a:not(.purdue-home-button, .wp-block-button__link) {
+    color: $black;
+  }
+  figure>figcaption, .wp-block-image>figcaption{
+    color:$black;
+    border-left:1px solid $black;
+  }
+}
+.has-dark-gray-background {
+  background: $steel-gray;
+  h1,
+  h2:not(.tagged-header),
+  h3:not(.tagged-header),
+  h4:not(.tagged-header),
+  h5:not(.tagged-header),
+  h6:not(.tagged-header),
+  p:not(.tagged-header),li {
+    color: $white;
+  }
+  a:not(.purdue-home-button, .wp-block-button__link) {
+    color: $boiler-gold;
+  }
+  figure>figcaption, .wp-block-image>figcaption{
+    color:$white;
+    border-left:1px solid $white;
+  }
+}
+.has-image-background {
+  h1,
+  h2:not(.tagged-header),
+  h3:not(.tagged-header),
+  h4:not(.tagged-header),
+  h5:not(.tagged-header),
+  h6:not(.tagged-header),
+  p:not(.tagged-header),li {
+    color: $white;
+  }
+  a:not(.purdue-home-button, .wp-block-button__link) {
+    color: $boiler-gold;
+  }
+}
+.has-gold-background {
+  background: $boiler-gold;
+  h1,
+  h2:not(.tagged-header),
+  h3:not(.tagged-header),
+  h4:not(.tagged-header),
+  h5:not(.tagged-header),
+  h6:not(.tagged-header),
+  p:not(.tagged-header) {
+    color: $black;
+  }
+  a:not(.purdue-home-button, .wp-block-button__link) {
+    color: $black;
+  }
+  figure>figcaption, .wp-block-image>figcaption{
+    color:$black;
+    border-left:1px solid $black;
+  }
+}
+.has-black-background {
+  background: $black;
+  h1,
+  h2:not(.tagged-header),
+  h3:not(.tagged-header),
+  h4:not(.tagged-header),
+  h5:not(.tagged-header),
+  h6:not(.tagged-header),
+  p:not(.tagged-header),li {
+    color: $white;
+  }
+  .tagged-header-container {
+    border-top: 2px solid $boiler-gold;
+  }
+  a:not(.purdue-home-button, .wp-block-button__link) {
+    color: $boiler-gold;
+  }
+  figure>figcaption, .wp-block-image>figcaption{
+    color:$white;
+    border-left:1px solid $white;
+  }
+  .has-white-background {
+    background: $white;
+    h1,
+    h2:not(.tagged-header),
+    h3:not(.tagged-header),
+    h4:not(.tagged-header),
+    h5:not(.tagged-header),
+    h6:not(.tagged-header),
+    p:not(.tagged-header) {
+      color: $black;
+    }
+  }
+  .has-gray-background {
+    background: $grey-lighter;
+    h1,
+    h2:not(.tagged-header),
+    h3:not(.tagged-header),
+    h4:not(.tagged-header),
+    h5:not(.tagged-header),
+    h6:not(.tagged-header),
+    p:not(.tagged-header) {
+      color: $black;
+    }
+  }
+  .has-dark-gray-background {
+    background: $steel-gray;
+    h1,
+    h2:not(.tagged-header),
+    h3:not(.tagged-header),
+    h4:not(.tagged-header),
+    h5:not(.tagged-header),
+    h6:not(.tagged-header),
+    p:not(.tagged-header) {
+      color: $white;
+    }
+  }
+  .has-gold-background {
+    background: $boiler-gold;
+    h1,
+    h2:not(.tagged-header),
+    h3:not(.tagged-header),
+    h4:not(.tagged-header),
+    h5:not(.tagged-header),
+    h6:not(.tagged-header),
+    p:not(.tagged-header) {
+      color: $black;
+    }
+  }
+}
+.has-gradient-background {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #f0f0f0 100%);
+  color: $black;
+}
+.purdue-home-background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

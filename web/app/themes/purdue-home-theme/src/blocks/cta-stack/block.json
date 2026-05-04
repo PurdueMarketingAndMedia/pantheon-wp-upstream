@@ -1,0 +1,38 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "purdue/cta-stack",
+	"version": "1.1.01",
+	"title": "CTA stack",
+	"category": "purdue",
+	"description": "This block adds a stack of CTA stack.",
+	"supports": {
+		"html": false
+	},
+    "attributes": {
+        "background": {
+            "type": "string",
+            "default": "none"
+        },
+        "header": {
+            "type": "string",
+            "default": ""
+        },
+        "cards": {
+            "type": "array",
+            "default": []
+        },
+        "id": {
+            "type": "string",
+            "default": ""
+        },
+        "className": {
+            "type": "string",
+            "default": ""
+        }
+    },
+	"textdomain": "cta-stack",
+	"editorScript": "file:./index.js",
+	"style": ["file:./style-index.css", "file:./test.css"],
+	"render": "file:./render.php"
+}

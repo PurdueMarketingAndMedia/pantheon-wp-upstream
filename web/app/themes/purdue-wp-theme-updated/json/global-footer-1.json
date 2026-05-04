@@ -1,0 +1,34 @@
+{
+    "column" : "1",
+    "header" : "EXPLORE",
+    "links" : [
+        {
+            "link_text": "Campus Map",
+            "link_url": "https://www.purdue.edu/campus-map/"
+        },
+        {
+            "link_text": "Careers",
+            "link_url": "https://www.purdue.edu/purdue/careers/index.php"
+        },
+        {
+            "link_text": "Center for Healthy Living",
+            "link_url": "https://www.purdue.edu/hr/CHL/"
+        },
+        {
+            "link_text": "Colleges and Schools",
+            "link_url": "https://www.purdue.edu/home/colleges_schools/"
+        },
+        {
+            "link_text": "Directory",
+            "link_url": "https://www.purdue.edu/directory/"
+        },
+        {
+            "link_text": "Entrepreneurship and Commercialization",
+            "link_url": "https://www.purdue.edu/purdue/commercialization/index.php"
+        },
+        {
+            "link_text": "Libraries",
+            "link_url": "https://www.lib.purdue.edu/"
+        }
+    ]
+}

@@ -1,0 +1,47 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "purdue/button-bar",
+	"version": "1.1.01",
+	"title": "Button Bar",
+	"category": "purdue",
+	"description": "This block adds a bar of button.",
+	"supports": {
+		"html": false
+	},
+    "attributes": {
+        "type": {
+            "type": "string",
+            "default": "complex"
+        },
+        "alignment": {
+            "type": "string",
+            "default": "left"
+        },
+        "background": {
+            "type": "string",
+            "default": "none"
+        },
+        "links": {
+            "type": "array",
+            "default": []
+        },
+        "id": {
+            "type": "string",
+            "default": ""
+        },
+        "className": {
+            "type": "string",
+            "default": ""
+        },
+        "buttonCSS": {
+            "type":  "string",
+            "default": ""
+        }
+    },
+	"textdomain": "button-bar",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php"
+}

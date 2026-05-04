@@ -8,28 +8,28 @@
  *
  * @package purdue-wp-theme
  */
-
+$customCSS = "";
+if (function_exists('get_field')) {	
+   $customCSS = wp_strip_all_tags(html_entity_decode(get_field('custom_styles')));
+}
 ?>
 
 <!DOCTYPE html>
 <html <?php language_attributes(); ?> class="is-fullheight">
 <head>
-	<title><?php wp_title(''); ?></title>
+	<title><?php is_front_page() ? bloginfo('name') : wp_title(''); ?></title>
 	<meta charset="<?php bloginfo('charset'); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="profile" href="http://gmpg.org/xfn/11">
-	<!-- Font Awesome -->
-	<script defer src="https://use.fontawesome.com/releases/v5.8.1/js/all.js" crossorigin="anonymous"></script>
-	<script defer src="https://use.fontawesome.com/releases/v5.8.1/js/v4-shims.js" crossorigin="anonymous"></script>
-	<?php wp_head(); ?>
+	<?php 
+		 if($customCSS != ""){
+			echo '<style type="text/css">' . $customCSS . '</style>';
+		}
+		wp_head(); 
+	?>
 </head>
 
 <body <?php body_class(); ?>>
-
-	<no-script>
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" crossorigin="anonymous" />
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/v4-shims.css" crossorigin="anonymous" />
-	</no-script>
 
 <?php if (function_exists('gtm4wp_the_gtm_tag')) {
     gtm4wp_the_gtm_tag();
@@ -44,7 +44,7 @@
 					<div class="navbar-brand">
 						<a href="https://www.purdue.edu/" class="navbar-item" rel="home"><img src="https://www.purdue.edu/purdue/images/PU-H.svg" alt="Purdue Logo"></a>
 						<button class="icon is-large navbar-burger" data-target="simple-nav">
-							<i arial-hidden="true" class="fas fa-bars fa-2x burger-icon"></i><i arial-hidden="true" class="fas fa-times close-icon"></i>
+							<i aria-hidden="true" class="fas fa-bars fa-2x burger-icon"></i><i aria-hidden="true" class="fas fa-times close-icon"></i>
 						</button>
 					</div>
 					<div class="navbar-end">
@@ -63,7 +63,7 @@
 				</nav>
 			</header>
 
-        <?php } else if (get_theme_mod( 'header_layout_settings' ) == 'global') { ?>
+        <?php } else if (get_theme_mod( 'header_layout_settings' ) == 'global'||get_theme_mod( 'header_layout_settings' ) == 'global2') { ?>
 			<header id="header" class="header--global">
 				<nav class="navbar is-black purdue-navbar-black" role="navigation">
 					<div class="navbar-brand">
@@ -112,7 +112,7 @@
 						<?php echo get_bloginfo( 'name' ); ?>
 					</button>
 				</div>
-				<nav id="global-nav" class="navbar has-shadow purdue-navbar-white navbar--global accordion__content" aria-labelledby="global-nav-button" data-menu="global-nav">					
+				<nav id="global-nav" class="navbar has-shadow purdue-navbar-white navbar--global accordion__content" aria-labelledby="global-nav-button" data-menu="global-nav" role="navigation">					
 					<ul class="navbar-start" data-menu="global-nav">
 						<?php purdueBrand_globalMenu(); ?>
 					</ul>					

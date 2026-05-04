@@ -1,0 +1,130 @@
+// =============
+// Youtube Lite.
+// =============
+
+lite-youtube, lite-vimeo {
+	background-color: #000;
+	position: relative;
+	display: block;
+	contain: content;
+	background-position: center center;
+	background-size: cover;
+	cursor: pointer;
+	margin: 0 auto;
+    width:100%;
+    height: auto;
+	border-radius:4px;
+	&::after {
+		content: '';
+		display: block;
+		padding-bottom: calc(100% / (16 / 9));
+		background: rgba(0,0,0,0.55);
+	}
+	&:hover{
+		.cta-link:after {
+			visibility: visible;
+			transform: scaleX(1);
+		}
+	}
+	> {
+		iframe {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			border: 0;
+		}
+
+	}
+
+	&:hover > .lty-playbtn,
+	.lty-playbtn:focus {
+		filter: none;
+	}
+	.flex-container--align-center, .cta-link, .cta-icon{
+		pointer-events: none;
+	}
+
+	&.lyt-activated {
+		cursor: unset;
+
+		&::before,
+		> .lty-playbtn {
+			opacity: 0;
+			pointer-events: none;
+		}
+	}
+
+	> .lty-playbtn .lyt-visually-hidden {
+		clip: rect(0 0 0 0);
+		clip-path: inset(50%);
+		height: 1px;
+		overflow: hidden;
+		position: absolute;
+		white-space: nowrap;
+		width: 1px;
+	}
+}
+lite-vimeo {
+	position: absolute;
+	height: 100%;
+    top: 0;
+    left: 0;
+	&:after {
+		padding-bottom: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+}
+.wp-block-embed.is-type-video, .post-content__video-hero {
+	.youtube-lite-container.purdue-home-cta-card{
+		box-shadow: none;
+	}
+	.flex-container--align-center{
+		.cta-link{
+			@include tablet{
+				font-size: 1.875rem;
+			}
+		}
+		.cta-icon.cta-icon--play {
+			@include tablet{
+			width: 80px;
+			height: 80px;
+			}
+		}
+	}
+}
+
+// ============================
+// Youtube Lite w/ Block Embed.
+// ============================
+
+.wp-embed-responsive {
+	.wp-embed-aspect-16-9 {
+		.wp-block-embed__wrapper {
+			&.youtube-lite-container {
+				&::before {
+					padding-top: unset;
+				}
+			}
+		}
+	}
+}
+
+.vimeo-lite{
+	.flex-container--align-center{
+		padding: 0;
+	}
+}
+
+.wp-block-embed-vimeo{
+	.wp-block-embed__wrapper{
+		&:before{
+			content: "";
+			display: block;
+			padding-top: 56.2%;
+		}
+	}
+}

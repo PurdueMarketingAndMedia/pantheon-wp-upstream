@@ -1,0 +1,30 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "purdue/link-cards-single",
+    "version": "1.1.01",
+    "title": "Link Card",
+    "category": "purdue",
+    "icon": "welcome-add-page",
+    "description": "Add Card.",
+    "supports": {
+      "className": true
+    },
+    "parent": [
+        "purdue/link-cards-new"
+    ],
+    "attributes": {
+      "columnClass" : {
+        "type" : "string",
+        "default" : "4"
+      },
+      "cardBackground" : {
+        "type" : "string",
+        "default": "white"
+      }
+    },
+    "usesContext": ["purdue/link-cards-columns", "purdue/link-cards-cardBackground"],
+    "textdomain": "link-cards-single",
+    "editorScript": "file:./index.js",
+    "render": "file:./render.php"
+  }

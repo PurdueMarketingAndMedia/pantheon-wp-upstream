@@ -12,11 +12,7 @@ var adminsubtabs = {
 		},
 		"visitor": {
 			tabtext: gtm4wp.visitortabtitle,
-			numitems: 7
-		},
-		"adwords": {
-			tabtext: gtm4wp.adwordstabtitle,
-			numitems: 1
+			numitems: 8
 		},
 		"whichbrowser": {
 			tabtext: gtm4wp.browsertabtitle,
@@ -29,11 +25,7 @@ var adminsubtabs = {
 		"site": {
 			tabtext: gtm4wp.sitetabtitle,
 			numitems: 2
-		}/*,
-		"misc": {
-			tabtext: gtm4wp.misctabtitle,
-			numitems: 1
-		}*/
+		}
 	},
 	2: {
 		"generalevents": {
@@ -43,21 +35,21 @@ var adminsubtabs = {
 		"mediaevents": {
 			tabtext: gtm4wp.mediaeventstabtitle,
 			numitems: 3
-		},
-		"depecratedevents": {
-			tabtext: gtm4wp.depecratedeventstabtitle,
-			numitems: 4
 		}
 	},
 	3: {},
 	4: {
 		"blocktags": {
 			tabtext: gtm4wp.blocktagstabtitle,
-			numitems: 20
+			numitems: 74
+		},
+		"blocktriggers": {
+			tabtext: gtm4wp.blocktriggerstabtitle,
+			numitems: 9
 		},
 		"blockmacros": {
 			tabtext: gtm4wp.blockmacrostabtitle,
-			numitems: 20
+			numitems: 15
 		}
 	},
 	5: {
@@ -67,14 +59,22 @@ var adminsubtabs = {
 		},
 		"int-wc": {
 			tabtext: gtm4wp.wctabtitle,
-			numitems: 15
-		},
-		"int-google-optimize": {
-			tabtext: gtm4wp.gotabtitle,
-			numitems: 2
+			numitems: 17
 		},
 		"int-amp": {
 			tabtext: gtm4wp.amptabtitle,
+			numitems: 1
+		},
+		"int-cookiebot": {
+			tabtext: gtm4wp.cookiebottabtitle,
+			numitems: 1
+		},
+		"int-consentmode": {
+			tabtext: gtm4wp.consentmodetabtitle,
+			numitems: 8
+		},
+		"int-webtoffeegdpr": {
+			tabtext: gtm4wp.webtoffeetabtitle,
 			numitems: 1
 		}
 	}

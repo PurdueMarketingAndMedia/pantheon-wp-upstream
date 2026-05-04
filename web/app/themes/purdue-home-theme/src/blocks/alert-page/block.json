@@ -1,0 +1,64 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "purdue/alert-page",
+	"version": "1.1.01",
+	"title": "Alert Page",
+	"category": "purdue",
+	"description": "This block adds an alert page on page load.",
+	"supports": {
+		"html": false
+	},
+    "attributes": {
+		"header": {
+			"type": "string",
+			"default": ""
+		},
+		"imgURL": {
+			"type": "string",
+			"default": ""
+		},
+		"imgAlt": {
+			"type": "string",
+			"default": ""
+		},
+		"youtubeURL": {
+			"type": "string",
+			"default": ""
+		},
+		"tag": {
+			"type": "string",
+			"default": ""
+		},
+		"subtext": {
+			"type": "string",
+			"default": ""
+		},
+		"linkText": {
+			"type": "string",
+			"default": "View More"
+		},
+		"linkURL": {
+			"type": "string",
+			"default": ""
+		},
+		"external": {
+			"type": "boolean",
+			"default": true
+		},
+		"showOnce": {
+			"type": "boolean",
+			"default": true
+		},
+		"id": {
+			"type": "string",
+			"default": ""
+		}
+    },
+	"textdomain": "alert-page",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+    "viewScript": "file:./frontend.js",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php"
+}

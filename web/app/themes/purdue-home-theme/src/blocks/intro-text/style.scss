@@ -1,0 +1,143 @@
+@import "../../../src/style/front-end/overides/colors";
+@import "../../../src/style/front-end/overides/variables";
+@import '../../../node_modules/bulma/sass/utilities/mixins.sass';
+
+.purdue-home-intro-text{
+    .purdue-home-intro-text__header, .purdue-home-subheader{
+        text-transform: none;
+    }
+    .purdue-home-subheader{
+        margin-bottom:1.5rem;
+    }
+    .has-black-background{
+        .purdue-home-subheader{
+            color:$boiler-gold; 
+        }
+        .purdue-home-intro-text__header{
+            color:$white;
+        }
+    }
+    .has-gold-background{
+        .tagged-header-container{
+            border-color:$black;
+        }
+    }
+    .section .container .columns .column:first-child{
+        border-right:none;
+    }
+    &.has-layout-one-centered{
+        .section{
+            .container{
+                max-width:880px;
+                text-align:center;
+                .columns{
+                    display:block;
+                }
+                .purdue-home-intro-text__list{
+                    justify-content: center;
+                }
+            }
+        }
+    }
+    &.has-layout-one-left{
+        .section{
+            .container{
+                .purdue-home-subheader{
+                    text-align:left;
+                }
+                .columns{
+                    display:block;
+                }
+
+            }
+        }
+    }
+    &.has-layout-two{
+        .section{
+            .container{
+                .columns{
+                    justify-content: space-between;
+                    align-items: center;
+                    .column{
+                        flex-basis:40%;
+                        flex-grow:0;
+                    }
+                }
+                .purdue-home-subheader{
+                    text-align:left;
+                }
+            }
+        }
+    }
+    &.has-layout-two-line{
+        .section{
+            .container{
+                .columns{
+                    justify-content: space-between;
+                    align-items: center;
+                    position: relative;
+                    &:after{
+                        content:"";
+                        border-top:4px solid $boiler-gold;
+                        height: 4px;
+                        width: 16%;
+                        position:absolute;
+                        top: calc(50% - 2px);
+                        left: 50%;
+                        transform: translateX(-50%);
+                        
+                    }
+                    @include mobile{
+                        &:after{
+                            content:none;
+                        }
+                    }
+                    .column{
+                        flex-basis:40%;
+                        flex-grow:0;
+
+                    }
+                
+                }
+                .purdue-home-subheader{
+                    text-align:left;
+                }
+            }
+            &.has-gold-background{
+                .container{
+                    .columns{
+                        &:after{
+                            border-top:4px solid $black;                            
+                        }
+                    }
+                }
+                .tagged-header-container{
+                    border-color: $black;
+                }
+            }
+        }
+    }
+    .tagged-header-container{
+        border-color:$boiler-gold;
+        margin-bottom:2rem;
+    }
+    .purdue-home-intro-text__list{
+        display:flex;
+        list-style-type: none;
+        margin-top:2rem;
+        padding-left:0;
+        flex-wrap: wrap;
+        li:not(:last-child){
+            margin-right:0.5rem;
+            padding-bottom:0.5rem;
+            @include mobile{
+                margin-right:0;
+            }
+        }
+        @include mobile{
+            flex-direction:column;
+            margin-top:2rem;
+        }
+    }
+}
+

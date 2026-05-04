@@ -2,8 +2,8 @@
 Contributors: xwp
 Tags: wp stream, stream, activity, logs, track
 Requires at least: 4.5
-Tested up to: 5.8
-Stable tag: 3.8.1
+Tested up to: 6.3
+Stable tag: 3.10.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -65,6 +65,11 @@ With Stream’s powerful logging, you’ll have the valuable information you nee
  * WP-CLI command for querying records
 
 
+= Known Issues
+
+ * We have temporarily disabled the data removal feature through plugin uninstallation, starting with version 3.9.3. We identified a few edge cases that did not behave as expected and we decided that a temporary removal is preferable at this time for such an impactful and irreversible operation. Our team is actively working on refining this feature to ensure it performs optimally and securely. We plan to reintroduce it in a future update with enhanced safeguards.
+
+
 = Contribute =
 
 There are several ways you can get involved to help make Stream better:
@@ -79,7 +84,7 @@ There are several ways you can get involved to help make Stream better:
 
 Thank you for wanting to make Stream better for everyone!
 
-Past Contributors: fjarrett, shadyvb, chacha, westonruter, johnregan3, jacobschweitzer, lukecarbis, kasparsd, bordoni, dero, faishal, rob, desaiuditd, DavidCramer, renovate-bot, marcin-lawrowski, JeffMatson, Powdered-Toast-Man, johnolek, johnbillion, greguly, pascal-klaeres, szepeviktor, rheinardkorf, frozzare, khromov, dkotter, bhubbard, stipsan, stephenharris, omniwired, kopepasah, joehoyle, eugenekireev, barryceelen, valendesigns, tlovett1, tareiking, stayallive, sayedtaqui, robbiet480, oscarssanchez, kidunot89, johnwatkins0, javorszky, jamesgol, desrosj, davelozier, davefx, cfoellmann, JustinSainton, JJJ, postphotos
+Past Contributors: fjarrett, shadyvb, chacha, westonruter, johnregan3, jacobschweitzer, lukecarbis, kasparsd, bordoni, dero, faishal, rob, desaiuditd, DavidCramer, renovate-bot, marcin-lawrowski, JeffMatson, Powdered-Toast-Man, johnolek, johnbillion, greguly, pascal-klaeres, szepeviktor, rheinardkorf, frozzare, khromov, dkotter, bhubbard, stipsan, stephenharris, omniwired, kopepasah, joehoyle, eugenekireev, barryceelen, valendesigns, tlovett1, tareiking, stayallive, sayedtaqui, robbiet480, oscarssanchez, kidunot89, johnwatkins0, javorszky, jamesgol, desrosj, davelozier, davefx, cfoellmann, JustinSainton, JJJ, postphotos, schlessera
 
 
 == Screenshots ==
@@ -89,7 +94,53 @@ Past Contributors: fjarrett, shadyvb, chacha, westonruter, johnregan3, jacobschw
 3. Create rules for excluding certain kinds of records from appearing in Stream.
 
 
+== Upgrade Notice ==
+
+= 3.9.0 =
+
+Track changes to posts when using the block editor.
+
+
 == Changelog ==
+
+= 3.10.0 - October 9, 2023 =
+
+- Fix: Improve PHP 8.1 compatibility by updating `filter_*()` calls referencing `FILTER_SANITIZE_STRING` (issue [#1422](https://github.com/xwp/stream/pull/1422)).
+- Fix: prevent PHP deprecation warning when checking for the Stream settings page requests (issue [#1440](https://github.com/xwp/stream/pull/1440)).
+- Fix: Add the associated post title to comment events (issue [#1430](https://github.com/xwp/stream/pull/1430)).
+- Fix: Use the user associated with a comment instead of the current logged-in user when logging comments (issue [#1429](https://github.com/xwp/stream/pull/1429)).
+- Fix: Prevent PHP warnings when no Lead ID present for a Gravity Forms submission (issue [#1447](https://github.com/xwp/stream/pull/1447)).
+- Fix: Remove support for legacy WordPress VIP user attribute helpers `get_user_attributes()`, `delete_user_attributes()` and `update_user_attributes()` (issue [#1425](https://github.com/xwp/stream/pull/1425)).
+- Development: Document the process for reporting security vulnerabilities (issue [#1433](https://github.com/xwp/stream/pull/1433)).
+- Development: Mark as tested with WordPress version 6.3.
+
+= 3.9.3 - April 25, 2023 =
+
+- Fix: [Security] CVE-2022-43490: Temporarily remove uninstall flow to avoid inadvertent uninstallation of the plugin, props [@Lucisu](https://github.com/Lucisu) via [Patchstack](https://patchstack.com/).
+- Fix: [Security] CVE-2022-43450: Check for capabilities in 'wp_ajax_load_alerts_settings' AJAX action before loading alert settings, props [@Lucisu](https://github.com/Lucisu) via [Patchstack](https://patchstack.com/).
+- Development: Mark as tested with the latest version 6.2 of WordPress.
+
+= 3.9.2 - January 10, 2023 =
+
+- Fix: [Security] Check authorization on 'save_new_alert' AJAX action [#1391](https://github.com/xwp/stream/pull/1391), props [marcS0H](https://github.com/marcS0H) (WPScan)
+- Development: Mark as tested with the latest version 6.1 of WordPress.
+- Development: Update development dependencies.
+
+= 3.9.1 - August 23, 2022 =
+
+- Fix: PHP 8 compatibility for widget connector [#1294](https://github.com/xwp/stream/pull/1355), props [@ParhamG](https://github.com/ParhamG)
+- Development: Mark as tested with the latest version 6.0 of WordPress.
+- Development: Update development dependencies.
+
+= 3.9.0 - March 8, 2022 =
+
+- Fix: Track changes to posts when using the block editor by making the Posts connector to run on both frontend and backend requests since block editor changes happen over the REST API [#1264](https://github.com/xwp/stream/pull/1264), props [@coreymckrill](https://github.com/coreymckrill).
+- Fix: Don't store empty log event parameters [#1307](https://github.com/xwp/stream/pull/1307), props [@lkraav](https://github.com/lkraav).
+- Development: Adjust the local development environment to use MariaDB containers for ARM processor compatabilty.
+
+= 3.8.2 - October 12, 2021 =
+
+- Security fix: Ensure the value of `order` query parameter forwarded to the database query when viewing the Stream records in the WordPress admin (for authenticated users) is only `ASC` or `DESC`. Previously it passed the whole value of the `order` parameter filtered through `esc_sql()`.
 
 = 3.8.1 - September 17, 2021 =
 

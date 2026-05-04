@@ -1,0 +1,179 @@
+@import "../../../src/style/front-end/overides/colors";
+@import "../../../src/style/front-end/overides/variables";
+@import '../../../node_modules/bulma/sass/utilities/mixins.sass';
+
+.purdue-home-link-hero {
+  .section.has-padding-exlarge {
+    padding-top: 8rem;
+    padding-bottom: 3rem;
+    height: 100%;
+    @include mobile {
+      padding-top: 4rem;
+      padding-bottom: 1.875rem;
+    }
+  }
+  .container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+  }
+  &__subheader {
+    margin-bottom: 3.375rem !important;
+    @include mobile {
+      margin-bottom: 2.5rem !important;
+    }
+  }
+  &__header {
+    color: $white;
+    margin-bottom: 1.25rem !important;
+  }
+  &__subtext {
+    color: $white;
+    font-family: $acumin-pro;
+    font-size: 1.25rem;
+    letter-spacing: 0;
+    line-height: 1.4;
+    text-align: center;
+    margin-bottom: 4rem !important;
+    max-width: 840px;
+    @include mobile {
+      font-size: 1rem;
+    }
+  }
+  &__arrow {
+    margin-top: auto;
+    & > * {
+      color: $boiler-gold;
+    }
+  }
+  &__list-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    @include mobile {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+  &__list--desktop {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-between;
+    list-style-type: none !important;
+    z-index: 1;
+    position: relative;
+    padding-left: 0 !important;
+    padding-bottom: 0 !important;
+    &:after {
+      content: "";
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      background-position: center;
+      background-size: 10px 2px;
+      background-repeat: repeat-x;
+      background-image: linear-gradient(
+        to right,
+        #fff 20%,
+        rgba(255, 255, 255, 0) 0%
+      );
+    }
+    @include touch {
+      display: none;
+    }
+    li {
+      z-index: 2;
+      padding-bottom: 0 !important;
+    }
+    .purdue-home-button.purdue-home-button--white {
+      font-size: 1rem;
+      &:after {
+        content: none;
+      }
+    }
+  }
+  &__list--mobile.purdue-home-select {
+    display: none;
+    select {
+      width: 100%;
+    }
+    @include touch {
+      display: flex;
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+  }
+  &__list-desc {
+    font-family: $united-sans-condensed;
+    font-size: 1.125rem;
+    font-weight: 900;
+    letter-spacing: 2.25px;
+    line-height: 1.1;
+    color: $boiler-gold;
+    text-transform: uppercase;
+    margin-right: 1.5rem;
+    flex-shrink: 0;
+    @include mobile {
+      margin-right: 0;
+      margin-bottom: 0.7rem;
+    }
+  }
+  .purdue-home-link-hero__subtext +  ul.purdue-home-button-list{
+    margin-top: -1.5rem;
+  }
+  ul.purdue-home-button-list {
+    padding-left: 0;
+    margin-bottom: 3rem;
+  }
+}
+.hero-down-arrow {
+  display: flex;
+  justify-content: center;
+  & > * {
+    position: relative;
+    color: $boiler-gold;
+    margin-top: 3rem;
+    font-size: 2rem;
+    cursor: pointer;
+    animation: bounce 2s infinite;
+    &:hover {
+      opacity: 0.9;
+      animation: none;
+    }
+    @media (max-width: 1199px) {
+      width: 35px;
+    }
+    @media (max-width: 767px) {
+      margin-top: 1.75rem;
+    }
+  }
+}
+.has-global-header {
+  .purdue-home-link-hero {
+    @include widescreen {
+      height: auto;
+    }
+  }
+}
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-15px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}

@@ -6,6 +6,7 @@ namespace WhichBrowser\Model\Primitive;
  * @internal
  */
 
+#[\AllowDynamicProperties]
 class Base
 {
     /**
@@ -76,6 +77,6 @@ class Base
             }
         }
 
-        return implode($lines, ", ");
+        return implode(", ", $lines);
     }
 }

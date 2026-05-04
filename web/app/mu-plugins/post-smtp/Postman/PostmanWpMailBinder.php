@@ -108,13 +108,50 @@ if (! class_exists ( 'PostmanWpMailBinder' )) {
 			 *        	Optional. Additional headers.
 			 * @param string|array $attachments
 			 *        	Optional. Files to attach.
+			 * @since 2.0.25 @action `wp_mail_succeeded` added.
 			 * @return bool Whether the email contents were sent successfully.
 			 */
 			function wp_mail($to, $subject, $message, $headers = '', $attachments = array()) {
 				// create an instance of PostmanWpMail to send the message
 				$postmanWpMail = new PostmanWpMail ();
 				// send the mail
+				
+				$atts = compact( 'to', 'subject', 'message', 'headers', 'attachments' );
+
+				/**
+				 * Filters whether to preempt sending an email.
+				 *
+				 * Returning a non-null value will short-circuit {@see wp_mail()}, returning
+				 * that value instead. A boolean return value should be used to indicate whether
+				 * the email was successfully sent.
+				 *
+				 * @since 2.9.8
+				 *
+				 * @param null|bool $return Short-circuit return value.
+				 * @param array     $atts {
+				 *     Array of the `wp_mail()` arguments.
+				 *
+				 *     @type string|string[] $to          Array or comma-separated list of email addresses to send message.
+				 *     @type string          $subject     Email subject.
+				 *     @type string          $message     Message contents.
+				 *     @type string|string[] $headers     Additional headers.
+				 *     @type string|string[] $attachments Paths to files to attach.
+				 * }
+				 */
+				$pre_wp_mail = apply_filters( 'pre_wp_mail', null, $atts );
+
+				if ( null !== $pre_wp_mail ) {
+
+					return $pre_wp_mail;
+
+				}
+				
 				$result = $postmanWpMail->send ( $to, $subject, $message, $headers, $attachments );
+				
+				if( $result ) {
+					do_action( 'wp_mail_succeeded', $atts );
+				} 
+
 				// return the result
 				return $result;
 			}

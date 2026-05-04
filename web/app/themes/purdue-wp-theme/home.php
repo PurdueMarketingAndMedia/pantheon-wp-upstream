@@ -85,7 +85,7 @@
 									<div class="content-text">
 										<?php 
 											$more = true;
-											if(sizeof(the_excerpt())!==0){
+											if(!empty(the_excerpt())){
 												the_excerpt();
 											}else{
 												echo purdue_get_excerpt(get_the_content()); 
@@ -113,7 +113,7 @@
 	</div>
 	
 	<?php if (!has_block('purdue-blocks/anchor-link-navigation')&&!has_block('purdue-blocks/custom-side-menu')) { ?>
-		<button id="to-top" class="to-top-hidden">
+		<button id="to-top" class="to-top-hidden" aria-label="To top button">
 			<i class="fas fa-chevron-up" aria-hidden="true"></i>
 		</button>
 	<?php } ?>

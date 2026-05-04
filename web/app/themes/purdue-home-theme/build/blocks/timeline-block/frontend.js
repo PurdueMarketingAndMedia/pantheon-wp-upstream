@@ -1,0 +1,1 @@
+!function(){const t=window.innerHeight,e=[...document.querySelectorAll(".purdue-home-timeline__card")];e&&e.length>0&&window.addEventListener("scroll",()=>{e.forEach(e=>{const n=e.getBoundingClientRect().top,i=e.getBoundingClientRect().bottom;n<=.6*t&&e.classList.add("animate"),i<=.5*t&&e.classList.add("no-animate")})})}();

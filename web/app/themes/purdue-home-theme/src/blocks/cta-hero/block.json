@@ -1,0 +1,59 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "purdue/cta-hero",
+	"version": "1.1.01",
+	"title": "CTA hero",
+	"category": "purdue",
+	"description": "This block adds a hero of CTA Hero.",
+	"supports": {
+		"html": false
+	},
+	"attributes": {
+		"addHeaderAnimation": {
+			"type": "boolean",
+			"default": false
+		},
+		"header": {
+			"type": "string",
+			"default": ""
+		},
+		"headerStatic1": {
+			"type": "string",
+			"default": ""
+		},
+		"headerAnimation": {
+			"type": "string",
+			"default": ""
+		},
+		"headerStatic2": {
+			"type": "string",
+			"default": ""
+		},
+		"subheader": {
+			"type": "string",
+			"default": ""
+		},
+		"cards": {
+			"type": "array",
+			"default": []
+		},
+		"links": {
+			"type": "array",
+			"default": []
+		},
+		"id": {
+			"type": "string",
+			"default": ""
+		},
+		"className": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"textdomain": "cta-hero",
+	"editorScript": "file:./index.js",
+	"script": "file:./frontend.js",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php"
+}

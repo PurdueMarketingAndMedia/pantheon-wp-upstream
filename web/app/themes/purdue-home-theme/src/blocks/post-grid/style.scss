@@ -1,0 +1,650 @@
+@import "../../../src/style/front-end/overides/colors";
+@import "../../../src/style/front-end/overides/variables";
+@import "../../../node_modules/bulma/sass/utilities/mixins.sass";
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-15px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+.purdue-home-cta-grid.purdue-home-post-grid {
+  &.has-gold-background {
+    .purdue-home-post-grid__filter-control {
+      color: $black;
+      &:after {
+        background: $black;
+      }
+    }
+    .field-title {
+      color: $black;
+      &:after {
+        border-color: $black;
+      }
+      &.is-open {
+        border-color: $black;
+      }
+    }
+  }
+  &.has-black-background {
+    .purdue-home-post-grid__filter-control {
+      color: $white;
+      &:after {
+        background: $boiler-gold;
+      }
+      svg {
+        stroke: white;
+      }
+    }
+    .pagination {
+      .page-numbers {
+        color: $black;
+        &.current {
+          border-color: $boiler-gold;
+          background-color: $boiler-gold;
+        }
+      }
+    }
+  }
+  &.has-gray-background {
+    .purdue-home-post-grid__filter-control {
+      color: $black;
+    }
+    .purdue-home-post-grid__filter-content {
+      border-color: $black;
+    }
+  }
+  .section .container {
+    .purdue-home-cta-grid__grid {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-template-rows: auto auto auto 1fr;
+      @include touch {
+        grid-template-columns: auto;
+        grid-template-rows: auto auto auto auto;
+      }
+      .purdue-home-cta-grid__grid__filters {
+        &-checkbox {
+          grid-column: 1/2;
+          grid-row: 1/5;
+          padding-right: 2rem;
+          min-width: 350px;
+          @include desktop{
+            min-width: 325px;
+            max-width: 325px;
+          }
+          @include touch {
+            padding-right: 0;
+            min-width: 0;
+            grid-column: 1/2;
+            grid-row: 2/3;
+          }
+          form {
+            position: sticky;
+            top: 150px;
+          }
+        }
+        &-search {
+          grid-column: 2/3;
+          grid-row: 1/2;
+          @include touch {
+            grid-column: 1/2;
+            grid-row: 1/2;
+          }
+        }
+      }
+      .purdue-home-cta-grid__grid__filters-selected {
+        grid-column: 2/3;
+        grid-row: 2/3;
+        padding-bottom: 2rem;
+        @include touch {
+          grid-column: 1/2;
+          grid-row: 3/4;
+        }
+        .filter-elected-term {
+          font-size: 1rem;
+          border-radius: 4px;
+          border: 0.5px solid $steel-gray;
+          padding: 0 1rem;
+          margin-bottom: 0.5rem;
+          color: $black;
+          &:after {
+            content: "";
+            right: -0.25rem;
+            margin-left: 0.5rem;
+            height: 0.8rem;
+            width: 0.8rem;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+            display: inline-block;
+            flex-shrink: 0;
+            background-image: url("../../../imgs/close_icon_black.svg");
+          }
+          &:hover {
+            background: $black;
+            color: $white;
+            &:after {
+              background-image: url("../../../imgs/close_icon.svg");
+            }
+          }
+          &:not(:last-child) {
+            margin-right: 1rem;
+          }
+        }
+      }
+      .purdue-home-cta-grid__grid__letters {
+       
+        grid-column: 2/3;
+        grid-row: 2;
+        padding-bottom: 2rem;
+        ul{
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          font-family: $united-sans;
+          font-size: 1.5rem;
+          margin: 0;
+          padding: 0;
+
+          @include touch {
+            flex-wrap: wrap;
+            justify-content: flex-start;
+          }
+        }
+        .filter-letter{
+          color: #000;
+          text-decoration: none;
+          line-height: 1;        
+          border-radius: 4px;
+          font-weight: 700;
+        }
+        li{
+          list-style-type: none;
+          @include touch {
+            padding: 0.25rem;
+          }
+          &.is-disabled{
+            padding: 0 0.25rem 1rem;
+            @include touch {
+            margin: 0.25rem;
+            padding: 0.25rem;
+          }
+            color: $cool-gray;
+          }
+          a{
+            padding: 0.25rem;
+            @include touch {
+            padding: 0.25rem;
+          }
+            &.active, &:hover{
+              background-color: $aged-gold;
+              color: #fff;              
+              border-radius: 4px;
+              
+            }
+          }
+        }
+        @include touch {
+          grid-column: 1/2;
+          grid-row: 3;
+          
+        }
+        
+      }
+      .purdue-home-cta-grid__message{
+        margin-bottom: 2rem;
+      }
+      
+      .purdue-home-cta-grid__grid__filters-right{
+        grid-column: 2/3;
+        grid-row: 3;
+        @include touch {
+          grid-column: 1/2;
+          grid-row: 4;
+        }
+      }
+      .purdue-home-cta-grid__grid__content {
+        grid-column: 2/3;
+        grid-row: 4;
+        @include touch {
+          grid-column: 1/2;
+          grid-row: 5;
+        }
+
+        .purdue-home-cta-card{
+          &--story{
+            .purdue-home-cta-grid__card-title{
+             @media screen and (min-width: 1024px) and (max-width: 1215px) {
+              font-size: 1.3rem;
+            }
+          }
+        }
+      }
+        
+      }
+    }
+  }
+  .search-box {
+    margin-bottom: 1.25rem;
+    flex: 1;
+    input {
+      box-shadow: none;
+      border: 0.5px solid $steam-gray;
+      @include until-fullhd {
+        padding: 0.5rem 3.5rem;
+      }
+    }
+    .search-icon {
+      @include until-fullhd {
+        font-size: 1.6rem;
+        top: calc(50% - 12.5px);
+        left: 1.25rem;
+      }
+    }
+    .search-button {
+      @include until-fullhd {
+        display: none;
+      }
+    }
+    .clear-button {
+      @include until-fullhd {
+        font-size: 1.5rem;
+        padding: 1rem;
+      }
+    }
+  }
+  .purdue-home-post-grid__filter {
+    padding: 0 0 2rem 0;
+
+    &-fields {
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      fieldset {
+        border: 0.5px solid $steam-gray;
+        border-radius: 4px;
+        margin-bottom: 0.625rem;
+        background: $white;
+        @include touch {
+          margin-bottom: 1.25rem;
+        }
+      }
+    }
+    &-content {
+      padding: 0 0 1.5rem;
+      @include touch {
+        border-bottom: 1px solid $primary-background-gray;
+        padding: 0 0 1.5rem;
+      }
+    }
+    &-button {
+      text-align: left;
+    }
+    &-control {
+      font-family: $united-sans-condensed;
+      font-size: 1rem;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+      letter-spacing: 0.0525rem;
+      text-transform: uppercase;
+      color: $railway-gray;
+      border: none;
+      background: none;
+      display: none;
+      align-items: center;
+      cursor: pointer;
+      position: relative;
+      padding: 0;
+      svg,
+      i {
+        margin-right: 0.5rem;
+        stroke: $black;
+      }
+      &:after {
+        content: "";
+        height: 3px;
+        width: 100%;
+        position: absolute;
+        display: block;
+        bottom: -3px;
+        left: 0;
+        visibility: hidden;
+        background: #8e6f3e;
+        transform: scaleX(0);
+        transition: all 0.25s cubic-bezier(1, 0.25, 0, 0.75) 0s;
+      }
+      &.is-open,
+      &:hover {
+        &:after {
+          visibility: visible;
+          transform: scaleX(1);
+        }
+      }
+      @include touch {
+        display: flex;
+      }
+    }
+    &-search {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      padding-bottom: 0.75rem;
+      @include touch {
+        flex-direction: column;
+        padding-bottom: 0;
+      }
+      fieldset {
+        display: flex;
+        padding: 0.75rem 1.5rem;
+        justify-content: space-around;
+        align-items: center;
+        border: 0.5px solid $steam-gray;
+        background: $white;
+        margin-left: 1rem;
+        border-radius: 4px;
+        height: 4rem;
+        @include touch {
+          margin-left: 0;
+          justify-content: flex-start;
+          height: auto;
+          margin-bottom: 1.25rem;
+        }
+        .field-wrap {
+          margin-left: 1rem;
+        }
+        span {
+          font-family: $united-sans-condensed;
+          font-size: 1.25rem;
+          font-style: normal;
+          font-weight: 700;
+          line-height: normal;
+          letter-spacing: 0.075rem;
+          text-transform: uppercase;
+        }
+      }
+    }
+  }
+  .field-title {
+    border: none;
+    background: none;
+    font-size: 1.125rem;
+    font-family: $acumin-pro;
+    padding: 0.75rem 2rem 0.75rem 1.5rem;
+    margin-bottom: 0;
+    text-align: left;
+    position: relative;
+    width: 100%;
+    cursor: default;
+    border-bottom: 1px solid $steam-gray;
+    color: $black;
+    @include touch {
+      cursor: pointer;
+      border-bottom: none;
+    }
+    &:after {
+      content: "";
+      transition: transform 0.3s;
+      top: 50%;
+      right: 1rem;
+      border: 3px solid $aged-gold;
+      border-radius: 2px;
+      border-right: 0;
+      border-top: 0;
+      display: none;
+      height: 0.625em;
+      margin-top: -0.4375em;
+      pointer-events: none;
+      position: absolute;
+      transform: rotate(-45deg);
+      transform-origin: center;
+      width: 0.625em;
+      @include touch {
+        display: block;
+      }      
+    }
+
+    &.collapse{
+      &:after {
+        display: block;
+      }
+    }
+
+    &.is-open {
+      border-bottom: 1px solid $steam-gray;
+      &:after {
+        transform: rotate(-225deg);
+      }
+    }
+
+    span {
+      font-family: $united-sans-condensed;
+      font-size: 1.25rem;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+      letter-spacing: 0.075rem;
+      text-transform: uppercase;
+    }
+  }
+  .field-content {
+    display: flex;
+    flex-direction: column;
+    padding: 0.75rem 1.5rem;
+    &.year-month-filter {
+      padding: 1.5rem;
+    }
+    & > *:not(:last-child) {
+      margin-bottom: 0rem;
+    }
+    &.hide {
+      display: none;
+    }
+  }
+  .field-wrap {
+    display: flex;
+    position: relative;    
+    cursor: pointer;
+    font-size: 1rem;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin-bottom: .5rem;
+    &.radio-field {
+      margin-bottom: 0;
+      .checkmark {
+        border-radius: 50%;
+        &:after {
+          background-image: none;
+          border-radius: 50%;
+          background: $aged-gold;
+          width: 10px;
+          height: 10px;
+          left: calc(50% - 5px);
+          top: calc(50% - 5px);
+        }
+      }
+    }
+    input {
+      /*position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0; */
+      appearance: none;
+      background-color: transparent;
+      outline: none;
+      box-sizing: border-box;
+      width: 1rem;
+      height: 1rem;
+      border: 1px solid #000;
+      min-height: 1rem;
+      min-width: 1rem;
+      max-height: 1rem;
+      max-width: 1rem;
+      margin-top:.4rem;
+      cursor: pointer;
+      &:checked ~ .checkmark {
+        background-color: $white;
+        &:after {
+          display: block;
+        }
+      }
+    }
+    input[type="checkbox"]:checked, input[type="radio"]:checked {
+      background-size: 77%;
+      background-position: center;
+      padding: 2px;
+    }
+
+    input[type="checkbox"]:not(:disabled):checked, input[type="radio"]:not(:disabled):checked {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='10' viewBox='0 0 12 10' fill='none'%3E%3Cpath d='M1 5L4.5 8.5L10.5 1' stroke='%238E6F3E' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+    }
+
+    .checkmark {
+      //position: absolute;
+     // top: 4px;
+      //left: 0;
+      //height: 1rem;
+      //width: 1rem;
+
+      background-color: $white;
+      border: 1px solid $black;
+     /* &:after {
+        content: "";
+        position: absolute;
+        display: none;
+        width: 16px;
+        height: 16px;
+        top: 2px;
+        left: 1px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='10' viewBox='0 0 12 10' fill='none'%3E%3Cpath d='M1 5L4.5 8.5L10.5 1' stroke='%238E6F3E' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+      }*/
+    }
+    label.checkmark{
+      border: 0;
+      padding-left: 1rem;
+      position: relative;
+      line-height: 1.5;
+
+    }
+  }
+  .purdue-home-button.form-clear-button {
+    &:after {
+      background-image: url("../../../imgs/close_icon.svg");
+    }
+    &:hover {
+      &:after {
+        background-image: url("../../../imgs/close_icon_black.svg");
+      }
+    }
+  }
+  .purdue-home-button-storylink {
+    width: 100%;
+    text-align: center;
+    padding-top: 2rem;
+  }
+  .purdue-home-cta-grid__cards {
+    .columns {
+      justify-content: flex-start;
+      .column {
+        &.is-4-desktop {
+          max-width: 33.33333337%;
+          &.is-half-tablet {
+            @include touch {
+              max-width: 50%;
+            }
+            @include mobile {
+              max-width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+  .year-month-filter select {
+    width: 100%;
+    margin-right: 0;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background-size:
+      1rem auto,
+      100%;
+  }
+
+  .purdue-home-cta-grid__grid__total{
+    text-align: right;
+    @include touch {
+      text-align: left;
+    }
+  }
+
+  .load.purdue-home-button--white{
+    &:after{
+      font-family: "Font Awesome 6 Free"; 
+      content: "\f078"; 
+      font-weight: 900; 
+      background-image: none;
+      display: block;
+      position: absolute;
+      top: 120px;
+      left: 0;
+      margin: 0 auto;
+      animation: 2s infinite bounce;
+    }
+    &:hover{
+      &:after{
+        left: 0;
+        transform: none !important;
+        color: #000;
+      }
+    }
+  }
+}
+
+.autocomplete-results {
+
+  &.hide{
+    display: none;
+  }
+
+  position: absolute;
+  background: #ededed;
+  border: 0.5px solid #C4BFC0;
+  border-radius: 4px;
+  top: 4rem;
+  width: 100%;
+  list-style: none;
+  padding: 0 !important;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 999;
+}
+
+.autocomplete-results li {
+    padding: 5px 10px 8px !important;
+    cursor: pointer;
+    list-style: none;
+    margin: 0 4px;
+    border-radius: 4px;
+    line-height: 1.25;
+}
+
+.autocomplete-results li:hover {
+  background: #4194FF;
+  color: #fff;
+}

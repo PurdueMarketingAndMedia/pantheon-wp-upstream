@@ -1,0 +1,60 @@
+@import "../../../src/style/front-end/overides/colors";
+@import "../../../src/style/front-end/overides/variables";
+@import '../../../node_modules/bulma/sass/utilities/mixins.sass';
+
+.image-buttons{
+    z-index: 100;
+    position: absolute;
+    text-align:center;
+    padding-top:1rem;
+    width:100%;
+    bottom:1rem;
+}
+
+.purdue-home-cta-strap-preview{
+    .purdue-home-cta-strap__container{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+}
+.purdue-home-cta-strap-preview{
+ul.purdue-home-button-list{
+    padding-left:0;
+    flex-direction: column;
+}
+}
+
+.purdue-home-cta-strap__image{
+    .image{
+      display: flex;
+      position: relative;
+      width: 60px;
+      height: 60px;
+      margin-right: 20px;
+    }
+    .image-buttons {
+        bottom: -1rem;
+        left: 0;
+    }
+    .purdue-home-cta-strap__container{
+      display: flex;
+      justify-content: space-between;
+    .purdue-home-cta-strap__subTitle{
+      font-weight: 900;
+      font-family: $acumin-pro;
+      color: $aged-gold;
+      line-height: 1;
+      margin-bottom: 0.5rem !important;
+    }
+    .purdue-home-cta-strap__container--left{
+      display: flex;
+    }
+    .purdue-home-cta-strap__container--right{
+        align-content: end;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+    }
+  }

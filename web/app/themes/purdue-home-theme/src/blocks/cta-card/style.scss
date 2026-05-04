@@ -1,0 +1,182 @@
+@import "../../../src/style/front-end/overides/colors";
+@import "../../../src/style/front-end/overides/variables";
+@import '../../../node_modules/bulma/sass/utilities/mixins.sass';
+
+.purdue-home-cta-card-block{
+  position: relative;
+  .section.has-black-background{
+    .purdue-home-cta-card-block__content-container, p, ul, ol{
+      color:$black;
+    }
+  }
+  &__container{
+    position:relative;
+    border-radius: 4px;
+    box-shadow: 2px 4px 5px -1px rgba(0,0,0,0.3);   
+    display:flex;
+    background:$white;
+    overflow: hidden;
+
+    &--reversed{
+      flex-direction:row-reverse;
+      .purdue-home-cta-card-block__image-container{
+        .image figcaption{
+          padding:1.25rem 3.5rem 1.25rem 1.25rem;
+          text-align:left;
+        }
+        .cta-play,.cta-pause{
+          right:1rem;
+          left:auto;
+          width:32px;
+          height:32px;
+        }
+      } 
+    }
+    @include mobile{
+      flex-direction:column;
+      .purdue-home-cta-card-block__image-container{
+        .image figcaption{
+          padding:1.25rem 3.5rem 1.25rem 1.25rem;
+          text-align:left;
+        }
+
+      } 
+      .cta-play,.cta-pause{
+        right:1rem;
+        left:auto;
+      }
+    }
+  }
+  &__content-container{
+    width:50%;
+    padding:4rem 3.5rem;
+    @include mobile{
+      width:100%;
+      padding:1.25rem;
+      font-size:1rem;
+    }
+    a:not(.purdue-home-button){
+      color:$aged-gold !important;
+    }
+  }
+  &__image-container{
+    width:50%;
+    position:relative;
+    @include mobile{
+      width:100%;
+    }
+    .image{
+      width:100%;
+      height:100%;
+      img{
+        object-fit: cover;
+        height:100%;
+        border-radius: 0;
+      }
+      &.has-caption{
+        &:after{
+          content:"";
+          position:absolute;
+          width:100%;
+          height:100%;
+          top:0;
+          left:0;
+          background: linear-gradient(180deg, rgba(0,0,0,0) 50%, #000000 100%);
+        }
+      }
+      figcaption{
+        position:absolute;
+        left:0;
+        bottom:0;
+        padding:1.25rem 1.25rem 1.25rem 3.5rem;
+        text-align:right;
+        width:100%;
+        color:$white;
+        font-size:0.875rem;
+        z-index:1;
+      }
+    }
+    .purdue-home-cta-card-block__image-slider,.glide__track,.glide__slides,.glide__slide{
+      height:100%;
+    }
+  .cta-play,.cta-pause{
+    display:none;
+    color:$boiler-gold;
+    font-size:2rem;
+    position:absolute;
+    bottom:1rem;
+    left:1rem;
+    z-index:2;
+    background:none;
+    border:none;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    &.is-active{
+      display:block;
+      width: 32px;
+      height: 32px;
+    }
+  }
+  }
+  &__subheader{
+    font-family: $united-sans-condensed;
+    font-size: 1.125rem;
+    font-weight: 900;
+    letter-spacing: 2.5px;
+    line-height: 1.5;
+    margin-bottom: 0.8rem !important;
+  }
+  &__header{
+    color: $black;
+    font-family: $acumin-pro;
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1.1;
+    margin-bottom:1.5rem !important;
+    @include mobile{
+        font-size: 2rem;
+        margin-bottom:1.2rem !important;
+    }
+  }
+
+  .purdue-home-button-list{
+    justify-content: flex-start;
+    flex-wrap:wrap;
+    padding-left:0;
+    li:before{
+      content:none;
+    }
+    li:first-child{
+      padding-left:0;
+    }
+    .purdue-home-button{
+      border: 1px solid $boiler-gold;
+      &:after {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3C!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --%3E%3Cpath fill='%23000000' d='M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z'/%3E%3C/svg%3E");
+      }
+      &:hover{
+        background: $black;
+        color:$white;
+        &:after {
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3C!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --%3E%3Cpath fill='%23cfb991' d='M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z'/%3E%3C/svg%3E");
+        }
+      }
+      &--black{
+        &:after {
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3C!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --%3E%3Cpath fill='%23cfb991' d='M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z'/%3E%3C/svg%3E");
+        }
+        &:hover{
+          background: $boiler-gold;
+          color:$black;
+          &:after {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3C!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --%3E%3Cpath fill='%23000000' d='M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z'/%3E%3C/svg%3E");
+          }
+        }
+      }
+    }
+  }
+
+}
+

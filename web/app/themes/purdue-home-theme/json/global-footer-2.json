@@ -1,0 +1,34 @@
+{
+    "column" : "1",
+    "header" : "INFORMATION",
+    "links" : [
+        {
+            "link_text": "Ethics and Compliance",
+            "link_url": "https://www.purdue.edu/vpec/"
+        },
+        {
+            "link_text": "Events",
+            "link_url": "https://events.purdue.edu/"
+        },
+        {
+            "link_text": "Give",
+            "link_url": "https://giving.purdue.edu/west-lafayette/?appealcode=21008"
+        },
+        {
+            "link_text": "Lost and Found",
+            "link_url": "https://www.purdue.edu/surplus/lost-and-found/Index.html"
+        },
+        {
+            "link_text": "Office of Engagement",
+            "link_url": "https://www.purdue.edu/engagement/"
+        },
+        {
+            "link_text": "President",
+            "link_url": "https://www.purdue.edu/president/"
+        },       
+        {
+            "link_text": "Tuition Calculator",
+            "link_url": "https://www.purdue.edu/treasurer/finance/bursar-office/tuition/tuition-calculator/"
+        }
+    ]
+}

@@ -1,0 +1,47 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "purdue/cta-carousel",
+	"version": "1.1.01",
+	"title": "CTA Carousel",
+	"category": "purdue",
+	"description": "This block adds an CTA Carousel on page load.",
+	"supports": {
+		"html": false
+	},
+	"attributes": {
+		"background": {
+			"type": "string",
+			"default": "none"
+		},
+		"header": {
+			"type": "string",
+			"default": ""
+		},
+		"cards": {
+			"type": "array",
+			"default": []
+		},
+		"paddingTop": {
+			"type": "string",
+			"default": ""
+		},
+		"paddingBottom": {
+			"type": "string",
+			"default": ""
+		},
+		"id": {
+			"type": "string",
+			"default": ""
+		},
+		"className": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"textdomain": "cta-carousel",
+	"editorScript": "file:./index.js",
+    "style": "file:./style-index.css",
+	"render": "file:./render.php",
+	"script": "file:./frontend.js"
+}

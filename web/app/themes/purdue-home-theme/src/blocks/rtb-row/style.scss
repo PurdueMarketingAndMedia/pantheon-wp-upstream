@@ -1,0 +1,158 @@
+@import "../../../src/style/front-end/overides/colors";
+@import "../../../src/style/front-end/overides/variables";
+@import '../../../node_modules/bulma/sass/utilities/mixins.sass';
+
+.purdue-home-rtb-row{
+    overflow: hidden;
+    .purdue-home-rtb-horizontal{
+        border: 2px solid $aged-gold;
+        border-radius: 4px;
+        padding:1.5rem;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width:100%;
+        @include mobile{
+            height: auto;
+        }
+        .columns{
+            flex-wrap: nowrap;
+            .column{
+
+                &.is-highlight{
+                    flex-grow:0;
+                }
+            }
+        }
+        &.purdue-home-rtb-horizontal--vertical .columns{
+            flex-direction:column;
+            align-items:center;
+            width:100%;
+            .column.is-highlight{
+                padding-bottom:0;
+                @media (max-width: 480px){
+                    padding: 0.75rem 0 0 0;
+                }
+            }
+            .column.is-highlight + .column{
+                padding-top:0.2rem;
+            }
+            .purdue-home-rtb-horizontal__highlight,.purdue-home-rtb-horizontal__content,.purdue-home-rtb-horizontal__source{
+                width:100%;
+                text-align:center;
+            }
+        }
+        &__highlight{
+            font-size:4rem;
+            color:$aged-gold;
+            font-family: $united-sans;
+            line-height: 1;
+            text-transform: uppercase;
+            display:block;
+            word-break: keep-all;
+            @media (max-width: 480px){
+                font-size: 3.5rem;
+            }
+            @media (max-width: 320px){
+                font-size: 2.5rem;
+            }
+        }
+        &__content{
+            font-size:1.5rem;
+            color:$black;
+            font-family: $united-sans-condensed;
+            line-height: 1.3;
+            text-transform: uppercase;
+            font-weight:700;
+            letter-spacing: 1px;
+            display:block;
+        }
+        &__source{
+            font-size:1rem;
+            color:$black;
+            font-family: $acumin-pro;
+            line-height: 1.5;
+            margin-top:0.5rem;
+            display:block;            
+            font-style: italic;
+
+        }
+        a.purdue-home-rtb-horizontal__source{
+            text-decoration: underline;
+            &:hover{
+                text-decoration: none;
+            }
+        }
+    }
+    .has-black-background{
+      background:$black;
+      color:$white;
+      .purdue-home-rtb-horizontal{
+        border: 2px solid $boiler-gold;
+        &__highlight{
+            color:$boiler-gold;
+        }
+        &__content{
+            color:$white;
+        }
+        &__source{
+            color:$white;
+        }
+    }
+    }
+    .has-gold-background{
+        .purdue-home-rtb-horizontal{
+            border: 2px solid $black;
+            &__highlight{
+                color:$black;
+            }
+        }
+    }
+    .columns{
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items:center;
+      .column.is-one-quarter-widescreen{
+        .purdue-home-rtb-horizontal .columns{
+            flex-direction:column;
+            align-items:center;
+            width:100%;
+            .column.is-highlight{
+                padding-bottom:0;
+            }
+            .column.is-highlight + .column{
+                padding-top:0.2rem;
+            }
+            .purdue-home-rtb-horizontal__highlight,.purdue-home-rtb-horizontal__content,.purdue-home-rtb-horizontal__source{
+                width:100%;
+                text-align:center;
+            }
+        }
+      }
+      .column{
+        @media (max-width:1500px){
+            .purdue-home-rtb-horizontal .columns{
+                flex-direction:column;
+                align-items:center;
+                width:100%;
+                .column.is-highlight{
+                    padding-bottom:0;
+                }
+                .column.is-highlight + .column{
+                    padding-top:0.2rem;
+                }
+                .purdue-home-rtb-horizontal__highlight,.purdue-home-rtb-horizontal__content,.purdue-home-rtb-horizontal__source{
+                    width:100%;
+                    text-align:center;
+                }
+            }
+        }
+      }
+
+    }
+    .section .container>.columns{
+        align-items: stretch;
+    }
+}
+

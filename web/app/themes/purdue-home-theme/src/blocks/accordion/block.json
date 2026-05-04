@@ -1,0 +1,68 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "purdue/accordion",
+	"title": "Accordion",
+	"category": "purdue",
+	"description": "Accordion Block",
+	"attributes": {
+		"title": {
+			"type": "string",
+			"selector": ".accordion-title"
+		},
+		"titleLevel": {
+			"type": "string",
+			"default": "h3"
+		},
+		"titleSize": {
+			"type": "string",
+			"default": "large"
+		},
+		"background": {
+			"type": "string",
+			"default": "black"
+		},
+		"paddingTop": {
+			"type": "string",
+			"default": "has-padding-top-none"
+		},
+		"paddingBottom": {
+			"type": "string",
+			"default": "has-padding-bottom-none"
+		},
+		"removeSidePadding": {
+			"type": "boolean",
+			"default": false
+		},
+		"removeBottomBorder": {
+			"type": "boolean",
+			"default": true
+		},
+		"removeTopBorder": {
+			"type": "boolean",
+			"default": false
+		},
+		"isNarrow": {
+			"type": "boolean",
+			"default": false
+		},
+		"id": {
+			"type": "string",
+			"default": ""
+		},
+		"blockId": {
+			"type": "string",
+			"default": ""
+		},
+		"className": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"textdomain": "accordion",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+    "viewScript": "file:./frontend.js",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php"
+}

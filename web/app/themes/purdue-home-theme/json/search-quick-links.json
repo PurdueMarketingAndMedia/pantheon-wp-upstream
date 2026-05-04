@@ -1,0 +1,24 @@
+{
+    "links" : [
+        {
+            "link_text": "Indianapolis",
+            "link_url": "https://www.purdue.edu/campuses/indianapolis/"
+        },
+        {
+            "link_text": "Housing",
+            "link_url": "https://www.housing.purdue.edu/"
+        },
+        {
+            "link_text": "Majors",
+            "link_url": "https://www.admissions.purdue.edu/majors/index.php"
+        },
+        {
+            "link_text": "Online Programs",
+            "link_url": "https://www.purdue.edu/online/programs-of-study/"
+        },
+        {
+            "link_text": "Graduate Programs",
+            "link_url": "https://www.purdue.edu/academics/ogsps/academics/graduate-degree-programs.html"
+        }
+    ]
+}

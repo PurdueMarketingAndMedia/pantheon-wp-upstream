@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "purdue/tab-block",
+  "version": "2",
+  "title": "Tabs",
+  "category": "purdue",
+  "icon": "welcome-add-page",
+  "description": "Add tab.",
+  "supports": {
+    "className": false
+  },
+  "parent": [
+    "purdue/tabs-block"
+  ],
+  "attributes": {
+    "aria": {
+      "type": "string",
+      "default": ""
+    },
+    "editorSelected": {
+      "type": "boolean",
+      "default": false
+    },
+    "selected": {
+      "type": "boolean",
+      "default": false
+    },
+    "anchorId": {
+      "type": "string"
+    }
+  },
+  "textdomain": "tab-block",
+  "editorScript": "file:./index.js",
+  "render": "file:./render.php"
+}

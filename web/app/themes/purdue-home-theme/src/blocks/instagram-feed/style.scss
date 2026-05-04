@@ -1,0 +1,226 @@
+@import "../../../src/style/front-end/overides/colors";
+@import "../../../src/style/front-end/overides/variables";
+@import '../../../node_modules/bulma/sass/utilities/mixins.sass';
+
+
+.purdue-home-instagram-feed{
+    position:relative;
+    background:$black;
+    overflow: hidden;
+  &>.image{
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    background-color: $black;
+    background-position: center;
+    background-size:cover;
+    background-repeat: no-repeat;
+    &:after{
+        position:absolute;
+        width:100%;
+        height:100%;
+        top:0;
+        left:0;
+        background:rgba(0,0,0,0.55);
+        content:"";
+    }
+  }
+  .image{
+    img{
+        object-fit: cover;
+    }
+  }
+  .section{
+    @include mobile{
+        padding-left:0;
+        padding-right:0;
+    }
+  }
+  .tagged-header-container{
+    border-color:$boiler-gold;
+    margin-left:4.675rem;
+    @include mobile{
+        margin-left:1.925rem;
+        margin-right:1.25rem;
+    }
+  }
+  .columns{
+    flex-direction:row-reverse;
+    .column{
+        display:flex;
+        flex-direction:column;
+        justify-content: center;
+    }
+  }
+  &__header{
+    color: $white;
+    font-family: $acumin-pro;
+    font-size: 4rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1;
+    margin-left:4rem;
+    margin-top:2rem !important;
+    @include mobile{
+        font-size:2rem;
+        line-height:1.3;
+        margin-left:1.25rem;
+        margin-right:1.25rem;
+    }
+  }
+  &__text{
+    color: $white;
+    margin-left:4rem;
+    @include mobile{
+        margin-left:1.25rem;
+        margin-right:1.25rem;
+    }
+  }
+  &__image-container{
+    display:grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-gap: 10px;
+    @include until-widescreen {
+        grid-template-columns: repeat(2,1fr);
+    }      
+    &.mobile-show{
+        @include tablet{
+            display:none;
+        }
+    }
+    &.mobile-hidden{
+        @include mobile{
+            display:none;
+        }
+    }
+  }
+  &__image{
+    img{
+        object-fit: cover;
+        border-radius: 4px;
+    }
+    &:after{
+        display: inline-block;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        font: var(--fa-font-brands);
+        content: "\f16d";
+        position:absolute;
+        color:$railway-gray;
+        bottom:0.5rem;
+        left:1rem;
+        font-size:1.5rem;
+    }
+  }
+  &__list-container{
+    margin-top:2rem;
+    margin-left:4rem;
+    @include mobile{
+        margin-left:1.25rem;
+        margin-right:1.25rem;
+        margin-top:3rem;
+
+    }
+  }
+  &__list{
+    list-style-type: none !important;
+    display:flex;
+    padding-left:0 !important;
+    @include mobile{
+        justify-content: center;
+    }
+    li:not(:last-child){
+        margin-right:1.5rem;
+        @include mobile{
+            margin-right:1rem;
+        }
+    }
+    a{
+        color:$white;
+        svg{
+            fill:$white;
+        }
+        &:hover{
+            color:$boiler-gold;
+            svg{
+                fill:$boiler-gold;
+            }
+        }
+    }
+    i,svg{
+        font-size:3rem;
+        @include mobile{
+            font-size:2rem;
+        }
+    }
+  }
+  .slider-controls{
+    margin-top:1.5rem;
+  }
+  .spotlight-instagram-feed .FeedGridLayout__grid{
+    @include until-widescreen {
+        grid-template-columns: repeat(2,1fr) !important;
+    }    
+
+  }
+.glide{
+    .image{
+        &:after{
+            display: inline-block;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+            font: var(--fa-font-brands);
+            content: "\f16d";
+            position:absolute;
+            color:$railway-gray;
+            bottom:0.5rem;
+            left:1rem;
+            font-size:1.5rem;
+        }
+
+    }
+    .glide__slide--active{
+        &:hover{
+            .trigger-button-container{
+                display: flex;
+            }
+        }
+    }
+}
+.purdue-home-button-list{
+    margin-left: 4rem;
+    padding: 1rem 0 2rem 0;
+    justify-content: flex-start;
+    @include mobile{
+        margin-left: 0;
+        justify-content: center;
+    }
+    li{
+        @media (max-width: 500px){
+            width:auto;
+        }
+    }
+}
+}
+.modal{
+    .iframe-container-feed{
+        @include mobile{
+            padding-top:100%;
+        }
+    }
+}
+.trigger-button-container{
+    display:none;
+    position:absolute;
+    width:100%;
+    height:100%;
+    align-items: center;
+    justify-content: center;
+    top:0;
+    left:0;
+    button{
+        flex-direction: row;
+    }
+}

@@ -1,0 +1,319 @@
+@import "../../../src/style/front-end/overides/colors";
+@import "../../../src/style/front-end/overides/variables";
+@import '../../../node_modules/bulma/sass/utilities/mixins.sass';
+
+.purdue-home-timeline {
+  &__intro{
+    margin: 0 auto 2.5rem;
+    text-align:center;
+    max-width: 880px;
+  }
+  &__cards{
+    padding-top:3rem;
+    position:relative;
+    &:before{
+      content:'';
+      display: block;
+      width: 10px;
+      height: 100%;
+      position: absolute;
+      background-size: 2px 10px;
+      background-repeat: repeat-y;
+      background-image: linear-gradient(to bottom, #8e6f3e 20%, #ededed 0%);
+      left: 50%;
+      top:0;
+    }
+    &:after{
+      display: block;
+      content: "";
+      position: absolute;
+      width: 2.6rem;
+      height: 2.6rem;
+      border-radius: 100%;
+      background-color: $aged-gold;
+      margin: 0;
+      border: 1px solid $aged-gold;
+      background-clip: content-box;
+      padding: 0.5rem;
+      top: -1.3em;
+      left: calc(50% - 1.3rem);
+    }
+
+  }
+  &__card{
+    position:relative;
+    border-radius: 4px;
+    &:before{
+      display: block;
+      content: "";
+      position: absolute;
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 100%;
+      background-color: $grey-lighter;
+      margin: 0;
+      transition: .5s ease-out;
+    }
+    &:after{
+      display: block;
+      content: "";
+      position: absolute;
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 100%;
+      background-color: $aged-gold;
+      margin: 0;
+      border: 1px solid #8e6f3e;
+      background-clip: content-box;
+      padding: 0.25rem;
+      transition: .5s ease-out;
+    }
+    &-content{
+      transition: .5s ease-out;
+      overflow:hidden;
+      border-radius:4px;
+      .image{
+        .flex-container{
+          position:absolute;
+          top:0;
+          left:0;
+          width:100%;
+          height:100%;
+          background:rgba(0,0,0,0.55);
+          display:flex;
+          align-items: center;
+          justify-content: center;
+          .cta-link{
+            color:$white;
+            @include tablet {
+              font-size:1.875rem;
+            }
+          }
+          .cta-icon{
+            position:relative;
+            width: 50px;
+            height: 50px;
+            @include tablet{
+              width: 80px;
+              height: 80px;
+          }
+
+          }
+      }
+      }
+    }
+    &.no-animate{
+      .purdue-home-timeline__card-content{
+        transition:none;
+      }
+    }
+    &.card-width-align{
+      width:calc(50% - 2rem);
+
+      @include touch{
+        width:100%;
+        margin: 6rem 0;
+      }
+      &.content-align-left{
+        left:0;
+        &:before, &:after{
+          top: calc(50% - 0.75rem);
+          left: calc(100% + 1.3rem);
+          @include touch{
+            top: -3rem;
+            left: calc(50% - 0.7rem);
+          }
+        }
+        .purdue-home-timeline__card-content{
+          box-shadow: 15px 0px 16px -15px rgba(0, 0, 0, 0.25);
+          @include touch{
+            box-shadow: 0px 15px 16px -15px rgba(0, 0, 0, 0.25);
+          }
+        }
+        &.animate{
+          .purdue-home-timeline__card-content{
+            transform: translateX(0);
+            @include touch{
+              transform: translateY(0);
+            }
+          }
+          &:before, &:after{
+            opacity:1;
+          }
+        }
+
+      }
+      &.content-align-right{
+        left: calc(50% + 2rem);
+        @include touch{
+          left:0;
+
+        }
+        &:before, &:after{
+          top: calc(50% - 0.75rem);
+          left: -2.7rem;
+          @include touch{
+            top: -3rem;
+            left: calc(50% - 0.7rem);
+          }
+        }
+        .purdue-home-timeline__card-content{
+          box-shadow: -15px 0px 16px -15px rgba(0, 0, 0, 0.25);
+          @include touch{
+            box-shadow: 0px 15px 16px -15px rgba(0, 0, 0, 0.25);
+          }
+        }
+        &.animate{
+          .purdue-home-timeline__card-content{
+            transform: translateX(0);
+            @include touch{
+              transform: translateY(0);
+            }
+          }
+          &:before, &:after{
+            opacity:1;
+          }
+        }
+      }
+      .flex-container--align-center{
+        padding: 1.875rem 1.5rem;
+      }
+      &.has-thumbnail{
+        .flex-container--align-center{
+          padding: 2.75rem 3.5rem;
+          @include touch{
+            padding: 1.5rem;
+          }
+        }
+      }
+    }
+    &.card-width-full{
+      margin-top:6rem;
+      .purdue-home-timeline__card-content{
+        box-shadow: 10px 10px 30px -5px rgba(0, 0, 0, 0.25);
+        .flex-container--align-center{
+          padding:4rem 5rem;
+          display:flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items:flex-start;
+          @include touch{
+            padding: 1.5rem;
+          }
+        }
+      }
+      &.has-thumbnail{
+        .purdue-home-timeline__card-content{
+          .image{
+            position:absolute;
+            width:60%;
+            height: 100%;
+            padding-top:0;
+            @include touch{
+              position:relative;
+              width:100%;
+              padding-top:56.25%;
+            }
+            img{
+              object-fit: cover;
+            }
+          }
+          .flex-container--align-center{
+            width:40%;
+            min-height:500px;
+            @include touch{
+              width:100%;
+              min-height:1px;
+            }
+          }
+        }
+      }
+
+      &:not(:last-child){
+        margin-bottom:6rem;
+      }
+      &:before, &:after{
+        top: -3rem;
+        left:calc(50% - 0.7rem);
+      }
+
+      &.content-align-right{
+        .image{
+          top:0;
+          left:0;
+        }
+        .flex-container--align-center{
+          margin-left:auto;
+          right:0;
+        }
+
+      }
+      &.content-align-left{
+        .image{
+          top:0;
+          right:0;
+        }
+        .flex-container--align-center{
+          left:0;
+        }
+      }
+
+      &.animate{
+        .purdue-home-timeline__card-content{
+          transform: translateY(0);
+        }
+        &:before, &:after{
+          opacity:1;
+        }
+      }
+
+    }
+    .purdue-home-timeline__card-content{
+      background: $grey-lighter;
+    }
+    &.has-thumbnail{
+      .purdue-home-timeline__card-content{
+        background: $white;
+      }
+    }
+    &-subtitle{
+      color: $black;
+      font-family: $united-sans-condensed;
+      font-size: 1.125rem;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 1.5;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      margin-bottom:0.5rem !important;
+    }
+    &-title{
+      color: $black;
+      font-family: $acumin-pro;
+      font-size: 2.125rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 1.17;
+      margin-bottom:1rem !important;
+    }
+    &-subtext{
+      color: $black;
+      font-family: $acumin-pro;
+      font-size: 1rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 1.75;
+      margin-bottom:1rem;
+      a{
+        color: $aged-gold !important;
+      }
+    }
+    &.purdue-home-timeline__card__vimeo, &.purdue-home-timeline__card__youtube{
+      .modal-trigger:hover .cta-link:after {
+        visibility: visible;
+        transform: scaleX(1);
+    }
+    }
+  }
+  
+}

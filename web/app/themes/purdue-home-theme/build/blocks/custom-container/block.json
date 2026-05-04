@@ -1,0 +1,46 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "purdue/custom-container",
+  "version": "1.1.01",
+  "title": "Custom Container",
+  "category": "purdue",
+  "description": "Add a Section layout element that can contain any content.",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "id": {
+      "type": "string",
+      "default": ""
+    },
+    "background": {
+      "type": "string",
+      "default": "black"
+    },
+    "paddingTop": {
+      "type": "string",
+      "default": ""
+    },
+    "paddingBottom": {
+      "type": "string",
+      "default": ""
+    },
+    "sidePadding": {
+      "type": "string",
+      "default": "no"
+    },
+    "removeSidePadding": {
+      "type": "boolean",
+      "default": false
+    },
+    "className": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "textdomain": "custom-container",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "render": "file:./render.php"
+}

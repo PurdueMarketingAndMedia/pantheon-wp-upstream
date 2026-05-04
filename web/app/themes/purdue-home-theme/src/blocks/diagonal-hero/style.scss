@@ -1,0 +1,242 @@
+@import "../../../src/style/front-end/overides/colors";
+@import "../../../src/style/front-end/overides/variables";
+@import "../../../node_modules/bulma/sass/utilities/mixins.sass";
+
+.purdue-home-diagonal-hero {
+  overflow: hidden;
+  display: flex;
+  > .section {
+	width: calc(50% - 80px);
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+	flex-direction: column;
+	height: 100%;
+  }
+  @include touch {
+    flex-wrap: wrap;
+	> div {
+		width:100%;
+		flex: 1 1 100%;
+	}
+  }
+  &.image-align-left-desktop {
+	flex-direction: row-reverse;
+	> .section {
+	  align-items: flex-start;
+	}
+    .image {
+      &:before {
+        height: 101%;
+        left: auto;
+        right: -1px;
+        clip-path: polygon(0 100%, 100% 0, 100% 100%);
+      }
+    }
+    .cta-play,
+    .cta-pause {
+      left: 2rem;
+      right:auto;
+      @include mobile {
+        left: 1rem;
+      }
+    }
+  }
+  &.image-align-top-mobile {
+
+    @include touch {
+	    > div {
+		    width:100%;
+		    flex: 1 1 100%;
+	    }
+      flex-direction: column-reverse;
+	    > * {
+		    flex:1;
+	    }
+    }
+  }
+  &.minheight-300{
+    min-height:300px;
+    @include touch {
+      min-height:0px;
+      height:auto;
+    }
+  }
+  &.minheight-500{
+    min-height:500px;
+    @include touch {
+      min-height:0px;
+      height:auto;
+    }
+  }
+  &.minheight-700{
+    min-height:700px;
+    @include touch {
+      min-height:0px;
+      height:auto;
+    }
+  }
+  &.no-diagonal {
+	  > div {
+		  flex: 1%;
+		  width:auto;
+	  }
+    .image {
+      &:before {
+        content:none;
+      }
+      @include touch {
+        width: 100%;
+      }
+    }
+  }
+  .section.has-padding-top-large {
+    height:100%;
+    @include mobile {
+      padding-bottom: 2rem;
+    }
+  }
+  .image {
+	  width: calc(50% + 80px);
+    img,
+    video {
+	  position: absolute;
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      display:block;
+    }
+    &:before {
+      background: $white;
+      clip-path: polygon(0 0, 0 100%, 100% 0);
+      content: "";
+      height: 101%;
+      top: -0.5%;
+      left: -1px;
+      position: absolute;
+      width: 10rem;
+      z-index: 1;
+      @include touch {
+        content: none;
+      }
+    }
+	@include touch {
+		img, video {
+			position: relative;
+		}
+	}
+  }
+  &.has-black-background {
+    .image:before {
+      background: $black;
+    }
+    .purdue-home-diagonal-hero__subtext {
+      color: $white;
+    }
+  }
+  &.has-gray-background {
+    .image:before {
+      background: $primary-background-gray;
+    }
+  }
+  &.has-gold-background {
+    .image:before {
+      background: $boiler-gold;
+    }
+  }
+  &__content {
+	  max-width: calc(1344px / 2);
+    @include touch {
+      max-width: none;
+    }
+  }
+  &__subheader {
+    margin-bottom: 3.375rem !important;
+    @include mobile {
+      margin-bottom: 2.5rem !important;
+    }
+  }
+	&__header {
+		font-size: clamp(4rem, 7vw, 6rem) !important;
+	}
+
+  &__header.second-level-page-heading {
+    margin-bottom: 1.25rem !important;
+    z-index: 1;
+    text-align: left;
+    &:last-child {
+      margin-bottom: 0 !important;
+    }
+  }
+  &__subtext {
+      color: $black;
+      font-family: $acumin-pro;
+	  letter-spacing: 0;
+      line-height: 1.4;
+      text-align: left;
+      max-width: 840px;
+      z-index: 1;
+      &:last-child {
+        margin-bottom: 2rem !important;
+      }
+      @include mobile {
+        font-size: 1rem;
+        margin-bottom: 1.5rem !important;
+      }
+
+    p {
+      color: $black;
+      font-family: $acumin-pro;
+	  font-size: clamp(1rem, 1vw, 1.25rem);
+	  letter-spacing: 0;
+      line-height: 1.4;
+      text-align: left;
+      max-width: 840px;
+      z-index: 1;
+      &:last-child {
+        margin-bottom: 2rem !important;
+      }
+      @include mobile {
+        font-size: 1rem;
+        margin-bottom: 1.5rem !important;
+      }
+    }
+
+  }
+  .tagged-header {
+    left: 10px;
+  }
+  .purdue-home-button-list {
+    margin-top: 2rem;
+    justify-content: flex-start;
+    padding-left: 0;
+    @include mobile {       
+        margin-top: 1.5rem !important;
+      }
+  }
+  .cta-play,
+  .cta-pause {
+    display: none;
+    color: $white;
+    background: $black;
+    border-radius: 50%;
+    font-size: 2rem;
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 2;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    &.is-active {
+      display: block;
+      width: 32px;
+      height: 32px;
+      @include mobile {
+        bottom: 1rem;
+        right: 1rem;
+      }
+    }
+  }
+}

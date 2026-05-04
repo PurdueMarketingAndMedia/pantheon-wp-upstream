@@ -1,9 +1,10 @@
 === WP Redis ===
-Contributors: getpantheon, danielbachhuber, mboynes, Outlandish Josh
-Tags: cache, plugin, redis
+Contributors: getpantheon, danielbachhuber, mboynes, Outlandish Josh, jspellman, jazzs3quence
+Tags: cache, object-cache, redis
 Requires at least: 3.0.1
-Tested up to: 5.7
-Stable tag: 1.1.2
+Tested up to: 6.9
+Requires PHP: 7.4
+Stable tag: 1.4.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -11,7 +12,7 @@ Back your WP Object Cache with Redis, a high-performance in-memory storage backe
 
 == Description ==
 
-[![Travis CI](https://travis-ci.org/pantheon-systems/wp-redis.svg?branch=master)](https://travis-ci.org/pantheon-systems/wp-redis) [![CircleCI](https://circleci.com/gh/pantheon-systems/wp-redis/tree/master.svg?style=svg)](https://circleci.com/gh/pantheon-systems/wp-redis/tree/master)
+[![CircleCI](https://circleci.com/gh/pantheon-systems/wp-redis/tree/master.svg?style=svg)](https://circleci.com/gh/pantheon-systems/wp-redis/tree/master)
 
 For sites concerned with high traffic, speed for logged-in users, or dynamic pageloads, a high-speed and persistent object cache is a must. You also need something that can scale across multiple instances of your application, so using local file caches or APC are out.
 
@@ -31,11 +32,11 @@ This assumes you have a PHP environment with the [required PhpRedis extension](h
         $redis_server = array(
             'host'     => '127.0.0.1',
             'port'     => 6379,
-            'auth'     => '12345',
+            'auth'     => '12345', // ['user', 'password'] if you use Redis ACL
             'database' => 0, // Optionally use a specific numeric Redis database. Default is 0.
         );
 
-3. If your Redis server is listening through a sockt file instead, set its path on `host` parameter and change the port to `null`:
+3. If your Redis server is listening through a socket file instead, set its path on `host` parameter and change the port to `null`:
 
         $redis_server = array(
             'host'     => '/path/of/redis/socket-file.sock',
@@ -47,8 +48,9 @@ This assumes you have a PHP environment with the [required PhpRedis extension](h
 4. Engage thrusters: you are now backing WP's Object Cache with Redis.
 5. (Optional) To use the `wp redis` WP-CLI commands, activate the WP Redis plugin. No activation is necessary if you're solely using the object cache drop-in.
 6. (Optional) To use the same Redis server with multiple, discreet WordPress installs, you can use the `WP_CACHE_KEY_SALT` constant to define a unique salt for each install.
-7. (Optional) To use true cache groups, with the ability to delete all keys for a given group, register groups with `wp_cache_add_redis_hash_groups()`, or define the `WP_REDIS_USE_CACHE_GROUPS` constant to true to enable with all groups. However, when enabled, the expiration value is not respected because expiration on group keys isn't a feature supported by Redis.
+7. (Optional) To use true cache groups, with the ability to delete all keys for a given group, register groups with `wp_cache_add_redis_hash_groups()`, or define the `WP_REDIS_USE_CACHE_GROUPS` constant to `true` to enable with all groups. However, when enabled, the expiration value is not respected because expiration on group keys isn't a feature [supported by Redis](https://github.com/redis/redis/issues/6620).
 8. (Optional) On an existing site previously using WordPress' transient cache, use WP-CLI to delete all (`%_transient_%`) transients from the options table: `wp transient delete-all`. WP Redis assumes responsibility for the transient cache.
+9. (Optional) To use [Relay](https://relaycache.com) instead of PhpRedis as the client define the `WP_REDIS_USE_RELAY` constant to `true`. For support requests, please use [Relay's GitHub discussions](https://github.com/cachewerk/relay/discussions).
 
 == WP-CLI Commands ==
 
@@ -75,22 +77,7 @@ Use `wp help redis <command>` to learn more about each command.
 
 == Contributing ==
 
-The best way to contribute to the development of this plugin is by participating on the GitHub project:
-
-https://github.com/pantheon-systems/wp-redis
-
-Pull requests and issues are welcome!
-
-You may notice there are two sets of tests running, on two different services:
-
-* Travis CI runs the [PHPUnit](https://phpunit.de/) test suite in a variety of environment configurations (e.g. Redis enabled vs. Redis disabled).
-* Circle CI runs the [Behat](http://behat.org/) test suite against a Pantheon site, to ensure the plugin's compatibility with the Pantheon platform.
-
-Both of these test suites can be run locally, with a varying amount of setup.
-
-PHPUnit requires the [WordPress PHPUnit test suite](https://make.wordpress.org/core/handbook/testing/automated-testing/phpunit/), and access to a database with name `wordpress_test`. If you haven't already configured the test suite locally, you can run `bash bin/install-wp-tests.sh wordpress_test root '' localhost`. You'll also need to enable Redis and the PHPRedis extension in order to run the test suite against Redis.
-
-Behat requires a Pantheon site with Redis enabled. Once you've created the site, you'll need [install Terminus](https://github.com/pantheon-systems/terminus#installation), and set the `TERMINUS_TOKEN`, `TERMINUS_SITE`, and `TERMINUS_ENV` environment variables. Then, you can run `./bin/behat-prepare.sh` to prepare the site for the test suite.
+See [CONTRIBUTING.md](https://github.com/pantheon-systems/wp-redis/blob/master/CONTRIBUTING.md) for information on contributing.
 
 == Frequently Asked Questions ==
 
@@ -104,7 +91,7 @@ This plugin is for the internal application object cache. It doesn't have anythi
 
 = How do I disable the persistent object cache for a bad actor? =
 
-A page load with 2,000 Redis calls can be 2 full seonds of object cache transactions. If a plugin you're using is erroneously creating a huge number of cache keys, you might be able to mitigate the problem by disabling cache persistency for the plugin's group:
+A page load with 2,000 Redis calls can be 2 full seconds of object cache transactions. If a plugin you're using is erroneously creating a huge number of cache keys, you might be able to mitigate the problem by disabling cache persistency for the plugin's group:
 
     wp_cache_add_non_persistent_groups( array( 'bad-actor' ) );
 
@@ -114,7 +101,73 @@ This declaration means use of `wp_cache_set( 'foo', 'bar', 'bad-actor' );` and `
 
 There's a known issue with WordPress `alloptions` cache design. Specifically, a race condition between two requests can cause the object cache to have stale values. If you think you might be impacted by this, [review this GitHub issue](https://github.com/pantheon-systems/wp-redis/issues/221) for links to more context, including a workaround.
 
+= Where do I report security bugs found in this plugin? =
+Please report security bugs found in the source code of the WP Redis plugin through the [Patchstack Vulnerability Disclosure Program](https://patchstack.com/database/vdp/wp-redis). The Patchstack team will assist you with verification, CVE assignment, and notify the developers of this plugin.
+
 == Changelog ==
+
+= 1.4.7 (December 2, 2025) =
+* WordPress 6.9 compatibility [[#524](https://github.com/pantheon-systems/wp-redis/pull/524)]
+
+= 1.4.6 (June 17, 2025) =
+* PHP 8.4 compatibility 
+
+= 1.4.5 (January 21, 2024) =
+* Support Relay in check_client_dependencies() with the WP_REDIS_USE_RELAY constant [[#471](https://github.com/pantheon-systems/wp-redis/pull/471)]
+
+= 1.4.4 (November 27, 2023) =
+* Updates Pantheon WP Coding Standards to 2.0 [[#445](https://github.com/pantheon-systems/wp-redis/pull/445)]
+* Handle duplicate keys in `get_multiple` function [[#448](https://github.com/pantheon-systems/wp-redis/pull/448)] (props @souptik)
+
+= 1.4.3 (June 26, 2023)  =
+* Bug fix: Fixes assumption that CACHE_PORT & CACHE_PASSWORD are Set. [[428](https://github.com/pantheon-systems/wp-redis/pull/428)] (props @tnolte)
+* Adds WP.org validation GitHub action [[#435](https://github.com/pantheon-systems/wp-redis/pull/435)]
+* Bug fix: Fixes incorrect order of `array_replace_recursive` and other issues [[434](https://github.com/pantheon-systems/wp-redis/pull/434)] (props @timnolte)
+* Bug fix: Replace use of wp_strip_all_tags in object-cache.php [[434](https://github.com/pantheon-systems/wp-redis/pull/434)] (props @timnolte)
+* Bug fix: Don't strip tags from the cache password. [[434](https://github.com/pantheon-systems/wp-redis/pull/434)] (props @timnolte)
+
+= 1.4.2 (May 15, 2023) =
+* Bug fix: Removes exception loop caused by `esc_html` in `_exception_handler()` [[421](https://github.com/pantheon-systems/wp-redis/pull/421)]
+
+= 1.4.1 (May 11, 2023) =
+* Bug fix: `wp_cache_flush_runtime` should only clear the local cache [[413](https://github.com/pantheon-systems/wp-redis/pull/413)]
+
+= 1.4.0 (May 9, 2023) =
+* Add support for `flush_runtime` and `flush_group` functions [[#405](https://github.com/pantheon-systems/wp-redis/pull/405)]
+* Add `pantheon-wp-coding-standards` [[#400](https://github.com/pantheon-systems/wp-redis/pull/400)]
+* Update CONTRIBUTING.MD [[#406](https://github.com/pantheon-systems/wp-redis/pull/406)]
+* Update Composer dependencies [[#401](https://github.com/pantheon-systems/wp-redis/pull/394)]
+
+= 1.3.5 (April 6, 2023) =
+* Bump tested up to version to 6.2
+* Update Composer dependencies [[#394](https://github.com/pantheon-systems/wp-redis/pull/394)]
+
+= 1.3.4 (March 7, 2023) =
+* Set `missing_redis_message` if Redis service is not connected [[#391](https://github.com/pantheon-systems/wp-redis/pull/391)].
+
+= 1.3.3 (February 28, 2023) =
+* Add PHP 8.2 support [[#388](https://github.com/pantheon-systems/wp-redis/pull/388)].
+* Remove Grunt, add valid license to Composer file [[#387](https://github.com/pantheon-systems/wp-redis/pull/387)].
+* Update Composer dependencies [[#384](https://github.com/pantheon-systems/wp-redis/pull/384)] [[#385](https://github.com/pantheon-systems/wp-redis/pull/385)].
+
+= 1.3.2 (December 5, 2022) =
+* Fix broken `wp_cache_supports` function [[#382](https://github.com/pantheon-systems/wp-redis/pull/382)].
+
+= 1.3.1 (December 2, 2022) =
+* Declare `wp_cache_supports` function and support features. [[#378](https://github.com/pantheon-systems/wp-redis/pull/378)]
+* Make dependabot target `develop` branch for PRs. [[#376](https://github.com/pantheon-systems/wp-redis/pull/376)]
+
+= 1.3.0 (November 29, 2022) =
+* Added CONTRIBUTING.MD and GitHub action to automate deployments to wp.org. [[#368](https://github.com/pantheon-systems/wp-redis/pull/368)]
+
+= 1.2.0 (February 17, 2022) =
+* Adds support for Relay via `WP_REDIS_USE_RELAY` constant [[#344](https://github.com/pantheon-systems/wp-redis/pull/344)].
+
+= 1.1.4 (October 21, 2021) =
+* Fixes some faulty logic in `WP_REDIS_IGNORE_GLOBAL_GROUPS` check [[#333](https://github.com/pantheon-systems/wp-redis/pull/333)].
+
+= 1.1.3 (October 21, 2021) =
+* Supports a `WP_REDIS_IGNORE_GLOBAL_GROUPS` constant to prevent groups from being added to global caching group [[#331](https://github.com/pantheon-systems/wp-redis/pull/331)].
 
 = 1.1.2 (March 24, 2021) =
 * Applies logic used elsewhere to fall back to `$_SERVER` in `wp_redis_get_info()` [[#316](https://github.com/pantheon-systems/wp-redis/pull/316)].
@@ -204,3 +257,8 @@ There's a known issue with WordPress `alloptions` cache design. Specifically, a 
 
 = 0.1 =
 * Initial commit of working code for the benefit of all.
+
+== Upgrade Notice ==
+
+= 1.4.0 =
+WP Redis 1.4.0 adds support for the `flush_runtime` and `flush_group` functions. If you've copied `object-cache.php` and made your own changes, be sure to copy these additions over as well.

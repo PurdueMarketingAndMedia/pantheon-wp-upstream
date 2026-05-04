@@ -1,0 +1,19 @@
+.purdue-home-image-slider-editor {
+  .glide__slides:not(.cards-slider) {
+    display: flex;
+    .glide__slide {
+      margin: 0;
+    }
+  }
+  .purdue-home-cta-card.purdue-home-image-slider__card
+    .flex-container--align-bottom {
+    width: 350px;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    height: auto;
+    position: relative;
+  }
+}

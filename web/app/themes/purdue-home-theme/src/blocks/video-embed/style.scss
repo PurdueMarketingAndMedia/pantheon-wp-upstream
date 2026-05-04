@@ -1,0 +1,55 @@
+@import "../../../src/style/front-end/overides/colors";
+@import "../../../src/style/front-end/overides/variables";
+@import '../../../node_modules/bulma/sass/utilities/mixins.sass';
+
+.purdue-home-video-embed{
+    .tagged-header-container{
+        margin-bottom:2rem;
+        @include mobile{
+            margin-bottom:1.5rem;
+        }
+    }
+    .section.has-black-background{
+        .tagged-header-container{
+            border-color:$boiler-gold;
+            .tagged-header{
+                background:$boiler-gold;
+                color:$black;
+            }
+        }
+    }
+
+    .container{
+        &.is-9by16{
+            max-width: 422px;
+            max-height: 750px;
+
+            .iframe-container{
+                padding-top: 177.7777%;
+            }
+        }
+    }
+    .purdue-home-cta-card {
+        .cta-link{
+            @include tablet{
+                font-size:2.25rem;
+                margin-bottom: 0.5rem;
+            }
+            @include desktop{
+                font-size:3.25rem;
+                margin-bottom: 1rem;
+            }
+        }
+        .cta-icon.cta-icon--play{
+            @include tablet{
+                width: 80px;
+                height: 80px;
+            }
+            @include desktop{
+                width: 90px;
+                height: 90px;
+            }
+        }
+
+    }
+ }

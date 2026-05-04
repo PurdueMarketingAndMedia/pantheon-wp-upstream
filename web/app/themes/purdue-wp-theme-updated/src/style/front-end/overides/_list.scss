@@ -1,0 +1,42 @@
+.content ol li {
+  ol:not([type]) {
+    list-style-type: lower-alpha !important;
+    li {
+      ol:not([type]) {
+        list-style-type: lower-roman !important;
+      }
+    }
+  }
+}
+.content {
+  ul,
+  ol {
+    font-size: 1rem;
+    li + li {
+      margin-top: 0.5em;
+    }
+  }
+}
+ul.purdue-home-button-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding-left: 1.3rem;
+  padding-bottom: 0;
+  list-style: none;
+  flex-wrap: wrap;
+  list-style-type: none;
+  li {
+    padding-right: 0.5rem;
+    padding-bottom: 0.5rem;
+    @media (max-width: 500px) {
+      padding-right: 0;
+      width: 100%;
+      max-width: 280px;
+    }
+    .purdue-home-button {
+      width: 100%;
+    }
+  }
+}

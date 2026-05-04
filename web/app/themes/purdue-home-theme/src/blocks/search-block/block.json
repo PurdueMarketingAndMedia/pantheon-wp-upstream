@@ -1,0 +1,51 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "purdue/search-block",
+    "version": "1.1.01",
+    "title": "Search Block",
+    "category": "purdue",
+    "description": "The placeholder text and which site it searchs within can be changed in the customizer.",
+    "supports": {
+      "html": false
+    },
+    "attributes": {
+      "header": {
+          "type": "string",
+          "default": ""
+      },
+      "background": {
+          "type": "string",
+          "default": "none"
+      },
+      "id": {
+          "type": "string",
+          "default": ""
+      },
+      "paddingTop": {
+          "type": "string",
+          "default": ""
+      },
+      "paddingBottom": {
+          "type": "string",
+          "default": ""
+      },
+      "borderTop": {
+          "type": "boolean",
+          "default": false
+      },
+      "borderBottom": {
+          "type": "boolean",
+          "default": false
+      },
+      "className": {
+          "type": "string",
+          "default": ""
+      }
+    },
+    "textdomain": "search-block",
+    "editorScript": "file:./index.js",
+    "editorStyle": "file:./index.css",
+    "style": "file:./style-index.css",
+    "render": "file:./render.php"
+  }

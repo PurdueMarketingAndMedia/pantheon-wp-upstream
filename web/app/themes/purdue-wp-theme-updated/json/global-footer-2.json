@@ -1,0 +1,30 @@
+{
+    "column" : "2",
+    "header" : "INFORMATION",
+    "links" : [
+        {
+            "link_text": "Ethics and Compliance",
+            "link_url": "https://www.purdue.edu/vpec/"
+        },
+        {
+            "link_text": "News",
+            "link_url": "https://www.purdue.edu/newsroom/"
+        },
+        {
+            "link_text": "Office of Engagement",
+            "link_url": "https://www.purdue.edu/engagement/"
+        },
+        {
+            "link_text": "President",
+            "link_url": "https://www.purdue.edu/president/"
+        },
+        {
+            "link_text": "Purdue Today",
+            "link_url": "https://www.purdue.edu/newsroom/purduetoday/"
+        },
+        {
+            "link_text": "Tuition Calculator",
+            "link_url": "https://www.purdue.edu/treasurer/finance/bursar-office/tuition/tuition-calculator/"
+        }
+    ]
+}

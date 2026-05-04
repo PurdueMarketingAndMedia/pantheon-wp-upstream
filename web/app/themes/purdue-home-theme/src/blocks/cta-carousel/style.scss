@@ -1,0 +1,271 @@
+@import "../../../src/style/front-end/overides/colors";
+@import "../../../src/style/front-end/overides/variables";
+@import '../../../node_modules/bulma/sass/utilities/mixins.sass';
+
+.purdue-home-cta-carousel{
+  overflow: hidden;
+    .glide__track {
+        overflow: visible;
+    }
+    .glide__slide {
+        padding-bottom:0.2rem;
+        height:auto;
+    }
+    .tagged-header-container{
+        margin-bottom: 3rem;
+        border-color: $boiler-gold;
+        @include mobile {
+            margin-bottom: 2rem;
+          }
+    }
+    .has-gold-background{
+        .tagged-header-container{
+            border-color: $black;
+        }
+    }
+
+    .has-black-background{
+        p:not(.tagged-header){
+          color: #000;
+        }
+    }
+
+    .purdue-home-cta-card{
+        padding:3rem;
+        display:flex;
+        height:100%;
+        background-position: center;
+       background-size: cover;
+        @include until-widescreen {
+            padding:1.5rem;
+          }
+        @include touch {
+            padding:0;
+            flex-direction: column;
+          }
+      &.has-black-background{
+        p:not(.tagged-header){
+          color: #000;
+        }
+      }
+      &.purdue-home-cta-card__has-youtube{
+        .purdue-home-cta-carousel__card-image{
+          width:65%;
+          @include widescreen-only {
+            width:45%;
+          }
+          @include until-widescreen {
+            width:55%;
+          }
+          @include touch {
+            width:100%;
+          }
+          .image{
+            padding-top:56.25%;
+            &:after{
+              content: "";
+              border-radius: 4px 0 0 4px;
+            }
+          }
+        }
+        
+        .purdue-home-cta-carousel__card-content{
+          width:35%;
+          @include widescreen-only {
+            width:55%;
+          }
+          @include until-widescreen {
+            width:45%;
+            padding: 2rem;
+          }
+          @include touch {
+            width:100%;
+            flex:1;
+            border-radius: 0;
+          }
+        }
+      }
+    }
+    .purdue-home-cta-carousel__card-image{
+        width:40%;
+        height:100%;
+        box-shadow: 0 2px 5px 0 rgba(0,0,0,.15);
+        @include widescreen-only {
+            width:45%;
+          }
+          @include until-widescreen {
+            width:55%;
+          }
+          @include touch {
+            width:100%;
+            height:auto;
+          }
+        .image{
+            padding-top:100%;
+            height: 100%;
+            @include touch {
+                padding-top:56.25%;
+              }
+            &:after{
+              content:none;
+            }
+            img,video.purdue-home-background-image {
+                object-fit:cover;
+                border-radius: 4px 0 0 4px;
+                @include touch {
+                    border-radius: 0;
+                  }
+            }
+            .flex-container--align-center {
+               
+                @include touch {
+                    border-radius: 0;
+                  }
+                .cta-link{
+                  @include tablet {
+                    font-size:1.875rem;
+                  }
+                }
+                .cta-icon{
+                  position:relative;
+                  @include tablet{
+                    width: 80px;
+                    height: 80px;
+                }
+
+                }
+            }
+        }  
+    }
+    &__card-content{
+        background:$white;
+        padding:2.5rem;
+        width:60%;
+        border-radius: 0 4px 4px 0;
+        display:flex;
+        flex-direction: column;
+        cursor: default;
+        @include widescreen-only {
+            width:55%;
+          }
+          @include until-widescreen {
+            width:45%;
+            padding: 2rem;
+          }
+          @include touch {
+            width:100%;
+            flex:1;
+            border-radius: 0;
+          }
+    }
+
+    &__card-tag{
+        color: $aged-gold;
+        font-family: $united-sans-condensed;
+        font-size: 1.25rem;
+        font-weight: 900;
+        letter-spacing: 1.67px;
+        line-height: 1.4;
+        padding-bottom:1rem;
+        border-bottom: 2px solid $aged-gold;
+        display:flex;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+        align-self: flex-start;
+        width:100%;
+    }
+
+    &__cite-name{
+        color: $aged-gold;
+        margin-right:4rem;
+    }
+    &__cite-title{
+        color: $black;
+    }
+    &__story-title,&__quote-content{
+        color: $black;
+        font-family: $acumin-pro;
+        font-size: 3rem;
+        font-weight: 700;
+        letter-spacing: 0;
+        line-height: 1.1;
+        @include widescreen-only {
+            font-size: 2.5rem;
+          }
+          @include until-widescreen {
+            font-size: 1.875rem;
+            line-height: 1.2;
+          }
+          @include touch {
+            font-size: 2rem;
+          }
+    }
+    &__story-content{
+        color: $black;
+        font-family: $acumin-pro;
+        font-size: 1.125rem;
+    }
+    ul.purdue-home-button-list {
+        padding-left:0;
+        padding-top:1.5rem;
+        align-self: flex-end;
+        margin-top: auto;
+        width: 100%;
+        justify-content: flex-start;
+    }
+    .slider-controls{
+        margin-top:3rem;
+    }
+}
+
+.purdue-home-cta-card-carousel--profile{
+        .purdue-home-cta-carousel__card-image{
+          width:65%;
+          @include widescreen-only {
+            width:45%;
+          }
+          @include until-widescreen {
+            width:55%;
+          }
+          @include touch {
+            width:100%;
+          }
+          .image{
+            padding-top:56.25%;
+            height: 100%;
+            &:after{
+              content: "";
+              border-radius: 4px 0 0 4px;
+              background-color: unset;
+            }
+          }
+        }
+        .purdue-home-cta-carousel__card-content{
+          width:35%;
+          justify-content: end;
+          padding: 2rem 2rem 0;
+          @include widescreen-only {
+            width:55%;
+          }
+          @include until-widescreen {
+            width:45%;
+            padding: 2rem;
+          }
+          @include touch {
+            width:100%;
+            flex:1;
+            border-radius: 0;
+          }
+        }
+      .purdue-home-cta-carousel__card-tag{
+        display: block;
+        border-top: 2px solid $aged-gold;
+        border-bottom: none;
+        margin-top: 1rem;
+        padding-top: 1rem;
+
+        .purdue-home-cta-carousel__cite-name{
+          margin-left: -1rem;
+        }
+    }
+}

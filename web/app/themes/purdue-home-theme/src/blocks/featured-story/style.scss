@@ -1,0 +1,126 @@
+@import "../../../src/style/front-end/overides/colors";
+@import "../../../src/style/front-end/overides/variables";
+@import '../../../node_modules/bulma/sass/utilities/mixins.sass';
+
+.purdue-home-featured-story{
+  position: relative;
+  .tagged-header-container{
+    margin-bottom:2.5rem;
+    border-color:$boiler-gold;
+    @include mobile{
+      margin-bottom:1.5rem;
+    }
+  }
+  .has-gold-background{
+    .tagged-header-container{
+        border-color:$black;
+    }
+  }
+  &__container{
+    justify-content: space-between;
+    &--reversed{
+      flex-direction:row-reverse;
+    }
+    @include mobile{
+      flex-direction:column;
+    }
+    &--50{
+      .purdue-home-featured-story__content-container.column{
+        flex-basis: 48%;
+        @include mobile{
+          width:100%;
+          flex-basis: 100%;
+        }
+      }
+      .purdue-home-featured-story__image-container.column{
+        flex-basis: 50%;
+        @include mobile{
+          width:100%;
+          flex-basis: 100%;
+        }
+      }
+    }
+  }
+  &__content-container  {
+    &.column {
+      flex-basis:42%;
+      font-size:1.125rem;
+      display:flex;
+      flex-direction: column;
+      justify-content: center;
+      flex-grow:0;
+      @include mobile{
+        width:100%;
+        padding:1.25rem;
+        font-size:1rem;
+      }
+      p,ul{
+        font-size: inherit;
+      }
+
+    }
+    ul.purdue-home-button-list{
+      justify-content: flex-start;
+      flex-wrap:wrap;
+      padding-left:0;
+      li:before{
+        content:none;
+      }
+      li:first-child{
+        padding-left:0;
+      }
+    }
+  }
+  &__image-container{
+    &.column {
+      flex-basis:56%;
+      position:relative;
+      flex-grow:0;
+      @include mobile{
+        width:100%;
+      }
+      .image{
+        img{
+          border-radius: 4px;
+          object-fit: cover;
+        }
+      }
+      .purdue-home-cta-card{
+        .image{
+          width:100%;
+          img{
+            object-fit: cover;
+            height:100%;
+          }
+        }
+        .cta-link{
+          @include desktop{
+            font-size:2.25rem;
+          }
+         }
+        .cta-icon.cta-icon--play{
+          @include desktop{
+            width:70px;
+            height:70px;
+          }
+         }
+      }
+
+    }
+  }
+  &__header{
+    color: inherit;
+    font-family: $acumin-pro;
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1.1;
+    margin-bottom:1.5rem !important;
+    @include mobile{
+        font-size: 2rem;
+        margin-bottom:1.2rem !important;
+    }
+  }
+
+}
+

@@ -1,0 +1,111 @@
+
+
+.modal-wrapper{
+     .loading {
+        display: block;
+        width: 100px;
+        margin: auto;
+        padding: 25vh 0;
+    }
+    &.show{
+        background-color: rgba(0, 0, 0, 0.86);
+        align-items: center; 
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: 0;
+        z-index: 9999;
+        overflow: auto;
+        display: block;
+        
+
+    .wp-post-modal {
+        background: none !important;
+        box-shadow: none;
+        padding: 0;
+        margin: 5rem auto;
+        max-width: 100%;
+        border: 0;
+        position: static;
+
+        @include touch{
+            width: 100%;
+        }
+       
+        }
+       
+        #modal-content{
+            max-width: 800px;
+            width: 100%;
+            background: #fff;
+            box-shadow: none;
+            min-height: 60%;
+            margin: 5rem auto;
+            padding: 2rem;
+            border-radius: 4px !important;
+            box-shadow: none !important;
+            border-radius:0;
+            max-height: auto;
+            position: relative;
+
+        }
+
+        .close-modal {
+            border: 2px solid #cfb991 !important;
+            border-radius: 100% !important;
+            box-shadow: none;
+            position: fixed !important;;
+            right: 5rem !important;;
+            top: 5rem !important;;
+            transition: none;
+            color: hsl(0, 0%, 100%) !important;
+            max-height: 40px;
+            max-width: 40px;
+            cursor: pointer;
+            background:transparent;
+            display: flex !important;
+            justify-content: center;
+            align-items: center;
+            line-height: 1;
+            padding: 2px 10px 10px;
+            margin-top: 0px !important;
+            font-size: 1.5rem;
+            z-index: 9999;
+            &:focus{
+                outline: none;
+            }
+
+            @include touch{
+                right: 2rem !important;
+                top: 2rem !important;
+                background-color: rgba(0, 0, 0, .5) !important;
+                z-index: 9999 !important;
+                position: fixed !important;
+            }
+        }
+    } 
+}
+
+
+
+.modal-wrapper.styled .wp-post-modal, .modal-wrapper .wp-post-modal{
+
+        ul:not(.purdue-home-button-list){
+            padding-top: 1rem;
+            padding-left: 2.5rem;
+            list-style: disc;
+
+            li {
+                list-style: square;
+                padding-bottom: 1rem;
+            }
+        }
+
+        
+
+        ul.purdue-home-button-list li {
+            list-style: none;
+        }
+
+}

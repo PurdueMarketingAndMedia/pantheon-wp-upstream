@@ -1,0 +1,134 @@
+@import "../../../src/style/front-end/overides/colors";
+@import "../../../src/style/front-end/overides/variables";
+@import '../../../node_modules/bulma/sass/utilities/mixins.sass';
+
+.purdue-home-media-grid{
+    .columns{
+        flex-direction: row-reverse;
+        .column{
+            display: flex;
+            flex-direction: column;
+            gap:10px;
+            justify-content: space-between;
+            &.is-three-fifths{
+                .image:nth-child(2){
+                    order:2;
+                }
+                width:62%;
+                @include until-widescreen {         
+                               width:60%;
+                  }
+                @include mobile{
+                    width:100%;
+                }
+            }
+            &.is-two-fifths{
+                width:38%;
+                @include until-widescreen {         
+                    width:40%;
+                }
+                @include mobile{
+                    display:none;
+                }
+            }
+        }
+    }
+    &__content-wrap{
+        width:100%;
+        display:flex;
+        justify-content: flex-end;
+        align-items: center;
+        z-index:2;
+        @include mobile{
+            position:relative;
+        }
+    }
+    &__content{
+        padding-left:3rem;
+        padding-right:3rem;
+        background:rgba(255,255,255,0.65);
+        padding-top:1rem;
+        padding-bottom:1rem;
+        @include until-widescreen{
+            padding-left:1.5rem;
+            padding-right:1.5rem;
+        }
+        @include mobile{
+            width:100%;
+            padding-left:0;
+            padding-right:0;
+        }
+        p{
+            font-size:1.125rem;
+        }
+        ul.purdue-home-button-list{
+            @include mobile{
+                justify-content: center;
+            }
+            li{
+                @include mobile{
+                    width:auto;
+                }
+            }
+        }
+    }
+    &__header{
+        color: $black;
+        font-family: $acumin-pro;
+        font-size: 3rem;
+        font-weight: 700;
+        letter-spacing: 0;
+        line-height:1.05;
+        margin-bottom:2rem !important;
+        @include until-widescreen {
+            font-size:2rem;
+            margin-bottom:1rem !important;
+          }
+        @include mobile{
+            text-align:center;
+        }
+    }
+    &__subtext{
+        color:$black;
+        @include until-widescreen {
+            font-size:1rem;
+            margin-bottom:1rem !important;
+          }
+        @include mobile{
+            text-align:center;
+            font-size:1.125rem;
+
+        }
+    }
+    .image{
+        img,video{
+            object-fit: cover;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            border-radius: 4px;
+        }
+    
+
+    }
+    &.has-black-background{
+        .purdue-home-media-grid__content{
+            background: rgba(0,0,0,0.65);
+        }
+        .purdue-home-media-grid__header{
+            color: $boiler-gold;
+        }
+        .purdue-home-media-grid__subtext{
+            color:$white;
+        }
+    }
+    .purdue-home-button-list{
+        justify-content: flex-start;
+        padding-left: 0;
+        li:first-child {
+            padding-left: 0;
+        }
+    }
+ }

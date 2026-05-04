@@ -1,9 +1,10 @@
 === Pantheon Advanced Page Cache ===
-Contributors: getpantheon, danielbachhuber
+Contributors: getpantheon, danielbachhuber, kporras07, jspellman, jazzs3quence, ryanshoover, rwagner00, pwtyler
 Tags: pantheon, cdn, cache
-Requires at least: 4.7
-Tested up to: 5.7
-Stable tag: 1.0.0
+Requires at least: 6.4
+Tested up to: 6.9
+Requires PHP: 7.4
+Stable tag: 2.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -11,7 +12,7 @@ Automatically clear related pages from Pantheon's Edge when you update content. 
 
 == Description ==
 
-[![Travis CI](https://travis-ci.org/pantheon-systems/pantheon-advanced-page-cache.svg?branch=master)](https://travis-ci.org/pantheon-systems/pantheon-advanced-page-cache) [![CircleCI](https://circleci.com/gh/pantheon-systems/pantheon-advanced-page-cache.svg?style=svg)](https://circleci.com/gh/pantheon-systems/pantheon-advanced-page-cache)
+[![CircleCI](https://circleci.com/gh/pantheon-systems/pantheon-advanced-page-cache.svg?style=svg)](https://circleci.com/gh/pantheon-systems/pantheon-advanced-page-cache)
 
 For sites wanting fine-grained control over how their responses are represented in their edge cache, Pantheon Advanced Page Cache is the golden ticket. Here's a high-level overview of how the plugin works:
 
@@ -126,31 +127,77 @@ Because Pantheon Advanced Page Cache already handles WordPress post purge events
 
 Lastly, the `pantheon_wp_rest_api_surrogate_keys` filter lets you filter surrogate keys present in a REST API response.
 
+= Additional purging by path =
+
+When a post is published for the first time, the permalink's path is also purged even if it has no matching keys. This can be further filtered with the `pantheon_clear_post_path` filter.
+
+        add_action('pantheon_clear_post_path', function($paths) {
+            // Add or remove paths from $paths
+            return $paths
+        }, 10, 3);
+
 Need a bit more power? In addition to `pantheon_wp_clear_edge_keys()`, there are two additional helper functions you can use:
 
 * `pantheon_wp_clear_edge_paths( $paths = array() )` - Purge cache for one or more paths.
 * `pantheon_wp_clear_edge_all()` - Warning! With great power comes great responsibility. Purge the entire cache, but do so wisely.
+
+= Ignoring Specific Post Types =
+
+By default, Pantheon Advanced Page Cache is pretty aggressive in how it clears its surrogate keys. Specifically, any time `wp_insert_post` is called (which can include any time a post of any type is added or updated, even private post types), it will purge a variety of keys including `home`, `front`, `404` and `feed`. To bypass or override this behavior, since 1.5.0 we have a filter allowing an array of post types to ignore to be passed before those caches are purged. By default, the `revision` post type is ignored, but others can be added:
+
+	/**
+	* Add a custom post type to the ignored post types.
+	*
+	* @param array $ignored_post_types The array of ignored post types.
+	* @return array
+	*/
+	function filter_ignored_posts( $ignored_post_types ) {
+		$ignored_post_types[] = 'my-post-type'; // Ignore my-post-type from cache purges.
+		return $ignored_post_types;
+	}
+
+	add_filter( 'pantheon_purge_post_type_ignored', 'filter_ignored_posts' );
+
+This will prevent the cache from being purged if the given post type is updated.
+
+= Setting the Cache Max Age with a filter =
+
+The cache max age setting is controlled by the [Pantheon Page Cache](https://docs.pantheon.io/guides/wordpress-configurations/wordpress-cache-plugin) admin page. As of 2.0.0, there are three cache age options by default — 1 week, 1 month, 1 year. Pantheon Advanced Page Cache automatically purges the cache of updated and related posts and pages, but you might want to override the cache max age value and set it programmatically. In this case, you can use the `pantheon_cache_default_max_age` filter added in [Pantheon MU plugin 1.4.0+](https://docs.pantheon.io/guides/wordpress-configurations/wordpress-cache-plugin#override-the-default-max-age). For example:
+
+	add_filter( 'pantheon_cache_default_max_age', function() {
+		return 10 * DAY_IN_SECONDS;
+	} );
+
+When the cache max age is filtered in this way, the admin option is disabled and a notice is displayed.
+
+= Updating the cache max age based on nonces =
+
+Nonces created on the front-end, often used to secure forms and other data, have a lifetime, and if the cache max age is longer than the nonce lifetime, the nonce may expire before the cache does. To avoid this, you can use the `pantheon_cache_nonce_lifetime` action to set the `pantheon_cache_default_max_age` to less than the nonce lifetime. For example:
+
+	do_action( 'pantheon_cache_nonce_lifetime' );
+
+It's important to wrap your `do_action` in the appropriate conditionals to ensure that the action is only called when necessary and not filtering the cache max age in cases when it's not necessary. This might mean only running on certain pages or in certain contexts in your code.
 
 == WP-CLI Commands ==
 
 This plugin implements a variety of [WP-CLI](https://wp-cli.org) commands. All commands are grouped into the `wp pantheon cache` namespace.
 
     $ wp help pantheon cache
-    
+
     NAME
-    
+
       wp pantheon cache
-    
+
     DESCRIPTION
-    
+
       Manage the Pantheon Advanced Page Cache.
-    
+
     SYNOPSIS
-    
+
       wp pantheon cache <command>
-    
+
     SUBCOMMANDS
-    
+
       purge-all       Purge the entire page cache.
       purge-key       Purge one or more surrogate keys from cache.
       purge-path      Purge one or more paths from cache.
@@ -291,7 +338,104 @@ Different WordPress actions cause different surrogate keys to be purged, documen
 * Purges surrogate keys: `rest-setting-<name>`
 * Affected views: REST API resource endpoint
 
+== Surrogate Keys for taxonomy terms ==
+Setting surrogate keys for posts with large numbers of taxonomies (such as WooCommerce products with a large number of global attributes) can suffer from slower queries. Surrogate keys can be skipped for 'product' post types' taxonomy terms (or any other criteria you see fit) with the following filter:
+
+	function custom_should_add_terms($should_add_terms, $wp_query) {
+		if ( $wp_query->is_singular( 'product' ) ) {
+			return false;
+		}
+		return $should_add_terms;
+	}
+	add_filter('pantheon_should_add_terms', 'custom_should_add_terms', 10, 2);
+
+== Other Filters ==
+
+= pantheon_apc_disable_admin_notices =
+Since 2.0.0, Pantheon Advanced Page Cache displays a number of admin notices about your current cache max age value. You can disable these notices with the `pantheon_apc_disable_admin_notices` filter.
+
+	add_filter( 'pantheon_apc_disable_admin_notices', '__return_true' );
+
+Alternately, the function callback is passed into the `pantheon_apc_disable_admin_notices` filter, allowing you to specify precisely _which_ notice to disable, for example:
+
+	add_filter( 'pantheon_apc_disable_admin_notices', function( $disable_notices, $callback ) {
+    	if ( $callback === '\\Pantheon_Advanced_Page_Cache\\Admin_Interface\\admin_notice_maybe_recommend_higher_max_age' ) {
+        	return true;
+    	}
+    	return $disable_notices;
+	}, 10, 2 );
+
+The above example would disable _only_ the admin notice recommending a higher cache max age.
+
+== Plugin Integrations ==
+
+Pantheon Advanced Page Cache integrates with WordPress plugins, including:
+
+* [WPGraphQL](https://wordpress.org/plugins/wp-graphql/)
+
+== Contributing ==
+
+See [CONTRIBUTING.md](https://github.com/pantheon-systems/wp-saml-auth/blob/master/CONTRIBUTING.md) for information on contributing.
+
 == Changelog ==
+
+= 2.1.2 (December 16, 2025) =
+* Confirmed PHP 8.4 compatibility [[#333](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/333)]
+* Confirmed WordPress 6.9 compatibility [[#355](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/355)]
+* Adding rest-term-* keys to purge_post_with_related() for published and draft posts. ([#357](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/357)) 
+
+= 2.1.1 (25 February 2025) =
+* Fixes 404 pages remaining cached after a post has been published ([#315](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/315))
+
+= 2.1.0 (8 August 2024) =
+* Adds any callable functions hooked to the `pantheon_cache_default_max_age` filter to the message that displays in the WordPress admin when a cache max age filter is active. [[#292](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/292)] This gives some context to troubleshoot if the filter is active somewhere in the codebase. If an anonymous function is used, it is noted in the message that displays.
+* Removes the hook to `nonce_life` and replaces it with a new action (`pantheon_cache_nonce_lifetime`, see [documentation](https://github.com/pantheon-systems/pantheon-advanced-page-cache?tab=readme-ov-file#updating-the-cache-max-age-based-on-nonces)). [[#293](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/293)] This was erroneously overriding any admin settings and setting the default cache max age for some sites to always be 23 hours (the nonce lifetime minus 1 hour). This solution requires that developers add the `do_action` when they are creating nonces on the front-end, but allows the cache settings to work as designed in all other instances.
+
+= 2.0.0 (28 May 2024) =
+* Adds new admin alerts and Site Health tests about default cache max age settings and recommendations [[#268](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/268), [#271](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/271)]. The default Pantheon GCDN cache max age value has been updated to 1 week in the [Pantheon MU plugin](https://github.com/pantheon-systems/pantheon-mu-plugin). For more information, see the [release note](https://docs.pantheon.io/release-notes/2024/04/pantheon-mu-plugin-1-4-0-update).
+* Updated UI in Pantheon Page Cache admin page when used in a Pantheon environment (with the Pantheon MU plugin). [[#272](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/272)] This UI change takes effect when [Pantheon MU plugin version 1.4.3](https://docs.pantheon.io/release-notes/2024/05/pantheon-mu-plugin-1-4-3-update) is available on your site.
+* Automatically updates the cache max age to the recommended value (1 week) if it was saved at the old default value (600 seconds). [[#269](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/269)]
+* Adds a hook into the `nonce_life` filter when nonces are created on the front-end to set the `pantheon_cache_default_max_age` to less than the nonce lifetime to avoid nonces expiring before the cache does. [[#282](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/282)] props [@ryanshoover](https://profiles.wordpress.org/ryanshoover/)
+
+= 1.5.0 (11 March 2024) =
+* Adds filter `pantheon_purge_post_type_ignored` to allow an array of post types to ignore before purging cache [[#258](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/258)]
+* Adds [wpunit-helpers](https://github.com/pantheon-systems/wpunit-helpers) for running/setting up WP Unit tests
+
+= 1.4.2 (October 16, 2023) =
+* Updates Pantheon WP Coding Standards to 2.0 [[#249](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/249)]
+* Fixes an issue where a PHP warning was thrown when surrogate keys were emitted from archive pages with multiple post types. [[#252](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/252)]
+
+= 1.4.1 (August 8, 2023) =
+* Send the REST API response header to the result and not the REST server [[#237](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/237)]. Props [@srtfisher](https://github.com/srtfisher) & [@felixarntz](https://github.com/felixarntz).
+
+= 1.4.0 (August 1, 2023) =
+* Bumped Dependencies [[236](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/236)]
+* Add filter `pantheon_should_add_terms` to allow disabling surrogate keys for posts' taxonomy terms [[239](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/239)]
+
+= 1.3.0 (April 19, 2023) =
+* Adds support for WordPress Multisite which resolves issue where editing a Post on one subsite clears the home page cache of other sites in the Multisite install if it has a Post containing the same ID [[#228](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/228)].
+
+= 1.2.4 (April 13, 2023) =
+* Adds surrogate key to post-type archive pages (e.g. "portfolio") that's specific to that archive(e.g. "portfolio-archive"), and clears that archive where appropriate [[#225](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/225)].
+
+= 1.2.3 (April 5, 2023) =
+* Bump tested up to version to 6.2
+
+= 1.2.2 (March 14, 2023) =
+* Adds PHP 8.2 compatibility [[#218](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/218)].
+* Bump dependencies [[#204](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/204)].
+
+= 1.2.1 (February 23, 2023) =
+* Handle models that are not instances of the `WPGraphQL\Model\Model` class [[#212](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/212)].
+* Make dependabot target develop branch [[#209](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/209)].
+* Bump dependencies [[#210](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/210)] [[#214](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/214)].
+
+= 1.2.0 (November 29, 2022) =
+* Adds Github Actions for building tag and deploying to wp.org. Add CONTRIBUTING.md. [[#203](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/203)]
+
+= 1.1.0 (November 1, 2022) =
+* Hook into WPGraphQL to emit surrogate keys [[#199](https://github.com/pantheon-systems/pantheon-advanced-page-cache/pull/199)].
+* Add Plugin Integrations section to README
 
 = 1.0.0 (March 2, 2020) =
 * Plugin is stable.
@@ -328,3 +472,13 @@ Different WordPress actions cause different surrogate keys to be purged, documen
 
 = 0.1.0 (November 23rd, 2016) =
 * Initial release.
+
+== Upgrade Notice ==
+= 2.0.0 (28 May 2024) =
+This release requires a minimum WordPress version of 6.4.0. It uses Site Health checks and the `wp_admin_notices` function to alert users to the new cache max-age default settings and recommendations. The plugin will still function with earlier versions, but you will not get the benefit of the alerts and Site Health checks.
+
+This version also automatically updates the cache max age (set in the [Pantheon Page Cache settings](https://docs.pantheon.io/guides/wordpress-configurations/wordpress-cache-plugin)) to the recommended value (1 week) if it was saved at the old default value (600 seconds). If the cache max age was set to any other value (or not set at all), it will not be changed. A one-time notice will be displayed in the admin interface to inform administrators of this change.
+
+= 1.3.0 =
+= 1.3.0 =
+Note that the Pantheon Advanced Page Cache 1.3.0 release now prefixes keys on a WordPress Multisite (WPMS) with the blog ID. For users who already have this plugin installed on a WPMS, they will need to click the Clear Cache button on the settings page to generate the prefixed keys.

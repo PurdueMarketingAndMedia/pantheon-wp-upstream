@@ -1,0 +1,47 @@
+@import "../../../src/style/front-end/overides/colors";
+@import "../../../src/style/front-end/overides/variables";
+
+.purdue-home-color-hero{
+    .purdue-color-hero--stats-wrapper--box{
+        margin-bottom:2rem;
+    }
+    &--right__stat{
+        font-size:100px;
+        font-weight: bold;
+        color:#CFB991;
+        font-family: $united-sans;
+        margin: 0;
+        line-height:0.9;
+        display: block;
+    }
+    &--right__description{
+        color:#FFFFFF;
+        font-size:29px;
+        line-height: 38px;
+        font-family: $united-sans-condensed;
+        font-weight: 900;
+        text-transform: uppercase;
+        display: block;
+    }
+    &--right__source{
+        color:#FFFFFF;
+        font-size:29px;
+        line-height: 38px;
+        font-family: $united-sans-condensed;
+        font-weight: 500;
+        text-transform: uppercase;
+        display: block;
+        a{
+            color:#FFFFFF;
+        }
+    }
+    ul.purdue-home-button-list {
+        list-style-type: none;
+        padding: 0;
+        justify-content: flex-start;
+        margin-top: 2rem;
+    }
+}
+
+
+ 

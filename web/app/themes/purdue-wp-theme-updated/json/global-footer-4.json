@@ -1,0 +1,34 @@
+{
+    "column" : "4",
+    "header" : "COMMUNICATION",
+    "links" : [
+        {
+            "link_text": "Annual Security Report",
+            "link_url": "https://www.purdue.edu/ehps/police/statistics-policies/security-reports.php"
+        },
+        {
+            "link_text": "Construction",
+            "link_url": "https://www.purdue.edu/physicalfacilities/construction/"
+        },
+        {
+            "link_text": "Emergency",
+            "link_url": "https://www.purdue.edu/emergency/"
+        },
+        {
+            "link_text": "Information Technology",
+            "link_url": "https://it.purdue.edu/"
+        },
+        {
+            "link_text": "Marketing and Communications",
+            "link_url": "https://marcom.purdue.edu/"
+        },
+        {
+            "link_text": "Purdue Hotline",
+            "link_url": "https://www.purdue.edu/hotline/"
+        },       
+        {
+            "link_text": "Timely Warnings",
+            "link_url": "https://www.purdue.edu/ehps/police/timely-warnings/"
+        }
+    ]
+}

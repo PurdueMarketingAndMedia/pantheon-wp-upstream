@@ -1,0 +1,19 @@
+//import 'core-js/stable'
+import "./accordion.js";
+import "./skip-link-focus-fix.js";
+import "./hideAjaxLoadMoreButton.js";
+import "./to-top.js";
+import "./currentPage.js";
+import "./table.js";
+import "./navigation.js";
+import "./search.js";
+import "./video.js";
+import "./modal.js";
+import "./select.js";
+import "./slider.js";
+//blocks
+import "../../blocks/accordion/frontend.js";
+import "../../blocks/tabs-block/frontend.js";
+import "../../blocks/news-and-events/frontend.js";
+import "../../blocks/instagram-feed/frontend.js";
+import "../../blocks/image-slider/frontend.js";

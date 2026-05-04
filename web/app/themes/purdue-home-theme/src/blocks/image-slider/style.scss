@@ -1,0 +1,142 @@
+@import "../../../src/style/front-end/overides/colors";
+@import "../../../src/style/front-end/overides/variables";
+@import '../../../node_modules/bulma/sass/utilities/mixins.sass';
+
+.purdue-home-image-slider{
+	@include mobile{
+		overflow: hidden;
+	}
+	.slider-controls{
+		margin-top:1.5rem;
+	}
+	.glide{
+		min-height: 300px;
+		height: auto;
+		figure{
+			max-height: 100%;
+			img{
+				&.is-16by9 {
+					aspect-ratio: 16 / 9;
+				}
+				border-radius: 4px;
+				object-fit: cover;
+			}
+			figcaption {
+				max-width: min(900px, 100% - 16px);
+				width: 100%;
+				margin: 1.5rem 0 0 1.5rem;
+				padding: 0 1.5rem 0 1.5rem;
+				border-left: 1px solid #c4bfc0;
+
+				@include touch {
+					width: calc(100% - 16px);
+					padding: 0 0 0 1rem !important;
+					text-align: left !important;
+				}
+				@include mobile {
+					margin: 1.5rem 0 0 0 !important;
+				}
+			}
+		}
+	}
+	&.has-gray-background{
+		figcaption{
+			background-color: $grey-lighter;
+		}
+	}
+	&.has-white-background{
+		figcaption{
+			background-color: #fff;
+		}
+	}
+	&.has-black-background{
+		figcaption{
+			background-color: #000;
+		}
+		.glide__bullet{
+			background-color: #ffffff;
+			opacity: 0.5;
+			&--active{
+				background: $boiler-gold;
+				opacity: 1;
+				&:hover{
+					background: $boiler-gold;
+					opacity: 1;
+				}
+			}
+			&:hover{
+				opacity: 0.7;
+			}
+		}
+		.glide__arrow{
+			&.arrow--left{
+				margin-right:1rem;
+				background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3C!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --%3E%3Cpath fill='%23ffffff' d='M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z'/%3E%3C/svg%3E");          }
+			&.arrow--right{
+				margin-left:1rem;
+				background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3C!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --%3E%3Cpath fill='%23ffffff' d='M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z'/%3E%3C/svg%3E");      }
+		}
+	}
+	&__card {
+		&.purdue-home-cta-card {
+			display:flex;
+			cursor:default;
+			@include mobile{
+				flex-direction:column;
+			}
+		}
+
+		&-image{
+			flex:1;
+			@include mobile{
+				width:100%;
+			}
+			.image{
+
+				min-height:400px;
+				@include mobile{
+					min-height:1px;
+				}
+				&:after{
+					content:none !important;
+				}
+			}
+		}
+		&-title{
+			font-size:2rem;
+			font-weight:700;
+			line-height:1.1;
+			@include until-widescreen {
+				font-size:1.5rem;
+			}
+		}
+		.flex-container--align-bottom{
+			width:350px;
+			padding:2.5rem;
+			display:flex;
+			flex-direction: column;
+			justify-content: flex-end;
+			align-items: flex-start;
+			height: auto;
+			position: relative;
+			@include mobile{
+				width:100%;
+				padding:2.5rem 1.125rem;
+			}
+		}
+	}
+	&--has-text{
+		.purdue-home-image-slider__card{
+			flex-wrap: wrap;
+		}
+		.slider-controls{
+			margin-top:3rem;
+			@include mobile{
+				margin-top:2rem;
+			}
+		}
+	}
+	.glide__slide{
+		padding:0.2rem;
+	}
+}

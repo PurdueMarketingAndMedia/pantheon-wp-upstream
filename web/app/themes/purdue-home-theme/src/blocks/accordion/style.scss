@@ -1,0 +1,192 @@
+@import "../../../src/style/front-end/overides/colors";
+@import "../../../src/style/front-end/overides/variables";
+@import '../../../node_modules/bulma/sass/utilities/mixins.sass';
+
+.purdue-accordion-wrap {
+    .has-black-background{
+        .purdue-accordion{
+            border-top:1px solid $white;
+            border-bottom:1px solid $white;
+            &__title button {
+                z-index:20;
+                color:$white;
+                &:after{
+                    background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='52px' height='52px' viewBox='0 0 52 52' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3Eplus_icon%3C/title%3E%3Cg id='Desktop' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='plus_icon' stroke='%23cfb991' stroke-width='4'%3E%3Ccircle id='Oval-Copy-3' cx='26' cy='26' r='24'%3E%3C/circle%3E%3Cline x1='26.5' y1='14' x2='26.5' y2='38' id='Path-6' stroke-linecap='round' stroke-linejoin='round'%3E%3C/line%3E%3Cline x1='25.6896552' y1='14.5116279' x2='25.6896552' y2='38.6976744' id='Path-6' stroke-linecap='round' stroke-linejoin='round' transform='translate(25.6897, 26.6047) rotate(-90) translate(-25.6897, -26.6047)'%3E%3C/line%3E%3C/g%3E%3C/g%3E%3C/svg%3E");                }
+            }
+        }
+    }
+    .container.is-narrow{
+        @include fullhd {
+            max-width:1200px;
+        }
+    }
+    .purdue-accordion {
+        border-top:1px solid $black;
+        border-bottom:1px solid $black;	
+        font-family: $acumin-pro;
+        position: relative;
+        cursor: pointer;
+        margin:auto;
+        &.has-no-bottomborder{
+            border-bottom:none;	
+        }
+        &.has-no-topborder{
+            border-top:none;	
+        }
+        &__title {
+            margin-bottom:0;
+            button {
+                display:flex;
+                justify-content: space-between;
+                align-items: center;
+                width:100%;
+                padding:2.5rem 4rem 2.5rem 0;
+                border:none;
+                cursor: pointer;
+                width:100%;
+                font-family: $acumin-pro;
+                font-size: 2.75rem;
+                font-weight: 700;
+                letter-spacing: 0;
+                line-height: 1.1;
+                position:relative;
+                z-index:20;
+                color:$black;
+                margin-bottom:0;
+                text-align: left;
+                @include mobile{
+                    padding:1.75rem 4rem 1.75rem 0;
+                    font-size:2rem;
+                }
+                background-color: inherit;
+                &:after {
+                    content:"";
+                    background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='52px' height='52px' viewBox='0 0 52 52' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3Eplus_icon%3C/title%3E%3Cg id='Desktop' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='plus_icon' stroke='%23000000' stroke-width='4'%3E%3Ccircle id='Oval-Copy-3' cx='26' cy='26' r='24'%3E%3C/circle%3E%3Cline x1='26.5' y1='14' x2='26.5' y2='38' id='Path-6' stroke-linecap='round' stroke-linejoin='round'%3E%3C/line%3E%3Cline x1='25.6896552' y1='14.5116279' x2='25.6896552' y2='38.6976744' id='Path-6' stroke-linecap='round' stroke-linejoin='round' transform='translate(25.6897, 26.6047) rotate(-90) translate(-25.6897, -26.6047)'%3E%3C/line%3E%3C/g%3E%3C/g%3E%3C/svg%3E");                    
+                    width: 50px;
+                    height:50px;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    position: absolute;
+                    right: 0;
+                    top: calc(50% - 25px);
+                    transition: all 0.3s ease;
+                    @include mobile{
+                        width: 45px;
+                        height:45px;
+                        top: calc(50% - 22.5px);
+                    }
+                }
+                strong{
+                    pointer-events: none;
+                }
+            }
+            &--small{
+                button{
+                    font-size: 2rem;
+                    padding: 1.625rem 4rem 1.625rem 0;
+
+                    &:after {
+                        width: 38px;
+                        height:38px;
+                        top: calc(50% - 18px);
+                    }
+                }
+            }
+            
+        }
+        
+        &__content {
+            display:block;
+            font-size:18px;
+            transition: all 0.3s;
+            box-sizing: border-box;
+            position: relative;
+            width: 100%;
+            z-index: 1;
+            overflow: hidden;
+            opacity:0;
+            animation: fadeIn 1s;
+            height:0;
+        
+            img{
+                overflow: hidden;
+                max-height: 100%;
+                height: auto;
+                width: 100%;
+                border-radius: 4px;
+                max-width:100%;
+            }
+            .wp-block-columns{
+                margin-bottom:0;
+            }
+            .wp-block-column{
+                &:not(:last-child){
+                    @media (min-width: 782px){
+                        padding-right:2rem;
+
+                    }
+                }
+            
+                figcaption{
+                    display:none;
+                }
+            }
+
+            h2,h3,h4,h5{
+                margin-bottom:12px;
+                font-family: $acumin-pro;
+                font-weight:700;
+            }
+            h3{
+                font-size:2.0rem;
+            }
+            h4{
+                font-size:1.875rem;
+            }
+            h5{
+                font-size:1.5rem;
+            }
+            h5{
+                font-size:1.25rem;
+            }
+            h6{
+                font-size:1.125rem;
+            }
+            p:not(:last-child){
+                margin-bottom:1rem;
+            }
+        }    
+    }
+    &.is-open {
+        > .section > .container > .purdue-accordion {
+            > .purdue-accordion__title button {
+                &:after{
+                        transform: rotate(45deg);
+                }
+            }
+            > .purdue-accordion__content {
+                display:block;
+                opacity:1;
+                padding-bottom:2rem;
+                height:auto;
+            }
+        }
+    }
+}
+
+.container{
+    .purdue-accordion-wrap {
+        &--small{
+            @media screen and (max-width: 1407px){
+                .section{
+                    padding-left: 0;
+                    padding-right: 0;
+                }
+            }
+        }
+    }
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+      to { opacity: 1; }
+}

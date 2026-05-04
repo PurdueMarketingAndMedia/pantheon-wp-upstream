@@ -1,0 +1,35 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "purdue/tab-horizontal-block",
+    "version": "1.1.02",
+    "title": "Tabs Horizontal",
+    "category": "purdue",
+    "icon": "welcome-add-page",
+    "description": "Add tab.",
+    "supports": {
+      "className": false
+    },
+    "parent": [
+        "purdue/tabs-horizontal-block"
+    ],
+    "attributes": {
+        "aria": { 
+            "type": "string", 
+            "default": "" 
+        },
+        "editorSelected": { 
+            "type": "boolean", 
+            "default": false 
+        },
+        "selected": { 
+            "type": "boolean", 
+            "default": false 
+        },
+        "id": {
+			"type": "string"
+		}
+    },
+    "textdomain": "tab-horizontal-block",
+    "editorScript": "file:./index.js"
+  }

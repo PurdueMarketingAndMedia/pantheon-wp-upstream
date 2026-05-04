@@ -1,0 +1,92 @@
+@import "../../../src/style/front-end/overides/colors";
+@import "../../../src/style/front-end/overides/variables";
+@import '../../../node_modules/bulma/sass/utilities/mixins.sass';
+
+.purdue-home-layout--left-banner {
+  position: relative;
+  overflow: hidden;
+  & > .image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 28%;
+    min-height: 100%;
+    margin-left: 0;
+    padding-left: 0 !important;
+    max-width: 535px;
+    @include touch {
+      display: none;
+      padding-left: 0;
+    }
+    @include mobile {
+      padding-left: 0;
+    }
+    img {
+      position: relative;
+      min-height: 100vh;
+      object-fit: cover;
+      transition: all 0.1s ease;
+    }
+  }
+  .container {
+    max-width: 1152px !important;
+    margin: 0;
+  }
+  & > * {
+    margin-left: min(28%, 535px);
+    padding-left: 5rem !important;
+    @include touch {
+      margin-left: 0;
+      padding-left: $side-padding-tablet !important;
+    }
+    @include mobile {
+      padding-left: $side-padding-mobile !important;
+    }
+
+    .section {
+      padding-left: 0;
+      @include touch {
+        padding-left: 0;
+      }
+      @include mobile {
+        padding-left: 0;
+      }
+    }
+  }
+  &__header.second-level-page-heading {
+    text-align: left;
+    max-width: 765px;
+    margin-bottom: 1.25rem;
+  }
+  &__subheader.tagged-header {
+    margin-bottom: 2.25rem;
+    margin-left: 10px;
+    @include mobile {
+      margin-bottom: 2rem;
+    }
+  }
+  .purdue-home-button-list {
+    justify-content: flex-start;
+    padding-left: 0;
+    li:first-child {
+      padding-left: 0;
+    }
+  }
+  p.purdue-home-layout--left-banner__subtext {
+    margin-bottom: 2.25rem;
+    font-size: 1.25rem;
+    max-width: 850px;
+    @include mobile {
+      margin-bottom: 2rem;
+      font-size: 1.25rem;
+    }
+  }
+  &__border {
+    hr {
+      margin: 0;
+      background: $steam-gray;
+      box-shadow: $box-shadow;
+      height: 1px;
+    }
+  }
+}

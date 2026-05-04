@@ -1,0 +1,84 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "purdue/diagonal-cta-hero",
+	"version": "1.1.01",
+	"title": "Diagonal CTA Hero",
+	"category": "purdue",
+	"description": "This block adds a smaller diagonal CTA hero with jump link options.",
+	"supports": {
+		"html": false
+	},
+	"attributes": {
+		"header": {
+			"type": "string",
+			"default": ""
+		},
+		"background": {
+			"type": "string",
+			"default": "none"
+		},
+		"imageAlignDesktop": {
+			"type": "string",
+			"default": "right"
+		},
+		"imageAlignMobile": {
+			"type": "string",
+			"default": "bottom"
+		},
+		"minHeight": {
+			"type": "string",
+			"default": "0"
+		},
+		"subheader": {
+			"type": "string",
+			"default": ""
+		},
+		"subtext": {
+			"type": "string",
+			"default": ""
+		},
+		"mediaType": {
+			"type": "string",
+			"default": ""
+		},
+		"mediaURL": {
+			"type": "string",
+			"default": ""
+		},
+		"mediaAlt": {
+			"type": "string",
+			"default": ""
+		},
+		"mediaTitle": {
+			"type": "string",
+			"default": ""
+		},
+		"loopVideo": {
+			"type": "boolean",
+			"default": false
+		},
+		"noDiagonal": {
+			"type": "boolean",
+			"default": false
+		},
+		"links": {
+			"type": "array",
+			"default": []
+		},
+		"id": {
+			"type": "string",
+			"default": ""
+		},
+		"className": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"textdomain": "diagonal-cta-hero",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php",
+	"script": "file:./frontend.js"
+}

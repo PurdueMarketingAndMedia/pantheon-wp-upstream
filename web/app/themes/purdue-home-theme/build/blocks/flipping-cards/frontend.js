@@ -1,0 +1,1 @@
+!function(){const e=document.querySelectorAll(".flipping-card");e.length>0&&e.forEach(e=>{e.querySelectorAll(".flipping-icon").forEach(l=>{l.addEventListener("click",()=>{e.classList.toggle("flipped")})})})}();

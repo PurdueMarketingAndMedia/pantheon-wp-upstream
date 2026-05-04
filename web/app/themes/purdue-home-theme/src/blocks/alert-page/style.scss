@@ -1,0 +1,73 @@
+@import "../../../src/style/front-end/overides/colors";
+@import "../../../src/style/front-end/overides/variables";
+@import "../../../node_modules/bulma/sass/utilities/mixins.sass";
+
+.alert-page-widget.modal {
+  z-index: 1002 !important;
+  display: flex;
+  transform: translateY(-100%);
+  color: $white;
+  transition: all 0.3s ease;
+  &.is-active {
+    transform: translateY(0);
+  }
+  .modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 650px;
+    &.alert-page__video {
+      max-width: 1200px;
+      @media (max-width: 1500px) {
+        max-width: 900px;
+      }
+      .iframe-container {
+        width: 100%;
+        margin-bottom: 3rem;
+      }
+    }
+  }
+  .modal-close {
+    top: 3rem;
+    @include touch {
+      right: calc(50% - 20px);
+    }
+  }
+}
+.alert-page__image {
+  max-width: 600px;
+  width: 100%;
+  margin-bottom: 3rem;
+  border-radius: 4px;
+}
+.alert-page__tag {
+  color: $boiler-gold;
+  font-family: $acumin-pro;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 1.67px;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+h2.alert-page__header {
+  color: $white;
+  font-family: $united-sans-condensed;
+  font-size: 3.5rem;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-align: center;
+  line-height: 0.9;
+  margin: 0 0 1.5rem;
+  @include mobile {
+    font-size: 2.5rem;
+  }
+}
+.alert-page__subtext {
+  color: $white;
+  font-family: $acumin-pro;
+  font-size: 1.125rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-align: center;
+  margin-bottom: 3rem;
+}

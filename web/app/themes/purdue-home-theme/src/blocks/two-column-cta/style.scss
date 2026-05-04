@@ -1,0 +1,131 @@
+@import "../../../src/style/front-end/overides/colors";
+@import "../../../src/style/front-end/overides/variables";
+@import '../../../node_modules/bulma/sass/utilities/mixins.sass';
+
+.purdue-home-two-column-cta{
+  
+    &__cards{
+        width:100%;
+        display:flex;
+        flex-wrap: wrap;
+        .purdue-home-cta-card{
+            width:50%;
+            border-radius:0;
+            @include mobile{
+                width:100%;
+            }
+            .image{
+                min-height:880px;
+                @include mobile{
+                    min-height:0px;
+                }
+                &:after{
+                    background: none;
+                }
+                img{
+                    width:100%;
+                    height:100%;
+                    border-radius: 0;
+                }
+            }
+        } 
+        .flex-container--align-center{
+            position:absolute !important;
+            display:flex !important;
+            flex-direction:column !important;
+            padding:2rem !important;
+            background:$white !important;
+            width:auto !important;
+            height:auto !important;
+            bottom:2.25rem !important;
+            max-width:530px !important;
+            top:auto !important;
+            justify-content: flex-start !important;
+            border-radius: 4px;
+            .purdue-home-button{
+                margin-top:auto;
+            }
+            @include mobile{
+                position:relative !important;
+                bottom:auto !important;
+                top:-100px !important;
+                min-height:0px !important;
+                padding:3rem 1.25rem !important;
+                max-width: 100% !important;
+            }
+        }
+    }
+    .purdue-home-cta-card.purdue-home-cta-card--vertical{
+        box-shadow:none;
+        margin-bottom:0;
+        position: relative;
+        @include mobile{
+            margin-bottom:-100px;
+        }
+        &:first-child{
+            .flex-container--align-center{
+                align-items: flex-end;
+                right:2.25rem;
+                left:auto;
+                justify-content: flex-end;
+                margin-left:2.25rem;
+                @include mobile{
+                    right:auto;
+                    left:auto;
+                    margin-left:1.25rem;
+                    margin-right:1.25rem;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                p, h2{
+                    text-align: right;
+                    @include mobile{
+                        text-align: center;
+                    }
+                }
+            }
+        }
+        &:last-child{
+            .flex-container--align-center{
+                align-items: flex-start;
+                left:2.25rem;
+                margin-right:2.25rem;
+                @include mobile{
+                    right:auto;
+                    left:auto;
+                    margin-left:1.25rem;
+                    margin-right:1.25rem;
+                    justify-content: center;
+                    align-items: center;
+                }
+                p{
+                    @include mobile{
+                        text-align: center;
+                    }
+                }
+            }
+        }
+    }
+    &__card-title:not(:last-child){
+        color: $black;
+        font-family: $acumin-pro;
+        font-size: 2.5rem;
+        font-weight: 700;
+        letter-spacing: 0;
+        line-height: 1.1;
+        margin-bottom:1.5rem !important;
+        @include mobile{
+            font-size: 2rem;
+            margin-bottom:1.2rem !important;
+        }
+    }
+    &__card-subtext{
+        color: $black;
+        font-family: $acumin-pro;
+        font-size: 1rem;
+        font-weight: 400;
+        letter-spacing: 0;
+        line-height: 1.5;
+    }
+}

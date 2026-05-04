@@ -1,0 +1,239 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "purdue/post-grid",
+	"version": "1.1.01",
+	"title": "Post Archive Grid",
+	"category": "purdue",
+	"description": "This block adds a grid of posts with optional filters. Currently support post type, category, and one taxonomy.",
+	"supports": {
+		"html": false
+	},
+	"attributes": {
+		"blockType": {
+			"type": "string",
+			"default": "all"
+		},
+		"linkText": {
+            "type": "string",
+            "default": "View More"
+        },
+        "linkURL": {
+            "type": "string",
+            "default": ""
+        },
+        "external": {
+            "type": "boolean",
+            "default": true
+        },
+		"background": {
+			"type": "string",
+			"default": "none"
+		},
+		"orderBy": {
+			"type": "string",
+			"default": "date"
+		},
+		"showExcerpt": {
+            "type": "boolean",
+            "default": true
+        },
+		"showDate": {
+            "type": "boolean",
+            "default": false
+        },
+		"showThumbnail": {
+            "type": "boolean",
+            "default": true
+        },
+		"header": {
+			"type": "string",
+			"default": ""
+		},
+		"cardType": {
+			"type": "string",
+			"default": "story"
+		},
+		"hasSelectedPostType": {
+			"type": "boolean",
+			"default": true
+		},
+		"hasSelectedTax": {
+			"type": "boolean",
+			"default": true
+		},
+		"hasSelectedCatTerms": {
+			"type": "boolean",
+			"default": true
+		},
+		"selectedPostType": {
+			"type": "array",
+			"default": []
+		},
+		"postTypeTag": {
+			"type": "boolean",
+			"default": false
+		},
+		"selectedTax": {
+			"type": "string",
+			"default": ""
+		},
+		"selectedTaxTerms": {
+			"type": "array",
+			"default": []
+		},
+		"selectedTaxFilters": {
+			"type": "array",
+			"default": []
+		},
+		"selectedCatTerms": {
+			"type": "array",
+			"default": []
+		},
+		"excludeCat": {
+			"type": "array",
+			"default": []
+		},
+		"addTaxFilter": {
+			"type": "boolean",
+			"default": false
+		},
+		"addCatFilter": {
+			"type": "boolean",
+			"default": false
+		},
+		"addPostTypeFilter": {
+			"type": "boolean",
+			"default": false
+		},
+		"addOrderFilter": {
+			"type": "boolean",
+			"default": false
+		},
+		"addSearch": {
+			"type": "boolean",
+			"default": false
+		},
+		"addYearFilter": {
+			"type": "boolean",
+			"default": false
+		},
+		"postTypeFilterName": {
+			"type": "string",
+			"default": "Post Types"
+		},
+		"catFilterName": {
+			"type": "string",
+			"default": "Category"
+		},
+		"taxFilterName": {
+			"type": "object",
+			"default": {}
+		},
+		"postsPerPage": {
+			"type": "string",
+			"default": "3"
+		},
+		"columns": {
+			"type": "string",
+			"default": "3"
+		},
+		"rows": {
+			"type": "string",
+			"default": "4"
+		},
+		"headerStyle": {
+			"type": "string",
+			"default": "simple"
+		},
+		"buttonText": {
+			"type": "string",
+			"default": "Learn More"
+		},
+		"paddingTop": {
+			"type": "string",
+			"default": ""
+		},
+		"paddingBottom": {
+			"type": "string",
+			"default": ""
+		},
+		"id": {
+			"type": "string",
+			"default": ""
+		},
+		"blockId": {
+			"type": "string",
+			"default": ""
+		},
+		"className": {
+			"type": "string",
+			"default": ""
+		},
+		"infiniteScroll": {
+			"type": "boolean",
+			"default": false
+		},
+		"addPostTotal": {
+			"type": "boolean",
+			"default": false
+		},
+		"postTotalType": {
+			"type":"string",
+			"default": "posts"
+		},
+		"sortAlpha": {
+			"type": "boolean",
+			"default": false
+		},
+		"addAutoComplete":{
+			"type": "boolean",
+			"default": false
+		},
+		"filterOrder": {
+			"type": "array",
+			"default":[]
+		},
+		"postPanelCollapse": {
+			"type": "boolean",
+			"default":false
+		},
+		"catPanelCollapse": {
+			"type": "boolean",
+			"default":false
+		},
+		"taxPanelCollapse": {
+			"type": "object",
+			"default":{}
+		},
+		"datePanelCollapse": {
+			"type": "boolean",
+			"default":false
+		},
+		"resultsMessage": {
+			"type": "string",
+			"default": "No results found!"
+		},
+		"postIsDropdown": {
+			"type": "boolean",
+			"default": false
+		},
+		"catIsDropdown": {
+			"type": "boolean",
+			"default": false
+		},
+		"taxIsDropdown": {
+			"type": "object",
+			"default":{}
+		},
+		"queryName": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"textdomain": "post-grid",
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./frontend.js",
+	"render": "file:./render.php"
+}

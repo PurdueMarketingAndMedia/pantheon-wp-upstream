@@ -8,7 +8,7 @@
 
 /**
  * The SEO Framework plugin
- * Copyright (C) 2019 - 2021 Sybre Waaijer, CyberWire B.V. (https://cyberwire.nl/)
+ * Copyright (C) 2019 - 2025 Sybre Waaijer, CyberWire B.V. (https://cyberwire.nl/)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as published
@@ -29,7 +29,7 @@
  * Holds tsfSettings values in an object to avoid polluting global namespace.
  *
  * @since 4.0.0
- * TODO FIXME: We check for setting's existence inconsistently... Resolve at TSF 5.0?
+ * TODO split up this file?
  *
  * @constructor
  * @param {!jQuery} $ jQuery object.
@@ -41,9 +41,9 @@ window.tsfSettings = function( $ ) {
 	 *
 	 * @since 4.0.0
 	 * @access public
-	 * @type {(Object<string, *>)|boolean|null} l10n Localized strings
+	 * @type {(Object<string,*>)|Boolean|null} l10n Localized strings
 	 */
-	const l10n = 'undefined' !== typeof tsfSettingsL10n && tsfSettingsL10n;
+	const l10n = tsfSettingsL10n;
 
 	/**
 	 * Returns settings ID.
@@ -51,25 +51,58 @@ window.tsfSettings = function( $ ) {
 	 * @since 4.1.1
 	 * @access private
 	 *
-	 * @function
 	 * @param {string} name
 	 * @return {string} The full settings ID/name.
 	 */
-	const _getSettingsId = name => `autodescription-site-settings[${name}]`;
+	function _getSettingsId( name ) {
+		return `autodescription-site-settings[${name}]`;
+	}
+
+	/**
+	 * Clone of tsf.dispatchAtInteractive.
+	 * Eases programming, trims minified script size.
+	 *
+	 * @since 4.2.0
+	 * @access private
+	 * @ignore
+	 *
+	 * @function
+	 * @param {Element} element   The element to dispatch the event upon.
+	 * @param {string}  eventName The event name to trigger. Mustn't be custom.
+	 */
+	const _dispatchAtInteractive = tsf.dispatchAtInteractive;
+
+	/**
+	 * Initializes the settings page.
+	 *
+	 * @since 5.1.0
+	 * @access private
+	 */
+	function _initSubmit() {
+
+		const form = document.getElementById( 'tsf-settings' );
+
+		// How?
+		if ( ! form ) return;
+
+		const submitButtons = form.querySelectorAll( '[name=submit]' );
+		// Prevent double-submit.
+		form.addEventListener(
+			'submit',
+			() => {
+				submitButtons.forEach( el => el.disabled = true );
+				setTimeout( () => submitButtons.forEach( el => el.disabled = false ), 3000 );
+			},
+		);
+	}
 
 	/**
 	 * Initializes input helpers for the General Settings.
 	 *
 	 * @since 4.0.0
 	 * @access private
-	 * TODO remove event-based architecture, and just invoke the changes, instead. See: `$.trigger()`
-	 *
-	 * @function
-	 * @return {(undefined|null)}
 	 */
-	const _initGeneralSettings = () => {
-
-		const $window = $( window );
+	function _initGeneralSettings() {
 
 		/**
 		 * Triggers displaying/hiding of character counters on the settings page.
@@ -79,18 +112,15 @@ window.tsfSettings = function( $ ) {
 		 *
 		 * @function
 		 * @param {Event} event
-		 * @return {undefined}
 		 */
 		const toggleCharCounterDisplay = event => {
 			document.querySelectorAll( '.tsf-counter-wrap' ).forEach( el => {
 				el.style.display = event.target.checked ? '' : 'none';
 			} );
-			event.target.checked && tsfC.triggerCounterUpdate();
+			event.target.checked && tsfC?.triggerCounterUpdate();
 		}
-		const displayCharCounterInput = document.getElementById( _getSettingsId( 'display_character_counter' ) );
-		if ( displayCharCounterInput ) {
-			displayCharCounterInput.addEventListener( 'click', toggleCharCounterDisplay );
-		}
+		document.getElementById( _getSettingsId( 'display_character_counter' ) )
+			?.addEventListener( 'click', toggleCharCounterDisplay );
 
 		/**
 		 * Triggers displaying/hiding of pixel counters on the settings page.
@@ -100,158 +130,59 @@ window.tsfSettings = function( $ ) {
 		 *
 		 * @function
 		 * @param {Event} event
-		 * @return {undefined}
 		 */
 		const togglePixelCounterDisplay = event => {
 			document.querySelectorAll( '.tsf-pixel-counter-wrap' ).forEach( el => {
 				el.style.display = event.target.checked ? '' : 'none';
 			} );
-			event.target.checked && tsfC.triggerCounterUpdate();
+			event.target.checked && tsfC?.triggerCounterUpdate();
 		}
-		const displayPixelCounterInput = document.getElementById( _getSettingsId( 'display_pixel_counter' ) );
-		if ( displayPixelCounterInput ) {
-			displayPixelCounterInput.addEventListener( 'click', togglePixelCounterDisplay );
-		}
-
-		const postTypeHelpTemplate   = wp.template( 'tsf-disabled-post-type-help' )();
-		const taxonomyHelpTemplate   = wp.template( 'tsf-disabled-taxonomy-help' )();
-		const taxonomyPtHelpTemplate = wp.template( 'tsf-disabled-taxonomy-from-pt-help' )();
+		document.getElementById( _getSettingsId( 'display_pixel_counter' ) )
+			?.addEventListener( 'click', togglePixelCounterDisplay );
 
 		/**
-		 * @param {string} postType
-		 * @return {string} The cloned input class used for sending POST data.
+		 * Emits a canonical URL scheme change to rewrite canonical URLs on the page.
+		 *
+		 * @since 5.1.0
+		 * @access private
+		 *
+		 * @function
+		 * @param {Event} event
 		 */
-		const getCloneClassPT = postType => tsf.escapeString( 'tsf-disabled-post-type-input-clone-' + postType );
-		/**
-		 * @param {string} taxonomy
-		 * @return {string} The cloned input class used for sending POST data.
-		 */
-		const getCloneClassTaxonomy = taxonomy => tsf.escapeString( 'tsf-disabled-taxonomy-input-clone-' + taxonomy );
-		/**
-		 * @param {string} postType
-		 * @return {array} A list of affected post type settings.
-		 */
-		const getPostTypeRobotsSettings = postType => [
-			document.getElementById( `${ _getSettingsId( 'noindex_post_types' ) }[${postType}]` ),
-			document.getElementById( `${ _getSettingsId( 'nofollow_post_types' ) }[${postType}]` ),
-			document.getElementById( `${ _getSettingsId( 'noarchive_post_types' ) }[${postType}]` ),
-		].filter( el => el );
-		/**
-		 * @param {string} taxonomy
-		 * @return {array} A list of affected post type settings.
-		 */
-		const getTaxonomyRobotsSettings = taxonomy => [
-			document.getElementById( `${ _getSettingsId( 'noindex_taxonomies' ) }[${taxonomy}]` ),
-			document.getElementById( `${ _getSettingsId( 'nofollow_taxonomies' ) }[${taxonomy}]` ),
-			document.getElementById( `${ _getSettingsId( 'noarchive_taxonomies' ) }[${taxonomy}]` ),
-		].filter( el => el );
+		const dispatchCanonicalSchemeUpdate = event => {
 
-		const augmentPTRobots = ( postType, disable ) => {
-			if ( disable ) {
-				getPostTypeRobotsSettings( postType ).forEach( element => {
-					if ( ! element ) return;
+			const selected = event.target.value,
+				  values   = JSON.parse( event.target.dataset?.values || 0 ) || []; // not cached OK.
 
-					let clone = element.cloneNode( true );
-					clone.type = 'hidden';
-					// Because the clone is hidden, we must set its value based on the checked state's + value thereof:
-					clone.value = element.checked ? element.value : '';
-					// Note that this might cause inconsistencies when other JS elements try to amend the data via ID.
-					// However, they should use 'getElementsByName', anyway.
-					clone.id += '-cloned' ;
-					clone.classList.add( getCloneClassPT( postType ) );
-
-					element.disabled                = true;
-					element.dataset.disabledWarning = 1;
-
-					$( element.closest( 'label' ) ).append( postTypeHelpTemplate ).append( clone );
-				} );
-
-				tsfTT.triggerReset();
-			} else {
-				getPostTypeRobotsSettings( postType ).forEach( element => {
-					if ( ! element ) return;
-					if ( ! element.dataset.disabledWarning ) return;
-
-					// 'tsf-post-type-warning' is defined at `../inc/views/templates/settings/settings.php`
-					element.closest( 'label' ).querySelector( '.tsf-post-type-warning' ).remove();
-
-					document.querySelectorAll( '.' + getCloneClassPT( postType ) ).forEach( ( clone ) => {
-						clone.remove();
-					} );
-
-					element.disabled               = false;
-					element.dataset.disabledWarning = '';
-				} );
-			}
+			document.body.dispatchEvent( new CustomEvent(
+				'tsf-canonical-scheme-changed',
+				{
+					detail: {
+						scheme: values[ selected ] ?? selected,
+					},
+				},
+			) );
 		}
-		const augmentTaxonomyRobots = ( taxonomy, disable ) => {
-			if ( disable ) {
-				getTaxonomyRobotsSettings( taxonomy ).forEach( element => {
-					if ( ! element ) return;
+		document.getElementById( _getSettingsId( 'canonical_scheme' ) )
+			?.addEventListener( 'change', dispatchCanonicalSchemeUpdate );
 
-					let clone = element.cloneNode( true );
-					clone.type = 'hidden';
-					// Because the clone is hidden, we must set its value based on the checked state's + value thereof:
-					clone.value = element.checked ? element.value : '';
-					// Note that this might cause inconsistencies when other JS elements try to amend the data via ID.
-					// However, they should use 'getElementsByName', anyway.
-					clone.id += '-cloned' ;
-					clone.classList.add( getCloneClassTaxonomy( taxonomy ) );
-
-					element.disabled               = true;
-					element.dataset.disabledWarning = 1;
-
-					$( element.closest( 'label' ) ).append( taxonomyHelpTemplate ).append( clone );
-				} );
-
-				tsfTT.triggerReset();
-			} else {
-				getTaxonomyRobotsSettings( taxonomy ).forEach( element => {
-					if ( ! element ) return;
-					if ( ! element.dataset.disabledWarning ) return;
-
-					// 'tsf-taxonomy-warning' is defined at `../inc/views/templates/settings/settings.php`
-					element.closest( 'label' ).querySelector( '.tsf-taxonomy-warning' ).remove();
-
-					document.querySelectorAll( '.' + getCloneClassTaxonomy( taxonomy ) ).forEach( ( clone ) => {
-						clone.remove();
-					} );
-
-					element.disabled                = false;
-					element.dataset.disabledWarning = '';
-				} );
-			}
-		}
-
-		const addTaxDisabledByPtWarning = ( taxonomy, disable ) => {
-			let taxEl = document.getElementById( `${ _getSettingsId( 'disabled_taxonomies' ) }[${taxonomy}]` );
-			if ( disable ) {
-				$( taxEl.closest( 'label' ) ).append( taxonomyPtHelpTemplate );
-				tsfTT.triggerReset();
-			} else {
-				// 'tsf-taxonomy-from-pt-warning' is defined at `../inc/views/templates/settings/settings.php`
-				taxEl.closest( 'label' ).querySelector( '.tsf-taxonomy-from-pt-warning' ).remove();
-			}
-		}
-
-		const excludedPostTypes     = new Set(),
-			  excludedTaxonomies    = new Set(),
-			  excludedTaxonomiesAll = new Set(),
-			  excludedPtTaxonomies  = new Set();
+		const excludedPostTypes     = new Set(), // Excluded post types.
+			  excludedTaxonomies    = new Set(), // Excluded taxonomies.
+			  excludedPtTaxonomies  = new Set(), // Excluded taxonomies via post types.
+			  excludedTaxonomiesAll = new Set(); // Combined E_Taxonomies + E_PtTaxonomies
 		const validateTaxonomyState = () => {
 			// We want to show that the taxonomy is excluded, but make that auto-reversible, and somehow still enactable?
-
 			let taxEntries    = document.querySelectorAll( '.tsf-excluded-taxonomies' ),
 				triggerchange = false;
 
 			taxEntries.forEach( element => {
 				// get taxonomy from last [] entry.
-				let taxonomy = element.name.split( /(?:.+\[)(.+?)(?:])/ ).join( '' );
+				const taxonomy = element.name.split( /(?:.+\[)(.+?)(?:])/ ).join( '' );
 
-				let taxPostTypes = JSON.parse( element.dataset.postTypes ),
-					disabled     = taxPostTypes.every( postType => excludedPostTypes.has( postType ) );
+				const taxPostTypes = JSON.parse( element.dataset?.postTypes || 0 ) || [],
+					  isDisabled   = taxPostTypes && taxPostTypes.every( postType => excludedPostTypes.has( postType ) );
 
-				if ( disabled ) {
+				if ( isDisabled ) {
 					if ( ! excludedPtTaxonomies.has( taxonomy ) ) {
 						// Newly disabled, trigger change.
 						triggerchange = true;
@@ -265,47 +196,41 @@ window.tsfSettings = function( $ ) {
 						triggerchange = true;
 					}
 				}
-				// TODO Collect and combine changes, to condense paint stack (perceptive performance, reduce race condition changes)?
-				triggerchange && triggerTaxonomyChange( taxonomy );
+				refreshTaxonomies();
+				triggerchange && dispatchTaxonomySupportChangedEvent( taxonomy );
 			} );
 		}
-		const validatePostTypes = ( event, postType ) => {
-			augmentPTRobots( postType, excludedPostTypes.has( postType ) );
-			validateTaxonomyState();
-		}
-		let validateTaxonomiesCache = new Map();
-		const getValidateTaxonomiesCache = key => validateTaxonomiesCache.get( key ) || (new Set());
-		// TODO trigger new events here, to make it easier to work with for others?
-		const validateTaxonomies = ( event, taxonomy ) => {
+		document.body.addEventListener( 'tsf-post-type-support-changed', validateTaxonomyState );
 
-			// Only check length--should be good enough (unless we face race conditions, which we can sort out elsewhere.)
-			if ( getValidateTaxonomiesCache( 'excludedTaxonomiesAll' ).size !== excludedTaxonomiesAll.size ) {
-				augmentTaxonomyRobots( taxonomy, excludedTaxonomiesAll.has( taxonomy ) );
-			}
-
-			// Don't place these in the if-statement above (which is mutually inclusive)--these are mutually exclusive.
-			// if ( getValidateTaxonomiesCache( 'excludedTaxonomies' ).size !== excludedTaxonomies.size ) {
-				// excludedTaxonomies.has( taxonomy )
-			// }
-			if ( getValidateTaxonomiesCache( 'excludedPtTaxonomies' ).size !== excludedPtTaxonomies.size ) {
-				addTaxDisabledByPtWarning( taxonomy, excludedPtTaxonomies.has( taxonomy ) );
-			}
-
-			// Create new pointers in the memory by shadowcloning the object.
-			validateTaxonomiesCache.set( 'excludedTaxonomiesAll', new Set( excludedTaxonomiesAll ) );
-			validateTaxonomiesCache.set( 'excludedTaxonomies', new Set( excludedTaxonomies ) );
-			validateTaxonomiesCache.set( 'excludedPtTaxonomies', new Set( excludedPtTaxonomies ) );
-		}
-		$window.on( 'tsf-post-type-support-changed', validatePostTypes );
-		$window.on( 'tsf-taxonomy-support-changed', validateTaxonomies );
-
-		const triggerTaxonomyChange = taxonomy => {
+		const refreshTaxonomies = () => {
 			// Refresh and concatenate.
 			excludedTaxonomiesAll.clear();
-			excludedTaxonomies.forEach( tax => excludedTaxonomiesAll.add( tax ) );
-			excludedPtTaxonomies.forEach( tax => excludedTaxonomiesAll.add( tax ) );
-
-			$window.trigger( 'tsf-taxonomy-support-changed', [ taxonomy, excludedTaxonomiesAll, excludedTaxonomies, excludedPtTaxonomies ] );
+			excludedTaxonomies.forEach( taxonomy => excludedTaxonomiesAll.add( taxonomy ) );
+			excludedPtTaxonomies.forEach( taxonomy => excludedTaxonomiesAll.add( taxonomy ) );
+		}
+		const dispatchTaxonomySupportChangedEvent = taxonomy => {
+			document.body.dispatchEvent( new CustomEvent(
+				'tsf-taxonomy-support-changed',
+				{
+					detail: {
+						taxonomy,
+						set:    excludedTaxonomies,
+						setPt:  excludedPtTaxonomies,
+						setAll: excludedTaxonomiesAll,
+					}
+				}
+			) );
+		}
+		const dispatchPosttypeSupportChangedEvent = postType => {
+			document.body.dispatchEvent( new CustomEvent(
+				'tsf-post-type-support-changed',
+				{
+					detail: {
+						postType,
+						set: excludedPostTypes,
+					}
+				}
+			) );
 		}
 
 		// This prevents notice-removal checks before they're added.
@@ -318,12 +243,12 @@ window.tsfSettings = function( $ ) {
 			let postType = event.target.name.split( /(?:.+\[)(.+?)(?:])/ ).join( '' );
 			if ( event.target.checked ) {
 				excludedPostTypes.add( postType );
-				$window.trigger( 'tsf-post-type-support-changed', [ postType, excludedPostTypes ] );
+				dispatchPosttypeSupportChangedEvent( postType );
 			} else {
 				// No need to filter when it was never registered in the first place.
 				if ( init ) {
 					excludedPostTypes.delete( postType );
-					$window.trigger( 'tsf-post-type-support-changed', [ postType, excludedPostTypes ] );
+					dispatchPosttypeSupportChangedEvent( postType );
 				}
 			}
 		}
@@ -335,23 +260,24 @@ window.tsfSettings = function( $ ) {
 			let taxonomy = event.target.name.split( /(?:.+\[)(.+?)(?:])/ ).join( '' );
 			if ( event.target.checked ) {
 				excludedTaxonomies.add( taxonomy );
-				triggerTaxonomyChange( taxonomy );
+				refreshTaxonomies();
+				dispatchTaxonomySupportChangedEvent( taxonomy );
 			} else {
 				// No need to filter when it was never registered in the first place.
 				if ( init ) {
 					excludedTaxonomies.delete( taxonomy );
-					triggerTaxonomyChange( taxonomy );
+					refreshTaxonomies();
+					dispatchTaxonomySupportChangedEvent( taxonomy );
 				}
 			}
 		}
-		const changeEvent = new Event( 'change' );
 		document.querySelectorAll( '.tsf-excluded-post-types' ).forEach( el => {
 			el.addEventListener( 'change', checkDisabledPT );
-			el.dispatchEvent( changeEvent );
+			_dispatchAtInteractive( el, 'change' );
 		} );
 		document.querySelectorAll( '.tsf-excluded-taxonomies' ).forEach( el => {
 			el.addEventListener( 'change', checkDisabledTaxonomy );
-			el.dispatchEvent( changeEvent );
+			_dispatchAtInteractive( el, 'change' );
 		} );
 
 		init = true;
@@ -362,11 +288,8 @@ window.tsfSettings = function( $ ) {
 	 *
 	 * @since 4.0.0
 	 * @access private
-	 *
-	 * @function
-	 * @return {(undefined|null)}
 	 */
-	const _initColorPicker = () => {
+	function _initColorPicker() {
 
 		document.querySelectorAll( '.tsf-color-picker' ).forEach( element => {
 			// We might as well switch to jQuery instantly since wpColorPicker added its prototype to it.
@@ -377,7 +300,7 @@ window.tsfSettings = function( $ ) {
 			$input.wpColorPicker( {
 				defaultColor: defaultColor,
 				width: 238,
-				change: ( event, ui ) => {
+				change: () => {
 					currentColor = $input.wpColorPicker( 'color' );
 
 					if ( '' === currentColor )
@@ -407,41 +330,45 @@ window.tsfSettings = function( $ ) {
 	 * @since 4.0.0
 	 * @since 4.0.5 Fixed the additionsToggle getter.
 	 * @access private
-	 *
-	 * @function
-	 * @return {undefined}
 	 */
-	const _initTitleSettings = () => {
+	function _initTitleSettings() {
 
 		const additionsToggle            = document.getElementById( _getSettingsId( 'title_rem_additions' ) ),
 			  socialAdditionsToggle      = document.getElementById( _getSettingsId( 'social_title_rem_additions' ) ),
-			  titleAdditionsHelpTemplate = wp.template( 'tsf-disabled-title-additions-help' )();
+			  titleAdditionsHelpTemplate = wp.template( 'tsf-disabled-title-additions-help-social' )();
 
 		/**
 		 * Toggles example on Left/Right selection of global title options.
 		 *
 		 * @function
-		 * @return {undefined}
 		 */
-		const toggleAdditionsDisplayExample = () => {
-			if ( additionsToggle.checked ) {
+		const toggleAdditionsDisplayExample = event => {
+			if ( event.target.checked ) {
 				document.querySelectorAll( '.tsf-title-additions-js' ).forEach( el => el.style.display = 'none' );
 				if ( socialAdditionsToggle ) {
 					socialAdditionsToggle.dataset.disabledWarning = 1;
-					$( socialAdditionsToggle.closest( 'label' ) ).append( titleAdditionsHelpTemplate );
+					socialAdditionsToggle.closest( 'label' ).insertAdjacentHTML( 'beforeend', titleAdditionsHelpTemplate );
 					tsfTT.triggerReset();
 				}
 			} else {
 				document.querySelectorAll( '.tsf-title-additions-js' ).forEach( el => el.style.display = 'inline' );
-				// 'tsf-title-additions-warning' is defined at `../inc/views/templates/settings/settings.php`
-				if ( socialAdditionsToggle && socialAdditionsToggle.dataset.disabledWarning ) {
-					socialAdditionsToggle.closest( 'label' ).querySelector( '.tsf-title-additions-warning' ).remove();
-				}
+				// 'tsf-title-additions-warning-social' is defined at `../inc/views/templates/settings/settings.php`
+				if ( socialAdditionsToggle?.dataset.disabledWarning )
+					socialAdditionsToggle.closest( 'label' ).querySelector( '.tsf-title-additions-warning-social' )?.remove();
 			}
+
+			document.body.dispatchEvent( new CustomEvent(
+				'tsf-update-title-rem-additions',
+				{
+					detail: {
+						removeAdditions: !! event.target.checked,
+					}
+				}
+			) );
 		}
 		if ( additionsToggle ) {
 			additionsToggle.addEventListener( 'change', toggleAdditionsDisplayExample );
-			additionsToggle.dispatchEvent( new Event( 'change' ) );
+			_dispatchAtInteractive( additionsToggle, 'change' );
 		}
 
 		/**
@@ -450,20 +377,38 @@ window.tsfSettings = function( $ ) {
 		 *
 		 * @function
 		 * @param {Event} event
-		 * @return {undefined}
 		 */
 		const toggleAdditionsLocationExample = event => {
-			let showLeft = 'left' === event.target.value;
+
+			let value;
+
+			document.getElementsByName( event.target.name ).forEach( el => {
+				if ( el.checked )
+					value = el.value;
+			} );
+
+			const showLeft      = 'left' === value,
+				  locationClass = 'tsf-title-additions-location-hidden';
 
 			document.querySelectorAll( '.tsf-title-additions-example-left' ).forEach( el => {
-				el.style.display = showLeft ? 'inline' : 'none';
+				el.classList.toggle( locationClass, ! showLeft );
+				el.classList.remove( 'hidden' );
 			} );
 			document.querySelectorAll( '.tsf-title-additions-example-right' ).forEach( el => {
-				el.style.display = showLeft ? 'none' : 'inline';
+				el.classList.toggle( locationClass, showLeft );
+				el.classList.remove( 'hidden' );
 			} );
+
+			tsfTitle.updateStateAll(
+				'additionPlacement',
+				showLeft ? 'before' : 'after',
+				_getSettingsId( 'homepage_title' ),
+			);
 		}
 		document.querySelectorAll( '#tsf-title-location input' ).forEach( el => {
-			el.addEventListener( 'click', toggleAdditionsLocationExample );
+			el.addEventListener( 'change', toggleAdditionsLocationExample );
+			if ( el.checked )
+				_dispatchAtInteractive( el, 'change' );
 		} );
 
 		/**
@@ -471,17 +416,27 @@ window.tsfSettings = function( $ ) {
 		 *
 		 * @function
 		 * @param {Event} event
-		 * @return {undefined}
 		 */
 		const adjustPrefixExample = event => {
-			document.querySelectorAll( '.tsf-title-prefix-example' ).forEach( el => {
-				// Checked = hide.
-				el.style.display = event.target.checked ? 'none' : 'inline';
+
+			const showPrefix  = ! event.target.checked,
+				  prefixClass = 'tsf-title-tax-prefix-hidden';
+
+			document.querySelectorAll( '.tsf-title-tax-prefix' ).forEach( el => {
+				el.classList.toggle( prefixClass, ! showPrefix );
+				el.classList.remove( 'hidden' );
 			} );
+			document.querySelectorAll( '.tsf-title-tax-noprefix' ).forEach( el => {
+				el.classList.toggle( prefixClass, showPrefix );
+				el.classList.remove( 'hidden' );
+			} );
+
+			tsfTitle.updateStateAll( 'showPrefix', showPrefix, _getSettingsId( 'homepage_title' ) );
 		}
-		const archivePrefixInput = document.getElementById( _getSettingsId( 'title_rem_prefixes' ) );
-		if ( archivePrefixInput ) {
-			archivePrefixInput.addEventListener( 'click', adjustPrefixExample );
+		const titleRemPrefixes = document.getElementById( _getSettingsId( 'title_rem_prefixes' ) );
+		if ( titleRemPrefixes ) {
+			titleRemPrefixes.addEventListener( 'change', adjustPrefixExample );
+			_dispatchAtInteractive( titleRemPrefixes, 'change' );
 		}
 
 		/**
@@ -489,14 +444,13 @@ window.tsfSettings = function( $ ) {
 		 *
 		 * @function
 		 * @param {Event} event
-		 * @return {undefined}
 		 */
 		const updateSeparator = event => {
 			const separator   = tsf.decodeEntities( event.target.dataset.entity ),
 				  activeClass = 'tsf-title-separator-active';
 
 			document.querySelectorAll( '.tsf-sep-js' ).forEach( el => {
-				el.innerText = ` ${separator} `;
+				el.textContent = ` ${separator} `; // two spaces hug it.
 			} );
 
 			window.dispatchEvent(
@@ -523,7 +477,6 @@ window.tsfSettings = function( $ ) {
 		 *
 		 * @function
 		 * @param {Event} event
-		 * @return {(undefined|null)}
 		 */
 		const addNoFocusClass = event => {
 			event.target.classList.add( 'tsf-no-focus-ring' );
@@ -531,41 +484,110 @@ window.tsfSettings = function( $ ) {
 		document.querySelectorAll( '#tsf-title-separator label' ).forEach( el => {
 			el.addEventListener( 'click', addNoFocusClass );
 		} );
+
+		const homeTitleId    = _getSettingsId( 'homepage_title' ),
+			  siteTitleInput = document.getElementById( _getSettingsId( 'site_title' ) );
+		/**
+		 * Adjusts homepage left/right title example part.
+		 *
+		 * @function
+		 * @param {Event} event
+		 */
+		 const adjustSiteTitleExampleOutput = event => {
+			let examples = document.querySelectorAll( '.tsf-site-title-js' ),
+				newVal   = tsf.decodeEntities( tsf.sDoubleSpace( event.target.value.trim() ) );
+
+			newVal ||= tsf.decodeEntities( event.target.placeholder );
+
+			// If the home-as-page has a title, don't overwrite.
+			if ( ! tsfTitle.getStateOf( homeTitleId, '_defaultTitleLocked' ) )
+				tsfTitle.updateStateOf( homeTitleId, 'defaultTitle', newVal );
+
+			tsfTitle.updateStateAll( 'additionValue', newVal, homeTitleId );
+
+			let htmlVal = tsf.escapeString( newVal );
+			examples.forEach( el => { el.innerHTML = htmlVal } );
+		}
+		if ( siteTitleInput ) {
+			siteTitleInput.addEventListener( 'input', adjustSiteTitleExampleOutput );
+			_dispatchAtInteractive( siteTitleInput, 'input' );
+		}
+	}
+
+	/**
+	 * Initializes home's general tab meta input listeners.
+	 *
+	 * @since 4.0.0
+	 * @access private
+	 */
+	function _initHomeGeneralListeners() {
+
+		/**
+		 * Enqueues meta title and description input triggers.
+		 * These triggers force an update for the counters without affecting tsfAys.
+		 *
+		 * @function
+		 */
+		const enqueueGeneralInputListeners = () => {
+			tsfTitle.enqueueUnregisteredInputTrigger( _getSettingsId( 'homepage_title' ) );
+			tsfDescription.enqueueUnregisteredInputTrigger( _getSettingsId( 'homepage_description' ) );
+		}
+
+		/**
+		 * Enqueues doctitles input trigger synchronously on postbox collapse or open.
+		 *
+		 * @function
+		 * @param {!jQuery.Event} event
+		 * @param {Element}       elem
+		 */
+		const triggerPostboxSynchronousUnregisteredInput = ( event, elem ) => {
+			if ( 'autodescription-homepage-settings' === elem.id ) {
+				let inside = elem.querySelector( '.inside' );
+				if ( inside.offsetHeight > 0 && inside.offsetWidth > 0 ) {
+					enqueueGeneralInputListeners();
+				}
+			}
+		}
+		// jQuery: WP action.
+		$( document ).on( 'postbox-toggled', triggerPostboxSynchronousUnregisteredInput );
+
+		// This also triggers change for the homepage description, which isn't necessary. But, this trims down codebase.
+		document.getElementById( 'tsf-homepage-tab-general' )
+			?.addEventListener( 'tsf-tab-toggled', enqueueGeneralInputListeners );
 	}
 
 	/**
 	 * Initializes Homepage's meta title input.
 	 *
 	 * @since 4.0.0
+	 * @since 4.2.8 Now parses custom state _defaultTitleLocked.
 	 * @access private
-	 *
-	 * @function
-	 * @return {undefined}
 	 */
-	const _initHomeTitleSettings = () => {
+	function _initHomeTitleSettings() {
 
-		const titleId = _getSettingsId( 'homepage_title' );
+		const _titleId = _getSettingsId( 'homepage_title' );
 
-		const
-			titleInput    = document.getElementById( titleId ),
-			taglineInput  = document.getElementById( _getSettingsId( 'homepage_title_tagline' ) ),
-			taglineToggle = document.getElementById( _getSettingsId( 'homepage_tagline' ) );
+		const titleInput    = document.getElementById( _titleId ),
+			  taglineInput  = document.getElementById( _getSettingsId( 'homepage_title_tagline' ) ),
+			  taglineToggle = document.getElementById( _getSettingsId( 'homepage_tagline' ) );
+
+		if ( ! titleInput ) return;
 
 		tsfTitle.setInputElement( titleInput );
 
-		let state = JSON.parse(
-			document.getElementById( 'tsf-title-data_' + titleId ).dataset.state
+		const state = JSON.parse(
+			document.getElementById( `tsf-title-data_${_titleId}` )?.dataset.state || 0,
 		);
 
-		tsfTitle.updateStateOf( titleId, 'allowReferenceChange', ! state.refTitleLocked );
-		tsfTitle.updateStateOf( titleId, 'defaultTitle', state.defaultTitle.trim() );
-		tsfTitle.updateStateOf( titleId, 'addAdditions', state.addAdditions );
-		tsfTitle.updateStateOf( titleId, 'useSocialTagline', !! ( state.useSocialTagline || false ) );
-		tsfTitle.updateStateOf( titleId, 'additionValue', state.additionValue.trim() );
-		tsfTitle.updateStateOf( titleId, 'additionPlacement', state.additionPlacement );
-		tsfTitle.updateStateOf( titleId, 'hasLegacy', !! ( state.hasLegacy || false ) );
+		tsfTitle.updateStateOf( _titleId, 'allowReferenceChange', ! state.refTitleLocked );
+		tsfTitle.updateStateOf( _titleId, 'defaultTitle', state.defaultTitle );
+		tsfTitle.updateStateOf( _titleId, 'addAdditions', state.addAdditions );
+		tsfTitle.updateStateOf( _titleId, 'useSocialTagline', !! ( state.useSocialTagline || false ) );
+		tsfTitle.updateStateOf( _titleId, 'additionValue', state.additionValue );
+		tsfTitle.updateStateOf( _titleId, 'additionPlacement', state.additionPlacement );
+		tsfTitle.updateStateOf( _titleId, '_defaultTitleLocked', !! ( state._defaultTitleLocked || false ) );
 
-		tsfTitle.enqueueUnregisteredInputTrigger( titleId );
+		tsfTitle.enqueueUnregisteredInputTrigger( _titleId );
 
 		/**
 		 * Updates the hover additions placement.
@@ -573,18 +595,18 @@ window.tsfSettings = function( $ ) {
 		 * @since 4.1.1
 		 *
 		 * @function
-		 * @return {undefined}
 		 */
 		const toggleHoverAdditionsPlacement = event => {
-			let oldPlacement = tsfTitle.getStateOf( titleId, 'additionPlacement' ),
-				newPlacement = 'left' === event.target.value ? 'before' : 'after';
-
-			if ( newPlacement !== oldPlacement ) {
-				tsfTitle.updateStateOf( titleId, 'additionPlacement', newPlacement );
-			}
+			tsfTitle.updateStateOf(
+				_titleId,
+				'additionPlacement',
+				'left' === event.target.value ? 'before' : 'after',
+			);
 		}
 		document.querySelectorAll( '#tsf-home-title-location input' ).forEach( el => {
-			el.addEventListener( 'click', toggleHoverAdditionsPlacement );
+			el.addEventListener( 'change', toggleHoverAdditionsPlacement );
+			if ( el.checked )
+				_dispatchAtInteractive( el, 'change' );
 		} );
 
 		/**
@@ -592,11 +614,9 @@ window.tsfSettings = function( $ ) {
 		 *
 		 * @function
 		 * @param {string} visibility
-		 * @return {undefined}
 		 */
-		const setTitleVisibilityPrefix = ( visibility ) => {
-
-			let oldPrefixValue = tsfTitle.getStateOf( titleId, 'prefixValue' ),
+		const setTitleVisibilityPrefix = visibility => {
+			let oldPrefixValue = tsfTitle.getStateOf( _titleId, 'prefixValue' ),
 				prefixValue    = '';
 
 			switch ( visibility ) {
@@ -615,7 +635,7 @@ window.tsfSettings = function( $ ) {
 			}
 
 			if ( prefixValue !== oldPrefixValue )
-				tsfTitle.updateStateOf( titleId, 'prefixValue', prefixValue );
+				tsfTitle.updateStateOf( _titleId, 'prefixValue', prefixValue );
 		}
 		if ( l10n.states.isFrontPrivate ) {
 			setTitleVisibilityPrefix( 'private' );
@@ -628,7 +648,6 @@ window.tsfSettings = function( $ ) {
 		 *
 		 * @function
 		 * @param {Event} event
-		 * @return {undefined}
 		 */
 		const adjustHomepageExampleOutput = event => {
 			let examples = document.querySelectorAll( '.tsf-custom-title-js' ),
@@ -638,63 +657,62 @@ window.tsfSettings = function( $ ) {
 				val = tsf.escapeString( val );
 				examples.forEach( el => el.innerHTML = val );
 			} else {
-				val = tsf.escapeString( tsf.decodeEntities( tsfTitle.getStateOf( titleId, 'defaultTitle' ) ) );
+				val = tsf.escapeString( tsf.decodeEntities( tsfTitle.getStateOf( _titleId, 'defaultTitle' ) ) );
 				examples.forEach( el => el.innerHTML = val );
 			}
-		};
+		}
 		titleInput.addEventListener( 'input', adjustHomepageExampleOutput );
-		titleInput.dispatchEvent( new Event( 'input' ) );
+		_dispatchAtInteractive( titleInput, 'input' );
 
-		let updateHomePageTaglineExampleOutputBuffer,
-			$exampleTagline = $( '.tsf-custom-tagline-js' );
+		let updateHomePageTaglineExampleOutputBuffer;
 		/**
 		 * Updates homepage title example output.
-		 * Has high debounce timer, as it's crucially visible on the input screen anyway.
 		 *
 		 * @function
-		 * @return {undefined}
 		 */
 		const updateHomePageTaglineExampleOutput = () => {
-
 			clearTimeout( updateHomePageTaglineExampleOutputBuffer );
+			updateHomePageTaglineExampleOutputBuffer = setTimeout(
+				() => {
+					let value = tsfTitle.getStateOf( _titleId, 'additionValue' );
 
-			updateHomePageTaglineExampleOutputBuffer = setTimeout( () => {
-				let value = tsfTitle.getStateOf( titleId, 'additionValue' );
+					value = tsf.decodeEntities( tsf.sDoubleSpace( value.trim() ) );
 
-				value = tsf.decodeEntities( tsf.sDoubleSpace( value.trim() ) );
-
-				if ( value.length && tsfTitle.getStateOf( titleId, 'addAdditions' ) ) {
-					$exampleTagline.html( tsf.escapeString( value ) );
-					$( '.tsf-custom-blogname-js' ).show();
-				} else {
-					$( '.tsf-custom-blogname-js' ).hide();
-				}
-			} );
+					if ( value.length && tsfTitle.getStateOf( _titleId, 'addAdditions' ) ) {
+						document.querySelectorAll( '.tsf-custom-tagline-js' ).forEach( el => {
+							el.innerHTML = tsf.escapeString( value );
+						} );
+						document.querySelectorAll( '.tsf-custom-blogname-js' ).forEach( el => {
+							el.style.display = null;
+						} );
+					} else {
+						document.querySelectorAll( '.tsf-custom-blogname-js' ).forEach( el => {
+							el.style.display = 'none';
+						} );
+					}
+				},
+				1000/60 // 60fps.
+			);
 		}
 
 		/**
 		 * Updates the hover additions value.
 		 *
 		 * @function
-		 * @return {undefined}
 		 */
 		const updateHoverAdditionsValue = () => {
-			let oldValue = tsfTitle.getStateOf( titleId, 'additionValue' ),
-				value    = taglineInput.value.trim();
+			let value = taglineInput.value.trim();
 
-			if ( ! value.length ) {
+			if ( ! value.length )
 				value = taglineInput.placeholder || '';
-			}
 
 			value = tsf.escapeString( tsf.decodeEntities( value.trim() ) );
 
-			if ( oldValue !== value ) {
-				tsfTitle.updateStateOf( titleId, 'additionValue', value );
-				updateHomePageTaglineExampleOutput();
-			}
+			tsfTitle.updateStateOf( _titleId, 'additionValue', value );
+			updateHomePageTaglineExampleOutput();
 		}
 		taglineInput.addEventListener( 'input', updateHoverAdditionsValue );
-		taglineInput.dispatchEvent( new Event( 'input' ) );
+		_dispatchAtInteractive( taglineInput, 'input' );
 
 		/**
 		 * Toggle tagline end examples within the Left/Right example for the homepage titles.
@@ -702,33 +720,31 @@ window.tsfSettings = function( $ ) {
 		 *
 		 * @function
 		 * @param {Event} event
-		 * @return {undefined}
 		 */
 		const toggleHomePageTaglineExampleDisplay = event => {
 			let addAdditions = false;
 
 			if ( event.target.checked ) {
-				addAdditions            = true;
+				addAdditions          = true;
 				taglineInput.readOnly = false;
 			} else {
-				addAdditions            = false;
+				addAdditions          = false;
 				taglineInput.readOnly = true;
 			}
 
 			// A change action implies a change. Don't test for previous; it changed!
 			// (also, it defaults to false; which would cause a bug not calling updateHomePageTaglineExampleOutput on-load)
-			tsfTitle.updateStateOf( titleId, 'addAdditions', addAdditions );
+			tsfTitle.updateStateOf( _titleId, 'addAdditions', addAdditions );
 			updateHomePageTaglineExampleOutput();
 		}
 		taglineToggle.addEventListener( 'change', toggleHomePageTaglineExampleDisplay );
-		taglineToggle.dispatchEvent( new Event( 'change' ) );
+		_dispatchAtInteractive( taglineToggle, 'change' );
 
 		/**
 		 * Updates separator used in the titles.
 		 *
 		 * @function
 		 * @param {Event} event
-		 * @return {undefined}
 		 */
 		const updateSeparator = event => {
 			tsfTitle.updateStateAll( 'separator', event.detail.separator );
@@ -741,47 +757,690 @@ window.tsfSettings = function( $ ) {
 	 *
 	 * @since 4.0.0
 	 * @access private
-	 *
-	 * @function
-	 * @return {undefined}
 	 */
-	const _initHomeDescriptionSettings = () => {
+	function _initHomeDescriptionSettings() {
 
 		const descId = _getSettingsId( 'homepage_description' );
 
-		let state = JSON.parse(
-			document.getElementById( 'tsf-description-data_' + descId ).dataset.state
-		);
-
 		tsfDescription.setInputElement( document.getElementById( descId ) );
 
-		// tsfDescription.updateState( 'allowReferenceChange', ! state.refDescriptionLocked );
-		tsfDescription.updateStateOf( descId, 'defaultDescription', state.defaultDescription.trim() );
-		tsfDescription.updateStateOf( descId, 'hasLegacy', !! ( state.hasLegacy || false ) );
+		const state = JSON.parse(
+			document.getElementById( `tsf-description-data_${descId}` )?.dataset.state || 0,
+		);
+
+		if ( state ) {
+			// tsfDescription.updateState( 'allowReferenceChange', ! state.refDescriptionLocked );
+			tsfDescription.updateStateOf( descId, 'defaultDescription', state.defaultDescription.trim() );
+		}
 
 		tsfDescription.enqueueUnregisteredInputTrigger( descId );
 	}
 
 	/**
-	 * Initializes uncategorized general tab meta input listeners.
+	 * Initializes Homepage's social meta input.
 	 *
-	 * @since 4.0.0
+	 * @since 4.2.0
+	 * @access private
+	 */
+	function _initHomeSocialSettings() {
+
+		const _socialGroup = 'homepage_social_settings';
+
+		tsfSocial.setInputInstance(
+			_socialGroup,
+			_getSettingsId( 'homepage_title' ),
+			_getSettingsId( 'homepage_description' ),
+		);
+
+		const groupData = JSON.parse(
+			document.getElementById( `tsf-social-data_${_socialGroup}` )?.dataset.settings || 0,
+		);
+
+		if ( ! groupData ) return;
+
+		tsfSocial.updateStateOf( _socialGroup, 'addAdditions', groupData.og.state.addAdditions ); // tw Also has one. Maybe future.
+		tsfSocial.updateStateOf(
+			_socialGroup,
+			'defaults',
+			{
+				ogTitle: groupData.og.state.defaultTitle,
+				twTitle: groupData.tw.state.defaultTitle,
+				ogDesc:  groupData.og.state.defaultDesc,
+				twDesc:  groupData.tw.state.defaultDesc,
+			}
+		);
+		tsfSocial.updateStateOf(
+			_socialGroup,
+			'placeholderLocks',
+			{
+				ogTitle: groupData.og.state?.titlePhLock || false,
+				twTitle: groupData.tw.state?.titlePhLock || false,
+				ogDesc:  groupData.og.state?.descPhLock || false,
+				twDesc:  groupData.tw.state?.descPhLock || false,
+			}
+		);
+
+		const twitterCardType = document.getElementById( _getSettingsId( 'homepage_twitter_card_type' ) );
+		const updateTitleRemoveAdditions = event => {
+			const { cardType } = event.detail;
+
+			const _defaultIndexOption = twitterCardType.querySelector( '[value=""]' ),
+				  _data               = twitterCardType.dataset || {};
+
+			const newHTML = _data.defaultI18n?.replace(
+				'%s',
+				_data.defaultLocked
+					? _data.defaultValue
+					: cardType,
+			);
+
+			_defaultIndexOption.innerHTML = newHTML;
+			twitterCardType.dispatchEvent( new Event( 'change' ) );
+		}
+		if ( twitterCardType )
+			document.body.addEventListener( 'tsf-update-twitter-card-type', updateTitleRemoveAdditions );
+	}
+
+	/**
+	 * Initializes Homepage's visibility input.
+	 *
+	 * @since 5.1.0
+	 * @access private
+	 */
+	function _initHomeVisibilitySettings() {
+
+		const _canonicalId = _getSettingsId( 'homepage_canonical' ),
+			  _noindexId   = _getSettingsId( 'homepage_noindex' );
+
+		const canonicalInput = document.getElementById( _canonicalId ),
+			  noindexInput   = document.getElementById( _noindexId );
+
+		if ( ! canonicalInput ) return;
+
+		// Prefixed with B because I don't trust using 'protected' (might become reserved).
+		const BNOINDEX = 0b10;
+
+		let canonicalPhState = 0b00;
+
+		tsfCanonical.setInputElement( canonicalInput );
+
+		const state  = JSON.parse( document.getElementById( `tsf-canonical-data_${_canonicalId}` )?.dataset.state || 0 );
+
+		if ( state ) {
+			tsfCanonical.updateStateOf( _canonicalId, 'allowReferenceChange', ! state.refCanonicalLocked );
+			tsfCanonical.updateStateOf( _canonicalId, 'defaultCanonical', state.defaultCanonical.trim() );
+			tsfCanonical.updateStateOf( _canonicalId, 'preferredScheme', state.preferredScheme.trim() );
+			tsfCanonical.updateStateOf( _canonicalId, 'urlStructure', state.urlStructure );
+		}
+
+		tsfCanonical.enqueueTriggerUnregisteredInput( _canonicalId );
+
+		document.body.addEventListener( 'tsf-canonical-scheme-changed', event => {
+			tsfCanonical.updateStateOf( _canonicalId, 'preferredScheme', event.detail.scheme );
+		} );
+
+		/**
+		 * @since 5.1.0
+		 *
+		 * @function
+		 */
+		const updateCanonicalPlaceholder = () => {
+			tsfCanonical.updateStateOf(
+				_canonicalId,
+				'showUrlPlaceholder',
+				canonicalPhState & BNOINDEX
+					? false
+					: true,
+			);
+		}
+		updateCanonicalPlaceholder();
+
+		let pageNoindex = false,
+			siteNoindex = false;
+
+		const updateNoindexState = () => {
+
+			let type = 'index';
+
+			switch ( state.noindexQubit ) {
+				case 0: // default, unset since unknown.
+					if ( noindexInput?.checked || siteNoindex || pageNoindex || state.isProtected ) {
+						type = 'noindex';
+					} else {
+						type = 'index';
+					}
+					break;
+				case -1: // force index
+					type = 'index';
+					break;
+				case 1: // force noindex
+					type = 'noindex';
+			}
+
+			if ( 'noindex' === type ) {
+				canonicalPhState |= BNOINDEX;
+			} else {
+				canonicalPhState &= ~BNOINDEX;
+			}
+
+			updateCanonicalPlaceholder();
+		}
+		noindexInput?.addEventListener( 'change', updateNoindexState );
+
+		if ( state.isPage ) {
+			const checkPTNoindex = event => {
+				const { robotsType, set } = event.detail;
+
+				if ( 'noindex' !== robotsType ) return;
+
+				pageNoindex = set.has( 'page' );
+				updateNoindexState();
+			}
+			document.body.addEventListener( 'tsf-post-type-robots-changed', checkPTNoindex );
+		}
+
+		const checkSiteNoindex = event => {
+			const { checked, robotsType } = event.detail;
+
+			if ( 'noindex' !== robotsType ) return;
+
+			siteNoindex = !! checked;
+			updateNoindexState();
+		}
+		document.body.addEventListener( 'tsf-site-robots-changed', checkSiteNoindex );
+	}
+
+	/**
+	 * Returns the option name/id of PTA settings.
+	 *
+	 * @since 4.2.0
 	 * @access private
 	 *
-	 * @function
-	 * @return {undefined}
+	 * @param {String} postType
+	 * @param {String} id
+	 * @return {String} The option name/id.
 	 */
-	const _initHomeGeneralListeners = () => {
+	function _getPtaInputId( postType, id ) {
+		return `${_getSettingsId('pta')}[${postType}][${id}]`;
+	}
+
+	let _cachedPtaData = void 0;
+	/**
+	 * Returns predefined PTA object data.
+	 *
+	 * @since 4.2.0
+	 * @access private
+	 *
+	 * @param {string|undefined} postType
+	 * @return {{label:string,url:string,hasPosts:Boolean}}
+	 */
+	function _getPtaData() {
+		return _cachedPtaData ||= JSON.parse(
+			document.getElementById( 'tsf-post-type-archive-data' )?.dataset.postTypes || 0
+		) || {};
+	}
+
+	/**
+	 * Initializes all Post Type Archive setting fields.
+	 *
+	 * @since 4.2.0
+	 * @access private
+	 */
+	function _initPtaSettings() {
+
+		const postTypeData = _getPtaData(),
+			  itemLength   = Object.keys( postTypeData ).length;
+
+		switch ( true ) {
+			case itemLength > 1:
+				_initPtaSelector();
+				// fall through;
+			case itemLength > 0:
+				_initPtaListeners();
+				break;
+			default:
+				break;
+		}
+
+		// Yes, this will spawn many event listeners if there are many post type archives.
+		// I call those 'Event Horizon cases'. Puns very much intended.
+		for ( const postType in postTypeData ) {
+			_initPtaTitleSettings( postType );
+			_initPtaDescriptionSettings( postType );
+			_initPtaSocialSettings( postType );
+			_initPtaVisibilitySettings( postType );
+			_initPtaMainListeners( postType );
+		}
+	}
+
+	/**
+	 * Initializes the Post Type Archive selector/switcher.
+	 *
+	 * @since 4.2.0
+	 * @access private
+	 */
+	function _initPtaSelector() {
+
+		const postTypeData = _getPtaData();
+
+		const select       = document.getElementById( 'tsf-post-type-archive-selector' ),
+			  optionOption = document.createElement( 'option' );
+
+		const headerWrap = document.getElementById( 'tsf-post-type-archive-header-wrap' );
+
+		headerWrap && ( headerWrap.style.display = null );
+
+		const populateSelect = () => {
+			for ( const postType in postTypeData ) {
+				let _option       = optionOption.cloneNode();
+
+				_option.value     = tsf.escapeString( postType );
+				_option.innerHTML = tsf.escapeString( postTypeData[ postType ].label );
+
+				select?.appendChild( _option );
+			}
+		}
+		populateSelect();
+
+		// Hide all headers.
+		document.querySelectorAll( '.tsf-post-type-header' ).forEach( el => el.classList.add( 'hidden' ) );
+
+		let _debounceSwitch = void 0,
+			_detailsEl;
+		const switchPostTypeSettingsView = event => {
+			clearTimeout( _debounceSwitch );
+			_debounceSwitch = setTimeout(
+				() => {
+					// Remove old details (if any).
+					_detailsEl && headerWrap?.removeChild( _detailsEl );
+
+					document.querySelectorAll( '.tsf-post-type-archive-wrap' ).forEach( el => {
+						if ( event.target.value === el.dataset.postType ) {
+							el.style.display = null;
+							_detailsEl = el.querySelector( '.tsf-post-type-archive-details' )?.cloneNode( true );
+						} else {
+							el.style.display = 'none';
+						}
+						// This class is redundant now; remove it for it hides permanently.
+						el.classList.remove( 'hide-if-tsf-js' );
+					} );
+
+					_detailsEl && headerWrap?.appendChild( _detailsEl );
+
+					document.body.dispatchEvent(
+						new CustomEvent( 'tsf-post-type-archive-switched', {
+							detail: {
+								postType:                      event.target.value,
+								hasKompaanChocolateBananaBeer: false, // sad day.
+							},
+						} ),
+					);
+				},
+				1000/60, // 60fps.
+			);
+		}
+
+		if ( select ) {
+			select.addEventListener( 'change', switchPostTypeSettingsView );
+			_dispatchAtInteractive( select, 'change' );
+		}
+	}
+
+	/**
+	 * Initializes the global Post Type Archive listeners.
+	 *
+	 * @since 4.2.0
+	 * @access private
+	 */
+	function _initPtaListeners() {
+
+		const augmentSwitcher = event => {
+			const { postType, set } = event.detail,
+				  wrap              = document.querySelector( `.tsf-post-type-archive-wrap[data-post-type="${postType}"]` ),
+				  excluded          = set.has( postType );
+
+			wrap?.querySelector( '.tsf-post-type-archive-if-excluded' )?.classList.toggle( 'hidden', ! excluded );
+			wrap?.querySelector( '.tsf-post-type-archive-if-not-excluded' )?.classList.toggle( 'hidden', excluded );
+
+			document.body.dispatchEvent(
+				// Necessary to trigger input events
+				new CustomEvent( 'tsf-post-type-archive-switched', {
+					detail: {
+						postType: postType,
+					}
+				} )
+			);
+		}
+
+		// This also dispatches at Interactive.
+		document.body.addEventListener( 'tsf-post-type-support-changed', augmentSwitcher );
+	}
+
+	/**
+	 * Initializes PTA's meta title input.
+	 *
+	 * @since 4.2.0
+	 * @access private
+	 *
+	 * @param {String} postType The post type name.
+	 */
+	function _initPtaTitleSettings( postType ) {
+
+		const _titleId   = _getPtaInputId( postType, 'doctitle' ),
+			  titleInput = document.getElementById( _titleId );
+
+		if ( ! titleInput ) return;
+
+		tsfTitle.setInputElement( titleInput );
+
+		const state = JSON.parse(
+			document.getElementById( `tsf-title-data_${_titleId}` )?.dataset.state || 0,
+		);
+
+		if ( state ) {
+			tsfTitle.updateStateOf( _titleId, 'defaultTitle', state.defaultTitle );
+			tsfTitle.updateStateOf( _titleId, 'addAdditions', state.addAdditions );
+			tsfTitle.updateStateOf( _titleId, 'useSocialTagline', !! ( state.useSocialTagline || false ) );
+			tsfTitle.updateStateOf( _titleId, 'additionValue', state.additionValue );
+			tsfTitle.updateStateOf( _titleId, 'additionPlacement', state.additionPlacement );
+			tsfTitle.updateStateOf( _titleId, 'prefixValue', state.prefixValue );
+			tsfTitle.updateStateOf( _titleId, 'showPrefix', state.showPrefix );
+		}
+
+		/**
+		 * Updates title prefix, based on input and global settings.
+		 *
+		 * @function
+		 * @param {Event} event
+		 */
+		const updateTitlePrefix = event => {
+			let showPrefix = ! event.target.value.trim().length;
+
+			if ( document.getElementById( _getSettingsId( 'title_rem_prefixes' ) )?.checked )
+				showPrefix = false;
+
+			tsfTitle.updateStateOf( _titleId, 'showPrefix', showPrefix );
+		}
+		titleInput.addEventListener( 'input', updateTitlePrefix );
+
+		/**
+		 * Updates title additions, based on singular settings change.
+		 *
+		 * @function
+		 * @param {Event} event
+		 */
+		const updateTitleAdditions = event => {
+			let addAdditions = ! event.target.checked;
+
+			if ( document.getElementById( _getSettingsId( 'title_rem_additions' ) )?.checked )
+				addAdditions = false;
+
+			tsfTitle.updateStateOf( _titleId, 'addAdditions', addAdditions );
+		}
+
+		const disabledTitleAdditionsHelp = wp.template( 'tsf-disabled-title-additions-help' )();
+
+		const blogNameTrigger = document.getElementById( _getPtaInputId( postType, 'title_no_blog_name' ) );
+		const updateTitleRemoveAdditions = event => {
+			const { removeAdditions } = event.detail;
+
+			blogNameTrigger.disabled = removeAdditions;
+
+			if ( removeAdditions ) {
+				blogNameTrigger.closest( 'label' ).insertAdjacentHTML( 'beforeend', disabledTitleAdditionsHelp );
+				tsfTT.triggerReset();
+			} else {
+				// 'tsf-title-additions-warning' is defined at `../inc/views/templates/settings/settings.php`
+				blogNameTrigger.closest( 'label' ).querySelector( '.tsf-title-additions-warning' )?.remove();
+			}
+
+			blogNameTrigger.dispatchEvent( new Event( 'change' ) );
+		}
+		if ( blogNameTrigger ) {
+			document.body.addEventListener( 'tsf-update-title-rem-additions', updateTitleRemoveAdditions );
+			blogNameTrigger.addEventListener( 'change', updateTitleAdditions );
+			_dispatchAtInteractive( blogNameTrigger, 'change' );
+		}
+
+		tsfTitle.enqueueUnregisteredInputTrigger( _titleId );
+	}
+
+	/**
+	 * Initializes PTA's meta description input.
+	 *
+	 * @since 4.2.0
+	 * @access private
+	 *
+	 * @param {String} postType The post type name.
+	 */
+	function _initPtaDescriptionSettings( postType ) {
+
+		const _descId   = _getPtaInputId( postType, 'description' ),
+			  descInput = document.getElementById( _descId );
+
+		if ( ! descInput ) return;
+
+		tsfDescription.setInputElement( descInput );
+
+		const state = JSON.parse(
+			document.getElementById( `tsf-description-data_${_descId}` )?.dataset.state || 0,
+		);
+
+		if ( state )
+			tsfDescription.updateStateOf( _descId, 'defaultDescription', state.defaultDescription.trim() );
+
+		tsfDescription.enqueueUnregisteredInputTrigger( _descId );
+	}
+
+	/**
+	 * Initializes PTA's social meta input.
+	 *
+	 * @since 4.2.0
+	 * @access private
+	 *
+	 * @param {String} postType The post type name.
+	 */
+	function _initPtaSocialSettings( postType ) {
+
+		const _socialGroup = `pta_social_settings_${postType}`;
+
+		const groupData = JSON.parse(
+			document.getElementById( `tsf-social-data_${_socialGroup}` )?.dataset.settings || 0,
+		);
+
+		tsfSocial.setInputInstance(
+			_socialGroup,
+			_getPtaInputId( postType, 'doctitle' ),
+			_getPtaInputId( postType, 'description' ),
+		);
+		tsfSocial.updateStateOf( _socialGroup, 'addAdditions', groupData.og.state.addAdditions ); // tw Also has one. Maybe future.
+
+		tsfSocial.updateStateOf(
+			_socialGroup,
+			'defaults',
+			{
+				ogTitle: groupData.og.state.defaultTitle,
+				twTitle: groupData.tw.state.defaultTitle,
+				ogDesc:  groupData.og.state.defaultDesc,
+				twDesc:  groupData.tw.state.defaultDesc,
+			}
+		);
+
+		const twitterCardType = document.getElementById( _getPtaInputId( postType, 'tw_card_type' ) );
+		const updateTitleRemoveAdditions = event => {
+			const { cardType } = event.detail;
+
+			const _defaultIndexOption = twitterCardType.querySelector( '[value=""]' ),
+				  _data               = twitterCardType.dataset || {};
+
+			const newHTML = _data.defaultI18n?.replace(
+				'%s',
+				cardType,
+			);
+
+			_defaultIndexOption.innerHTML = newHTML;
+			twitterCardType.dispatchEvent( new Event( 'change' ) );
+		}
+		if ( twitterCardType )
+			document.body.addEventListener( 'tsf-update-twitter-card-type', updateTitleRemoveAdditions );
+	}
+
+	/**
+	 * Initializes PTA's Visibility input.
+	 *
+	 * @since 4.2.0
+	 * @access private
+	 *
+	 * @param {String} postType The post type name.
+	 */
+	function _initPtaVisibilitySettings( postType ) {
+
+		const canonicalId    = _getPtaInputId( postType, 'canonical' ),
+		      noindexId      = _getPtaInputId( postType, 'noindex' );
+
+		const canonicalInput = document.getElementById( canonicalId ),
+			  indexSelect   = document.getElementById( noindexId );
+
+		// Prefixed with B because I don't trust using 'protected' (might become reserved).
+		const BNOINDEX = 0b10;
+
+		let canonicalPhState = 0b00;
+		/**
+		 * @since 5.1.0
+		 *
+		 * @function
+		 */
+		const updateCanonicalPlaceholder = () => {
+			tsfCanonical.updateStateOf(
+				canonicalId,
+				'showUrlPlaceholder',
+				canonicalPhState & BNOINDEX
+					? false
+					: true,
+			);
+		}
+
+		if ( canonicalInput ) {
+
+			tsfCanonical.setInputElement( canonicalInput );
+
+			const state  = JSON.parse( document.getElementById( `tsf-canonical-data_${canonicalId}` )?.dataset.state || 0 );
+
+			if ( state ) {
+				tsfCanonical.updateStateOf( canonicalId, 'allowReferenceChange', ! state.refCanonicalLocked );
+				tsfCanonical.updateStateOf( canonicalId, 'defaultCanonical', state.defaultCanonical.trim() );
+				tsfCanonical.updateStateOf( canonicalId, 'preferredScheme', state.preferredScheme.trim() );
+				tsfCanonical.updateStateOf( canonicalId, 'urlStructure', state.urlStructure );
+			}
+
+			tsfCanonical.enqueueTriggerUnregisteredInput( canonicalId );
+
+			document.body.addEventListener( 'tsf-canonical-scheme-changed', event => {
+				tsfCanonical.updateStateOf( canonicalId, 'preferredScheme', event.detail.scheme );
+			} );
+		}
+
+		const robotsData = {
+			site: new Map(),
+			pt:   new Map(),
+		}
+		const isNo_Default = robotsType => {
+			let off = false;
+
+			if ( 'noindex' === robotsType )
+				off = ! _getPtaData()[ postType ].hasPosts;
+
+			return off || robotsData.site.get( robotsType ) || robotsData.pt.get( robotsType );
+		}
+		const updateRobots = robotsType => {
+			const robotsSelect = document.getElementById( _getPtaInputId( postType, robotsType ) );
+
+			if ( ! robotsSelect ) return;
+
+			const _defaultIndexOption = [ ...robotsSelect.options ].find( o => '0' === o.value ),
+				  _data               = robotsSelect.dataset || {};
+
+			const newHTML = _data.defaultI18n?.replace(
+				'%s',
+				tsf.decodeEntities(
+					isNo_Default( robotsType ) ? _data.defaultOff : _data.defaultOn,
+				)
+			);
+
+			if ( newHTML !== _defaultIndexOption?.innerHTML ) {
+				_defaultIndexOption.innerHTML = newHTML;
+				robotsSelect.dispatchEvent( new Event( 'change' ) );
+			}
+		}
+		const _registerPTDefaultRobotsValue = event => {
+			const { postType: pt, robotsType, set } = event.detail;
+			// Nothing to see here.
+			if ( postType !== pt ) return;
+			robotsData.pt.set( robotsType, set.has( postType ) );
+			updateRobots( robotsType );
+		}
+		const _registerSiteDefaultRobotsValue = event => {
+			const { checked, robotsType } = event.detail;
+			robotsData.site.set( robotsType, !! checked );
+			updateRobots( robotsType );
+		}
+		document.body.addEventListener( 'tsf-post-type-robots-changed', _registerPTDefaultRobotsValue );
+		document.body.addEventListener( 'tsf-site-robots-changed', _registerSiteDefaultRobotsValue );
+
+		[ 'noindex', 'nofollow', 'noarchive' ].forEach( type => {
+			updateRobots( type )
+		} );
+
+		/**
+		 * @since 5.1.0
+		 *
+		 * @function
+		 * @param {Number} value
+		 */
+		const setRobotsIndexingState = value => {
+			let type = '';
+
+			switch ( +value ) {
+				case 0: // default, unset since unknown.
+					type = isNo_Default( 'noindex' ) ? 'noindex' : 'index';
+					break;
+				case -1: // index
+					type = 'index';
+					break;
+				case 1: // noindex
+					type = 'noindex';
+					break;
+			}
+			if ( 'noindex' === type ) {
+				canonicalPhState |= BNOINDEX;
+			} else {
+				canonicalPhState &= ~BNOINDEX;
+			}
+
+			updateCanonicalPlaceholder();
+		}
+		indexSelect.addEventListener( 'change', event => setRobotsIndexingState( event.target.value ) );
+		setRobotsIndexingState( indexSelect.value );
+	}
+
+	/**
+	 * Initializes PTA's main tab meta input listeners.
+	 *
+	 * @since 4.2.0
+	 * @access private
+	 *
+	 * @param {String} postType The post type name.
+	 */
+	function _initPtaMainListeners( postType ) {
 
 		/**
 		 * Enqueues meta title and description input triggers
 		 *
 		 * @function
-		 * @return {undefined}
 		 */
 		const enqueueGeneralInputListeners = () => {
-			tsfTitle.enqueueUnregisteredInputTrigger( _getSettingsId( 'homepage_title' ) );
-			tsfDescription.enqueueUnregisteredInputTrigger( _getSettingsId( 'homepage_description' ) );
+			tsfTitle.enqueueUnregisteredInputTrigger( _getPtaInputId( postType, 'doctitle' ) );
+			tsfDescription.enqueueUnregisteredInputTrigger( _getPtaInputId( postType, 'description' ) );
 		}
 
 		/**
@@ -790,21 +1449,35 @@ window.tsfSettings = function( $ ) {
 		 * @function
 		 * @param {!jQuery.Event} event
 		 * @param {Element}       elem
-		 * @return {undefined}
 		 */
-		const triggerPostboxSynchronousUnregisteredInput = function( event, elem ) {
-			if ( 'autodescription-homepage-settings' === elem.id ) {
+		const triggerPostboxSynchronousUnregisteredInput = ( event, elem ) => {
+			if ( 'autodescription-post-type-archive-settings' === elem.id ) {
 				let inside = elem.querySelector( '.inside' );
 				if ( inside.offsetHeight > 0 && inside.offsetWidth > 0 ) {
 					enqueueGeneralInputListeners();
 				}
 			}
 		}
+		// jQuery: WP action.
 		$( document ).on( 'postbox-toggled', triggerPostboxSynchronousUnregisteredInput );
 
+		/**
+		 * Enequeues doctitles and social input trigger synchronously on post type change.
+		 * Triggers for the current post type only.
+		 *
+		 * @param {Event} event
+		 */
+		const triggerPtaSynchronousUnregisteredInput = event => {
+			if ( event.detail?.postType === postType ) {
+				// This also invokes inputs for the Social tabs, which is nice.
+				enqueueGeneralInputListeners();
+			}
+		}
+		document.body.addEventListener( 'tsf-post-type-archive-switched', triggerPtaSynchronousUnregisteredInput );
+
 		// This also triggers change for the homepage description, which isn't necessary. But, this trims down codebase.
-		const homepageGeneralTab = document.getElementById( 'tsf-homepage-tab-general' );
-		homepageGeneralTab && homepageGeneralTab.addEventListener( 'tsf-tab-toggled', enqueueGeneralInputListeners );
+		document.getElementById( `tsf-post_type_archive_${postType}-tab-general` )
+			?.addEventListener( 'tsf-tab-toggled', enqueueGeneralInputListeners );
 	}
 
 	/**
@@ -812,29 +1485,213 @@ window.tsfSettings = function( $ ) {
 	 *
 	 * @since 4.1.0
 	 * @access private
-	 *
-	 * @function
-	 * @return {undefined}
 	 */
-	const _initSocialSettings = () => {
+	function _initSocialSettings() {
 
-		const socialAdditionsToggle = document.getElementById( _getSettingsId( 'social_title_rem_additions' ) );
-
+		const socialTitleRemoveAdditions = document.getElementById( _getSettingsId( 'social_title_rem_additions' ) );
 		/**
 		 * Changes the useSocialTagline state for dynamic social-title-placeholder updates.
 		 *
 		 * @function
 		 * @param {Event} event
-		 * @return {undefined}
 		 */
 		const updateSocialAdditions = event => {
 			if ( event.target.checked ) {
-				tsfTitle.updateStateAll( 'useSocialTagline', false );
+				tsfSocial.updateStateAll( 'addAdditions', false );
 			} else {
-				tsfTitle.updateStateAll( 'useSocialTagline', true );
+				tsfSocial.updateStateAll( 'addAdditions', true );
 			}
 		}
-		socialAdditionsToggle && socialAdditionsToggle.addEventListener( 'change', updateSocialAdditions );
+		if ( socialTitleRemoveAdditions ) {
+			socialTitleRemoveAdditions.addEventListener( 'change', updateSocialAdditions );
+			_dispatchAtInteractive( socialTitleRemoveAdditions, 'change' );
+		}
+
+		const ogTagsToggle = document.getElementById( _getSettingsId( 'og_tags' ) );
+		/**
+		 * Hides Open Graph fields if Open Graph is disabled.
+		 *
+		 * @function
+		 * @param {Event} event
+		 */
+		const displayOgFields = event => {
+			document.getElementById( 'multi_og_image_wrapper' )
+				?.classList
+				.toggle( 'hidden', ! event.target.checked );
+		}
+		if ( ogTagsToggle ) {
+			ogTagsToggle.addEventListener( 'change', displayOgFields );
+			_dispatchAtInteractive( ogTagsToggle, 'change' );
+		}
+
+		/**
+		 * Changes the tabs visibility and selectability during option toggles.
+		 *
+		 * @function
+ 		 * @param {{id:string,tab:string}} toggleData
+		 */
+		const registerTagToggle = toggleData => {
+
+			if ( ! toggleData.id ) return;
+
+			const toggle = document.getElementById( _getSettingsId( toggleData.id ) );
+			/**
+			 * @function
+			 * @param {Event} event
+			 */
+			const hideDisableTab = event => {
+				tsfTabs.toggleTab( 'tsfSettings', `tsf-social-tab-${toggleData.tab}`, event.target.checked );
+			}
+
+			if ( toggle ) {
+				toggle.addEventListener( 'change', hideDisableTab );
+				_dispatchAtInteractive( toggle, 'change' );
+			}
+		};
+		[
+			{
+				id:  'og_tags', // option ID.
+				tab: 'postdates',
+			},
+			{
+				id:  'facebook_tags',
+				tab: 'facebook',
+			},
+			{
+				id:  'twitter_tags',
+				tab: 'twitter',
+			},
+			{
+				id:  'oembed_scripts',
+				tab: 'oembed',
+			},
+		].forEach( registerTagToggle );
+
+		const toggleCheckRegistry = new Set();
+		/**
+		 * Changes the settings visibility and selectability during all option toggles.
+		 * @function
+		 * @param {Event} event
+		 */
+		const checkAllDisabled = event => {
+			if ( event.target.checked ) {
+				toggleCheckRegistry.add( event.target.name );
+			} else {
+				toggleCheckRegistry.delete( event.target.name );
+			}
+
+			document.getElementById( 'tsf-social-settings-wrapper' )
+				?.classList
+				.toggle( 'hidden', ! toggleCheckRegistry.size );
+		}
+		[ 'og_tags', 'facebook_tags', 'twitter_tags', 'oembed_scripts' ].forEach( id => {
+			const toggle = document.getElementById( _getSettingsId( id ) );
+			toggle.addEventListener( 'change', checkAllDisabled );
+			_dispatchAtInteractive( toggle, 'change' );
+		} );
+
+		/**
+		 * Emits hooks for when the Twitter Card is toggled.
+		 * @function
+		 * @param {Event} event
+		 */
+		const dispatchCardToggleEvent = event => {
+			document.body.dispatchEvent( new CustomEvent(
+				'tsf-update-twitter-card-type',
+				{
+					detail: {
+						cardType: event.target.value,
+					}
+				}
+			) );
+		}
+		document.querySelectorAll( '#tsf-twitter-cards input' ).forEach( el => {
+			el.addEventListener( 'change', dispatchCardToggleEvent );
+			if ( el.checked )
+				_dispatchAtInteractive( el, 'change' );
+		} );
+	}
+
+	/**
+	 * Initializes Schema settings inputs.
+	 *
+	 * @since 5.0.0
+	 * @access private
+	 */
+	function _initSchemaSettings() {
+
+		const sdToggle = document.getElementById( _getSettingsId( 'ld_json_enabled' ) );
+		/**
+		 * @function
+		 * @param {Event} event
+		 */
+		const toggleSettingsDisplay = event => {
+			document.getElementById( 'tsf-advanced-structured-data-settings-wrapper' )
+				?.classList
+				.toggle( 'hidden', ! event.target.checked );
+
+			togglePresenceTab();
+		}
+		if ( sdToggle ) {
+			sdToggle.addEventListener( 'change', toggleSettingsDisplay );
+			_dispatchAtInteractive( sdToggle, 'change' );
+		}
+
+		const presenceTab = {
+			id:  'knowledge_output', // option ID.
+			tab: 'presence',
+		};
+		const presenceToggle   = document.getElementById( _getSettingsId( presenceTab.id ) ),
+			  presenceTabRadio = document.getElementById( `tsf-social-tab-${presenceTab.tab}` );
+		const presenceTabLabel = document.getElementById( 'schema-tabs-wrapper' )
+			?.querySelector( `[for=tsf-schema-tab-${presenceTab.tab}]` );
+
+		/**
+		 * @function
+		 */
+		const togglePresenceTab = () => {
+			let show = sdToggle?.checked && presenceToggle?.checked;
+
+			presenceTabLabel?.classList.toggle( 'hidden', ! show );
+
+			show
+				? presenceTabRadio?.removeAttribute( 'disabled' )
+				: presenceTabRadio?.setAttribute( 'disabled', '' );
+		}
+		if ( presenceToggle ) {
+			presenceToggle.addEventListener( 'change', togglePresenceTab );
+			togglePresenceTab( presenceToggle, 'change' );
+		}
+
+		const knowledgeTypeSelect = document.getElementById( _getSettingsId( 'knowledge_type' ) );
+		/**
+		 * @function
+		 * @param {Event} event
+		 */
+		const toggleKnowledgeType = event => {
+			document.getElementById( 'tsf-logo-structured-data-settings-wrapper' )
+				?.classList
+				.toggle( 'hidden', event.target.value === 'person' );
+		}
+		if ( knowledgeTypeSelect ) {
+			knowledgeTypeSelect.addEventListener( 'change', toggleKnowledgeType );
+			_dispatchAtInteractive( knowledgeTypeSelect, 'change' );
+		}
+
+		const logoToggle = document.getElementById( _getSettingsId( 'knowledge_logo' ) );
+		/**
+		 * @function
+		 * @param {Event} event
+		 */
+		const toggleDisplayLogo = event => {
+			document.getElementById( 'tsf-logo-upload-structured-data-settings-wrapper' )
+				?.classList
+				.toggle( 'hidden', ! event.target.checked );
+		}
+		if ( logoToggle ) {
+			logoToggle.addEventListener( 'change', toggleDisplayLogo );
+			_dispatchAtInteractive( logoToggle, 'change' );
+		}
 	}
 
 	/**
@@ -843,11 +1700,8 @@ window.tsfSettings = function( $ ) {
 	 * @since 4.0.2
 	 * @since 4.1.1 Now adds taxonomy warnings.
 	 * @access private
-	 *
-	 * @function
-	 * @return {undefined}
 	 */
-	const _initRobotsInputs = () => {
+	function _initRobotsInputs() {
 
 		const copyrightToggle = document.getElementById( _getSettingsId( 'set_copyright_directives' ) );
 
@@ -864,7 +1718,6 @@ window.tsfSettings = function( $ ) {
 			 *
 			 * @function
 			 * @param {Event} event
-			 * @return {undefined}
 			 */
 			const toggleCopyrightControl = event => {
 				if ( event.target.checked ) {
@@ -883,11 +1736,8 @@ window.tsfSettings = function( $ ) {
 				}
 			}
 			copyrightToggle.addEventListener( 'change', toggleCopyrightControl );
-			copyrightToggle.dispatchEvent( new Event( 'change' ) );
+			_dispatchAtInteractive( copyrightToggle, 'change' );
 		}
-
-		const $window            = $( window );
-		const postTypeRobotsHelp = wp.template( 'tsf-robots-pt-help' )();
 
 		const robotsPostTypes     = {},
 			  robotsPtTaxonomies  = {};
@@ -896,15 +1746,54 @@ window.tsfSettings = function( $ ) {
 			_const.nofollow  = new Set();
 			_const.noarchive = new Set();
 		} );
+
+		const dispatchPosttypeRobotsChangedEvent = ( postType, robotsType ) => {
+			document.body.dispatchEvent( new CustomEvent(
+				'tsf-post-type-robots-changed',
+				{
+					detail: {
+						postType,
+						robotsType,
+						set: robotsPostTypes[ robotsType ],
+					}
+				}
+			) );
+		}
+		const dispatchTaxonomyRobotsChangedEvent = ( taxonomy, robotsType ) => {
+			document.body.dispatchEvent( new CustomEvent(
+				'tsf-taxonomy-robots-changed',
+				{
+					detail: {
+						taxonomy,
+						robotsType,
+						set: robotsPtTaxonomies[ robotsType ],
+					}
+				}
+			) );
+		}
+
+		const dispatchSiteRobotsChangedEvent = ( checked, robotsType ) => {
+			document.body.dispatchEvent( new CustomEvent(
+				'tsf-site-robots-changed',
+				{
+					detail: {
+						checked,
+						robotsType,
+					}
+				}
+			) );
+		}
+
+		const postTypeRobotsHelp = wp.template( 'tsf-robots-pt-help' )();
 		const addTaxRobotsByPtWarning = ( taxonomy, robotsType, disable ) => {
 			// Yes, stacked template literals. Sue me :)
 			let taxEl = document.getElementById( `${ _getSettingsId( `${robotsType}_taxonomies` ) }[${taxonomy}]` );
 			if ( disable ) {
-				$( taxEl.closest( 'label' ) ).append( postTypeRobotsHelp );
+				taxEl.closest( 'label' ).insertAdjacentHTML( 'beforeend', postTypeRobotsHelp );
 				tsfTT.triggerReset();
 			} else {
 				// 'tsf-taxonomy-from-pt-robots-warning' is defined at `../inc/views/templates/settings/settings.php`
-				taxEl.closest( 'label' ).querySelector( '.tsf-taxonomy-from-pt-robots-warning' ).remove();
+				taxEl.closest( 'label' ).querySelector( '.tsf-taxonomy-from-pt-robots-warning' )?.remove();
 			}
 
 			toggleWarnings( taxonomy );
@@ -913,15 +1802,16 @@ window.tsfSettings = function( $ ) {
 		const validateTaxonomyState = robotsType => {
 			// We want to show that the taxonomy is de-robotsTyped, but make that auto-reversible, and somehow still enactable?
 
-			let taxEntries    = document.querySelectorAll( `.tsf-robots-taxonomies[data-robots="${robotsType}"]` ),
-				triggerchange = false;
+			const taxEntries = document.querySelectorAll( `.tsf-robots-taxonomies[data-robots="${robotsType}"]` );
+
+			let triggerchange = false;
 
 			taxEntries.forEach( element => {
 				// get taxonomy from last [] entry.
 				let taxonomy = element.name.split( /(?:.+\[)(.+?)(?:])/ ).join( '' );
 
-				let taxPostTypes = JSON.parse( element.dataset.postTypes ),
-					hasRobots    = taxPostTypes.every( postType => robotsPostTypes[ robotsType ].has( postType ) );
+				const taxPostTypes = JSON.parse( element.dataset.postTypes || 0 ),
+					  hasRobots    = taxPostTypes && taxPostTypes.every( postType => robotsPostTypes[ robotsType ].has( postType ) );
 
 				if ( hasRobots ) {
 					if ( ! robotsPtTaxonomies[ robotsType ].has( taxonomy ) ) {
@@ -938,38 +1828,32 @@ window.tsfSettings = function( $ ) {
 					}
 				}
 				// TODO Collect and combine changes, to condense paint stack (perceptive performance, reduce race condition changes)?
-				triggerchange && triggerTaxonomyChange( taxonomy, robotsType );
+				triggerchange && dispatchTaxonomyRobotsChangedEvent( taxonomy, robotsType );
 			} );
 		}
-		const validatePostTypes = ( event, postType, robotsType ) => {
-			// augmentPTRobots( postType, robotsType. robotsPostTypes[ robotsType ].has( postType ) );
-			validateTaxonomyState( robotsType );
-		}
-		let validateTaxonomiesCache = {
+		const validateTaxonomiesCache = {
 			noindex:   new Map(),
 			nofollow:  new Map(),
 			noarchive: new Map(),
 		};
 		const getValidateTaxonomiesCache = ( key, robotsType ) => validateTaxonomiesCache[ robotsType ].get( key ) || ( new Set() );
 		// TODO trigger new events here, to make it easier to work with for others?
-		const validateTaxonomies = ( event, taxonomy, robotsType ) => {
-			if ( getValidateTaxonomiesCache( 'robotsPtTaxonomies', robotsType ).size !== robotsPtTaxonomies[ robotsType ].size ) {
-				addTaxRobotsByPtWarning( taxonomy, robotsType, robotsPtTaxonomies[ robotsType ].has( taxonomy ) );
-			}
+		const validateTaxonomies = event => {
+			const { taxonomy, robotsType } = event.detail;
+
+			if ( getValidateTaxonomiesCache( 'robotsPtTaxonomies', robotsType ).size
+				!== robotsPtTaxonomies[ robotsType ].size
+			) addTaxRobotsByPtWarning( taxonomy, robotsType, robotsPtTaxonomies[ robotsType ].has( taxonomy ) );
 
 			// Create new pointers in the memory by shadowcloning the object.
 			validateTaxonomiesCache[ robotsType ].set( 'robotsPtTaxonomies', new Set( robotsPtTaxonomies[ robotsType ] ) );
 		}
-		$window.on( 'tsf-post-type-robots-changed', validatePostTypes );
-		$window.on( 'tsf-taxonomy-robots-changed', validateTaxonomies );
+		document.body.addEventListener( 'tsf-taxonomy-robots-changed', validateTaxonomies );
 
-		const triggerTaxonomyChange = ( taxonomy, robotsType ) => {
-			$window.trigger( 'tsf-taxonomy-robots-changed', [
-				taxonomy,
-				robotsType,
-				robotsPtTaxonomies[ robotsType ]
-			] );
+		const validatePostTypes = event => {
+			validateTaxonomyState( event.detail.robotsType );
 		}
+		document.body.addEventListener( 'tsf-post-type-robots-changed', validatePostTypes );
 
 		/**
 		 * Add exclusions support by removing duplicated warnings.
@@ -989,35 +1873,198 @@ window.tsfSettings = function( $ ) {
 				}
 			}
 		}
-		$window.on( 'tsf-taxonomy-support-changed', ( event, taxonomy ) => toggleWarnings( taxonomy ) );
+		document.body.addEventListener( 'tsf-taxonomy-support-changed', event => toggleWarnings( event.detail.taxonomy ) );
 
 		// This prevents notice-removal checks before they're added.
 		let init = false;
+
 		const checkRobotsPT = event => {
-
-			if ( ! event.target.name ) return;
-
 			// get post type from last [] entry.
-			let postType   = event.target.name.split( /(?:.+\[)(.+?)(?:])/ ).join( '' ),
-				robotsType = event.target.dataset.robots;
+			let postType   = event.target?.name.split( /(?:.+\[)(.+?)(?:])/ ).join( '' ),
+				robotsType = event.target?.dataset.robots;
+
 			if ( event.target.checked ) {
 				robotsPostTypes[ robotsType ].add( postType );
-				$window.trigger( 'tsf-post-type-robots-changed', [ postType, robotsType, robotsPostTypes[ robotsType ] ] );
+				dispatchPosttypeRobotsChangedEvent( postType, robotsType );
 			} else {
 				// No need to filter when it was never registered in the first place.
 				if ( init ) {
 					robotsPostTypes[ robotsType ].delete( postType );
-					$window.trigger( 'tsf-post-type-robots-changed', [ postType, robotsType, robotsPostTypes[ robotsType ] ] );
+					dispatchPosttypeRobotsChangedEvent( postType, robotsType );
 				}
 			}
 		}
-		const changeEvent = new Event( 'change' );
 		document.querySelectorAll( '.tsf-robots-post-types' ).forEach( el => {
 			el.addEventListener( 'change', checkRobotsPT );
-			el.dispatchEvent( changeEvent );
+			_dispatchAtInteractive( el, 'change' );
+		} );
+
+		const checkRobotsSite = event => {
+			let robotsType = event.target?.dataset.robots,
+				checked    = event.target.checked;
+
+			if ( checked ) {
+				dispatchSiteRobotsChangedEvent( checked, robotsType );
+			} else {
+				// Dispatch only when something new is introduced.
+				if ( init ) {
+					dispatchSiteRobotsChangedEvent( checked, robotsType );
+				}
+			}
+		}
+		document.querySelectorAll( '.tsf-robots-site' ).forEach( el => {
+			el.addEventListener( 'change', checkRobotsSite );
+			_dispatchAtInteractive( el, 'change' );
 		} );
 
 		init = true;
+	}
+
+	/**
+	 * Initializes robots Post Type support.
+	 *
+	 * @since 4.2.0
+	 * @access private
+	 */
+	function _initRobotsSupport() {
+
+		/**
+		 * @param {string} postType
+		 * @return {string} The cloned input class used for sending POST data.
+		 */
+		const getCloneClassPT = postType => tsf.escapeString( `tsf-disabled-post-type-input-clone-${postType}` );
+		const postTypeHelpTemplate = wp.template( 'tsf-disabled-post-type-help' )();
+		/**
+		 * @param {string} postType
+		 * @return {array} A list of affected post type settings.
+		 */
+		const getPostTypeRobotsSettings = postType => [
+			document.getElementById( `${ _getSettingsId( 'noindex_post_types' ) }[${postType}]` ),
+			document.getElementById( `${ _getSettingsId( 'nofollow_post_types' ) }[${postType}]` ),
+			document.getElementById( `${ _getSettingsId( 'noarchive_post_types' ) }[${postType}]` ),
+		].filter( el => el );
+		const augmentPTRobots = event => {
+			const { postType, set } = event.detail;
+
+			if ( set.has( postType ) ) {
+				getPostTypeRobotsSettings( postType ).forEach( element => {
+					if ( ! element ) return;
+
+					let clone = element.cloneNode( true );
+					clone.type = 'hidden';
+					// Because the clone is hidden, we must set its value based on the checked state's + value thereof:
+					clone.value = element.checked ? element.value : '';
+					// Note that this might cause inconsistencies when other JS elements try to amend the data via ID.
+					// However, they should use 'getElementsByName', anyway.
+					clone.id += '-cloned';
+					clone.classList.add( getCloneClassPT( postType ) );
+
+					element.disabled                = true;
+					element.dataset.disabledWarning = 1;
+
+					const label = element.closest( 'label' );
+
+					label.insertAdjacentHTML( 'beforeend', postTypeHelpTemplate );
+					label.append( clone );
+				} );
+
+				tsfTT.triggerReset();
+			} else {
+				getPostTypeRobotsSettings( postType ).forEach( element => {
+					if ( ! element ) return;
+					if ( ! element.dataset.disabledWarning ) return;
+
+					// 'tsf-post-type-warning' is defined at `../inc/views/templates/settings/settings.php`
+					element.closest( 'label' ).querySelector( '.tsf-post-type-warning' ).remove();
+
+					document.querySelectorAll( `.${getCloneClassPT( postType )}` ).forEach(
+						clone => { clone.remove() }
+					);
+
+					element.disabled               = false;
+					element.dataset.disabledWarning = '';
+				} );
+			}
+		}
+		document.body.addEventListener( 'tsf-post-type-support-changed', augmentPTRobots );
+
+		const taxonomyHelpTemplate   = wp.template( 'tsf-disabled-taxonomy-help' )();
+		const taxonomyPtHelpTemplate = wp.template( 'tsf-disabled-taxonomy-from-pt-help' )();
+		/**
+		 * @param {string} taxonomy
+		 * @return {string} The cloned input class used for sending POST data.
+		 */
+		const getCloneClassTaxonomy = taxonomy => tsf.escapeString( `tsf-disabled-taxonomy-input-clone-${taxonomy}` );
+		/**
+		 * @param {string} taxonomy
+		 * @return {array} A list of affected post type settings.
+		 */
+		const getTaxonomyRobotsSettings = taxonomy => [
+			document.getElementById( `${ _getSettingsId( 'noindex_taxonomies' ) }[${taxonomy}]` ),
+			document.getElementById( `${ _getSettingsId( 'nofollow_taxonomies' ) }[${taxonomy}]` ),
+			document.getElementById( `${ _getSettingsId( 'noarchive_taxonomies' ) }[${taxonomy}]` ),
+		].filter( el => el );
+		const augmentTaxonomyRobots = event => {
+			const { taxonomy, set, setPt, setAll } = event.detail;
+
+			if ( setAll.has( taxonomy ) ) {
+				getTaxonomyRobotsSettings( taxonomy ).forEach( element => {
+					if ( ! element ) return;
+
+					let clone = element.cloneNode( true );
+					clone.type = 'hidden';
+					// Because the clone is hidden, we must set its value based on the checked state's + value thereof:
+					clone.value = element.checked ? element.value : '';
+					// Note that this might cause inconsistencies when other JS elements try to amend the data via ID.
+					// However, they should use 'getElementsByName', anyway.
+					clone.id += '-cloned';
+					clone.classList.add( getCloneClassTaxonomy( taxonomy ) );
+
+					element.disabled               = true;
+					element.dataset.disabledWarning = 1;
+
+					const label = element.closest( 'label' );
+
+					// 'tsf-taxonomy-warning' is defined at `../inc/views/templates/settings/settings.php`
+					if ( ! label.querySelector( '.tsf-taxonomy-warning' ) )
+						label.insertAdjacentHTML( 'beforeend', taxonomyHelpTemplate );
+
+					if ( ! label.querySelector( getCloneClassTaxonomy( taxonomy ) ) )
+						label.append( clone );
+				} );
+
+				tsfTT.triggerReset();
+			} else {
+				getTaxonomyRobotsSettings( taxonomy ).forEach( element => {
+					if ( ! element ) return;
+					if ( ! element.dataset.disabledWarning ) return;
+
+					// 'tsf-taxonomy-warning' is defined at `../inc/views/templates/settings/settings.php`
+					element.closest( 'label' ).querySelector( '.tsf-taxonomy-warning' )?.remove();
+
+					document.querySelectorAll( `.${getCloneClassTaxonomy( taxonomy )}` ).forEach(
+						clone => { clone.remove() }
+					);
+
+					element.disabled                = false;
+					element.dataset.disabledWarning = '';
+				} );
+			}
+
+			const taxEl = document.getElementById( `${ _getSettingsId( 'disabled_taxonomies' ) }[${taxonomy}]` );
+
+			if ( setPt.has( taxonomy ) ) {
+				// 'tsf-taxonomy-from-pt-warning' is defined at `../inc/views/templates/settings/settings.php`
+				if ( ! taxEl.closest( 'label' ).querySelector( '.tsf-taxonomy-from-pt-warning' ) ) {
+					taxEl.closest( 'label' ).insertAdjacentHTML( 'beforeend', taxonomyPtHelpTemplate );
+					tsfTT.triggerReset();
+				}
+			} else {
+				// 'tsf-taxonomy-from-pt-warning' is defined at `../inc/views/templates/settings/settings.php`
+				taxEl.closest( 'label' ).querySelector( '.tsf-taxonomy-from-pt-warning' )?.remove();
+			}
+		}
+		document.body.addEventListener( 'tsf-taxonomy-support-changed', augmentTaxonomyRobots );
 	}
 
 	/**
@@ -1025,11 +2072,8 @@ window.tsfSettings = function( $ ) {
 	 *
 	 * @since 4.0.0
 	 * @access private
-	 *
-	 * @function
-	 * @return {undefined}
 	 */
-	const _initWebmastersInputs = () => {
+	function _initWebmastersInputs() {
 
 		const webmasterNodes = [
 			"google_verification",
@@ -1042,17 +2086,16 @@ window.tsfSettings = function( $ ) {
 		/**
 		 * @function
 		 * @param {Event} event
-		 * @return {undefined}
 		 */
 		const trimScript = event => {
 			let val = event.clipboardData && event.clipboardData.getData( 'text' ) || '';
 
 			if ( val ) {
 				// Extrude tag paste's content value and set that as a value.
-				let match = /<meta[^>]+content=(\"|\')?([^\"\'>\s]+)\1?.*?>/i.exec( val );
-				if ( match && 2 in match && 'string' === typeof match[2] && match[2].length ) {
+				let match = /<meta\b[^>]+?\bcontent=(["'])?([^"'>\s]+)\1?[^>]*?>/i.exec( val );
+				if ( match?.[2]?.length ) {
 					event.stopPropagation();
-					event.preventDefault(); // Prevents save listener
+					event.preventDefault(); // Prevents save listener.. TODO why?
 					event.target.value = match[2];
 					// Tell change:
 					tsfAys.registerChange();
@@ -1063,57 +2106,104 @@ window.tsfSettings = function( $ ) {
 	}
 
 	/**
-	 * Initializes settings scripts on TSF-load.
+	 * Initializes Sitemap input.
 	 *
-	 * @since 4.0.0
+	 * @since 5.0.5
 	 * @access private
-	 *
-	 * @function
-	 * @return {undefined}
 	 */
-	const _loadSettings = () => {
-		_initGeneralSettings();
-		_initTitleSettings();
+	function _initSitemapInputs() {
 
-		_initHomeTitleSettings();
-		_initHomeDescriptionSettings();
-		_initHomeGeneralListeners();
+		const optimizedSitemapsToggle = document.getElementById( _getSettingsId( 'sitemaps_output' ) ),
+			  cacheSitemapsToggle     = document.getElementById( _getSettingsId( 'cache_sitemap' ) );
+		/**
+		 * @function
+		 * @param {Event} event
+		 */
+		const updateSocialAdditions = event => {
 
-		_initSocialSettings();
+			const sitemapsEnabled = !! event.target.checked;
 
-		_initRobotsInputs();
-		_initWebmastersInputs();
-		_initColorPicker();
+			tsfTabs.toggleTab( 'tsfSettings', 'tsf-sitemaps-tab-style', sitemapsEnabled );
+
+			document.getElementById( 'tsf-sitemap-transient-cache-settings' )
+				?.classList.toggle( 'hidden', ! sitemapsEnabled );
+		}
+		if ( optimizedSitemapsToggle ) {
+			optimizedSitemapsToggle.addEventListener( 'change', updateSocialAdditions );
+			_dispatchAtInteractive( optimizedSitemapsToggle, 'change' );
+		}
+
+		const toggleCheckRegistry = new Map();
+		/**
+		 * Changes the settings visibility and selectability during all option toggles.
+		 * @function
+		 * @param {Event} event
+		 */
+		const checkAllEnabled = event => {
+			const prerenderingSettings = document.getElementById( 'tsf-sitemap-prerendering-settings' );
+
+			toggleCheckRegistry.set( event.target.name, !! event.target.checked );
+
+			for ( const val of toggleCheckRegistry.values() ) {
+				if ( ! val ) {
+					prerenderingSettings?.classList.add( 'hidden', ! toggleCheckRegistry.size );
+					return;
+				}
+			}
+
+			prerenderingSettings?.classList.remove( 'hidden' );
+		}
+		// optimizedSitemapsToggle is a master toggle here -- though, since there's only two... shrug.
+		[ optimizedSitemapsToggle, cacheSitemapsToggle ].forEach( toggle => {
+			if ( toggle ) {
+				toggle.addEventListener( 'change', checkAllEnabled );
+				_dispatchAtInteractive( toggle, 'change' );
+			}
+		} );
 	}
 
 	/**
-	 * Initializes settings scripts on TSF-ready.
+	 * Initializes settings scripts on TSF-load.
 	 *
 	 * @since 4.0.0
-	 * @since 4.1.0 Now registers the refNa title input.
+	 * @since 5.1.0 Added error handling.
 	 * @access private
-	 *
-	 * @function
-	 * @return {undefined}
 	 */
-	const _readySettings = () => {
+	function _loadSettings() {
+		// One is not reliant on the other; this way, if one crashes, the rest still works.
+		[
+			_initSubmit,
 
-		const titleId = _getSettingsId( 'homepage_title' ),
-			  descId  = _getSettingsId( 'homepage_description' );
+			_initGeneralSettings,
 
-		tsfSocial.initTitleInputs( {
-			ref:   document.getElementById( 'tsf-title-reference_' + titleId ),
-			refNa: document.getElementById( 'tsf-title-noadditions-reference_' + titleId ),
-			meta:  document.getElementById( titleId ),
-			og:    document.getElementById( _getSettingsId( 'homepage_og_title' ) ),
-			tw:    document.getElementById( _getSettingsId( 'homepage_twitter_title' ) ),
-		} );
+			_initTitleSettings,
 
-		tsfSocial.initDescriptionInputs( {
-			ref:  document.getElementById( 'tsf-description-reference_' + descId ),
-			meta: document.getElementById( descId ),
-			og:   document.getElementById( _getSettingsId( 'homepage_og_description' ) ),
-			tw:   document.getElementById( _getSettingsId( 'homepage_twitter_description' ) ),
+			_initHomeGeneralListeners,
+			_initHomeTitleSettings,
+			_initHomeDescriptionSettings,
+			_initHomeSocialSettings,
+			_initHomeVisibilitySettings,
+
+			_initPtaSettings,
+
+			_initSocialSettings,
+
+			_initSchemaSettings,
+
+			_initRobotsInputs,
+			_initRobotsSupport,
+
+			_initWebmastersInputs,
+
+			_initSitemapInputs,
+
+			_initColorPicker,
+		].forEach( fn => {
+			try {
+				fn();
+			} catch ( error ) {
+				console.error( `Error in ${fn.name}:`, error );
+			}
 		} );
 	}
 
@@ -1123,22 +2213,18 @@ window.tsfSettings = function( $ ) {
 	 * @since 4.0.0
 	 * @since 4.1.3 Now offloaded to tsfTabs.
 	 * @access private
-	 *
-	 * @function
-	 * @return {(undefined|null)}
 	 */
-	const _initTabs = () => {
+	function _initTabs() {
 		tsfTabs.initStack(
 			'tsfSettings',
 			{
 				tabToggledEvent: new CustomEvent( 'tsf-tab-toggled' ),
 				HTMLClasses:     {
 					wrapper:          'tsf-nav-tab-wrapper',
-					tabRadio:         'tsf-tabs-radio', // bad name
-					tabLabel:         'tsf-nav-tab',
-					activeTab:        'tsf-tab-active',
-					// TODO make this tsf-tab-active-content (force -content affix?)
-					activeTabContent: 'tsf-active-tab-content',
+					tabRadio:         'tsf-nav-tab-radio',
+					tabLabel:         'tsf-nav-tab-label',
+					activeTab:        'tsf-nav-tab-active',
+					activeTabContent: 'tsf-nav-tab-content-active',
 				},
 				fixHistory:      true, // false for flex? Doesn't seem like it was?
 			}
@@ -1155,20 +2241,21 @@ window.tsfSettings = function( $ ) {
 		 * @access protected
 		 *
 		 * @function
-		 * @return {undefined}
 		 */
 		load: () => {
 			// Execute this ASAP, to prevent late layout shifting. Use same anchor as core--so to prevent subsequent movement.
-			$( 'div.updated, div.error, div.notice, .notice-error, .notice-warning, .notice-info' ).insertAfter( '.wp-header-end' );
+			const headerEnd = document.querySelector( '.wp-header-end' );
+			document.querySelectorAll(
+				'div.updated, div.error, div.notice, .notice-error, .notice-warning, .notice-info'
+			).forEach( el => { headerEnd.insertAdjacentElement( 'afterend', el ) } );
 
 			document.body.addEventListener( 'tsf-onload', _loadSettings );
-			document.body.addEventListener( 'tsf-ready', _readySettings );
 
 			// Initializes tabs early; we rely a fallback event that tsf-onload/tsf-ready uses there.
 			_initTabs();
-		}
-	}, {}, {
-		l10n
+		},
+	}, {
+		l10n,
 	} );
 }( jQuery );
 window.tsfSettings.load();

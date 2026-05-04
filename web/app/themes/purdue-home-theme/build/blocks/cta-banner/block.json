@@ -1,0 +1,75 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "purdue/cta-banner",
+  "version": "1.1.01",
+  "title": "CTA Banner",
+  "category": "purdue",
+  "description": "This block adds a CTA banner on the page.",
+  "supports": {
+    "html": false,
+    "inserter": true
+  },
+  "attributes": {
+    "header": {
+      "type": "string",
+      "default": ""
+    },
+    "headerFontSize": {
+      "type": "string",
+      "default": "large"
+    },
+    "backgroundPosition": {
+      "type": "string",
+      "default": "center"
+    },
+    "subheader": {
+      "type": "string",
+      "default": ""
+    },
+    "mediaType": {
+      "type": "string",
+      "default": ""
+    },
+    "mediaURL": {
+      "type": "string",
+      "default": ""
+    },
+    "mediaAlt": {
+      "type": "string",
+      "default": ""
+    },
+    "mediaTitle": {
+      "type": "string",
+      "default": ""
+    },
+    "linkDisplay": {
+      "type": "string",
+      "default": "buttons"
+    },
+    "links": {
+      "type": "array",
+      "default": []
+    },
+    "id": {
+      "type": "string",
+      "default": ""
+    },
+    "fieldId": {
+      "type": "string",
+      "default": ""
+    },
+    "className": {
+      "type": "string",
+      "default": ""
+    },
+    "buttonName": {
+      "type": "string",
+      "default": "Learn More"
+    }
+  },
+  "textdomain": "cta-banner",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "render": "file:./render.php"
+}

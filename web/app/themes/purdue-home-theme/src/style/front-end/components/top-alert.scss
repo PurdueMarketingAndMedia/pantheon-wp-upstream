@@ -1,0 +1,96 @@
+.alert-widget {
+  background: $rush-gold;
+  font-family: $united-sans-condensed;
+  font-weight: 600;
+  line-height: 1.4;
+  font-size: 1.375rem;
+  color: $black;
+  padding: 1rem 3.5rem 1rem $side-padding-desktop;
+  text-align: center;
+  display: none;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  z-index: 1002;
+  position: fixed;
+  letter-spacing: 1.69px;
+  left:0;
+  top:0;
+  right:auto;
+  bottom:auto;
+  width:100%;
+  &.is-active {
+    display: flex;
+  }
+  @include touch {
+    padding: 1rem 3.5rem 1rem $side-padding-tablet;
+    font-size: 1rem;
+  }
+  @include mobile {
+    padding: 1rem 3.5rem 1rem $side-padding-mobile;
+  }
+  p {
+    font-size: 1.375rem;
+    font-family: $united-sans-condensed;
+    font-weight: 900;
+  }
+  a {
+    color: $black;
+    font-family: $acumin-pro;
+    text-decoration: underline;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 1.125rem;
+    margin: 0 1rem;
+    display: inline-block;
+    &:after {
+      content: "";
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3C!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --%3E%3Cpath fill='%23000000' d='M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z'/%3E%3C/svg%3E");
+      right: -0.25rem;
+      top: 2px;
+      margin-left: 0.75rem;
+      height: 1.25rem;
+      width: 1.25rem;
+      background-repeat: no-repeat;
+      background-size: cover;
+      margin-left: 0.75rem;
+      position: relative;
+      font-size: 1.75rem;
+      text-decoration: none;
+      display: inline-block;
+      transition: transform 0.3s ease;
+    }
+    @include mobile {
+      &:after {
+        right: 0;
+      }
+    }
+    &:hover {
+      color: $black;
+      text-decoration: none;
+      &:after {
+        right: -0.5rem;
+      }
+    }
+  }
+  .modal-close {
+    border: 1px solid $black;
+    border-radius: 100%;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.2s ease;
+    color: $black;
+    max-height: 30px;
+    max-width: 30px;
+    &:before,
+    &:after {
+      background-color: $black;
+    }
+    &:hover {
+      background: none;
+    }
+  }
+}

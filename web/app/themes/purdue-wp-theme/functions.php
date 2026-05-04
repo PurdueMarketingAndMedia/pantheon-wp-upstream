@@ -14,7 +14,7 @@ include_once(ABSPATH . 'wp-admin/includes/plugin.php');
 require get_template_directory() . '/inc/navwalker.php';
 require get_template_directory() . '/inc/helpers.php';
 require get_template_directory() . '/inc/function-admin.php';
-
+require get_template_directory() . '/inc/content-filters.php';
 if (!function_exists('purdueBrand_setup')) :
     /**
      * Sets up theme defaults and registers support for various WordPress features.
@@ -62,8 +62,9 @@ function purdue_layout_options($wp_customize){
         'settings'=>'header_layout_settings',
         'label'=>'Header Layout',
         'choices'=>array(
-            'simple'=>_('Simple'),
-            'global'=>_('Global')
+            'simple'=>_('Simple with fully customizable footer'),
+            'global'=>_('Global with fixed first two columns of links on footer'),
+            'global2'=>_('Global with fully customizable footer')
         )
     ));
 
@@ -141,7 +142,7 @@ function purdue_search_options($wp_customize)
         'title'       => __( 'Search Options' ), //Visible title of section
         'priority'    => 55, //Determines what order this appears in
         'capability'  => 'edit_theme_options', //Capability needed to tweak
-        'description' => __('Choose to use Wordpress default search to search within the site or Google Custom Search to search all of Purdue. Please note if you select Google Custom Seach, you will need to create an empty page on your site, name it Search and select the Search template as its template', 'purdue-wp-theme'), //Descriptive tooltip
+        'description' => __('Choose to use Wordpress default search to search within the site or Google Custom Search to search all of Purdue. Please note if you select Google Custom Search, you will need to create an empty page on your site, name it Search and select the Search template as its template', 'purdue-wp-theme'), //Descriptive tooltip
         ) 
     );   
     $wp_customize->add_setting('search_option_settings', array(
@@ -179,7 +180,7 @@ function purdue_contact_options($wp_customize)
     //add new section
     $wp_customize->add_section('contact_information', array(
         'title' => 'Footer Contact Information',
-        'description' => 'Set custom contact information for the site. If fields are left blank they will default to the Purdue University defaults.',
+        'description' => 'Set custom contact information for the site. If the address fields are left blank they will default to the Purdue University default address.',
         'priority' => 1,
         'panel'         => 'contact_details'
     ));
@@ -255,7 +256,7 @@ function purdue_contact_options($wp_customize)
     // Zipcode
     $wp_customize->add_setting( 'zipcode', array(
         'capability' => 'edit_theme_options',
-        'default' => '47906',
+        'default' => '47907',
         'sanitize_callback' => 'sanitize_text_field',
     ) );
         
@@ -297,7 +298,7 @@ function purdue_contact_options($wp_customize)
     //add new section
     $wp_customize->add_section('social_medias', array(
         'title' => 'Footer Social Media Link Options',
-        'description' => 'Set custom Social Media URLs for the site. If fields are left blank they will default to the Purdue University defaults.',
+        'description' => 'Set custom Social Media URLs for the site.',
         'priority' => 33,
         'panel'         => 'contact_details'
     ));
@@ -407,8 +408,9 @@ function purdue_header_radio_select($input, $setting)
 {
     // list of valid choices
     $valid = array(
-        'simple'=>_('Simple'),
-        'global'=>_('Global')
+        'simple'=>_('Simple with fully customizable footer'),
+        'global'=>_('Global with fixed first two columns of links on footer'),
+        'global2'=>_('Global with fully customizable footer')
     );
     // Ensure input is a slug.
     $input = sanitize_key($input);
@@ -502,12 +504,12 @@ function purdueBrand_default_colors()
         array(
             'name' => __('Opaque', 'purdue-wp-theme'),
             'slug' => 'opaque',
-            'color' => 'rgba(0,0,0,0.65',
+            'color' => 'rgba(0,0,0,0.65)',
         ),
         array(
             'name' => __('Transparent', 'purdue-wp-theme'),
             'slug' => 'transparent',
-            'color' => 'rgba(0,0,0,0',
+            'color' => 'rgba(0,0,0,0)',
         )
     ));
 }
@@ -590,6 +592,13 @@ if (is_plugin_active( 'luckywp-acf-menu-field/luckywp-acf-menu-field.php' )) {
                     'value' => 'template-sidenav.php',
                 ),
             ),
+            array(
+                array(
+                    'param' => 'post_template',
+                    'operator' => '==',
+                    'value' => 'template-topnav.php',
+                ),
+            ),
         ),
         'menu_order' => 0,
         'position' => 'side',
@@ -666,13 +675,201 @@ if( function_exists('acf_add_local_field_group') ):
     ));
     
     endif;
+// Make breadcrumb optional on pages with top second nav
+if( function_exists('acf_add_local_field_group') ):
 
+    acf_add_local_field_group(array(
+        'key' => 'group_62e83c171dbf5',
+        'title' => 'Include bread crumb on this page?',
+        'fields' => array(
+            array(
+                'key' => 'field_62e83d8f32a21',
+                'label' => 'Include bread crumb on this page?',
+                'name' => 'include_bread_crumb_on_this_page',
+                'type' => 'checkbox',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'choices' => array(
+                    'Yes' => 'Yes',
+                ),
+                'allow_custom' => 0,
+                'default_value' => array(
+                    0 => 'Yes',
+                ),
+                'layout' => 'vertical',
+                'toggle' => 0,
+                'return_format' => 'value',
+                'save_custom' => 0,
+            ),
+        ),
+        'location' => array(
+            array(
+                array(
+                    'param' => 'post_type',
+                    'operator' => '==',
+                    'value' => 'page',
+                ),
+                array(
+                    'param' => 'page_template',
+                    'operator' => '==',
+                    'value' => 'template-topnav.php',
+                ),
+            ),
+        ),
+        'menu_order' => 0,
+        'position' => 'side',
+        'style' => 'default',
+        'label_placement' => 'top',
+        'instruction_placement' => 'label',
+        'hide_on_screen' => '',
+        'active' => true,
+        'description' => '',
+        'show_in_rest' => 0,
+    ));
+    
+    endif;		
 
+// Make breadcrumb optional on pages with default template
+if( function_exists('acf_add_local_field_group') ):
+
+    acf_add_local_field_group(array(
+        'key' => 'group_641340f3a8918',
+        'title' => 'Breadcrumb setting',
+        'fields' => array(
+            array(
+                'key' => 'field_641340f382cb3',
+                'label' => 'Remove Breadcrumb on this page?',
+                'name' => 'remove_breadcrumb_on_this_page',
+                'aria-label' => '',
+                'type' => 'checkbox',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'choices' => array(
+                    'Yes' => 'Yes',
+                ),
+                'default_value' => array(
+                ),
+                'return_format' => 'value',
+                'allow_custom' => 0,
+                'layout' => 'vertical',
+                'toggle' => 0,
+                'save_custom' => 0,
+            ),
+        ),
+        'location' => array(
+            array(
+                array(
+                    'param' => 'post_type',
+                    'operator' => '==',
+                    'value' => 'page',
+                ),
+                array(
+                    'param' => 'page_template',
+                    'operator' => '==',
+                    'value' => 'default',
+                ),
+            ),
+        ),
+        'menu_order' => 0,
+        'position' => 'side',
+        'style' => 'default',
+        'label_placement' => 'top',
+        'instruction_placement' => 'label',
+        'hide_on_screen' => '',
+        'active' => true,
+        'description' => '',
+        'show_in_rest' => 0,
+    ));
+    
+    endif;		
+
+//Custom CSS and JS acf fields
+add_action( 'acf/include_fields', function() {
+	if ( ! function_exists( 'acf_add_local_field_group' ) ) {
+		return;
+	}
+    acf_add_local_field_group( array(
+		'key' => 'group_650c89da745d9',
+		'title' => 'Custom Styles and Scripts',
+		'fields' => array(
+			array(
+				'key' => 'field_650c89dce9501',
+				'label' => 'Custom Styles',
+				'name' => 'custom_styles',
+				'aria-label' => '',
+				'type' => 'textarea',
+				'instructions' => '',
+				'required' => 0,
+				'conditional_logic' => 0,
+				'wrapper' => array(
+					'width' => '',
+					'class' => '',
+					'id' => '',
+				),
+				'default_value' => '',
+				'maxlength' => '',
+				'rows' => '',
+				'placeholder' => '',
+				'new_lines' => '',
+			),
+			array(
+				'key' => 'field_650c8a464395b',
+				'label' => 'Custom Scripts',
+				'name' => 'custom_scripts',
+				'aria-label' => '',
+				'type' => 'textarea',
+				'instructions' => '',
+				'required' => 0,
+				'conditional_logic' => 0,
+				'wrapper' => array(
+					'width' => '',
+					'class' => '',
+					'id' => '',
+				),
+				'default_value' => '',
+				'maxlength' => '',
+				'placeholder' => '',
+				'prepend' => '',
+				'append' => '',
+			),
+		),
+		'location' => array(
+			array(
+				array(
+					'param' => 'post_type',
+					'operator' => '!=',
+					'value' => 'alert',
+				),
+			),
+		),
+		'menu_order' => 0,
+		'position' => 'normal',
+		'style' => 'default',
+		'label_placement' => 'top',
+		'instruction_placement' => 'label',
+		'hide_on_screen' => '',
+		'active' => true,
+		'description' => '',
+		'show_in_rest' => 0,
+	) );
+} );
 //image in rss feed
 function rss_post_thumbnail($content) {
     global $post;
     if(has_post_thumbnail($post->ID)) {
-    $content = '<figure>' . get_the_post_thumbnail($post->ID) .
+    $content = '<figure>' . get_the_post_thumbnail($post->ID, 'medium') .
     '</figure>' . get_the_content();
     }
     return $content;
@@ -680,3 +877,106 @@ function rss_post_thumbnail($content) {
 add_filter('the_excerpt_rss', 'rss_post_thumbnail');
 add_filter('the_content_feed', 'rss_post_thumbnail');
 
+//Add iframe shortcode compiler
+add_shortcode( 'iframe' , 'mycustom_shortcode_iframe' );
+function mycustom_shortcode_iframe($args, $content) {
+    $keys = array("id", "src", "title", "frameborder", "allow");
+    $arguments = mycustom_extract_shortcode_arguments($args, $keys);
+    return '<iframe ' . $arguments . '></iframe>';
+}
+//Add script shortcode compiler
+add_shortcode( 'custom-script' , 'mycustom_shortcode_script' );
+function mycustom_shortcode_script($args, $content) {
+    $keys = array("defer", "src");
+    $arguments = mycustom_extract_shortcode_arguments($args, $keys);
+    return '<script ' . $arguments . '></script>';
+}
+
+function mycustom_extract_shortcode_arguments($args, $keys) {
+    $result = "";
+    foreach ($keys as $key) {
+        if ($key === "defer"){
+            $result .= $key." ";
+        }elseif (isset($args[$key])) {
+            $result .= $key . '="' . $args[$key] . '" ';
+        }
+    }
+    return $result;
+}
+/*
+ * Find the images in a gallery and return them in a new wrapping <div>  for Square image gallery block
+ *
+ * @param string $block_content The block content about to be appended.
+ * @param array  $block   The full block, including name and attributes.
+ *
+ * @return string
+ */
+function pu_block_wrapper_edit_image_gallery( $block_content, $block ) {
+	if ( isset( $block['attrs']['className'] ) ) {
+		if ( 'core/gallery' === $block['blockName'] && 'purdue-image-gallery' === $block['attrs']['className'] ) {
+			$urls = [];
+            $captions = [];
+            $ids = [];
+            $alts = [];
+			preg_match_all( '/<figure[^>]*>(.*?)<\/figure>/mi', $block_content, $matches, PREG_SET_ORDER, 0 );
+
+			foreach ( $matches as $match ) {
+				preg_match("/\<img.+src\=(?:\"|\')(.+?)(?:\"|\')(?:.+?)\>/", $match[0], $matches1);
+                $urls[]=$matches1[1];
+                preg_match("/<figcaption[^>]*>(.*?)<\/figcaption>/mi", $match[0], $matches2);
+                $captions[]=$matches2[1];
+                preg_match("/\<img[^>]+alt=\"([^>]*)\"[^>]*>/iU", $match[0], $matches4);
+                $alts[]=$matches4[1];
+
+			}
+            $class="is-one-quarter-widescreen";
+            if ( isset( $block['attrs']['columns'] ) ) {
+				if($block['attrs']['columns']<=3){
+                    $class="is-one-third-widescreen";
+                }
+            }
+			$output = "<div class='purdue-image-gallery purdue-image-gallery-core'>
+            <div class='container'>
+            <div class='columns is-multiline'>";
+            for($i=0; $i<sizeof($urls); $i++){
+                $output.= "<div class='column is-half-tablet is-full-mobile is-one-third-desktop ".$class."'>";
+                $imageClass="image-gallery-open";
+                if($captions[$i] =="" ){
+                    $imageClass.=" image-no-caption";
+                }
+                $output.= "<div class='".$imageClass."'>";
+                $output.= "<div class='image is-square' role='image' data-src='".$urls[$i]."' aria-label='".$alts[$i]."'></div>";
+                if($captions[$i] !="" ){
+                $output.='<button class="image-modal-button" aria-label="More information">
+                <i class="fas fa-plus" aria-hidden="true"></i></button>';
+                }
+                $output.= "</div>";
+                if($captions[$i] !="" ){
+                $output.='<div class="image-modal-content">
+                <div class="image-modal-close"><p>'.$captions[$i].'</p></div>
+                <button class="image-modal-button" aria-label="close">
+                <i class="fas fa-minus" aria-hidden="true"></i></button>
+                </div>';}
+                $output.= "</div>";
+            }
+            $output.= "</div></div></div>";
+			return $output;
+		}
+	}
+	return $block_content;
+}
+add_filter( 'render_block', 'pu_block_wrapper_edit_image_gallery', 10, 2 );
+
+/*
+* Disable loading of separate core block assets (for performance optimization)
+* Fixes conflict with WordPress 6.9
+* https://make.wordpress.org/core/2025/11/18/wordpress-6-9-frontend-performance-field-guide/#load-block-styles-on-demand-in-classic-themes
+*/
+
+add_action(
+	'after_setup_theme',
+	function () {
+		// Only do this if absolutely necessary!
+		add_filter( 'should_load_separate_core_block_assets', '__return_false' );
+	}
+);
