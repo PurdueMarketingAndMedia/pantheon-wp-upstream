@@ -44,8 +44,11 @@ if ($attributes['paddingBottom']) {
                         <p class="purdue-home-instagram-feed__text"><?= $attributes['text']; ?></p>
                     <?php endif; ?>
                     
-                    <?php if ($attributes['buttonLinks'] && sizeof($attributes['buttonLinks']) > 0 && $attributes['buttonLinks'][0]['linkURL']): ?>
-                    <ul class="purdue-home-button-list">
+                    <?php if ($attributes['buttonLinks'] && sizeof($attributes['buttonLinks']) > 0 && $attributes['buttonLinks'][0]['linkURL']): 
+                        $buttonList = sizeof($attributes['buttonLinks']) > 1 ? "ul" : "div";
+                        $buttonWrapper = sizeof($attributes['buttonLinks']) > 1 ? "li" : "div";
+                    ?>
+                    <<?= $buttonList ?> class="purdue-home-button-list">
                         <?php foreach ($attributes['buttonLinks'] as $key => $link): ?>
                         <?php
                         $target = $link["external"] ? 'target="_blank"' : 'target="_self"';
@@ -57,20 +60,22 @@ if ($attributes['paddingBottom']) {
                         }
                         $liClass = $link["fullWidth"] ? "purdue-home-button-wrap--full" : "";
                         ?>
-                        <li class="<?= $liClass; ?>">
+                        <<?= $buttonWrapper ?> class="<?= $liClass; ?>">
                             <a class="<?= $buttonClass; ?>" href="<?= $link["linkURL"]; ?>" <?= $target; ?>>
                                 <?= trim($link["linkText"]); ?>
                             </a>
-                        </li>
+                        </<?= $buttonWrapper ?>>
                         <?php endforeach; ?>
-                    </ul>
+                    </<?= $buttonList ?>>
                     <?php endif; ?>
-                    <?php if ($attributes['links'] && sizeof($attributes['links']) > 0 && $attributes['links'][0]["linkURL"] !== ""): ?>
+                    <?php if ($attributes['links'] && sizeof($attributes['links']) > 0 && $attributes['links'][0]["linkURL"] !== ""): 
+                        $buttonList = sizeof($attributes['links']) > 1 ? "ul" : "div";
+                        $buttonWrapper = sizeof($attributes['links']) > 1 ? "li" : "div";?>
                     <div class="purdue-home-instagram-feed__list-container mobile-hidden">
-                        <ul class="purdue-home-instagram-feed__list">
+                        <<?= $buttonList ?> class="purdue-home-instagram-feed__list">
                             <?php foreach ($attributes['links'] as $key => $link): ?>
                             <?php $target = $link["external"] ? 'target="_blank"' : 'target="_self"'; ?>
-                            <li>
+                            <<?= $buttonWrapper ?>>
                                 <a title="<?= $link["linkText"]; ?>" href="<?= $link["linkURL"]; ?>" <?= $target; ?>>
                                     <span class="screen-reader-text"><?= $link["linkText"]; ?></span>
                                     <?php if(strtolower($link["linkText"]) == "twitter"){ ?>
@@ -111,9 +116,9 @@ if ($attributes['paddingBottom']) {
                                     </svg>
                                     <?php } ?>
                                 </a>
-                            </li>
+                            </<?= $buttonWrapper ?>>
                             <?php endforeach; ?>
-                        </ul>
+                        </<?= $buttonList ?>>
                     </div>
                     <?php endif; ?>
 
@@ -147,7 +152,7 @@ if ($attributes['paddingBottom']) {
                             </div>
                         </div>
                         <div class="slider-controls slider-controls--dark">
-                            <button class="glide__arrow arrow--left">prev</button>
+                            <button class="glide__arrow arrow--left">previous</button>
                             <div class="glide__bullets" data-glide-el="controls[nav]">
                                 <?php foreach ($attributes['imgs'] as $key => $card): ?>
                                 <?php $num = $key + 1; ?>
@@ -208,7 +213,7 @@ if ($attributes['paddingBottom']) {
                                     <figure role="button" class="image is-1by1">
                                         <img src="<?= $src; ?>" alt="<?= $item["caption"]; ?>" />
                                         <div class="trigger-button-container">
-                                            <button class="purdue-home-button--black modal-trigger"
+                                            <button class="purdue-home-button purdue-home-button--black modal-trigger"
                                                 data-target="feed-modal-<?= $key; ?>">View More</button>
                                         </div>
                                     </figure>
@@ -218,7 +223,7 @@ if ($attributes['paddingBottom']) {
                             </div>
                         </div>
                         <div class="slider-controls slider-controls--dark">
-                            <button class="glide__arrow arrow--left">prev</button>
+                            <button class="glide__arrow arrow--left">previous</button>
                             <div class="glide__bullets" data-glide-el="controls[nav]">
                                 <?php foreach ($attributes['items'] as $key => $item): ?>
                                 <?php if ($key < 6): ?>
@@ -293,9 +298,9 @@ if ($attributes['paddingBottom']) {
 <?php if ($attributes['type'] == "facebook" && $attributes['items'] != ""): ?>
 <?php foreach ($attributes['items'] as $key => $item): ?>
 <?php if ($key < 6): ?>
-<div id="feed-modal-<?= $key; ?>" class="instagram-feed-modal modal">
+<dialog id="feed-modal-<?= $key; ?>" class="instagram-feed-modal dialog modal">
     <div class="modal-background"></div>
-    <div class="modal-close" aria-label="close"></div>
+    <button  class="modal-close" aria-label="Close <?php echo $iframe; ?> dialog"></button>
     <div class="modal-content">
         <?php if ($item["media_type"] == "VIDEO"): ?>
         <div class="iframe-container-feed">
@@ -324,7 +329,7 @@ if ($attributes['paddingBottom']) {
         </div>
         <?php endif; ?>
     </div>
-</div>
+            </dialog>
 <?php endif; ?>
 <?php endforeach; ?>
 <?php endif; ?>

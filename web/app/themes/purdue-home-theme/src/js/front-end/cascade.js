@@ -1,6 +1,5 @@
 //import 'core-js/stable'
 import "./accordion.js";
-import "./skip-link-focus-fix.js";
 import "./hideAjaxLoadMoreButton.js";
 import "./to-top.js";
 import "./currentPage.js";

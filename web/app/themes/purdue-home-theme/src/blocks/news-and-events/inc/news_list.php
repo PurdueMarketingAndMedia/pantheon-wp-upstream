@@ -1,13 +1,37 @@
 <?php
 $target = $card["external"] ? 'target="_blank"' : 'target="_self"';
-if($card["postType"] && $card["postType"] == "rkv_podcast"){
-    $card["postType"] = "podcast";
-}elseif($card["postType"] && $card["postType"] == "post"){
-$card["postType"] = "article";
-}elseif($card["postType"] && ($card["postType"] == "video" || $card["postType"] == "rkv_video")){
-$card["postType"] = "video";
+
+if(isset($card["postType"] ) && $card["postType"]!==""){
+   if($card["postType"] == "rkv_podcast"){
+        $card["postType"] = "podcast";
+    }elseif($card["postType"] == "post"){
+        $card["postType"] = "article";
+    }elseif($card["postType"] == "video" || $card["postType"] == "rkv_video"){
+        $card["postType"] = "video";
+    }else{
+        $card["postType"] = $card["postType"];
+    }
+}else{
+    $card["postType"] = "article";
 }
+
+$slide['postType'] = $card['postType'];
+$articleHeading;
+
+ if($attributes['type']==="60-40"){
+       if($attributes['heading'] && $attributes["listHeading"]){
+        $articleHeading = 'h4';
+       }else if($attributes['heading'] || $attributes["listHeading"]){
+        $articleHeading = 'h3';
+       }else{
+        $articleHeading = 'h2';
+       }  
+    }else{
+        $articleHeading = $attributes['heading'] ? 'h3' : 'h2';
+    }
+
 if($attributes['type'] === "50-50-post"):
+    
 ?>
 <div class="<?= $cardClass; ?> <?= 'post-type-'.strtolower(str_replace(' ', '-', $card["postType"])) ?>  is-50-50">
     <div class="flex-container flex-container--align-center">
@@ -32,7 +56,7 @@ if($attributes['type'] === "50-50-post"):
             </div>
             <?php endif; ?>
             <a class="column" href="<?= $card["linkURL"]; ?>" <?= $target; ?>>
-                <p class="purdue-home-news-events__title"><?= $card["title"]; ?></p>
+                <<?= $articleHeading ?> class="purdue-home-news-events__title"><?= $card["title"]; ?></<?= $articleHeading ?>>
                 <?php if($attributes["showTag"] || $attributes["showPostType"]){?>
                 <p class="purdue-home-news-events__date">
                     <?= $attributes["showPostType"] && $card["postType"] ? '<span class="purdue-posttype-tag">'.$card["postType"].'</span>' : "";?>
@@ -70,7 +94,8 @@ if($attributes['type'] === "50-50-post"):
                 <?php if($attributes["showTag"]&&$card["tag"]){?>
                 <p class="purdue-home-news-events__tag"><?= $card["tag"]; ?></p>
                 <?php } ?>
-                <p class="purdue-home-news-events__title"><?= $card["title"]; ?></p>
+
+                <<?= $articleHeading ?> class="purdue-home-news-events__title"><?= $card["title"]; ?></<?= $articleHeading ?>>
                 <?php if($attributes["showDate"]){?>
                 <p class="purdue-home-news-events__date">
                     <?php
@@ -101,7 +126,8 @@ if($attributes['type'] === "50-50-post"):
         <?php if($attributes["showTag"]&&$card["tag"]){?>
         <p class="purdue-home-news-events__tag"><?= $card["tag"]; ?></p>
         <?php } ?>
-        <p class="purdue-home-news-events__title"><?= $card["title"]; ?></p>
+
+        <<?= $articleHeading ?> class="purdue-home-news-events__title"><?= $card["title"]; ?></<?= $articleHeading ?>>
         <?php if($attributes["showDate"]){?>
         <p class="purdue-home-news-events__date">
             <?php

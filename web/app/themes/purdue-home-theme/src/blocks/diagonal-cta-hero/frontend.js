@@ -1,32 +1,30 @@
-const diagonalHeroes = document.querySelectorAll(".purdue-home-diagonal-hero");
+import { flipBtnState } from '../../utils/flipBtnState.js';
+const diagonalHeroes = document.querySelectorAll(".purdue-home-diagonal-cta-hero");
 if (diagonalHeroes && diagonalHeroes.length > 0) {
   diagonalHeroes.forEach((diagonalHeroe) => {
-    const pauseButton = diagonalHeroe.querySelector(".cta-pause");
-    const playButton = diagonalHeroe.querySelector(".cta-play");
+    const btn = diagonalHeroe.querySelector('.cta-btnctrl');
     const video = diagonalHeroe.querySelector("video");
-    if (pauseButton) {
-      pauseButton.addEventListener("click", () => {
-        video.pause();
-        pauseButton.classList.remove("is-active");
-        playButton.classList.add("is-active");
-      });
-    }
-    if (playButton) {
-      playButton.addEventListener("click", () => {
+
+    btn.addEventListener("click", () => {
+      if (btn.classList.contains('cta-play')) {
         video.play();
-        playButton.classList.remove("is-active");
-        pauseButton ? pauseButton.classList.add("is-active") : "";
-      });
-    }
+      } else {
+        video.pause();
+      }
+      flipBtnState(btn);
+    });
+
     if (video && video.classList.contains("no-loop")) {
       video.addEventListener("ended", (event) => {
-        playButton.classList.add("is-active");
+        flipBtnState(btn, false);
       });
     }
     if(video && (video.paused || video.ended) && !video.classList.contains("no-loop")){
-      pauseButton ? pauseButton.classList.remove("is-active") : "";
-      video.addEventListener("play", ()=>{
-        pauseButton ? pauseButton.classList.add("is-active") : "";
+      video.addEventListener("play", ()=>{        console
+        flipBtnState(btn, true);
+      });
+      video.addEventListener("pause", ()=>{        console
+        flipBtnState(btn, false);
       });
     }
   });

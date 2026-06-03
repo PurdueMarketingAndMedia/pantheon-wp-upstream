@@ -14,6 +14,7 @@ import './editor.scss';
 import {normalizeUuid} from "../../utils/normalizeUuid";
 import { useEffect } from "react";
 import {isBlockIdReserved} from "../../js/back-end/blocks";
+import LinkPanelControl from "../../components/linkcomponent";
 
 const edit = ( props )=>{
   const { className, setAttributes } = props;
@@ -263,6 +264,8 @@ const initialLink ={
   buttonColor: 'gold',
   fullWidth: false,
   external:false,
+  buttonCSS:'',
+  ariaLabel:''
 }
 	useEffect(() => {
 		let obj;
@@ -329,36 +332,41 @@ const handleExternalChange = (id)=>{
 	);
 	setAttributes({ links: newLinks });
 }
+
+const handleAiraLabelChange = (label, id) => {
+		const newLinks = links.map((item) =>
+			item.id === id ? {
+				...item,
+				ariaLabel: label
+			} : item
+		);
+		setAttributes({ links: newLinks });
+	}
+
+
+	const handleButtonCSSChange = (css, id) => {
+		const newLinks = links.map((item) =>
+			item.id === id ? {
+				...item,
+				buttonCSS: css
+			} : item
+		);
+		setAttributes({ links: newLinks });
+}
+
+
 let linksEditorFields;
 linksEditorFields = links.map((item, index) => {   
 return (
   <PanelBody initialOpen={false} key={item.id} title={item.linkText?item.linkText:`link ${index+1}`}>
-    <PanelRow>
-      <TextControl
-        label="Link Text"
-        value={ item.linkText }
-        onChange={ ( val ) => handleLinkTextChange( val, item.id ) }
+     <LinkPanelControl
+        item={item}
+        onLinkTextChange={(val) => handleLinkTextChange(val, item.id)}
+        onLinkURLChange={(val) => handleLinkURLChange(val, item.id)}
+        onExternalChange={() => handleExternalChange(item.id)}
+        onAiraLabelChange={(val) => handleAiraLabelChange(val, item.id)}
+        onButtonCSSChange={(css) => handleButtonCSSChange(css, item.id)}
       />
-    </PanelRow>
-    <PanelRow>
-      <TextControl
-        label={'Link URL'}
-        type="url"
-        onChange={(val) => {
-          handleLinkURLChange(val, item.id);
-        }}
-        value={item.linkURL}
-      />
-    </PanelRow>
-    <PanelRow>
-      <CheckboxControl
-        label="Open link in new tab?"
-        checked={item.external}
-        onChange={() => {
-          handleExternalChange(item.id);
-        }}
-      />
-    </PanelRow>
     <PanelRow>
         <SelectControl
           label="Choose a button color"

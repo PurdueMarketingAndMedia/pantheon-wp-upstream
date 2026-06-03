@@ -1,4 +1,4 @@
-import {CustomActiveClass, check_resize} from '../../../src/js/front-end/slider';
+import {CustomActiveClass, check_resize, changeFocusOnSlideChange} from '../../../src/js/front-end/slider';
 import Glide from '@glidejs/glide';
 
 document.addEventListener("DOMContentLoaded",function(){
@@ -9,9 +9,9 @@ document.addEventListener("DOMContentLoaded",function(){
 			const cards=news_sliders[i].querySelectorAll('.purdue-home-cta-card')
 			if(cards.length>1){
 				let glide = new Glide(news_sliders[i], {
-					type: 'carousel',
-					perView: 1,
-				
+						type: 'carousel',
+						perView: 1,
+						keyboard: false,
 					});
 					const nextButton = news_sliders[i].querySelector('.arrow--left');
 					const prevButton = news_sliders[i].querySelector('.arrow--right');
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded",function(){
 					glide.on('resize', () => {
 						check_resize(glide);
 					});
-					glide.mount({CustomActiveClass,});
+					glide.mount({CustomActiveClass, changeFocusOnSlideChange});
 					check_resize(glide);
 			}
 		}

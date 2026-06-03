@@ -73,7 +73,7 @@ ul.wp-block-list {
 	}
 }
 
-ul.purdue-home-button-list {
+.purdue-home-button-list {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -84,6 +84,7 @@ ul.purdue-home-button-list {
 	flex-wrap: wrap;
 	list-style-type: none;
 	li {
+		list-style: none;
 		padding-right: 0.5rem;
 		padding-bottom: 0.5rem;
 		@media (max-width: 500px) {

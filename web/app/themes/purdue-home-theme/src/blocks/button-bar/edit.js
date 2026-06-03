@@ -35,7 +35,8 @@ const edit = ( props )=>{
     external:false,
     buttonColor: 'gold',
     fullWidth: false,
-    buttonCSS:''
+    buttonCSS:'',
+    ariaLabel:''
   }
 	useEffect(() => {
 		let obj;
@@ -120,6 +121,17 @@ const edit = ( props )=>{
 	  );
 	  setAttributes({ links: newLinks });
   }
+
+
+   const handleAriaLabelChange = (label, id) => {
+	  const newLinks = links.map((item) =>
+		  item.id === id ? {
+			  ...item,
+			  ariaLabel: label
+		  } : item
+	  );
+	  setAttributes({ links: newLinks });	  
+  }
   
 let editorFields;
 editorFields = links.map((item, index) => {   
@@ -149,6 +161,17 @@ editorFields = links.map((item, index) => {
             handleLinkURLChange(val, item.id);
           }}
           value={item.linkURL}
+        />
+      </PanelRow>
+       <PanelRow>
+        <TextControl
+          label={"ARIA Label for Link"}
+          onChange={(val) => {
+            handleAriaLabelChange(val, item.id);
+          }}
+          value={item.ariaLabel}
+          help={`Provide an accessible label for the link. Defaults to the ${type==="complex"?"Title":"Button Text"} if left empty.`}
+
         />
       </PanelRow>
       {

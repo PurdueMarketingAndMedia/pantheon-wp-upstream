@@ -4,7 +4,7 @@
 
 
 .purdue-home-button-bar{
-    ul {
+    ul, div {
         list-style: none !important;
         margin:0 !important;
         padding:0 !important;
@@ -20,7 +20,7 @@
         }
     &.has-gold-background{
         background:$boiler-gold;
-        ul{
+        ul, div{
             li:not(:last-child){
                 border-color:$aged-gold;
             }
@@ -28,13 +28,13 @@
     }
     &.has-gray-background{
         background:$steam-gray;
-        ul{
+        ul, div{
             li:not(:last-child){
                 border-color:$cool-gray;
             }
         }
     }
-    ul {
+    ul, div {
         display:flex;
         list-style-type: none;
         padding:0;
@@ -42,7 +42,7 @@
         @include touch{
             display:block;
         }
-        li{
+        li, div{
             padding:0;
             flex:1 1 0;
             width:0;
@@ -62,6 +62,7 @@
         display:block;
         padding:2.5rem 5rem 5rem 1.75rem;
         height:100%;
+        width: 100%;
         position:relative;
         text-decoration: none;
         &:after{
@@ -121,7 +122,7 @@
         }
     }
     &.purdue-home-buttons--left{
-        ul.purdue-home-button-list {
+        .purdue-home-button-list {
             justify-content: left;
         }
     }
@@ -133,7 +134,7 @@
             padding-left:0;
         }
         &.purdue-home-buttons--left{
-            ul.purdue-home-button-list {
+            .purdue-home-button-list {
                 justify-content: left;
             }
         }

@@ -3,205 +3,249 @@
 @import '../../../node_modules/bulma/sass/utilities/mixins.sass';
 
 :root {
-    --animationSpeed1: 40;
-    --animationSpeed2: 40;
-    --translate1: calc(-284px * 8);
-    --translate2: calc(-284px * 8);
-    --translateStart: 0;
+  --animationSpeed1: 40;
+  --animationSpeed2: 40;
+  --translate1: calc(-284px * 8);
+  --translate2: calc(-284px * 8);
+  --translateStart: 0;
+}
+
+// Animation
+@keyframes scroll1 {
+  0% {
+    transform: translateX(var(--translateStart));
   }
-  // Animation
-  @keyframes scroll1 {
-    0% {
-      transform: translateX(var(--translateStart));
-    }
-    100% {
-      transform: translateX(var(--translate1));
+
+  100% {
+    transform: translateX(var(--translate1));
+  }
+}
+
+@keyframes scroll2 {
+  0% {
+    transform: translateX(var(--translateStart));
+  }
+
+  100% {
+    transform: translateX(var(--translate2));
+  }
+}
+
+@keyframes bounce {
+
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+
+  40% {
+    transform: translateY(-15px);
+  }
+
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+.continuous-moving-slider {
+  background: none;
+  margin: auto;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding-bottom: 0.75rem;
+
+  .slide-track {
+    animation: scroll1 calc(var(--animationSpeed1) * 1s) linear infinite;
+    display: flex;
+    width: auto;
+
+    @include mobile {
+      animation: none;
     }
   }
-  @keyframes scroll2 {
-    0% {
-      transform: translateX(var(--translateStart));
-    }
-    100% {
-      transform: translateX(var(--translate2));
-    }
-  }
-  @keyframes bounce {
-    0%,
-    20%,
-    50%,
-    80%,
-    100% {
-      transform: translateY(0);
-    }
-    40% {
-      transform: translateY(-15px);
-    }
-    60% {
-      transform: translateY(-5px);
-    }
-  }
-  .continuous-moving-slider {
-    background: none;
-    margin: auto;
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    padding-bottom: 0.75rem;
-  
+
+  &.row-2 {
     .slide-track {
-      animation: scroll1 calc(var(--animationSpeed1) * 1s) linear infinite;
-      display: flex;
-      width: auto;
+      position: relative;
+      animation: scroll2 calc(var(--animationSpeed2) * 1s) linear infinite;
+      left: -138px;
+
       @include mobile {
+        left: -69px;
         animation: none;
       }
     }
-    &.row-2 {
-      .slide-track {
-        position: relative;
-        animation: scroll2 calc(var(--animationSpeed2) * 1s) linear infinite;
-        left: -138px;
-        @include mobile {
-          left: -69px;
-          animation: none;
-        }
-      }
-    }
-    .slide {
+  }
+
+  .slide {
+    height: 153px;
+    width: 276px;
+    border-radius: 2px;
+    box-shadow: 2px 4px 5px -1px rgba(0, 0, 0, 0.3);
+    flex: 0 0 auto;
+    position: relative;
+    margin: 0 0.25rem;
+
+    @include mobile {
       height: 153px;
-      width: 276px;
-      border-radius: 2px;
-      box-shadow: 2px 4px 5px -1px rgba(0, 0, 0, 0.3);
-      flex: 0 0 auto;
-      position: relative;
-      margin: 0 0.25rem;
-      @include mobile {
-        height: 153px;
-        width: calc(33.3% - 2.67px);
-        height: calc(18.73vw - 1.5px);
-        margin: 0 0.125rem;
-      }
-      & > * {
-        max-width: 100%;
-        object-fit: cover;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        min-height: 0;
-        object-position: center;
-      }
+      width: calc(33.3% - 2.67px);
+      height: calc(18.73vw - 1.5px);
+      margin: 0 0.125rem;
     }
-  }
-  .purdue-home-canopy-hero {
-    @include widescreen {
-      @media (min-height: 900px) {
-        height: calc(100vh - 91px);
-        max-height: 900px;
-      }
-    }
-    &__canopy {
-      position: relative;
-    }
-    .section {
-      @include mobile {
-        padding-top: 2rem;
-        padding-bottom: 2rem;
-      }
-    }
-    h1 {
-      font-size: 8.75rem;
-      line-height: 0.9;
-      text-align: center;
-      font-weight: 700;
-      font-family: $united-sans-condensed;
-      text-transform: uppercase;
-      @include until-fullhd {
-        font-size: 8rem;
-      }
-      @include until-widescreen {
-        font-size: 6.5rem;
-        max-width: 850px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-      @include touch {
-        font-size: 5rem;
-        max-width: 600px;
-      }
-      @include mobile {
-        font-size: 3.5rem;
-        margin-bottom: 2rem;
-      }
-    }
-    &__links {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      color: $steel-gray;
-      flex-wrap: wrap;
-      span {
-        text-transform: uppercase;
-        font-family: $united-sans-condensed;
-        font-weight: 900;
-        letter-spacing: 1.75px;
-        font-size: 1rem;
-        padding-bottom: 0.5rem;
-      }
-      ul {
-        @include mobile {
-          padding-left: 0;
-        }
-      }
-    }
-    .hero-down-arrow {
-      display: flex;
-      justify-content: center;
-      & > * {
-        position: relative;
-        color: $aged-gold;
-        margin-top: 3rem;
-        font-size: 2rem;
-        cursor: pointer;
-        animation: bounce 2s infinite;
-        &:hover {
-          opacity: 0.9;
-          animation: none;
-        }
-        @media (max-width: 1199px) {
-          width: 35px;
-        }
-        @media (max-width: 767px) {
-          margin-top: 1.75rem;
-        }
-      }
-    }
-    .cta-play,
-    .cta-pause {
-      display: none;
-      color: $aged-gold;
-      font-size: 2rem;
+
+    &>* {
+      max-width: 100%;
+      object-fit: cover;
       position: absolute;
-      bottom: -2rem;
-      right: 1rem;
-      z-index: 2;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0;
-      line-height: 1;
-      &.is-active {
-        display: block;
-        width: 32px;
-        height: 32px;
-        @include mobile {
-          display: none;
-        }
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      min-height: 0;
+      object-position: center;
+    }
+  }
+}
+
+.purdue-home-canopy-hero {
+  @include widescreen {
+    @media (min-height: 900px) {
+      height: calc(100vh - 91px);
+      max-height: 900px;
+    }
+  }
+
+  &__canopy {
+    position: relative;
+  }
+
+  .section {
+    @include mobile {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+  }
+
+  h1 {
+    font-size: 8.75rem;
+    line-height: 0.9;
+    text-align: center;
+    font-weight: 700;
+    font-family: $united-sans-condensed;
+    text-transform: uppercase;
+
+    @include until-fullhd {
+      font-size: 8rem;
+    }
+
+    @include until-widescreen {
+      font-size: 6.5rem;
+      max-width: 850px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @include touch {
+      font-size: 5rem;
+      max-width: 600px;
+    }
+
+    @include mobile {
+      font-size: 3.5rem;
+      margin-bottom: 2rem;
+    }
+  }
+
+  &__links {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: $steel-gray;
+    flex-wrap: wrap;
+
+    span {
+      text-transform: uppercase;
+      font-family: $united-sans-condensed;
+      font-weight: 900;
+      letter-spacing: 1.75px;
+      font-size: 1rem;
+      padding-bottom: 0.5rem;
+    }
+
+    ul {
+      @include mobile {
+        padding-left: 0;
       }
     }
   }
-  
-  
+
+  .hero-down-arrow {
+    display: flex;
+    justify-content: center;
+
+    &>* {
+      position: relative;
+      color: $aged-gold;
+      margin-top: 3rem;
+      font-size: 2rem;
+      cursor: pointer;
+      animation-name: bounce;
+      animation-duration: 2s;
+      animation-iteration-count: 2;
+      animation-fill-mode: forwards;
+
+      &:hover,
+      &:focus {
+        opacity: 0.9;
+        animation: none;
+      }
+
+      @media (max-width: 1199px) {
+        width: 35px;
+      }
+
+      @media (max-width: 767px) {
+        margin-top: 1.75rem;
+      }
+    }
+  }
+
+  /* Pause animation when reduced-motion is set */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-down-arrow {
+      animation-play-state: paused !important;
+    }
+  }
+
+
+  .cta-play,
+  .cta-pause {
+    //display: none;
+    color: $aged-gold;
+    font-size: 2rem;
+    position: absolute;
+    bottom: -2rem;
+    right: 1rem;
+    z-index: 2;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+
+    &.is-active {
+      display: block;
+      width: 32px;
+      height: 32px;
+
+      @include mobile {
+        display: none;
+      }
+    }
+  }
+}

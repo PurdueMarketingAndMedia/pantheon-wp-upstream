@@ -13,6 +13,8 @@ import { InspectorControls, MediaUploadCheck, MediaUpload, useBlockProps } from 
 import { ReactSortable } from 'react-sortablejs';
 import {useEffect} from "react";
 import {normalizeUuid} from "../../utils/normalizeUuid";
+import { button } from "@wordpress/icons";
+import LinkPanelControl from "../../components/linkcomponent";
 const BLOCKS_TEMPLATE = [
   [ 'core/paragraph', { placeholder: 'Body content copy' } ],
 ];
@@ -36,6 +38,8 @@ const edit = ( props )=>{
       linkText:'',
       linkURL:'',
       external:true,
+      ariaLabel:'',
+      buttonCSS:''
     }
 
 	const makeCard = () => ({
@@ -117,6 +121,28 @@ const edit = ( props )=>{
 		);
 		setAttributes({ cards: newCards });
     }
+
+    const handleAiraLabelChange = (label, id) => {
+		const newCards = cards.map((item) =>
+			item.id === id ? {
+				...item,
+				ariaLabel: label
+			} : item
+		);
+		setAttributes({ cards: newCards });
+	}
+
+
+	const handleButtonCSSChange = (css, id) => {
+		const newCards = cards.map((item) =>
+			item.id === id ? {
+				...item,
+				buttonCSS: css
+			} : item
+		);
+		setAttributes({ cards: newCards });
+	}
+
   let editorFields;
 
   editorFields = cards.map((item, index) => {
@@ -162,32 +188,14 @@ const edit = ( props )=>{
             onChange={ ( val ) => handleSubtextChange( val, item.id ) }
           />
         </PanelRow>
-        <PanelRow>
-          <TextControl
-            label="Link Text"
-            value={ item.linkText }
-            onChange={ ( val ) => handleLinkTextChange( val, item.id ) }
-          />
-        </PanelRow>
-        <PanelRow>
-          <TextControl
-            label={'Link URL'}
-            type="url"
-            onChange={(val) => {
-              handleLinkURLChange(val, item.id);
-            }}
-            value={item.linkURL}
-          />
-        </PanelRow>
-        <PanelRow>
-          <CheckboxControl
-            label="Open link in new tab?"
-            checked={item.external}
-            onChange={() => {
-              handleExternalChange(item.id);
-            }}
-          />
-        </PanelRow>
+        <LinkPanelControl
+        item={item}
+        onLinkTextChange={(val) => handleLinkTextChange(val, item.id)}
+        onLinkURLChange={(val) => handleLinkURLChange(val, item.id)}
+        onExternalChange={() => handleExternalChange(item.id)}
+        onAiraLabelChange={(val) => handleAiraLabelChange(val, item.id)}
+        onButtonCSSChange={(css) => handleButtonCSSChange(css, item.id)}
+      />
         <Button
           style={{ marginTop: '5px' }}
           isSecondary

@@ -48,7 +48,7 @@ $id = $attributes['id'] != "" ? ' id="' . $attributes['id'] . '"' : "";
                     <div class="column">
                         <?php
                         if ($attributes['header'] != "") {
-                            if($attributes['subheader'] != "" || $attributes['headerType'] == "acumin"){
+                            if($attributes['subheader'] != "" && $attributes['headerType'] == "acumin"){
                                 if($attributes['headerLevel']=="h2"){
                                     echo '<h3 class="' . $headerclass . '">' . $attributes['header'] . '</h3>';
 
@@ -67,6 +67,8 @@ $id = $attributes['id'] != "" ? ' id="' . $attributes['id'] . '"' : "";
                                 }
                             }elseif($attributes['subheader'] == "" && $attributes['headerType'] == "united"){
                                 echo '<' . $attributes['headerLevel'] . ' class="' . $headerclass . '">' . $attributes['header'] . '</' . $attributes['headerLevel'] . '>';
+                            }else{
+                                echo '<' . $attributes['headerLevel'] . ' class="' . $headerclass . '">' . $attributes['header'] . '</' . $attributes['headerLevel'] . '>';
                             }
                         }
                         ?>
@@ -77,7 +79,7 @@ $id = $attributes['id'] != "" ? ' id="' . $attributes['id'] . '"' : "";
                 </div>
             <?php } else {
                         if ($attributes['header'] != "" || $attributes['headerType'] == "acumin") {
-                            if($attributes['subheader'] != ""){
+                            if($attributes['subheader'] != "" && $attributes['headerType'] == "acumin"){
                                 if($attributes['headerLevel']=="h2"){
                                     echo '<h3 class="' . $headerclass . '">' . $attributes['header'] . '</h3>';
 
@@ -94,7 +96,7 @@ $id = $attributes['id'] != "" ? ' id="' . $attributes['id'] . '"' : "";
                                     echo '<p class="' . $headerclass . '">' . $attributes['header'] . '</p>';
 
                                 }
-                            }elseif($attributes['subheader'] == ""){
+                            }elseif($attributes['subheader'] == "" || $attributes['headerType'] == "united"){
                                 echo '<' . $attributes['headerLevel'] . ' class="' . $headerclass . '">' . $attributes['header'] . '</' . $attributes['headerLevel'] . '>';
                             }
                         }

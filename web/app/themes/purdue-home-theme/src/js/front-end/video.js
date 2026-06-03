@@ -28,6 +28,7 @@ const pauseOtherVideos = (players, id) => {
 };
 let players = [];
 //cta caard: on hover preview, on click play youtube
+
 const cta_cards = document.querySelectorAll(
   ".purdue-home-cta-card:not(.purdue-home-cta-card--vimeo)"
 );
@@ -50,6 +51,12 @@ if (cta_cards.length > 0) {
     const card_text_container = card.querySelector(".flex-container");
     const card_background_container = card.querySelector(".image");
 
+    if (card_iframe_element) {
+      setTimeout(() => {
+        card_iframe_element.setAttribute("tabindex", "-1");
+      }, 100);
+    }
+
     let aspectRatio = {
       height: "390",
       width: "640",
@@ -60,10 +67,10 @@ if (cta_cards.length > 0) {
         height: "750",
         width: "422",
       }
-    }else{
+    } else {
       aspectRatio = {
-      height: "390",
-      width: "640",
+        height: "390",
+        width: "640",
       }
     }
 
@@ -85,6 +92,12 @@ if (cta_cards.length > 0) {
                   card_text_container.style.display = "none";
                   card_background_container.style.display = "none";
                   card_iframe_container.classList.remove("is-sr-only");
+                  
+                  setTimeout(() => {
+                    let iframe = document.getElementById(card_iframe_element.id);
+                    iframe.setAttribute("tabindex", "0");
+                  }, 100);
+                  
                   if (player) {
                     setTimeout(() => player.playVideo(), 500);
                   }
@@ -100,6 +113,8 @@ if (cta_cards.length > 0) {
                     card_text_container.style.display = "flex";
                     card_background_container.style.display = "block";
                     card_iframe_container.classList.add("is-sr-only");
+                    let iframe = document.getElementById(card_iframe_element.id);
+                    iframe.setAttribute("tabindex", "-1");
                   }
                 }, 500);
                 if (
@@ -201,18 +216,22 @@ if (ytl_list && ytl_list.length > 0) {
     }
 
     // Set up play button, and its visually hidden label
+
     if (!playBtnEl) {
-      playBtnEl = document.createElement("div");
-      playBtnEl.classList.add("flex-container--align-center", "lty-playbtn");
-      youtube.append(playBtnEl);
+      playBtnWrapper = document.createElement("div");
+      playBtnWrapper.classList.add("flex-container--align-center", "lty-playbtn");
+      youtube.append(playBtnWrapper);
+      playBtnEl = document.createElement("button");
+      playBtnEl.classList.add("playbtn");
       playText = document.createElement("span");
       playText.classList.add("cta-link", "purdue-home-cta-card__link");
       playText.innerHTML = "Watch Video";
       playBtnEl.append(playText);
+      playBtnWrapper.append(playBtnEl);
       playIcon = document.createElement("img");
       playIcon.classList.add("cta-icon", "cta-icon--play");
-      playIcon.src =
-        "https://www.purdue.edu/home/wp-content/themes/purdue-home-theme/imgs/play_icon_gold.svg";
+      playIcon.src = "https://www.purdue.edu/home/wp-content/themes/purdue-home-theme/imgs/play_icon_gold.svg";
+      playIcon.alt = "";  // alt="" since the button label handles it
       playBtnEl.append(playIcon);
     }
 
@@ -244,6 +263,12 @@ if (ytl_list && ytl_list.length > 0) {
           },
           events: {
             onReady: function () {
+              setTimeout(() => {
+                const playerIframe = document.getElementById(videoIdLite);
+                if (playerIframe) {
+                  playerIframe.setAttribute("tabindex", "-1");
+                }
+              }, 100);
               youtube.addEventListener("click", (event) => {
                 event.preventDefault();
                 !youtube.classList.contains("lyt-activated")
@@ -253,9 +278,15 @@ if (ytl_list && ytl_list.length > 0) {
                   .querySelector(".iframe-element")
                   .classList.contains("screen-reader-text")
                   ? youtube
-                      .querySelector(".iframe-element")
-                      .classList.remove("screen-reader-text")
+                    .querySelector(".iframe-element")
+                    .classList.remove("screen-reader-text")
                   : "";
+                setTimeout(() => {
+                  const playerIframe = document.getElementById(videoIdLite);
+                  if (playerIframe) {
+                    playerIframe.removeAttribute("tabindex");
+                  }
+                }, 100);
                 player.playVideo();
                 pauseOtherVideos(players, videoIdLite);
               });
@@ -326,7 +357,6 @@ const vimeo = [
 ];
 
 
-
 if (vimeo && vimeo.length > 0) {
   let tag = document.createElement("script");
   tag.src = "https://player.vimeo.com/api/player.js";
@@ -345,28 +375,31 @@ if (vimeo && vimeo.length > 0) {
     let playBtnEl = video.querySelector(".lty-playbtn");
     if (!video.style.backgroundImage) {
       let posterUrl = "";
-      if( hashParameter != null){
+      if (hashParameter != null) {
         posterUrl = `https://vumbnail.com/${videoIdLite}:${hashParameter}.jpg`;
-      }else{
+      } else {
         posterUrl = `https://vumbnail.com/${videoIdLite}.jpg`;
       }
-      
+
       video.style.backgroundImage = `url("${posterUrl}")`;
     }
 
     // Set up play button, and its visually hidden label
     if (!playBtnEl) {
-      playBtnEl = document.createElement("div");
-      playBtnEl.classList.add("flex-container--align-center", "lty-playbtn");
-      video.append(playBtnEl);
+      playBtnWrapper = document.createElement("div");
+      playBtnWrapper.classList.add("flex-container--align-center", "lty-playbtn");
+      video.append(playBtnWrapper);
+      playBtnEl = document.createElement("button");
+      playBtnEl.classList.add("playbtn");
       playText = document.createElement("span");
       playText.classList.add("cta-link", "purdue-home-cta-card__link");
       playText.innerHTML = "Watch Video";
       playBtnEl.append(playText);
+      playBtnWrapper.append(playBtnEl);
       playIcon = document.createElement("img");
       playIcon.classList.add("cta-icon", "cta-icon--play");
-      playIcon.src =
-        "https://www.purdue.edu/home/wp-content/themes/purdue-home-theme/imgs/play_icon_gold.svg";
+      playIcon.src = "https://www.purdue.edu/home/wp-content/themes/purdue-home-theme/imgs/play_icon_gold.svg";
+      playIcon.alt = "";  // alt="" since the button label handles it
       playBtnEl.append(playIcon);
     }
 
@@ -374,9 +407,10 @@ if (vimeo && vimeo.length > 0) {
     if (!iframeEL) {
       const iframeEl = document.createElement("iframe");
       iframeEl.id = videoIdLite;
+      iframeEl.setAttribute("tabindex", "-1");
       const params = new URLSearchParams([]);
-      
-      if( hashParameter != null){
+
+      if (hashParameter != null) {
         params.append("h", hashParameter);
       }
       params.append("autoplay", "1");
@@ -413,6 +447,9 @@ if (vimeo && vimeo.length > 0) {
               iframe.classList.contains("screen-reader-text")
                 ? iframe.classList.remove("screen-reader-text")
                 : "";
+              setTimeout(() => {
+                iframe.removeAttribute("tabindex");
+              }, 100);
               player.play();
             });
           }

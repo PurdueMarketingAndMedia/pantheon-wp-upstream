@@ -32,6 +32,5 @@
 		}
     },
     "textdomain": "tab-block",
-    "editorScript": "file:./index.js",
-    "render": "file:./render.php"
+    "editorScript": "file:./index.js"
   } 

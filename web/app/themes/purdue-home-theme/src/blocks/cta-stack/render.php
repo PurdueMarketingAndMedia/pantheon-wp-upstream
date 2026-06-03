@@ -6,7 +6,9 @@ $id = $attributes['id'] != "" ? ' id="' . $attributes['id'] . '"' : "";
         <div class="container">
             <?php if (($content && strlen($content) > 0) || $attributes['header']) : ?>
                 <div class="purdue-home-cta-stack__intro">
-                    <h2 class="purdue-home-intro-text__header header-font-united purdue-home-cta-stack__header"><?= $attributes['header'] ?></h2>
+                    <?php if ($attributes['header']) { ?>
+                        <h2 class="purdue-home-intro-text__header header-font-united purdue-home-cta-stack__header"><?= $attributes['header'] ?></h2>
+                    <?php } ?>
                     <?php if ($content && strlen($content) > 0) : ?>
                         <div class="purdue-home-cta-stack__content">
                             <?= $content ?>
@@ -17,7 +19,9 @@ $id = $attributes['id'] != "" ? ' id="' . $attributes['id'] . '"' : "";
             <?php if (sizeof($attributes['cards']) > 0) : ?>
                 <div class="purdue-home-cta-stack__cards">
                     <div class="columns">
-                        <?php foreach ($attributes['cards'] as $card) : ?>
+                        <?php foreach ($attributes['cards'] as $card) : 
+                            $headingLevel = $attributes['header'] ? 'h3' : 'h2';
+                        ?>
                             <div class="column">
                                 <?php
                                 $cardClass = "purdue-home-cta-card purdue-home-cta-card--horizontal";
@@ -28,7 +32,7 @@ $id = $attributes['id'] != "" ? ' id="' . $attributes['id'] . '"' : "";
                                         <img class="purdue-home-background-image" alt="<?= $card["mediaAlt"] ?>" src="<?= $card["mediaURL"] ?>" />
                                     </figure>
                                     <div class="flex-container flex-container--align-center">
-                                        <p class="purdue-home-cta-stack__card-title"><?= $card["title"] ?></p>
+                                        <<?= $headingLevel ?> class="purdue-home-cta-stack__card-title"><?= $card["title"] ?></<?= $headingLevel ?>>
                                         <p class="purdue-home-cta-stack__card-subtext"><?= $card["subtext"] ?></p>
                                     </div>
                                 </a>

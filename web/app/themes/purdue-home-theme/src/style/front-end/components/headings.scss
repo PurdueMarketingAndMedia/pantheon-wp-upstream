@@ -217,6 +217,15 @@ h2.purdue-home-intro-text__header.header-font-acumin {
     font-size: 2.75rem;
   }
 }
+
+.has-layout-two-line{
+  h2.purdue-home-intro-text__header.header-font-acumin {
+  font-size: 2rem;
+  @include mobile {
+    font-size: 1.75rem;
+  }
+}
+}
 h3.purdue-home-intro-text__header.header-font-acumin,
 h4.purdue-home-intro-text__header.header-font-acumin,
 h5.purdue-home-intro-text__header.header-font-acumin,

@@ -61,8 +61,9 @@ $id = $attributes['id'] != "" ? ' id="' . $attributes['id'] . '"' : "";
                     </div>
                 </div>
             <?php endif; ?>
-            <button class="cta-play" aria-label="play"><i class="fa-regular fa-circle-play cta-play-icon"></i></button>
-            <button class="cta-pause is-active" aria-label="pause"><i class="fa-regular fa-circle-pause cta-pause-icon"></i></button>
+            <button class="cta-btnctrl cta-pause" aria-label="Pause Slideshow" data-toggle-label="Start Slideshow">
+                <i class="fa-regular fa-circle-pause cta-pause-icon"></i>
+            </button>
         </div>
     <?php endif; ?>
     <div class="section">
@@ -71,18 +72,21 @@ $id = $attributes['id'] != "" ? ' id="' . $attributes['id'] . '"' : "";
                 <h1 class="purdue-home-canopy-hero__header"><?= $attributes['header'] ?></h1>
             <?php endif; ?>
 
-            <?php if ($attributes['links'] && sizeof($attributes['links']) > 0): ?>
+            <?php if ($attributes['links'] && sizeof($attributes['links']) > 0):
+                $buttonList = sizeof($attributes['links']) > 1 ? "ul" : "div";
+                $buttonWrapper = sizeof($attributes['links']) > 1 ? "li" : "div"; 
+            ?>
                 <div class="purdue-home-canopy-hero__links">
                     <span class="mobile-hidden">Quick Links:</span>
-                    <ul class="purdue-home-button-list">
+                    <<?= $buttonList ?> class="purdue-home-button-list">
                         <?php foreach ($attributes['links'] as $key => $link): ?>
                             <?php                             
                                 $target = $link["external"] ? 'target="_blank"' : 'target="_self"'; 
                                 $buttonCSS = isset($link['buttonCSS']) && $link['buttonCSS'] ? $link["buttonCSS"] : "";                            
                             ?>
-                            <li><a class="purdue-home-button <?= $buttonCSS ?>" href="<?= $link["linkURL"] ?>" <?= $target ?>><?= trim($link["linkText"]) ?></a></li>
+                            <<?= $buttonWrapper ?>><a class="purdue-home-button <?= $buttonCSS ?>" href="<?= $link["linkURL"] ?>" <?= $target ?>><?= trim($link["linkText"]) ?></a></<?= $buttonWrapper ?>>
                         <?php endforeach; ?>
-                    </ul>
+                    </<?= $buttonList ?>>
                 </div>
             <?php endif; ?>
 

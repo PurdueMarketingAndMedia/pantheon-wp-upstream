@@ -24,7 +24,7 @@
           padding:1.25rem 3.5rem 1.25rem 1.25rem;
           text-align:left;
         }
-        .cta-play,.cta-pause{
+        .cta-btnctrl {
           right:1rem;
           left:auto;
           width:32px;
@@ -41,7 +41,7 @@
         }
 
       } 
-      .cta-play,.cta-pause{
+      .cta-btnctrl{
         right:1rem;
         left:auto;
       }
@@ -99,24 +99,12 @@
     .purdue-home-cta-card-block__image-slider,.glide__track,.glide__slides,.glide__slide{
       height:100%;
     }
-  .cta-play,.cta-pause{
-    display:none;
+  .cta-btnctrl {
     color:$boiler-gold;
-    font-size:2rem;
     position:absolute;
     bottom:1rem;
     left:1rem;
     z-index:2;
-    background:none;
-    border:none;
-    cursor: pointer;
-    padding: 0;
-    line-height: 1;
-    &.is-active{
-      display:block;
-      width: 32px;
-      height: 32px;
-    }
   }
   }
   &__subheader{
@@ -177,6 +165,5 @@
       }
     }
   }
-
 }
 

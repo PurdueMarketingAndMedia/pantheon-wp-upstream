@@ -13,7 +13,7 @@ function trapFocus(event, top_menu, closeBtn) {
     'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"]), iframe'
   )).filter(el => !el.hasAttribute('disabled') && el.offsetParent !== null);
   if (closeBtn && closeBtn.classList.contains("is-active") && closeBtn.offsetParent !== null && !focusableElements.includes(closeBtn))
-  focusableElements.unshift(closeBtn);
+    focusableElements.unshift(closeBtn);
 
 
   if (focusableElements.length === 0) return;
@@ -45,15 +45,17 @@ function trapFocus(event, top_menu, closeBtn) {
   if (event.key === "Escape") {
 
     top_menu.classList.remove("is-active");
-          setTimeout(() => {
-            top_menu.classList.add("is-hidden");
-          }, 500);
+    setTimeout(() => {
+      top_menu.classList.add("is-hidden");
+    }, 500);
 
     closeBtn.classList.remove("is-active");
     closeBtn.classList.add("is-hidden");
     body.classList.remove("no-scroll");
     nav_opens.forEach((nav) => {
-      nav.setAttribute("aria-expanded", false);
+      if (nav.hasAttribute("aria-expanded")) {
+        nav.setAttribute("aria-expanded", false);
+      }
       nav.classList.add("is-active");
       nav.classList.remove("is-hidden");
     });
@@ -61,16 +63,16 @@ function trapFocus(event, top_menu, closeBtn) {
 
 }
 
-if(navbar_info){
-    //Trap focus inside Search Menu when open
-    navbar_info.addEventListener("keydown", (event) => trapFocus(event, navbar_info, closeBtn));
+if (navbar_info) {
+  //Trap focus inside Search Menu when open
+  navbar_info.addEventListener("keydown", (event) => trapFocus(event, navbar_info, closeBtn));
 }
-if(closeBtn){
-  closeBtn.addEventListener("keydown", (event) => trapFocus(event, navbar_info, closeBtn)); 
+if (closeBtn) {
+  closeBtn.addEventListener("keydown", (event) => trapFocus(event, navbar_info, closeBtn));
 }
 
 
-document.addEventListener("focusin", function(e) {
+document.addEventListener("focusin", function (e) {
   if (navbar_info.classList.contains("is-active") && !navbar_info.contains(e.target)) {
     const focusableElements = Array.from(navbar_info.querySelectorAll(
       'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"]), iframe'
@@ -78,24 +80,24 @@ document.addEventListener("focusin", function(e) {
 
     const closeBtn = document.querySelector(".navbar-close");
 
-  if (
-    closeBtn &&
-    closeBtn.classList.contains("is-active") &&
-    closeBtn.offsetParent !== null &&
-    !focusableElements.includes(closeBtn)
-  ) {
-    focusableElements.unshift(closeBtn);
-  }
+    if (
+      closeBtn &&
+      closeBtn.classList.contains("is-active") &&
+      closeBtn.offsetParent !== null &&
+      !focusableElements.includes(closeBtn)
+    ) {
+      focusableElements.unshift(closeBtn);
+    }
 
 
     if (focusableElements.length === 0) return;
-        
+
     if (focusableElements.length) {
-    focusableElements[0].focus();
+      focusableElements[0].focus();
     }
   }
 
- 
+
 });
 
 
@@ -119,7 +121,9 @@ if (nav_opens && nav_opens.length > 0) {
         top_menu.classList.add("is-active");
         body.classList.add("no-scroll");
         nav_opens.forEach((nav) => {
-          nav.setAttribute("aria-expanded", true);
+          if (nav.hasAttribute("aria-expanded")) {
+            nav.setAttribute("aria-expanded", true);
+          }
           nav.classList.remove("is-active");
           nav.classList.add("is-hidden");
         });
@@ -135,10 +139,10 @@ if (nav_opens && nav_opens.length > 0) {
     });
 
     nav_open.addEventListener("keydown", (event) => {
-       setTimeout(() => {
-            closeBtn.focus();
-          }, 1);
-      
+      setTimeout(() => {
+        closeBtn.focus();
+      }, 1);
+
     })
 
   });
@@ -161,7 +165,9 @@ if (nav_opens && nav_opens.length > 0) {
 
           body.classList.remove("no-scroll");
           nav_opens.forEach((nav) => {
-            nav.setAttribute("aria-expanded", false);
+            if (nav.hasAttribute("aria-expanded")) {
+              nav.setAttribute("aria-expanded", false);
+            }
             nav.classList.add("is-active");
             nav.classList.remove("is-hidden");
           });
@@ -194,6 +200,7 @@ if (collapsedGlobalMenus.length > 0) {
             window.location.href !== clonelink.href
           ) {
             clonelink.classList.remove("is-active-page");
+            clonelink.removeAttribute("aria-current");
           }
           clonelink.classList.remove("navbar-link", "navbar-link-submenu");
           clonelink.setAttribute("aria-haspopup", "false");
@@ -311,31 +318,32 @@ const sticky_second_navs = document.querySelectorAll(
 );
 //set header position if there is a top alert
 const top_alert = document.querySelector(".alert-widget.modal");
-if(top_alert){
+if (top_alert) {
   const height = top_alert.scrollHeight
   const page_content = document.querySelector(".site")
   const mobile_menu = document.querySelector(".navbar-find-info.is-global")
   const width = window.innerWidth
-  if(width <= 1215 && mobile_menu){
+  if (width <= 1215 && mobile_menu) {
     mobile_menu.style.top = height + "px"
   }
   page_content.style.top = height + "px"
-  window.addEventListener("resize", ()=>{
+  window.addEventListener("resize", () => {
     const newHeight = top_alert.offsetHeight
     page_content.style.top = newHeight + "px"
     const width = window.innerWidth
-    if(width <= 1215 && mobile_menu){
+    if (width <= 1215 && mobile_menu) {
       mobile_menu.style.top = newHeight + "px"
     }
   })
 
   const close_top_alert = top_alert.querySelector(".modal-close")
-  close_top_alert.addEventListener("click", ()=>{
+  close_top_alert.addEventListener("click", () => {
     page_content.style.top = "0px"
     const width = window.innerWidth
-    if(width <= 1215 && mobile_menu){
+    if (width <= 1215 && mobile_menu) {
       mobile_menu.style.top = "0px"
-    }  })
+    }
+  })
 }
 //sticky header
 const top_nav = document.querySelector(
@@ -352,18 +360,18 @@ if (top_nav) {
   });
 }
 
-if (sticky_second_navs.length>0) {
-  sticky_second_navs.forEach((sticky_second_nav)=>{
+if (sticky_second_navs.length > 0) {
+  sticky_second_navs.forEach((sticky_second_nav) => {
     const sticky = sticky_second_nav.offsetTop;
     window.addEventListener("scroll", () => {
       if (window.pageYOffset > sticky) {
         sticky_second_nav.classList.add("is-fixed-top");
-        if(top_alert){
-          sticky_second_nav.style.top = top_alert.offsetHeight+"px"
+        if (top_alert) {
+          sticky_second_nav.style.top = top_alert.offsetHeight + "px"
         }
       } else {
         sticky_second_nav.classList.remove("is-fixed-top");
-        if(top_alert){
+        if (top_alert) {
           sticky_second_nav.style.top = "auto"
         }
       }
@@ -371,5 +379,3 @@ if (sticky_second_navs.length>0) {
   })
 
 }
-
-

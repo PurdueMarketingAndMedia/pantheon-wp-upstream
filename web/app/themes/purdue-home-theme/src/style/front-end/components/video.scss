@@ -2,7 +2,8 @@
 // Youtube Lite.
 // =============
 
-lite-youtube, lite-vimeo {
+lite-youtube,
+lite-vimeo {
 	background-color: #000;
 	position: relative;
 	display: block;
@@ -11,21 +12,24 @@ lite-youtube, lite-vimeo {
 	background-size: cover;
 	cursor: pointer;
 	margin: 0 auto;
-    width:100%;
-    height: auto;
-	border-radius:4px;
+	width: 100%;
+	height: auto;
+	border-radius: 4px;
+
 	&::after {
 		content: '';
 		display: block;
 		padding-bottom: calc(100% / (16 / 9));
-		background: rgba(0,0,0,0.55);
+		background: rgba(0, 0, 0, 0.55);
 	}
-	&:hover{
+
+	&:hover {
 		.cta-link:after {
 			visibility: visible;
 			transform: scaleX(1);
 		}
 	}
+
 	> {
 		iframe {
 			width: 100%;
@@ -38,25 +42,34 @@ lite-youtube, lite-vimeo {
 
 	}
 
-	&:hover > .lty-playbtn,
+	&:hover>.lty-playbtn,
 	.lty-playbtn:focus {
 		filter: none;
 	}
-	.flex-container--align-center, .cta-link, .cta-icon{
+
+	.flex-container--align-center,
+	.cta-link,
+	.cta-icon {
 		pointer-events: none;
 	}
 
 	&.lyt-activated {
 		cursor: unset;
+		
 
 		&::before,
-		> .lty-playbtn {
+		>.lty-playbtn {
 			opacity: 0;
 			pointer-events: none;
 		}
 	}
 
-	> .lty-playbtn .lyt-visually-hidden {
+	button.lyt-activated {
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	>.lty-playbtn .lyt-visually-hidden {
 		clip: rect(0 0 0 0);
 		clip-path: inset(50%);
 		height: 1px;
@@ -65,12 +78,23 @@ lite-youtube, lite-vimeo {
 		white-space: nowrap;
 		width: 1px;
 	}
+
+	.lty-playbtn button {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		background: transparent;
+		border: transparent;
+	}
 }
+
 lite-vimeo {
 	position: absolute;
 	height: 100%;
-    top: 0;
-    left: 0;
+	top: 0;
+	left: 0;
+
 	&:after {
 		padding-bottom: 0;
 		width: 100%;
@@ -78,20 +102,24 @@ lite-vimeo {
 	}
 
 }
-.wp-block-embed.is-type-video, .post-content__video-hero {
-	.youtube-lite-container.purdue-home-cta-card{
+
+.wp-block-embed.is-type-video,
+.post-content__video-hero {
+	.youtube-lite-container.purdue-home-cta-card {
 		box-shadow: none;
 	}
-	.flex-container--align-center{
-		.cta-link{
-			@include tablet{
+
+	.flex-container--align-center {
+		.cta-link {
+			@include tablet {
 				font-size: 1.875rem;
 			}
 		}
+
 		.cta-icon.cta-icon--play {
-			@include tablet{
-			width: 80px;
-			height: 80px;
+			@include tablet {
+				width: 80px;
+				height: 80px;
 			}
 		}
 	}
@@ -113,15 +141,15 @@ lite-vimeo {
 	}
 }
 
-.vimeo-lite{
-	.flex-container--align-center{
+.vimeo-lite {
+	.flex-container--align-center {
 		padding: 0;
 	}
 }
 
-.wp-block-embed-vimeo{
-	.wp-block-embed__wrapper{
-		&:before{
+.wp-block-embed-vimeo {
+	.wp-block-embed__wrapper {
+		&:before {
 			content: "";
 			display: block;
 			padding-top: 56.2%;

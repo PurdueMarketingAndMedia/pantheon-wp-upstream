@@ -5,7 +5,8 @@
  * @package WordPress
  */
 	
-function card($card,$type, $inculdeDesc,$includeThumb, $hasType, $hasTag, $background, $layout){
+function card($card,$type, $inculdeDesc,$includeThumb, $hasType, $hasTag, $background, $layout, $header){
+    $headingTag = $header ? "h3" : "h2";
     $cardClass="purdue-home-cta-card";
     if($type=="simple"){
         $cardClass.=" has-content-bottom";
@@ -41,10 +42,28 @@ function card($card,$type, $inculdeDesc,$includeThumb, $hasType, $hasTag, $backg
     }else{
         $contentClass.=" flex-container--align-bottom";
     }
-    
+
+    if(!$card["linkURL"] || ($card["linkURL"] && $card["linkURL2"])) {
+        $cardClass .= ' purdue-home-cta-card--nolink';
+    }
+
     if($card["linkURL"] != "" && !$card['linkURL2']){
         $target = isset($card["external"]) && $card["external"] ? "_blank" : "_self";
-        $output.='<a class="'.$cardClass.' '.$card["buttonCSS"].'" href="'.$card["linkURL"].'" target='.$target.'>';  
+        $external = isset($card["external"]) && $card["external"] ? "(Opens in a new tab)" : "";
+        $ariaLabel = "";
+        $buttonText = (is_null($card["buttonText"])) ? "Learn More" : $card["buttonText"];
+        if(isset($card["ariaLabel"]) && $card["ariaLabel"]!=""){
+            $ariaLabel = 'aria-label="'.$card["ariaLabel"].' '.$external.'"';
+        }elseif(isset($external) && $external!=""){
+            if($type=="story" || $type=="simple"){                
+                $ariaLabel = isset($buttonText)? 'aria-label="'.$buttonText.' '.$external.'"':'';
+            }else{
+                $ariaLabel = isset($card["name"])? 'aria-label="'.$card["name"].' '.$external.'"':'';
+            }
+        }else{
+            $ariaLabel = "";
+        }
+        $output.='<article class="'.$cardClass.'" data-link="'.$card["linkURL"].'" data-target="'.$target.'">';  
         if($includeThumb){
             $imageClass="image";
             if($type=="simple" || $type=="story"){
@@ -56,9 +75,15 @@ function card($card,$type, $inculdeDesc,$includeThumb, $hasType, $hasTag, $backg
             }else{
                 $imageClass.=" is-square";
             }
+            if(!$layout){
+                $output.='<div class="card-image">';
+            }
             $output.='<figure class="'.$imageClass.'">';
             $output.='<img alt="'.$card["mediaAlt"].'" src="'.$card["mediaURL"].'"/>';
             $output.='</figure>';
+            if(!$layout){
+                $output.='</div>';
+            }
         }
         $output.='<div class="'.$contentClass.'">';
         if($type=="story" && ($card["tag"] || $card["postType"])&&($hasType||$hasTag)){
@@ -78,17 +103,17 @@ function card($card,$type, $inculdeDesc,$includeThumb, $hasType, $hasTag, $backg
             $output.='</p>';
         }
         if($type=="story"&& $card["title"]){
-        $output.='<p class="purdue-home-cta-grid__card-title">'.$card["title"].'</p>';
+        $output.='<'.$headingTag.' class="purdue-home-cta-grid__card-title">'.$card["title"].'</'.$headingTag.'>';
         }
         if($type=="story"&& $card["subtext"]&& $inculdeDesc){
             $output.='<div class="purdue-home-cta-grid__card-subtext">'.$card["subtext"].'</div>';
         }
         if($type=="story"){
             $buttonText = (is_null($card["buttonText"])) ? "Learn More" : $card["buttonText"];
-            $output.='<button class="purdue-home-button '.$card['buttonCSS'].'">'.$buttonText.'</button>';
+            $output.='<a class="purdue-home-button purdue-home-button--story '.$card['buttonCSS'].'" href="'.$card["linkURL"].'" target='.$target.' '.$ariaLabel.'>'.$buttonText.'</a>';
         }
         if($type=="faculty"&& $card["name"]){
-            $output.='<p class="purdue-home-cta-grid__card-name">'.$card["name"].'</p>';
+            $output.='<'.$headingTag.' ><a class="purdue-home-cta-grid__card-name '.$card["buttonCSS"].'" href="'.$card["linkURL"].'" target='.$target.' '.$ariaLabel.'>'.$card["name"].'</a></'.$headingTag.'>';
         }
         if($type=="faculty"&& $card["titleLine1"]){
             $output.='<p class="purdue-home-cta-grid__card-titleline">'.$card["titleLine1"].'</p>';
@@ -113,14 +138,14 @@ function card($card,$type, $inculdeDesc,$includeThumb, $hasType, $hasTag, $backg
             $output.='<p class="purdue-home-cta-grid__card-phone">Home: '.trim($card["homePhone"]).'</p>';
         }      
         if($type=="simple"&& $card["title"]){
-            $output.='<p class="purdue-home-cta-grid__card-title">'.$card["title"].'</p>';
+            $output.='<p><a class="purdue-home-cta-grid__card-title '.$card["buttonCSS"].'" href="'.$card["linkURL"].'" target='.$target.' '.$ariaLabel.'>'.$card["title"].'</a></p>';
         }
         if($type=="simple"&& $card["subtext"]){
             $output.='<p class="purdue-home-cta-grid__card-subtext">'.$card["subtext"].'</p>';
         }
-        $output.='</div></a>';
+        $output.='</div></article>';
     }else{
-        $output.='<div class="'.$cardClass.'">';  
+        $output.='<article class="'.$cardClass.'">';  
         if($includeThumb){
             $imageClass="image";
             if($type=="simple" || $type=="story"){
@@ -154,23 +179,43 @@ function card($card,$type, $inculdeDesc,$includeThumb, $hasType, $hasTag, $backg
         if($type=="story"&& $card["subtext"]&& $inculdeDesc){
             $output.='<p class="purdue-home-cta-grid__card-subtext">'.$card["subtext"].'</p>';
         }
-        if($type=="story" && ($card["linkURL"] || $cardlink["linkURL2"])){
+        if($type=="story" && ($card["linkURL"] || $card["linkURL2"])){
             $output.='<ul class="purdue-home-button-list">';
         }
         if($type=="story" && $card["linkURL"]){
+            $target = isset($card["external"]) && $card["external"] ? "_blank" : "_self";
+            $external = isset($card["external"]) && $card["external"] ? "(Opens in a new tab)" : "";
             $buttonText = (is_null($card["buttonText"])) ? "Learn More" : $card["buttonText"];
-            $output.='<li><a class="purdue-home-button '.$card["buttonCSS"].'" href="'.$card["linkURL"].'" target='.$target.'>'.$buttonText.'</a></li>';
+            $ariaLabel = "";
+            if(isset($card["ariaLabel"]) && $card["ariaLabel"]!=""){
+                $ariaLabel = 'aria-label="'.$card["ariaLabel"].' '.$external.'"';
+            }elseif(isset($external) && $external!=""){
+                $ariaLabel = isset($card["buttonText"])? 'aria-label="'.$card["buttonText"].' '.$external.'"':'';
+            }else{
+                $ariaLabel = "";
+            }
+            $output.='<li><a class="purdue-home-button '.$card["buttonCSS"].'" href="'.$card["linkURL"].'" target='.$target.' '.$ariaLabel.'>'.$buttonText.'</a></li>';
         }
         if($type=="story" && $card["linkURL2"]){
             $buttonText2 = (is_null($card["buttonText2"])) ? "Learn More" : $card["buttonText2"];
-            $output.='<li><a class="purdue-home-button '.$card["buttonCSS2"].'" href="'.$card["linkURL2"].'" target='.$target2.'>'.$buttonText2.'</a></li>';
+            $target2 = isset($card["external2"]) && $card["external2"] ? "_blank" : "_self";
+            $external2 = isset($card["external2"]) && $card["external2"] ? "(Opens in a new tab)" : "";
+            $ariaLabel2 = "";
+            if(isset($card["ariaLabel2"]) && $card["ariaLabel2"]!=""){
+                $ariaLabel2 = 'aria-label="'.$card["ariaLabel2"].' '.$external2.'"';
+            }elseif(isset($external2) && $external2!=""){
+                $ariaLabel2 = isset($card["buttonText2"])? 'aria-label="'.$card["buttonText2"].' '.$external2.'"':'';
+            }else{
+                $ariaLabel = "";
+            }
+            $output.='<li><a class="purdue-home-button '.$card["buttonCSS2"].'" href="'.$card["linkURL2"].'" target='.$target2.' '.$ariaLabel2.'>'.$buttonText2.'</a></li>';
         }
-        if($type=="story" && ($card["linkURL"] || $cardlink["linkURL2"])){
+        if($type=="story" && ($card["linkURL"] || $card["linkURL2"])){
             $output.='</ul>';
         }
 
         if($type=="faculty"&& $card["name"]){
-            $output.='<p class="purdue-home-cta-grid__card-name">'.$card["name"].'</p>';
+            $output.='<'.$headingTag.' class="purdue-home-cta-grid__card-name">'.$card["name"].'</'.$headingTag.'>';
         }
         if($type=="faculty"&& $card["titleLine1"]){
             $output.='<p class="purdue-home-cta-grid__card-titleline">'.$card["titleLine1"].'</p>';
@@ -206,7 +251,7 @@ function card($card,$type, $inculdeDesc,$includeThumb, $hasType, $hasTag, $backg
         if($type=="simple"&& $card["subtext"]){
             $output.='<p class="purdue-home-cta-grid__card-subtext">'.$card["subtext"].'</p>';
         }
-        $output.='</div></div>';
+        $output.='</div></article>';
     }
     return $output;
 }
@@ -262,9 +307,14 @@ function rss_feed($url){
                 }
             }
             $description = $item->get_description();
+            $media =  $item->get_enclosure();
+
             $imgURLMatch = preg_match("/img.+?src=\"([^\"]+)\"/", $description, $matchimgURL);
+            //$mediaURLMatch = preg_match("/<media.+?url=\"([^\"]+)\"/", $description, $matchmediaURL);
             if($imgURLMatch){
                 $imgURL=$matchimgURL[1];
+            }else if($media){
+                $imgURL=$media->get_link();
             }else{
                 $imgURL='https://marcom.purdue.edu/app/uploads/2021/09/cropped-cropped-DW540158-HDR.jpg';
             }
@@ -287,12 +337,15 @@ function rss_feed($url){
                 'title'=>strval($title),
                 'subtext'=>strval($text),
                 'linkURL'=>strval($link),
+                'linkURL2'=>'',
+                'buttonCSS'=>'',
                 'date'=>$date,
                 'mediaURL'=>$imgURL,
                 'mediaAlt'=>$imgALT,
                 "tag"=>$tag,
                 "postType"=>$postType,
                 "external"=>true,
+                'buttonText'=>"Learn More"
             );
             array_push($results, $node);
             ++$id;

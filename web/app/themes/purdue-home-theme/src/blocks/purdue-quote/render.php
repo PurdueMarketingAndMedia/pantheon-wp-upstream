@@ -1,7 +1,7 @@
 <?php
 $id = $attributes['id'] != "" ? ' id="' . $attributes['id'] . '"' : "";
 ?>
-<div <?= $id ?> class="purdue-home-quote <?= $attributes['className'] ?>">
+<div <?= $id ?> class="purdue-home-quote <?= $attributes['className'] ?> purdue-home-quote-<?= $attributes['type']; ?>">
     <?php
     $blockclass = 'section';
     if ($attributes['paddingTop']) {
@@ -67,7 +67,7 @@ $id = $attributes['id'] != "" ? ' id="' . $attributes['id'] . '"' : "";
                         </div>
                     </div>
                     <div class="slider-controls<?= ($attributes['background']=="black"?" slider-controls--dark":"") ?>">
-                        <button class="glide__arrow arrow--left">prev</button>
+                        <button class="glide__arrow arrow--left">previous</button>
                         <div class="glide__bullets" data-glide-el="controls[nav]">
                                 <?php foreach ($attributes['quoteGroup'] as $key => $card) {
                                     $num = $key + 1;

@@ -5,26 +5,47 @@
 .purdue-home-rtb-hero {
   .section.has-padding-top-large {
     position: relative;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    container-type: inline-size;
+    margin-left: calc((100vw - 1447px) / 2);
+
+    @include until-fullhd {
+      margin-left: 1rem;
+    }
+
+    @include touch {
+      flex-direction: column;
+    }
+
     @include mobile {
       padding-top: 4rem;
       padding-top: 4rem;
     }
   }
+
   .container {
     height: 100%;
+    flex: 1 1 clamp(600px, 60%, 900px);
+    min-width: 0;
   }
+
   &__subheader {
     left: 10px;
     margin-bottom: 3.375rem !important;
+
     @include mobile {
       margin-bottom: 2.5rem !important;
     }
   }
+
   &__header.second-level-page-heading {
     color: $white;
     margin-bottom: 1.25rem !important;
     text-align: left;
   }
+
   &__subtext {
     color: $white;
     font-family: $acumin-pro;
@@ -33,12 +54,13 @@
     line-height: 1.4;
     text-align: left;
     max-width: 840px;
+
     @include mobile {
       font-size: 1rem;
     }
   }
+
   &__slider-wrap.container {
-    position: absolute;
     top: 0;
     right: 0;
     width: 100%;
@@ -46,23 +68,37 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    margin-right: -3rem;
+    max-width: 600px !important;
+
+    position: relative;
+   // flex: 1 1 clamp(400px, 40%, 700px);
+    flex: 1 1 30%;
+    min-width: 0;
+
     .glide.purdue-home-slider--rtb-hero {
-      width: 45%;
+
       @include until-widescreen {
         width: 40%;
       }
+
+      @media screen and (max-width: 1280px) {
+        width: 100%;
+      }
+
       @include touch {
         width: 100%;
       }
     }
+
     @include touch {
       position: relative;
       justify-content: flex-start;
-      margin-top: 2rem;
+      margin: 2rem auto 0;
     }
   }
+
   &__content-wrap {
-    width: 60%;
     display: flex;
     align-items: flex-start;
     justify-content: center;
@@ -72,26 +108,32 @@
     z-index: 2;
     position: relative;
     max-width: 635px;
+
     @include touch {
       width: 100%;
       min-height: 1px;
     }
   }
+
   .glide__slide {
     height: auto;
     position: relative;
+
     .image {
       border: 2px solid $white;
       border-radius: 4px;
       box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.25);
+
       &:after {
         content: none;
       }
     }
+
     .purdue-home-content-card {
       height: 100%;
     }
   }
+
   .purdue-home-proofpoint--simple {
     border: 2px solid $white;
     border-radius: 4px;
@@ -100,24 +142,28 @@
     padding: 4.5rem 2rem;
     height: 100%;
     cursor: default;
+
     @include mobile {
       padding: 3rem 2rem;
     }
+
     &__content {
       display: block;
       color: #ffffff;
       font-family: $united-sans-condensed;
-      font-size: min(4vw, 3.25rem);
+      font-size: clamp(1.5rem, 2.5rem, 3.25rem);
       font-weight: 700;
       letter-spacing: 0.45px;
       line-height: 0.9;
       text-align: center;
       white-space: pre-wrap;
       cursor: default;
+
       @include mobile {
         font-size: 2.5rem;
       }
     }
+
     &__source {
       color: $white;
       font-family: $acumin-pro;
@@ -133,61 +179,74 @@
       display: block;
       cursor: default;
     }
+
     a.purdue-home-proofpoint--simple__source {
       text-decoration: underline;
       cursor: pointer;
+
       &:hover {
         text-decoration: none;
       }
     }
   }
+
   .slider-controls {
     justify-content: flex-start;
     margin-top: 2rem;
+
     @include touch {
       justify-content: center;
     }
   }
+
   .purdue-home-button-list {
     justify-content: flex-start;
     padding-left: 0;
     margin-top: 1rem;
-    li:first-child {
+
+    .purdue-home-button-wrap--full {
+      width: 100%;
+    }
+
+    li:first-child,
+    div:first-child {
       padding-left: 0;
     }
   }
+
   &--stack.purdue-home-cta-banner {
-    & > .image {
+    &>.image {
       &:after {
         background-color: rgba(255, 255, 255, 0.9);
       }
     }
+
     .purdue-home-rtb-hero__slider-wrap {
       @include touch {
         display: none;
       }
     }
+
     .purdue-home-rtb-hero__header.second-level-page-heading,
     .purdue-home-rtb-hero__subtext {
       color: $black;
     }
+
     .section {
       display: flex;
       justify-content: space-between;
       align-items: center;
+
       .container {
         .purdue-home-rtb-hero__content-wrap {
           width: 100%;
         }
-        @include desktop {
-          margin-left: max(calc(50vw - 648px), 0);
-        }
-        @include fullhd {
-          margin-left: calc(50vw - 724px);
-        }
+
       }
+
       .purdue-home-rtb-hero__slider-wrap {
         width: 40%;
+
         .purdue-home-rtb-hero__stack-wrap {
           width: 100%;
           max-width: 406px;
@@ -195,42 +254,51 @@
           display: flex;
           flex-direction: column;
           justify-content: center;
-          margin: -4rem 0;
+          margin: -4rem 3rem 0 0;
           align-items: stretch;
+
           .image {
             position: relative;
+
             img {
               position: absolute;
             }
           }
-          & > * {
+
+          &>* {
             min-height: 226px;
+
             &:not(:last-child) {
               margin-bottom: 1.5rem !important;
             }
           }
         }
       }
+
       .purdue-home-rtb-hero__slider-wrap {
         position: relative;
 
         .image {
           border-radius: 4px;
           border: 2px solid $boiler-gold;
+
           &:after {
             content: none;
           }
         }
       }
     }
+
     .purdue-home-content-card {
       background-color: rgba(255, 255, 255, 0.55);
       border-color: $boiler-gold;
+
       &__title,
       &__content {
         color: $black;
       }
     }
+
     .purdue-home-proofpoint--simple {
       background-color: rgba(255, 255, 255, 0.55);
       border-color: $boiler-gold;
@@ -238,6 +306,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+
       &__content,
       &__source {
         color: $black;
@@ -245,6 +314,7 @@
     }
   }
 }
+
 .purdue-home-content-card {
   border: 2px solid $white;
   border-radius: 4px;
@@ -254,12 +324,14 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+
   &__title {
     font-size: 1.5rem;
     font-weight: 700;
     color: $white;
     margin-bottom: 0.5rem !important;
   }
+
   &__content {
     font-size: 1.125rem;
     font-weight: 400;

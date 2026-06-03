@@ -9,13 +9,15 @@
   }
   &--dark {
     .glide__bullet {
-      background-color: #ffffff;
-      opacity: 0.5;
+      background-color: #000;
+      border: 2px solid #fff;
+      opacity: 1;
+     
       &--active {
-        background: $boiler-gold;
+        background: #fff;
         opacity: 1;
         &:hover {
-          background: $boiler-gold;
+          background: #fff;
           opacity: 1;
         }
       }
@@ -41,26 +43,33 @@
   align-items: center;
 }
 .glide__bullet {
-  width: 0.5rem;
-  height: 0.5rem;
-  border: none;
+  width: 0.75rem;
+  height: 0.75rem;
+  border: 2px solid $black;
   border-radius: 50%;
-  margin: 0.25rem;
+  margin: 0.5rem 1rem;
   display: inline-block;
   padding: 0;
-  opacity: 0.25;
-  background-color: #000000;
+  opacity: 1;
+  background-color: transparent;
   cursor: pointer;
+   &::before{
+          content: "";
+            padding: .25rem .75rem;
+            position: relative;
+            left: -9px;
+            top: -6px;
+      }
   &--active {
-    background: $aged-gold;
+    background: $black;
     opacity: 1;
     &:hover {
-      background: $aged-gold;
+      background: $black;
       opacity: 1;
     }
   }
   &:hover {
-    opacity: 0.7;
+    opacity: 1;
   }
 }
 .glide__arrow {

@@ -40,6 +40,8 @@ function purdue_get_posts($request) {
 	$alpha = $request['alpha'] ?: $request['alpha'] = "";
 	$autoComplete = $request['autocomplete'] ? $request['autocomplete']: false;
 	$authorName = $request['author_name'] ? $request['author_name']: "";
+    $termIds = '';
+    $terms = [];
 
 	if(site_url( '', 'relative')){
 		$path         = str_replace( site_url( '', 'relative'), '', $path );
@@ -119,7 +121,7 @@ function purdue_get_posts($request) {
 
 	if ($excludeCat) {
 
-		$terms = [];
+
 
 		foreach ($excludeCat as $cat){
 			$term = get_term_by('slug', $cat, 'category');
@@ -290,3 +292,17 @@ function get_items_permission_check( $request ) {
 }
 
 add_action('rest_api_init', 'post_list_endpoint');
+
+function scn_nav_menus_endpoint() {
+	register_rest_route( 'purdue-home/v1', '/nav-menus/', array(
+		'methods'             => 'GET',
+		'callback'            => 'scn_get_nav_menus',
+		'permission_callback' => fn() => current_user_can( 'edit_posts' ),
+	) );
+}
+function scn_get_nav_menus() {
+	$menus = get_terms( array( 'taxonomy' => 'nav_menu', 'hide_empty' => false ) );
+	if ( is_wp_error( $menus ) ) return array();
+	return array_map( fn( $m ) => array( 'id' => $m->term_id, 'name' => $m->name ), $menus );
+}
+add_action( 'rest_api_init', 'scn_nav_menus_endpoint' );

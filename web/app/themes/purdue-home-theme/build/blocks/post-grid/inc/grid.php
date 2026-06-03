@@ -21,7 +21,7 @@
 
             <div class="purdue-home-cta-grid__card-subtext"><?php purdue_get_excerpt(); ?></div>
 
-            <a class="purdue-home-button" href="<?= the_permalink() ?>"><?= $attributes['buttonText'] ?></a>
+            <a class="purdue-home-button" href="<?= the_permalink() ?>" aria-title="<?= get_the_title() ?>"><?= $attributes['buttonText'] ?></a>
 
         </div>
     </div>

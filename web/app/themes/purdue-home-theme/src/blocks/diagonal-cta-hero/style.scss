@@ -10,10 +10,12 @@
     margin-top: auto;
     margin-bottom: 1rem !important;
   }
+
   &.image-align-left-desktop {
     .image {
       left: 0;
       right: auto;
+
       &:before {
         height: 101%;
         left: auto;
@@ -21,71 +23,89 @@
         clip-path: polygon(0 100%, 100% 0, 100% 100%);
       }
     }
+
     .purdue-home-diagonal-cta-hero__content {
       margin-left: auto;
     }
+
     .cta-play,
     .cta-pause {
       left: 2rem;
-      right:auto;
+      right: auto;
+
       @include mobile {
         left: 1rem;
       }
     }
   }
+
   &.image-align-top-mobile {
     @include touch {
       display: flex;
       flex-direction: column-reverse;
     }
   }
-  &.minheight-300{
+
+  &.minheight-300 {
+
     // min-height:300px;
     // height:1px;
     @include touch {
-      min-height:0px;
-      height:auto;
+      min-height: 0px;
+      height: auto;
     }
   }
-  &.minheight-500{
+
+  &.minheight-500 {
+
     // min-height:500px;
     // height:1px;
     @include touch {
-      min-height:0px;
-      height:auto;
+      min-height: 0px;
+      height: auto;
     }
   }
-  &.minheight-700{
+
+  &.minheight-700 {
+
     // min-height:700px;
     // height:1px;
     @include touch {
-      min-height:0px;
-      height:auto;
+      min-height: 0px;
+      height: auto;
     }
   }
+
   &.no-diagonal {
     .image {
       width: 48%;
+
       &:before {
-        content:none;
+        content: none;
       }
+
       @include touch {
         width: 100%;
       }
     }
+
     .purdue-home-diagonal-cta-hero__content {
       width: 48%;
+
       @include touch {
         width: 100%;
       }
     }
   }
+
   .section.has-padding-top-large {
-    height:100%;
+    height: 100%;
+
     @include mobile {
       padding-bottom: 2rem;
     }
   }
+
   .image {
     position: absolute;
     top: 0;
@@ -93,17 +113,20 @@
     width: 50%;
     height: 100%;
     z-index: 0;
+
     @include touch {
       position: relative;
       width: 100%;
     }
+
     img,
     video {
       height: 100%;
       width: 100%;
       object-fit: cover;
-      display:block;
+      display: block;
     }
+
     &:before {
       background: $white;
       clip-path: polygon(0 0, 0 100%, 100% 0);
@@ -114,26 +137,31 @@
       position: absolute;
       width: 10rem;
       z-index: 1;
+
       @include touch {
         content: none;
       }
     }
   }
+
   &.has-black-background {
     .image:before {
       background: $black;
     }
   }
+
   &.has-gray-background {
     .image:before {
       background: $primary-background-gray;
     }
   }
+
   &.has-gold-background {
     .image:before {
       background: $boiler-gold;
     }
   }
+
   .container {
     display: flex;
     align-items: flex-start;
@@ -141,8 +169,10 @@
     flex-direction: column;
     height: 100%;
   }
+
   &__content {
     width: 48%;
+
     p:last-of-type {
       margin-bottom: 5rem;
     }
@@ -150,38 +180,47 @@
     @include touch {
       width: 100%;
     }
+
     .breadcrumbs {
       background-color: transparent;
       padding: 0;
       color: $black;
       margin-bottom: 1.5rem;
+
       ul {
         list-style-type: none;
         padding: 0;
       }
+
       a {
         font-weight: 400;
       }
+
       .current-item {
         font-weight: 400;
         color: $black;
       }
     }
   }
+
   &__subheader {
     margin-bottom: 3.375rem !important;
+
     @include mobile {
       margin-bottom: 2.5rem !important;
     }
   }
+
   &__header.second-level-page-heading {
     margin-bottom: 1.25rem !important;
     z-index: 1;
     text-align: left;
+
     &:last-child {
       margin-bottom: 0 !important;
     }
   }
+
   &__subtext {
     color: $black;
     font-family: $acumin-pro;
@@ -192,25 +231,31 @@
     margin-bottom: 4rem !important;
     max-width: 840px;
     z-index: 1;
+
     &:last-child {
       margin-bottom: 0 !important;
     }
+
     @include mobile {
       font-size: 1rem;
       margin-bottom: 1.5rem !important;
     }
+
     p {
       font-size: 20px;
       line-height: 30px;
     }
   }
+
   .tagged-header {
     left: 10px;
   }
+
   .purdue-home-button-list {
     justify-content: flex-start;
     padding-left: 0;
   }
+
   .cta-play,
   .cta-pause {
     display: none;
@@ -226,10 +271,12 @@
     cursor: pointer;
     padding: 0;
     line-height: 1;
+
     &.is-active {
       display: block;
       width: 32px;
       height: 32px;
+
       @include mobile {
         bottom: 1rem;
         right: 1rem;
@@ -237,35 +284,39 @@
     }
   }
 
-
-
   // src/blocks/link-hero/style.scss
   .purdue-home-link-hero {
     .section.has-padding-exlarge {
       padding-top: 8rem;
       padding-bottom: 3rem;
       height: 100%;
+
       @include mobile {
         padding-top: 4rem;
         padding-bottom: 1.875rem;
       }
     }
+
     .container {
       display: flex;
       align-items: center;
       flex-direction: column;
       height: 100%;
     }
+
     &__subheader {
       margin-bottom: 3.375rem !important;
+
       @include mobile {
         margin-bottom: 2.5rem !important;
       }
     }
+
     &__header {
       color: $white;
       margin-bottom: 1.25rem !important;
     }
+
     &__subtext {
       color: $white;
       font-family: $acumin-pro;
@@ -275,31 +326,37 @@
       text-align: center;
       margin-bottom: 4rem !important;
       max-width: 840px;
+
       @include mobile {
         font-size: 1rem;
       }
     }
+
     &__arrow {
       margin-top: auto;
-      & > * {
+
+      &>* {
         color: $boiler-gold;
       }
     }
+
     &__list-container {
       display: flex;
       flex-direction: row;
       align-items: center;
       width: 100%;
       max-width: 1200px;
+
       @media all and (min-width: 1280px) {
-          width: 80% !important;
+        width: 80% !important;
       }
-      
+
       @include mobile {
         flex-direction: column;
         align-items: flex-start;
       }
     }
+
     &__list--desktop {
       display: flex;
       flex-wrap: wrap;
@@ -310,9 +367,11 @@
       position: relative;
       padding-left: 0 !important;
       padding-bottom: 0 !important;
+
       @media (min-width: 1280px) {
         width: 28vw;
       }
+
       &:after {
         content: "";
         position: absolute;
@@ -323,31 +382,36 @@
         background-position: center;
         background-size: 10px 2px;
         background-repeat: repeat-x;
-        background-image: linear-gradient(
-          to right,
-          #fff 20%,
-          rgba(255, 255, 255, 0) 0%
-        );
+        background-image: linear-gradient(to right,
+            #fff 20%,
+            rgba(255, 255, 255, 0) 0%);
       }
+
       @include touch {
         display: none;
       }
+
       li {
         z-index: 2;
         padding-bottom: 0 !important;
       }
+
       .purdue-home-button.purdue-home-button--black {
         font-size: 1rem;
+
         &:after {
           content: none;
         }
       }
     }
+
     &__list--mobile.purdue-home-select {
       display: none;
+
       select {
         width: 100%;
       }
+
       @include touch {
         display: flex;
         width: 100%;
@@ -355,6 +419,7 @@
         margin: 0 auto;
       }
     }
+
     &__list-desc {
       font-family: $united-sans-condensed;
       font-size: 1.125rem;
@@ -365,41 +430,61 @@
       text-transform: uppercase;
       margin-right: 1.5rem;
       flex-shrink: 0;
+
       @include mobile {
         margin-right: 0;
         margin-bottom: 0.7rem;
       }
     }
-    .purdue-home-link-hero__subtext +  ul.purdue-home-button-list{
+
+    .purdue-home-link-hero__subtext+ul.purdue-home-button-list {
       margin-top: -1.5rem;
     }
+
     ul.purdue-home-button-list {
       padding-left: 0;
       margin-bottom: 3rem;
     }
   }
+
   .hero-down-arrow {
     display: flex;
     justify-content: center;
-    & > * {
+
+    &>* {
       position: relative;
       color: $boiler-gold;
       margin-top: 3rem;
       font-size: 2rem;
       cursor: pointer;
-      animation: bounce 2s infinite;
-      &:hover {
+      animation-name: bounce;
+      animation-duration: 2s;
+      animation-iteration-count: 2;
+      animation-fill-mode: forwards;
+
+      &:hover, &:focus {
         opacity: 0.9;
-        animation: none;
       }
+
       @media (max-width: 1199px) {
         width: 35px;
       }
+
       @media (max-width: 767px) {
         margin-top: 1.75rem;
       }
     }
   }
+
+/* Pause animation when reduced-motion is set */
+@media (prefers-reduced-motion: reduce) {
+  .hero-down-arrow {
+    &>* {
+      animation-play-state: paused !important;
+    }
+  }
+}
+
   .has-global-header {
     .purdue-home-link-hero {
       @include widescreen {
@@ -412,5 +497,3 @@
 
 
 }
-
-

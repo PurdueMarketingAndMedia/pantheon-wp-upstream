@@ -108,10 +108,12 @@ const edit = (props) => {
 		buttonText: "Learn More",
 		buttonCSS: "",
 		external: true,
+		ariaLabel: "",
 		linkURL2: "",
 		buttonText2: "Learn More",
 		external2: true,
 		buttonCSS2: "",
+		ariaLabel2: "",
 	};
 
 	const makeCard = () => ({
@@ -403,6 +405,17 @@ const edit = (props) => {
 		setAttributes({ cards: newCards });
 	}
 
+	const handleAiraLabelChange = (label, id) => {
+		const newCards = cards.map((item) =>
+			item.id === id ? {
+				...item,
+				ariaLabel: label
+			} : item
+		);
+		setAttributes({ cards: newCards });
+	}
+
+
 	const handleLinkURL2Change = (url, id) => {
 		const newCards = cards.map((item) =>
 			item.id === id ? {
@@ -414,7 +427,6 @@ const edit = (props) => {
 	};
 	const handleButtonText2Change = (button, id) => {
 
-		console.log(button);
 		const newCards = cards.map((item) =>
 			item.id === id ? {
 				...item,
@@ -438,6 +450,16 @@ const edit = (props) => {
 			item.id === id ? {
 				...item,
 				buttonCSS2: css
+			} : item
+		);
+		setAttributes({ cards: newCards });
+	}
+
+	const handleAiraLabel2Change = (label, id) => {
+		const newCards = cards.map((item) =>
+			item.id === id ? {
+				...item,
+				ariaLabel2: label
 			} : item
 		);
 		setAttributes({ cards: newCards });
@@ -666,6 +688,7 @@ const edit = (props) => {
 										handleButtonTextChange(val, item.id);
 									}}
 									value={item.buttonText}
+									help={"Card link text is displayed only when a second card link is used."}
 								/>
 							</PanelRow>
 							<PanelRow>
@@ -676,6 +699,17 @@ const edit = (props) => {
 										handleLinkURLChange(val, item.id);
 									}}
 									value={item.linkURL}
+								/>
+							</PanelRow>
+							<PanelRow>
+								<TextControl
+									label={"ARIA Label for Card Link"}
+									onChange={(val) => {
+										handleAiraLabelChange(val, item.id);
+									}}
+									value={item.ariaLabel}
+									help="Provide an accessible label for the link. Defualts to the Card Link Text or Card Title if left empty."
+
 								/>
 							</PanelRow>
 							<PanelRow>
@@ -722,6 +756,16 @@ const edit = (props) => {
 									onChange={() => {
 										handleExternal2Change(item.id);
 									}}
+								/>
+							</PanelRow>
+							<PanelRow>
+								<TextControl
+									label={"ARIA Label for Card Link 2"}
+									onChange={(val) => {
+										handleAiraLabel2Change(val, item.id);
+									}}
+									value={item.ariaLabel2}
+									help="Provide an accessible label for the link. Defualts to the Card Link 2 Text if left empty."
 								/>
 							</PanelRow>
 							<PanelRow>
@@ -1955,7 +1999,7 @@ const edit = (props) => {
 												background === "black" ? " slider-controls--dark" : ""
 											}`}
 										>
-											<button class="glide__arrow arrow--left">prev</button>
+											<button class="glide__arrow arrow--left">previous</button>
 											<div class="glide__bullets" data-glide-el="controls[nav]">
 												{cards.map((card, index) => {
 													return (

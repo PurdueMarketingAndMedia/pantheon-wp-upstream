@@ -2,15 +2,15 @@
     "links" : [
         {
             "link_text": "Indianapolis",
-            "link_url": "https://www.purdue.edu/campuses/indianapolis/"
+            "link_url": "https://www.purdue.edu/indianapolis/"
         },
         {
             "link_text": "Housing",
             "link_url": "https://www.housing.purdue.edu/"
         },
         {
-            "link_text": "Majors",
-            "link_url": "https://www.admissions.purdue.edu/majors/index.php"
+            "link_text": "Tuition &amp; Costs",
+            "link_url": "https://admissions.purdue.edu/cost-financial-aid/"
         },
         {
             "link_text": "Online Programs",

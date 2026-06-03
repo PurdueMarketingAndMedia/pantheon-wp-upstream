@@ -33,6 +33,7 @@ const Edit = ( props )=>{
     link1_content:'',
     link1_linkText:'Learn More',
     link1_linkURL:'',
+    link1_ariaLabel:'',
     link1_external:true,
     link1_X:0,
     link1_Y:0,
@@ -44,6 +45,7 @@ const Edit = ( props )=>{
     link2_content:'',
     link2_linkText:'Learn More',
     link2_linkURL:'',
+    link2_ariaLabel:'',
     link2_external:true,
     link2_X:0,
     link2_Y:0,
@@ -140,6 +142,15 @@ const handleSlideLinkURL1Change = (text, id)=>{
 	);
 	setAttributes({ slides: newLinks });
 }
+const handleSlideLink1AriaLabelChange = (text, id)=>{
+	const newLinks = slides.map((item) =>
+		item.id === id ? {
+			...item,
+			link1_ariaLabel: text,
+		} : item
+	);
+	setAttributes({ slides: newLinks });
+}
 const handleSlideLinkText1Change = (text, id)=>{
 	const newLinks = slides.map((item) =>
 		item.id === id ? {
@@ -163,6 +174,15 @@ const handleSlideLinkURL2Change = (text, id)=>{
 		item.id === id ? {
 			...item,
 			link2_linkURL: text,
+		} : item
+	);
+	setAttributes({ slides: newLinks });
+}
+const handleSlideLink2AriaLabelChange = (text, id)=>{
+	const newLinks = slides.map((item) =>
+		item.id === id ? {
+			...item,
+			link2_ariaLabel: text,
 		} : item
 	);
 	setAttributes({ slides: newLinks });
@@ -367,6 +387,18 @@ slideEditorFields = slides.map((item, index) => {
           />
         </PanelRow>:""}
         {item.addLink1 ?
+         <PanelRow>
+            <TextControl
+                label={"ARIA Label for Link"}
+                onChange={(val) => {
+                    handleSlideLink1AriaLabelChange(val, item.id);
+                }}
+                value={item.link1_ariaLabel}
+                help="Provide an accessible label for the link. Defaults to the Link Text if left empty."
+
+            />
+            </PanelRow>:""}
+        {item.addLink1 ?
         <PanelRow>
           <CheckboxControl
             label="Open link in new tab?"
@@ -475,6 +507,18 @@ slideEditorFields = slides.map((item, index) => {
             onChange={ ( val ) => handleSlideLinkURL2Change( val, item.id ) }
           />
         </PanelRow>:""}
+         {item.addLink1 && item.addLink2 ?
+         <PanelRow>
+            <TextControl
+                label={"ARIA Label for Link 2"}
+                onChange={(val) => {
+                    handleSlideLink2AriaLabelChange(val, item.id);
+                }}
+                value={item.link2_ariaLabel}
+                help="Provide an accessible label for the link. Defaults to the Link Text if left empty."
+
+            />
+            </PanelRow>:""}
         {item.addLink1 && item.addLink2 ?
         <PanelRow>
           <CheckboxControl

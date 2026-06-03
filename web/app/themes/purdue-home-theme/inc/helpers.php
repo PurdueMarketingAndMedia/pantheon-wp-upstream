@@ -355,7 +355,7 @@ if(! function_exists( 'purdue_get_vimeo_id' )){
 }
 if(! function_exists( 'purdue_get_youtube_id' )){
 	function purdue_get_youtube_id($url){
-		preg_match('%(?:youtube(?:-nocookie)?.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu.be/)([^"&?/ ]{11})%i', $url, $match);
+		preg_match('%(?:youtube(?:-nocookie)?.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?|live)/|.*[?&]v=)|youtu.be/)([^"&?/ ]{11})(?:.*si=([^"&?/ ]+))?%i', $url, $match);
 		if (isset($match[1])) {
 			$videoId = print_r($match[1], TRUE);
 		} else {

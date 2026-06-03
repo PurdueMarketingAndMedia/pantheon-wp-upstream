@@ -31,6 +31,7 @@
                         <div class="glide__slides">
                             <?php
                                 foreach ($attributes['cards'] as $card) {
+                                    $headingTag = $attributes['header'] ? "h3" : "h2";
                                     if ($card['youtube'] != "") {
                                         $cardClass = " purdue-home-cta-card__has-youtube";
                                         preg_match('%(?:youtube(?:-nocookie)?.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu.be/)([^"&?/ ]{11})%i', $card['youtube'], $match);
@@ -104,7 +105,7 @@
                                                         }
                                                         ?>
                                         </div>
-                                        <p class="purdue-home-cta-carousel__quote-content"><?= $card['subtext'] ?></p>
+                                        <<?= $headingTag ?> class="purdue-home-cta-carousel__quote-content"><?= $card['subtext'] ?></<?= $headingTag ?> >
                                         <?php
                                                 } else if (isset($card['type']) && $card['type'] == "story") {
                                                     if ($card['tag']) {
@@ -116,7 +117,7 @@
                                                     }
                                                 ?>
                                         <div class="purdue-home-cta-carousel__story-wrap">
-                                            <p class="purdue-home-cta-carousel__story-title"><?= $card['title'] ?></p>
+                                            <<?= $headingTag ?> class="purdue-home-cta-carousel__story-title"><?= $card['title'] ?></<?= $headingTag ?>>
                                             <?php
                                                         if ($card['subtext']) {
                                                         ?>
@@ -137,7 +138,7 @@
 
                                                         <div class="purdue-home-cta-carousel__story-wrap cta-profile">
 
-                                                            <p class="purdue-home-cta-carousel__story-title"><?= $card['title'] ?></p>
+                                                            <<?= $headingTag ?> class="purdue-home-cta-carousel__story-title"><?= $card['title'] ?></<?= $headingTag ?>>
                                                             <?php
                                                                         if ($card['subtext']) {
                                                                         ?>
@@ -177,21 +178,25 @@
                                                     $color2 = $card["color2"] == "black" ? ' purdue-home-button--black' : '';
                                                 ?>
 
-                                    <?php if ($card['type'] != "profile") { ?>
-                                        <ul class="purdue-home-button-list">
-                                            <li><a class="purdue-home-button<?= $color1 ?>"
+                                    <?php if ($card['type'] != "profile") { 
+                                        $buttonList = $card['linkURL2'] && $card['youtube'] == "" ? "ul" : "div";
+                                        $buttonWrapper = $card['linkURL2'] && $card['youtube'] == ""  ? "li" : "div";
+                                    ?>
+                                        <<?= $buttonList ?> class="purdue-home-button-list">
+                                            
+                                            <<?= $buttonWrapper ?>><a class="purdue-home-button<?= $color1 ?>"
                                                     href="<?= $card["linkURL1"] ?>"
-                                                    <?= $target1 ?>><?= trim($card["linkText1"]) ?></a></li>
+                                                    <?= $target1 ?>><?= trim($card["linkText1"]) ?></a></<?= $buttonWrapper ?>>
                                             <?php
-                                                        if ($card['linkURL2'] && $card['youtube'] == "") {
+                                                if ($card['linkURL2'] && $card['youtube'] == "") {
                                                         ?>
-                                            <li><a class="purdue-home-button<?= $color2 ?>"
+                                                <<?= $buttonWrapper ?>><a class="purdue-home-button<?= $color2 ?>"
                                                     href="<?= $card["linkURL2"] ?>"
-                                                    <?= $target2 ?>><?= trim($card["linkText2"]) ?></a></li>
+                                                    <?= $target2 ?>><?= trim($card["linkText2"]) ?></a></<?= $buttonWrapper ?>>
                                             <?php
-                                                        }
-                                                        ?>
-                                        </ul>
+                                                }
+                                                ?>
+                                        </<?= $buttonList ?>>
                                         <?php }?>
                                         <?php
                                                 }
@@ -209,7 +214,7 @@
                     $controlClass = $attributes['background'] == "black" ? " slider-controls--dark" : "";
                     ?>
                 <div class="slider-controls<?= $controlClass ?>">
-                    <button class="glide__arrow arrow--left">prev</button>
+                    <button class="glide__arrow arrow--left">previous</button>
                     <div class="glide__bullets" data-glide-el="controls[nav]">
                         <?php
                             foreach ($attributes['cards'] as $key => $card) {

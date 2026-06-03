@@ -1,16 +1,18 @@
 
-import {CustomActiveClass, check_resize} from '../../../src/js/front-end/slider';
+import {CustomActiveClass, check_resize, changeFocusOnSlideChange} from '../../../src/js/front-end/slider';
 import Glide from '@glidejs/glide';
 
 const rtbHero_sliders = document.querySelectorAll('.purdue-home-slider--rtb-hero');
 
-if(rtbHero_sliders && rtbHero_sliders.length>0){
+if (rtbHero_sliders && rtbHero_sliders.length > 0) {
 	for (let i = 0; i < rtbHero_sliders.length; i++) {
   let count= parseInt(rtbHero_sliders[i].dataset.number)>3?3:parseInt(rtbHero_sliders[i].dataset.number)
 	let glide = new Glide(rtbHero_sliders[i], {
 		type: 'carousel',
     gap: 24,
 		perView: 1.5,
+    keyboard: false,
+    slideWidth: '200',
     breakpoints: {
       1024:{
         perView: count,
@@ -19,6 +21,7 @@ if(rtbHero_sliders && rtbHero_sliders.length>0){
         perView: 1,
       },
     },
+	keyboard: false
 	});
 	const nextButton = rtbHero_sliders[i].querySelector('.arrow--left');
 	const prevButton = rtbHero_sliders[i].querySelector('.arrow--right');
@@ -36,15 +39,15 @@ if(rtbHero_sliders && rtbHero_sliders.length>0){
   glide.on('resize', () => {
     check_resize(glide);
   });
-  glide.mount({CustomActiveClass});
+  glide.mount({CustomActiveClass, changeFocusOnSlideChange});
   check_resize(glide);
 }}
 //fix cursor on safari
-const rtbCards=document.querySelectorAll('.purdue-home-slider--rtb-hero .purdue-home-proofpoint--simple');
-if(rtbCards && rtbCards.length>0){
-  rtbCards.forEach((item)=>{
-    item.addEventListener("mousedown", (event)=>{
-      event.preventDefault()
-    })
-  })
+const rtbCards = document.querySelectorAll('.purdue-home-slider--rtb-hero .purdue-home-proofpoint--simple');
+if (rtbCards && rtbCards.length > 0) {
+	rtbCards.forEach((item) => {
+		item.addEventListener("mousedown", (event) => {
+			event.preventDefault()
+		})
+	})
 }

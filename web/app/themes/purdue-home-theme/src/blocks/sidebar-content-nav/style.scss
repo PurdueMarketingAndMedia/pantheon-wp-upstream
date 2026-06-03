@@ -1,0 +1,550 @@
+@import "../../../src/style/front-end/overides/colors";
+@import "../../../src/style/front-end/overides/variables";
+@import "../../../node_modules/bulma/sass/utilities/mixins.sass";
+
+// Everything is nested under .scn-block so selectors have enough specificity
+// to win against the theme's generic `.main-content ul`, `.main-content ul ul`,
+// and `a` base styles without needing `!important`.
+//
+// The block is now a pure sidebar. Place it inside a narrow column (e.g. a
+// wp-block-column) next to the main content column; the sidebar fills the
+// column width and sticks to the top while scrolling.
+
+.scn-block {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  position: sticky;
+  top: 2rem;
+  align-self: flex-start;
+  max-height: calc(100vh - 3rem);
+  overflow-y: auto;
+  overflow-x: hidden;
+  // Small left padding so keyboard focus outlines on full-width L1/L2
+  // items aren't clipped by overflow-x: hidden.
+  padding-left: 0.25rem;
+  padding-right: 1.5rem;
+
+  // subtle scrollbar styling (WebKit)
+  &::-webkit-scrollbar { width: 6px; }
+  &::-webkit-scrollbar-thumb { background: #d9d9d9; border-radius: 3px; }
+  &::-webkit-scrollbar-thumb:hover { background: #bfbfbf; }
+
+  @include mobile {
+    position: static;
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
+  }
+
+  // ─── Filter bar ───────────────────────────────────────────────────────────
+
+  .scn-filter {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: $white;
+    // padding-bottom is an opaque white buffer that masks scrolled content as
+    // it passes under the sticky bar, so overflowed text never touches the input.
+    padding-bottom: 0.75rem;
+    margin-bottom: 0.75rem;
+
+    @include mobile {
+      position: static;
+    }
+  }
+
+  .scn-filter__input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.55rem 2.75rem 0.55rem 0.85rem;
+    font-family: $acumin-pro;
+    font-size: 0.9375rem;
+    font-weight: 400;
+    color: $black;
+    background: #fff;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+    &::placeholder {
+      color: #8a8a8a;
+    }
+
+    &:focus {
+      border-color: $aged-gold;
+      box-shadow: 0 0 0 2px rgba(142, 111, 62, 0.15);
+    }
+
+    &:focus-visible {
+      border-color: $aged-gold;
+      box-shadow: 0 0 0 2px rgba(142, 111, 62, 0.35);
+    }
+  }
+
+  .scn-filter__icon {
+    position: absolute;
+    right: 0.65rem;
+    // The icon is positioned against .scn-filter, which carries a 0.75rem
+    // padding-bottom buffer. Offset up by half that buffer (0.375rem) so the
+    // icon stays centered on the input itself, not the taller padded box.
+    top: calc(50% - 0.375rem);
+    transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    stroke: $aged-gold;
+    pointer-events: none;
+  }
+
+  .scn-filter__empty {
+    display: none;
+    padding: 0.5rem 0;
+    font-family: $acumin-pro;
+    font-size: 0.9375rem;
+    color: #666;
+    font-style: italic;
+  }
+
+  &.is-filter-empty .scn-filter__empty {
+    display: block;
+  }
+
+  // ─── Nav group wrapper ────────────────────────────────────────────────────
+
+  .scn-nav-group {
+    margin-bottom: 1.5rem;
+
+    &:last-of-type {
+      margin-bottom: 1rem;
+    }
+  }
+
+  // ─── Top-level list ───────────────────────────────────────────────────────
+
+  ul.scn-nav,
+  ul.scn-nav__children {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  ul.scn-nav__children {
+    padding: 0 0 0.5rem;
+  }
+
+  ul.scn-nav__children--l3 {
+    border-left: 1px solid #d9d9d9;
+    padding: 0 0 0.25rem 1.25rem;
+  }
+
+  // ─── Items (generic) ──────────────────────────────────────────────────────
+
+  li.scn-nav__item {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-wrap: pretty;
+
+    &::before,
+    &::marker {
+      content: none;
+      display: none;
+    }
+  }
+
+  li.scn-nav__item--l1 {
+
+  }
+
+  // Shared base for L1 trigger and L1 link
+  %scn-l1-base {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.75rem 0;
+    font-family: $acumin-pro;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: $black;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    transition: color 0.15s ease;
+
+    &:hover,
+    &:focus {
+      color: $aged-gold;
+      text-decoration: none;
+    }
+  }
+
+  // L1 parent row: label link grows, caret toggle sits at the right, children wrap below.
+  .scn-nav__item--l1.scn-nav__item--expandable {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    // flex-basis: 0 (not auto) + min-width: 0 so a long label wraps WITHIN its
+    // own column instead of contributing its full single-line width to the flex
+    // line-break calc — otherwise the label claims the whole row and pushes the
+    // caret toggle onto its own line (e.g. "Research Security & Export Controls").
+    > a.scn-nav__link--l1 { flex: 1 1 0; min-width: 0; width: auto; }
+    > .scn-nav__children  { flex: 0 0 100%; }
+  }
+
+  // Caret toggle button for L1 parents (icon only; the label is a separate <a>).
+  .scn-nav__trigger--l1 {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    width: auto;
+    padding: 0.75rem 0 0.75rem 0.5rem;
+    margin: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: $black;
+    transition: color 0.15s ease;
+
+    &:hover,
+    &:focus { color: $aged-gold; }
+  }
+
+  a.scn-nav__link--l1 {
+    @extend %scn-l1-base;
+
+    &.is-active,
+    &[aria-current="page"] {
+      color: $aged-gold;
+    }
+  }
+
+  // Plus / minus icons
+  .scn-nav__icon--plus  { display: block; }
+  .scn-nav__icon--minus { display: none; }
+
+  .scn-nav__item--l1.is-open {
+    .scn-nav__icon--plus  { display: none; }
+    .scn-nav__icon--minus { display: block; }
+
+    > .scn-nav__trigger--l1 {
+      //color: $aged-gold;
+    }
+  }
+
+  // ─── L1 icons ─────────────────────────────────────────────────────────────
+
+  .scn-nav__icon {
+    flex-shrink: 0;
+    stroke: $aged-gold;
+  }
+
+  .scn-nav__icon--plus,
+  .scn-nav__icon--minus {
+    width: 22px;
+    height: 22px;
+    margin-top: 0.05em;
+  }
+
+  .scn-nav__icon--external {
+    display: inline-block;
+    width: 1.1em;
+    height: 1.1em;
+    margin-left: 0.25em;
+    vertical-align: -0.2em;
+  }
+
+  // Keeps the final label word and the external ↗ icon on the same line so the
+  // arrow never wraps onto a line by itself. frontend.js builds this wrapper.
+  .scn-nav__label-end {
+    white-space: nowrap;
+  }
+
+  // Hover / open-section background. Intentionally does NOT move the gold
+  // accent bar — that bar is reserved for "you are here" (current page) so
+  // the two states read as distinct.
+  %scn-child-hover {
+    background-color: #f4f4f4;
+    text-decoration: none;
+  }
+
+  // Current-page appearance for L2/L3 leaf links: bold weight + a solid
+  // gold left accent. No background — the gray bg is reserved for hover/focus
+  // so the two states are visually unambiguous. Border width stays at 2px
+  // (matching the default gray bar) so layout doesn't shift between states.
+  %scn-child-current {
+    font-weight: 600;
+    border-left-color: $boiler-gold;
+    text-decoration: none;
+  }
+
+  // ─── L2 items ─────────────────────────────────────────────────────────────
+
+  li.scn-nav__item--l2 {
+    margin: 0;
+  }
+
+  %scn-l2-base {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.45rem 0.5rem 0.45rem 1rem;
+    border-left: 1px solid #d9d9d9;
+    color: $black;
+    font-family: $acumin-pro;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.4;
+    text-decoration: none;
+    background: none;
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+    cursor: pointer;
+    text-align: left;
+    box-sizing: border-box;
+    transition: background-color 0.15s ease;
+
+    &:hover,
+    &:focus {
+      @extend %scn-child-hover;
+    }
+  }
+
+  a.scn-nav__link--l2 {
+    @extend %scn-l2-base;
+
+    &.is-active,
+    &[aria-current="page"] {
+      @extend %scn-child-current;
+    }
+  }
+
+  // L2 parent row: label link grows, caret toggle at the right, children wrap below.
+  .scn-nav__item--l2.scn-nav__item--expandable {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+
+    // Same flex-basis: 0 + min-width: 0 fix as L1 so a long L2 label wraps in
+    // its column rather than bumping the chevron toggle to the next line.
+    > a.scn-nav__link--l2 { flex: 1 1 0; min-width: 0; width: auto; }
+    > .scn-nav__children  { flex: 0 0 100%; }
+  }
+
+  // Caret toggle button for L2 parents (icon only; the label is a separate <a>).
+  .scn-nav__trigger--l2 {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    width: auto;
+    padding: 0.45rem 0.5rem;
+    margin: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: $black;
+
+    &:hover,
+    &:focus { color: $aged-gold; }
+  }
+
+  .scn-nav__icon--chevron {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    stroke: $aged-gold;
+    transition: transform 0.2s ease;
+  }
+
+  .scn-nav__item--l2.is-open {
+    // No background on the open caret — the trigger is now just the chevron,
+    // not the full row, so the gray hover/open fill would look out of place.
+    .scn-nav__icon--chevron {
+      transform: rotate(180deg);
+    }
+  }
+
+  // ─── L3 items ─────────────────────────────────────────────────────────────
+
+  li.scn-nav__item--l3 {
+    margin: 0;
+    position: relative;
+
+    &.is-active::before {
+      content: '';
+      // The generic li.scn-nav__item::before rule sets `display: none` to kill
+      // list markers. That rule's specificity is lower than ours, but per-
+      // property cascade still applies `display: none` here because we don't
+      // override it — so the gold bar must explicitly opt back in.
+      display: block;
+      position: absolute;
+      left: -21px;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: $boiler-gold;
+      pointer-events: none;
+    }
+  }
+
+  // NOTE: L3 links are <a>, not <ul> — the original selector was `ul.scn-nav__link--l3`
+  // which meant L3 styles never applied and theme defaults (gold underline) showed.
+  a.scn-nav__link--l3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.4rem 0.5rem 0.4rem 1rem;
+    color: $black;
+    font-family: $acumin-pro;
+    font-size: 0.9375rem;
+    font-weight: 400;
+    line-height: 1.4;
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: background-color 0.15s ease;
+
+    &:hover,
+    &:focus {
+      @extend %scn-child-hover;
+    }
+
+    &.is-active,
+    &[aria-current="page"] {
+      font-weight: 600;
+    }
+  }
+
+  // ─── Filter hidden state ──────────────────────────────────────────────────
+
+  .scn-nav__item.is-hidden {
+    display: none;
+  }
+
+  // ─── Contact Box ──────────────────────────────────────────────────────────
+
+  .scn-contact-box {
+    background: $black;
+    display: flex;
+    align-items: stretch;
+    margin-top: 2rem;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .scn-contact-box__label {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    color: $boiler-gold;
+    font-family: $united-sans-condensed;
+    font-weight: 700;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-right: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  ul.scn-contact-box__links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    li {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      &::marker { content: none; }
+    }
+  }
+
+  a.scn-contact-box__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    color: $white;
+    text-decoration: none;
+    padding: 0.4rem 0;
+    font-family: $acumin-pro;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.3;
+    transition: color 0.15s ease;
+
+    &::after {
+      content: "→";
+      color: $boiler-gold;
+      font-weight: 400;
+      font-size: 1.125rem;
+      flex-shrink: 0;
+      transition: transform 0.15s ease;
+    }
+
+    &:hover,
+    &:focus {
+      color: $boiler-gold;
+      text-decoration: none;
+
+      &::after {
+        transform: translateX(3px);
+      }
+    }
+  }
+
+  // ─── Keyboard focus ───────────────────────────────────────────────────────
+  // Visible focus ring for keyboard users only (mouse clicks don't trigger it).
+
+  .scn-nav__trigger,
+  .scn-nav__link,
+  .scn-contact-box__link {
+    &:focus {
+      outline: none;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $aged-gold;
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+  }
+
+  // ─── Reduced motion ───────────────────────────────────────────────────────
+
+  @media (prefers-reduced-motion: reduce) {
+    .scn-filter__input,
+    .scn-nav__trigger,
+    .scn-nav__link,
+    .scn-nav__icon,
+    .scn-contact-box__link,
+    .scn-contact-box__link::after {
+      transition: none;
+    }
+  }
+
+  // ─── Editor overrides ─────────────────────────────────────────────────────
+
+  &.scn-block--editor {
+    position: static;
+    max-height: none;
+    overflow: visible;
+  }
+}

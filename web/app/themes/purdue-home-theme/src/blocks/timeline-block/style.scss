@@ -179,6 +179,9 @@
         padding: 1.875rem 1.5rem;
       }
       &.has-thumbnail{
+        img{
+          object-fit: cover;
+        }
         .flex-container--align-center{
           padding: 2.75rem 3.5rem;
           @include touch{
@@ -215,6 +218,9 @@
               padding-top:56.25%;
             }
             img{
+              object-fit: cover;
+            }
+            .purdue-home-background-image{
               object-fit: cover;
             }
           }

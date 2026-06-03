@@ -37,7 +37,7 @@ if ($searchOption == "wordpress") {
     $value = isset($_GET['s']) ? wp_filter_nohtml_kses(sanitize_text_field($_GET['s'])) : ""; ?>
     <form action="<?php echo home_url('/'); ?>" name="searchform" method="get" class="search-form">
         <i class="fas fa-search search-icon" aria-label="Search for:"></i>
-        <input type="search" title="search" class="search-field" placeholder="<?php echo $placeholder; ?>" name="s" value="<?php echo esc_attr($value); ?>">
+        <input type="search" title="search" class="search-field" aria-label="Search" placeholder="<?php echo $placeholder; ?>" name="s" value="<?php echo esc_attr($value); ?>">
         <button type="submit" class="search-button">Search</button>
         <button type="button" class="clear-button">
             <i class="fa-regular fa-circle-xmark" aria-label="Clear"></i>
@@ -47,8 +47,8 @@ if ($searchOption == "wordpress") {
     $value = isset($_GET['q']) ? wp_filter_nohtml_kses(sanitize_text_field($_GET['q'])) : "";
     $placeholder = purdue_search_placeholder_google(); ?>
     <form action="<?php echo home_url('/'); ?>/search" name="searchform" method="get" class="search-form">
-        <i class="fas fa-search search-icon" aria-label="Search for:"></i>
-        <input type="search" title="search" class="search-field" placeholder="<?php echo $placeholder; ?>" name="q" value="<?php echo esc_attr($value); ?>">
+        <i class="fas fa-search search-icon"></i>
+        <input type="search" title="search"  aria-label="Search for:" class="search-field" placeholder="<?php echo $placeholder; ?>" name="q" value="<?php echo esc_attr($value); ?>">
         <button type="submit" class="search-button">Search</button>
         <button type="button" class="clear-button">
             <i class="fa-regular fa-circle-xmark" aria-label="Clear"></i>

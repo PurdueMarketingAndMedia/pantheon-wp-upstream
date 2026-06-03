@@ -30,6 +30,10 @@ $ratioClass = !empty($attributes['aspectRatio']) ? 'is-16by9' : '';
 <div <?= $id ?> class="<?= esc_attr($blockclass) ?>" data-columns="<?= esc_attr($attributes['columns']) ?>">
     <div class="container">
         <div class="glide">
+            <div class="glide__live sr-only"
+                 aria-live="polite"
+                 aria-atomic="true">
+            </div>
             <div class="glide__track" data-glide-el="track">
                 <div class="glide__slides">
                     <?php if (!empty($attributes['type']) && $attributes['type'] === 'image') : ?>
@@ -71,17 +75,29 @@ $ratioClass = !empty($attributes['aspectRatio']) ? 'is-16by9' : '';
                                     </div>
                                     <div class="flex-container flex-container--align-bottom">
                                         <?php if (!empty($card['title'])) : ?>
-                                            <p class="purdue-home-image-slider__card-title"><?= esc_html($card['title']) ?></p>
+                                            <h2 class="purdue-home-image-slider__card-title"><?= esc_html($card['title']) ?></h2>
                                         <?php endif; ?>
                                         <?php if (!empty($card['subtext'])) : ?>
                                             <p class="purdue-home-image-slider__card-subtext"><?= esc_html($card['subtext']) ?></p>
                                         <?php endif; ?>
                                         <?php if (!empty($card['linkURL'])) :
-                                            $target = !empty($card['external']) ? '_blank' : '_self'; ?>
-                                            <a class="purdue-home-button"
+                                            $target = !empty($card['external']) ? '_blank' : '_self'; 
+                                            $external = isset($card["external"]) && $card["external"] == 'target="_blank"' ? "(Opens in a new tab)" : "";
+                                            $ariaLabel = "";
+                                            $buttonClass = !empty($card['buttonCSS']) ? 'purdue-home-button ' . esc_attr($card['buttonCSS']) : 'purdue-home-button';
+                                            if(isset($card["ariaLabel"]) && $card["ariaLabel"]!==""){
+                                                $ariaLabel = 'aria-label="'.$card["ariaLabel"].' '.$external.'"';
+                                            }elseif(isset($external) && $external!==""){
+                                                $ariaLabel = isset($card["linkText"])? 'aria-label="'.trim($card["linkText"]).' '.$external.'"':'';
+                                            }else{
+                                                $ariaLabel = "";
+                                            }  
+                                        ?>
+                                            <a class="<?= $buttonClass ?>"
                                                href="<?= esc_url($card['linkURL']) ?>"
                                                target="<?= esc_attr($target) ?>"
-                                                    <?= $target === '_blank' ? 'rel="noopener"' : '' ?>>
+                                                <?= $target === '_blank' ? 'rel="noopener"' : '' ?> 
+                                                <?= $ariaLabel ?>>
                                                 <?= esc_html($card['linkText']) ?>
                                             </a>
                                         <?php endif; ?>
@@ -92,8 +108,9 @@ $ratioClass = !empty($attributes['aspectRatio']) ? 'is-16by9' : '';
                     <?php endif; ?>
                 </div>
             </div>
-            <div class="slider-controls">
-                <button class="glide__arrow arrow--left">prev</button>
+            <?php $slideColor = !empty($attributes['background']) && $attributes['background'] === 'black' ? 'slider-controls slider-controls--dark' : 'slider-controls'; ?>
+            <div class="<?= $slideColor ?>">
+                <button class="glide__arrow arrow--left">previous</button>
                 <div class="glide__bullets" data-glide-el="controls[nav]">
                     <?php if (!empty($attributes['type']) && $attributes['type'] === 'image') : ?>
                         <?php foreach ($attributes['imgs'] as $key => $img) :

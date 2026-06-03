@@ -1,3 +1,5 @@
+import { flipBtnState } from '../../utils/flipBtnState.js';
+
 document.addEventListener("DOMContentLoaded", function () {
 	let carouselTimeout = null;
 	let slideOutTimeout = null;
@@ -64,26 +66,17 @@ document.addEventListener("DOMContentLoaded", function () {
 					const btn = e.currentTarget;
 					const icon = btn.querySelector('i');
 					if (btn.classList.contains('cta-play')) {
-						btn.classList.remove('cta-play');
-						btn.classList.add('cta-pause');
-						btn.setAttribute('aria-label', 'Pause Animation');
-						icon.classList.add('fa-circle-pause', 'cta-pause-icon');
-						icon.classList.remove('fa-circle-play', 'cta-play-icon');
 						animateHeader.classList.remove('pause');
 						isPaused = false;
 						stopTimers();
 						showFrame(currentIndex = (currentIndex + 1) % content.length);
 						scheduleNext();
 					} else {
-						btn.classList.add('cta-play');
-						btn.classList.remove('cta-pause');
-						btn.setAttribute('aria-label', 'Play Animation');
-						icon.classList.add('fa-circle-play', 'cta-play-icon');
-						icon.classList.remove('fa-circle-pause', 'cta-pause-icon');
 						animateHeader.classList.add('pause'); // optional, for CSS animation-play-state
 						isPaused = true;
 						stopTimers();
 					}
+					flipBtnState(btn);
 				});
 			}
 		}

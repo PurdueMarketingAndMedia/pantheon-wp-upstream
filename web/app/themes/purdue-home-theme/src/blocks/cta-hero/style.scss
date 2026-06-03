@@ -3,17 +3,117 @@
 @import '../../../node_modules/bulma/sass/utilities/mixins.sass';
 
 .purdue-home-cta-hero__header-animate.pause * {
-	animation-play-state: paused;
+  animation-play-state: paused;
 }
 
 @keyframes slideIn {
-    0% {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+.purdue-home-cta-hero {
+  .cta-btnctrl {
+    color: $aged-gold;
+    font-size: 2rem;
+    z-index: 2;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+  }
+
+  .cta-play,
+  .cta-pause {
+    &.is-active {
+      display: block;
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  .controls {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .section {
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .tagged-header {
+        align-self: center;
+        margin-bottom: 2.5rem;
+
+        @include mobile {
+          margin-bottom: 2rem;
+        }
+      }
+    }
+  }
+
+  &__header.second-level-page-heading {
+    max-width: 950px;
+    margin-bottom: 1.875rem;
+    overflow: hidden;
+
+    @include mobile {
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  .purdue-home-cta-hero__header-static {
+    position: relative;
+    z-index: 1;
+    background: $white;
+    display: block;
+    width: 100%;
+  }
+
+  .purdue-home-cta-hero__header-animate {
+    display: block;
+  }
+
+  .purdue-home-cta-hero__header-animate-item {
+    opacity: 0;
+    position: relative;
+    z-index: 0;
+    transform: translateX(-100%);
+
+    &.slide-in {
+      display: inline-block;
+      transform: translateY(0);
+      opacity: 1;
+      animation: slideIn 2s;
+    }
+
+    &.slide-out {
+      display: inline-block;
       transform: translateX(-100%);
       opacity: 0;
-    }
-    100% {
-      transform: translateX(0);
-      opacity: 1;
+      animation: slideOut 0.5s;
     }
   }
   @keyframes slideOut {
@@ -27,132 +127,119 @@
     }
   }
   .purdue-home-cta-hero {
-	  .cta-btnctrl {
-		  color:$boiler-gold;
-		  font-size:2rem;
-		  z-index:2;
-		  background:none;
-		  border:none;
-		  cursor: pointer;
-		  padding: 0;
-		  line-height: 1;
-	  }
-	  .cta-play,.cta-pause{
-		  &.is-active{
-			  display:block;
-			  width: 32px;
-			  height: 32px;
-		  }
-	  }
-	  .controls {
-		  display: flex;
-		  width: 100%;
-		  justify-content: flex-end;
-      }
+    .controls {
+      display: flex;
+      width: 100%;
+      justify-content: flex-end;
+    }
+  }
+  &__content {
+    max-width: 685px;
+    font-size: 1.25rem;
 
-.section {
-  .container {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	.tagged-header {
-	  align-self: center;
-	  margin-bottom: 2.5rem;
-	  @include mobile {
-		margin-bottom: 2rem;
-	  }
-	}
+    @include mobile {
+      font-size: 1rem;
+    }
+
+    p {
+      text-align: center;
+      font-size: inherit;
+    }
   }
-}
-&__header.second-level-page-heading {
-  max-width: 950px;
-  margin-bottom: 1.875rem;
-  overflow: hidden;
-  @include mobile {
-	margin-bottom: 1.5rem;
+
+  &__cards {
+    margin-top: 4rem;
+    width: 100%;
+
+    @include mobile {
+      margin-top: 2.5rem;
+    }
   }
-}
-.purdue-home-cta-hero__header-static {
-  position: relative;
-  z-index: 1;
-  background: $white;
-  display: block;
-  width: 100%;
-}
-.purdue-home-cta-hero__header-animate {
-  display: block;
-}
-.purdue-home-cta-hero__header-animate-item {
-  opacity: 0;
-  position: relative;
-  z-index: 0;
-  transform: translateX(-100%);
-  &.slide-in {
-	display: inline-block;
-	transform: translateY(0);
-	opacity: 1;
-	animation: slideIn 2s;
+
+  .pudue-home-cta-card {
+    position: relative;
   }
-  &.slide-out {
-	display: inline-block;
-	transform: translateX(-100%);
-	opacity: 0;
-	animation: slideOut 0.5s;
+
+  .purdue-home-cta-card * {
+    z-index: 1;
+
+    image:after {
+      content: none;
+    }
+
   }
-}
-&__content {
-  max-width: 685px;
-  font-size: 1.25rem;
-  @include mobile {
-	font-size: 1rem;
+
+
+  &__card-title {
+    display: block;
+    inset: 0;
+    z-index: 10 !important;
+    text-decoration: none;
+
+    p {
+
+      color: $white;
+      font-family: $acumin-pro;
+      font-size: 3.875rem;
+      font-weight: 700;
+      letter-spacing: 0;
+      line-height: 0.9;
+      text-shadow: 3px 3px 4px rgba(0, 0, 0, 0.25);
+      margin-bottom: 1.875rem;
+
+    }
+
+    &:after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+      pointer-events: auto;
+    }
+
+    @include until-widescreen {
+      font-size: 2.5rem;
+      margin-bottom: 0.8rem !important;
+    }
+
+    @include touch {
+      font-size: 2rem;
+      margin-bottom: 0.8rem !important;
+    }
+
+    @include mobile {
+      font-size: 2.5rem;
+      margin-bottom: 0.8rem !important;
+    }
   }
-  p {
-	text-align: center;
-	font-size: inherit;
+
+  &__card-subtext {
+    color: $white;
+    font-family: $acumin-pro;
+    font-size: 1.25rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1.5;
+    text-shadow: 3px 3px 4px rgba(0, 0, 0, 0.25);
+
+    @include touch {
+      font-size: 1rem;
+    }
   }
-}
-&__cards {
-  margin-top: 4rem;
-  width: 100%;
-  @include mobile {
-	margin-top: 2.5rem;
+
+  ul.purdue-home-button-list {
+    margin-top: 2.5rem;
+    padding-left: 0;
   }
-}
-&__card-title {
-  color: $white;
-  font-family: $acumin-pro;
-  font-size: 3.875rem;
-  font-weight: 700;
-  letter-spacing: 0;
-  line-height: 0.9;
-	text-shadow: 3px 3px 4px rgba(0, 0, 0, 0.25);
-  @include until-widescreen {
-	font-size: 2.5rem;
-	margin-bottom: 0.8rem !important;
+
+  .purdue-home-cta-card.has-content-bottom .image:after {
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.55) !important; 
   }
-  @include touch {
-	font-size: 2rem;
-	margin-bottom: 0.8rem !important;
+
+
+  .purdue-home-cta-card.has-content-bottom:after {
+    z-index: 1;
+    pointer-events: none;
   }
-  @include mobile {
-	font-size: 2.5rem;
-	margin-bottom: 0.8rem !important;
-  }
-}
-&__card-subtext {
-  color: $white;
-  font-family: $acumin-pro;
-  font-size: 1.25rem;
-  font-weight: 400;
-  letter-spacing: 0;
-  line-height: 1.5;
-	text-shadow: 3px 3px 4px rgba(0, 0, 0, 0.25);
-  @include touch {
-	font-size: 1rem;
-  }
-}
-ul.purdue-home-button-list {
-  margin-top: 2.5rem;
-  padding-left: 0;
-}
 }

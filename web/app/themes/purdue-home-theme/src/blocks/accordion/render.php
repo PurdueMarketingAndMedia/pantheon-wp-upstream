@@ -45,7 +45,8 @@ if ($attributes['removeTopBorder']) {
                 <<?= $attributes['titleLevel'] ?> class="accordion__heading purdue-accordion__title <?= $titleClass; ?>" id="title-<?= $attributes['blockId'] ?>">
                     <button aria-controls="content-<?= $attributes['blockId'] ?>" aria-expanded="false"><?= $attributes['title'] ?></button>
                 </<?= $attributes['titleLevel'] ?>>
-                <div class="accordion__content purdue-accordion__content" id="content-<?= $attributes['blockId'] ?>">
+                <div class="accordion__content purdue-accordion__content" id="content-<?= $attributes['blockId'] ?>" hidden aria-hidden=
+                "true">
                     <?= $content ?>
                 </div>
             </div>

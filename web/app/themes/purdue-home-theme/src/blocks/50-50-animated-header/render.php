@@ -55,6 +55,12 @@
                         <?php } ?>
                     </h2>
 
+                    <div class="controls">
+                        <button class="cta-btnctrl cta-pause" aria-label="Pause Animation">
+                            <i class="fa-regular fa-circle-pause cta-pause-icon"></i>
+                        </button>
+                    </div>
+
                 </div>
 
             </div>

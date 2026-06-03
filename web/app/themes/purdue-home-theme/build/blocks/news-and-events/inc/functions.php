@@ -57,9 +57,12 @@ function rss_feed_news($url){
                 $postType = "Podcast";
             }
             $description = $item->get_description();
+            $media =  $item->get_enclosure();
             $imgURLMatch = preg_match("/img.+?src=\"([^\"]+)\"/", $description, $matchimgURL);
             if($imgURLMatch){
                 $imgURL=$matchimgURL[1];
+            }elseif($media){
+                $imgURL=$media->get_link();
             }else{
                 $imgURL='';
             }

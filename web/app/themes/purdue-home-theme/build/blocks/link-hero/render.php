@@ -30,8 +30,11 @@ $id = $attributes['id'] != "" ? ' id="' . $attributes['id'] . '"' : "";
                     <?= $attributes['subtext']; ?>
                 </p>
             <?php endif; ?>
-            <?php if ($attributes['linkType']=="cta" && $attributes['ctalinks'] && sizeof($attributes['ctalinks']) > 0 && $attributes['ctalinks'][0]['linkURL']): ?>
-                <ul class="purdue-home-button-list">
+            <?php if ($attributes['linkType']=="cta" && $attributes['ctalinks'] && sizeof($attributes['ctalinks']) > 0 && $attributes['ctalinks'][0]['linkURL']): 
+                $buttonList = sizeof($attributes['ctalinks']) > 1 ? "ul" : "div";
+                $buttonWrapper = sizeof($attributes['ctalinks']) > 1 ? "li" : "div";
+            ?>
+                <<?= $buttonList; ?> class="purdue-home-button-list">
                     <?php foreach ($attributes['ctalinks'] as $key => $link): ?>
                         <?php
                         $target = $link["external"] ? 'target="_blank"' : 'target="_self"';
@@ -41,35 +44,37 @@ $id = $attributes['id'] != "" ? ' id="' . $attributes['id'] . '"' : "";
                         }elseif($link["buttonColor"] == "white") {
                             $buttonClass .= " purdue-home-button--white";
                         }
-                        $buttonClass .= $link["buttonCSS"] ? " ".$link["buttonCSS"] : "";
+                        $buttonClass .= isset($link["buttonCSS"]) ? " ".$link["buttonCSS"] : "";
                         $liClass = $link["fullWidth"] ? "purdue-home-button-wrap--full" : "";
                         ?>
-                        <li class="<?= $liClass; ?>">
+                        <<?= $buttonWrapper; ?> class="<?= $liClass; ?>">
                             <a class="<?= $buttonClass; ?>" href="<?= $link["linkURL"]; ?>" <?= $target; ?>>
                                 <?= trim($link["linkText"]); ?>
                             </a>
-                        </li>
+                        </<?= $buttonWrapper; ?>>
                     <?php endforeach; ?>
-                </ul>
+                </<?= $buttonList; ?>>
             <?php endif; ?>
             <?php if ($attributes['linkType']=="shortCuts" && $attributes['links'] && sizeof($attributes['links']) > 0): ?>
                 <div class="purdue-home-link-hero__list-container">
                     <span class="purdue-home-link-hero__list-desc tablet-hidden">
                         <?= $attributes['descText']; ?>:
                     </span>
-                    <ul class="purdue-home-link-hero__list--desktop">
+                     <?php $buttonList = sizeof($attributes['links']) > 1 ? "ul" : "div";
+                     $buttonWrapper = sizeof($attributes['links']) > 1 ? "li" : "div"; ?>
+                    <<?= $buttonList ?> class="purdue-home-link-hero__list--desktop">
                         <?php foreach ($attributes['links'] as $key => $link): ?>
                             <?php
                             $target = $link["external"] ? 'target="_blank"' : 'target="_self"';
-                            $buttonClass = $link["buttonCSS"] ? " ".$link["buttonCSS"] : "";
+                            $buttonClass = isset($link["buttonCSS"]) ? " ".$link["buttonCSS"] : "";
                             ?>
-                            <li>
+                            <<?= $buttonWrapper ?>>
                                 <a class="purdue-home-button purdue-home-button--white <?=$buttonClass?>" href="<?= $link["linkURL"]; ?>" <?= $target; ?>>
                                     <?= trim($link["linkText"]); ?>
                                 </a>
-                            </li>
+                            </<?= $buttonWrapper ?>>
                         <?php endforeach; ?>
-                    </ul>
+                    </<?= $buttonList ?>>
                     <form class="purdue-home-select purdue-home-link-hero__list--mobile">
                         <label for="<?= $attributes['fieldId']; ?>" class="is-sr-only">Choose a link:</label>
                         <select id="<?= $attributes['fieldId']; ?>" name="links">

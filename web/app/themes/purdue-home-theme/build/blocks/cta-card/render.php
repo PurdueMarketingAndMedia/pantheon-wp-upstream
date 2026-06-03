@@ -9,8 +9,9 @@ $blockClass .= " " . $attributes['className'];?>
             <div class="purdue-home-cta-card-block__container<?= $attributes["contentAlign"] === "left" ? " purdue-home-cta-card-block__container--reversed" : "" ?>">
                 <div class="purdue-home-cta-card-block__image-container">
                     <?php if (sizeof($attributes['imgs']) > 1) : ?>
-                        <button class="cta-play" aria-label="play"><i class="fa-regular fa-circle-play cta-play-icon"></i></button>
-                        <button class="cta-pause is-active" aria-label="pause"><i class="fa-regular fa-circle-pause cta-pause-icon"></i></button>
+                        <button class="cta-btnctrl cta-pause" aria-label="Pause Slideshow" data-toggle-label="Start Slideshow">
+                            <i class="fa-regular fa-circle-pause cta-pause-icon"></i>
+                        </button>
                     <?php endif; ?>
                     <div class="glide purdue-home-cta-card-block__image-slider">
                         <div class="glide__track" data-glide-el="track">
@@ -50,8 +51,11 @@ $blockClass .= " " . $attributes['className'];?>
                     endif;
                     ?>
                     <?= $content ?>
-                    <?php if ($attributes['links'] && sizeof($attributes['links']) > 0 && $attributes['links'][0]['linkURL']): ?>
-                        <ul class="purdue-home-button-list">
+                    <?php if ($attributes['links'] && sizeof($attributes['links']) > 0 && $attributes['links'][0]['linkURL']): 
+                         $buttonList = sizeof($attributes['links']) > 1 ? "ul" : "div";
+                         $buttonWrapper = sizeof($attributes['links']) > 1 ? "li" : "div";
+                    ?>
+                        <<?= $buttonList ?> class="purdue-home-button-list">
                             <?php foreach ($attributes['links'] as $key => $link): 
                                 $target = $link["external"] ? 'target="_blank"' : 'target="_self"';
                                 $buttonClass = "purdue-home-button";
@@ -60,9 +64,9 @@ $blockClass .= " " . $attributes['className'];?>
                                 }
                                 $liClass = $link["fullWidth"] ? "purdue-home-button-wrap--full" : "";
                                 ?>
-                                <li class="<?= $liClass ?>"><a class="<?= $buttonClass ?>" href="<?= $link["linkURL"] ?>" <?= $target ?>><?= trim($link["linkText"]) ?></a></li>
+                                <<?= $buttonWrapper ?> class="<?= $liClass ?>"><a class="<?= $buttonClass ?>" href="<?= $link["linkURL"] ?>" <?= $target ?>><?= trim($link["linkText"]) ?></a></<?= $buttonWrapper ?>>
                             <?php endforeach; ?>
-                        </ul>
+                        </<?= $buttonList ?>>
                     <?php endif; ?>
                 </div>
             </div>

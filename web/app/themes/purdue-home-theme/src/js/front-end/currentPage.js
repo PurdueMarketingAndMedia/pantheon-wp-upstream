@@ -10,15 +10,18 @@ if (topnavs && topnavs.length > 0) {
     if (navbar_items.length > 0) {
       navbar_items.forEach((el) => {
         const href = el.getAttribute("href");
+        if (!href) return;
 
         if (currentpage.toLowerCase() === href.toLowerCase()) {
           el.classList.add("is-active-page");
+          el.setAttribute("aria-current", "page");
           if (
             el.parentElement.parentElement.classList.contains("navbar-dropdown")
           ) {
             el.parentElement.parentElement.previousElementSibling.classList.add(
               "is-active-page"
             );
+            el.parentElement.parentElement.previousElementSibling.setAttribute("aria-current", "page");
           } else if (
             el.parentElement.parentElement.classList.contains(
               "navbar-dropdown-submenu"
@@ -30,6 +33,7 @@ if (topnavs && topnavs.length > 0) {
             el.parentElement.parentElement.parentElement.parentElement.previousElementSibling.classList.add(
               "is-active-page"
             );
+            el.parentElement.parentElement.parentElement.parentElement.previousElementSibling.setAttribute("aria-current", "page");
           } else if (
             el.parentElement.parentElement.classList.contains(
               "navbar-dropdown-submenu"
@@ -41,6 +45,7 @@ if (topnavs && topnavs.length > 0) {
             el.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.previousElementSibling.classList.add(
               "is-active-page"
             );
+            el.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.previousElementSibling.setAttribute("aria-current", "page");
           }
         }
       });

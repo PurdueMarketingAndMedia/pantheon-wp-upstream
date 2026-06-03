@@ -12,7 +12,8 @@ if ($attributes['type']=="50-50") {
     $sectionclass .= ' purdue-home-news-and-events--plain';
 }
 $type = $attributes['type']==="50-50-post" || $attributes['type']==="50-50" ? 'post-50-50' : '';
-
+$featuredHeading = $attributes['heading'] ? 'h3' : 'h2';
+$articleHeading = "";
 ?>
 
 <div <?= $id; ?> class="purdue-home-news-and-events <?= $attributes['className']; ?> <?= $type; ?>">
@@ -22,7 +23,8 @@ $type = $attributes['type']==="50-50-post" || $attributes['type']==="50-50" ? 'p
         ?>
         <div class="container">
             <?php 
-            if($attributes['type']==="60-40"){
+            if($attributes['type']==="60-40"){               
+                
         ?>
 
             <div class="columns is-multiline align-bottom">
@@ -158,7 +160,7 @@ $type = $attributes['type']==="50-50-post" || $attributes['type']==="50-50" ? 'p
                         if ($attributes['type']=="60-40"&&$attributes['featuredHeading']) {
                             ?>
                     <div class="tagged-header-container">
-                        <h3 class="tagged-header"><?= $attributes["featuredHeading"]; ?></h3>
+                        <<?= $featuredHeading ?> class="tagged-header"><?= $attributes["featuredHeading"]; ?></<?= $featuredHeading ?>>
                     </div>
                     <?php
                         }
@@ -168,13 +170,20 @@ $type = $attributes['type']==="50-50-post" || $attributes['type']==="50-50" ? 'p
                             <div class="glide__slides">
                                 <?php
                                     foreach ($attributes['sliderCards'] as $key=>$slide) {
-                                        if($slide["postType"] && $slide["postType"] == "rkv_podcast"){
-                                            $slide["postType"] = "podcast";
-                                        }elseif($slide["postType"] && $slide["postType"] == "post"){
-                                            $slide["postType"] = "article";
-                                        }elseif($slide["postType"] && ($slide["postType"] == "video" || $slide["postType"] == "rkv_video")){
-                                            $slide["postType"] = "video";
+                                        if(isset($slide["postType"])){
+                                             if($slide["postType"] == "rkv_podcast"){
+                                                    $slide["postType"] = "podcast";
+                                                }elseif($slide["postType"] == "post"){
+                                                    $slide["postType"] = "article";
+                                                }elseif(($slide["postType"] == "video" || $slide["postType"] == "rkv_video")){
+                                                    $slide["postType"] = "video";
+                                                }else{
+                                                    $slide["postType"] = "article";
+                                                }
+                                        }else{
+                                            $slide["postType"] = "";
                                         }
+                                       
                                         ?>
                                 <div class="glide__slide">
                                     <?php
@@ -208,16 +217,17 @@ $type = $attributes['type']==="50-50-post" || $attributes['type']==="50-50" ? 'p
                                                     ?>
                                         </div>
                                         <?php
-                                                if ($slide['linkType'] == "story") {
+                                    if ($slide['linkType'] == "story") {
                                                     $target = $slide["external"] ? 'target="_blank"' : 'target="_self"';
 
-                                                    if($attributes['type']==="50-50-post"){
+                                     if($attributes['type']==="50-50-post"){
+                                        $articleHeading = $attributes['heading']  ? 'h3' : 'h2';
                                                     ?>
                                         <div
                                             class="flex-container flex-container--align-vertical-bottom <?= 'post-type-'.strtolower(str_replace(' ', '-', $slide["postType"])) ?>">
                                             <a class="purdue-home-news-events__content" href="<?= $slide["linkURL"]; ?>"
                                                 <?= $target; ?>>
-                                                <p class="purdue-home-news-events__title"><?= $slide["title"]; ?></p>
+                                                <<?= $articleHeading ?> class="purdue-home-news-events__title"><?= $slide["title"]; ?></<?= $articleHeading ?>>
                                                 <?php if($attributes["showTag"] || $attributes["showPostType"]){?>
                                                 <p class="purdue-home-news-events__date">
                                                     <?= $attributes["showPostType"]? '<span class="purdue-posttype-tag">'.$slide["postType"].'</span>' : "";?>
@@ -229,6 +239,21 @@ $type = $attributes['type']==="50-50-post" || $attributes['type']==="50-50" ? 'p
                                         </div>
 
                                         <?php }else{ ?>
+                                       
+                                        <?php
+                                        
+                                        if($attributes['type']==="60-40"){
+                                            if($attributes['heading'] && $attributes["featuredHeading"]){
+                                                $articleHeading = 'h4';
+                                            }else if($attributes['heading'] || $attributes["featuredHeading"]){
+                                                $articleHeading = 'h3';
+                                            }else{
+                                                $articleHeading = 'h2';
+                                            }  
+                                        }else{
+                                            $articleHeading = $attributes['heading'] ? 'h3' : 'h2';
+                                        }
+                                        ?>    
 
                                         <div class="flex-container flex-container--align-vertical-bottom">
                                             <a class="purdue-home-news-events__content" href="<?= $slide["linkURL"]; ?>"
@@ -236,7 +261,7 @@ $type = $attributes['type']==="50-50-post" || $attributes['type']==="50-50" ? 'p
                                                 <?php if($attributes["showTag"]&&$slide["tag"]){?>
                                                 <p class="purdue-home-news-events__tag"><?= $slide["tag"]; ?></p>
                                                 <?php } ?>
-                                                <p class="purdue-home-news-events__title"><?= $slide["title"]; ?></p>
+                                                <<?= $articleHeading ?> class="purdue-home-news-events__title"><?= $slide["title"]; ?></<?= $articleHeading ?>>
                                                 <?php if($attributes["showDate"]){?>
                                                 <p class="purdue-home-news-events__date">
                                                     <?php
@@ -293,7 +318,7 @@ $type = $attributes['type']==="50-50-post" || $attributes['type']==="50-50" ? 'p
                             if (sizeof($attributes['sliderCards']) > 1) {
                             ?>
                         <div class="slider-controls">
-                            <button class="glide__arrow arrow--left">prev</button>
+                            <button class="glide__arrow arrow--left">previous</button>
                             <div class="glide__bullets" data-glide-el="controls[nav]">
                                 <?php
                                     foreach ($attributes['sliderCards'] as $key => $card) {
@@ -334,16 +359,17 @@ $type = $attributes['type']==="50-50-post" || $attributes['type']==="50-50" ? 'p
                 $rightColumnClass=$attributes['type']=="60-40"?" is-one-third-desktop is-half-tablet is-full-mobile":"";
 
                 if (sizeof($attributes['smallCards']) > 0) {
+
                     ?>
                 <div class="column<?= $rightColumnClass; ?>">
                     <?php
                         if ($attributes['type']=="60-40"&&$attributes['listHeading']) {
                             ?>
                     <div class="tagged-header-container">
-                        <h3 class="tagged-header"><?= $attributes["listHeading"]; ?></h3>
+                        <<?= $featuredHeading ?> class="tagged-header"><?= $attributes["listHeading"]; ?></<?= $featuredHeading ?>>
                     </div>
                     <?php
-                        }
+                        }                       
                         foreach ($attributes['smallCards'] as $key=>$card) {
                             if($key<3){
                                 $cardClass = "purdue-home-news-events__list ";

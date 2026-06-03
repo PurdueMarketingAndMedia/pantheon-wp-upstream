@@ -26,8 +26,11 @@ $class = 'purdue-home-layout--left-banner has-' . $attributes['background'] . '-
       <p class="purdue-home-layout--left-banner__subtext"><?= $attributes['subtext']; ?></p>
     <?php endif; ?>
 
-    <?php if ($attributes['links'] && sizeof($attributes['links']) > 0 && $attributes['links'][0]['linkURL']) : ?>
-      <ul class="purdue-home-button-list">
+    <?php if ($attributes['links'] && sizeof($attributes['links']) > 0 && $attributes['links'][0]['linkURL']) : 
+      $buttonList = sizeof($attributes['links']) > 1 ? "ul" : "div";
+      $buttonWrapper = sizeof($attributes['links']) > 1 ? "li" : "div";
+    ?>
+      <<?= $buttonList ?> class="purdue-home-button-list">
         <?php foreach ($attributes['links'] as $key => $link) :
           $target = $link["external"] ? 'target="_blank"' : 'target="_self"';
           $buttonClass = "purdue-home-button";
@@ -38,17 +41,17 @@ $class = 'purdue-home-layout--left-banner has-' . $attributes['background'] . '-
             $buttonClass .= " purdue-home-button--white";
           } 
 
-          $buttonClass .= $link["buttonCSS"] ? " ".$link["buttonCSS"] : "";
+          $buttonClass .= isset($link["buttonCSS"]) ? " ".$link["buttonCSS"] : "";
 
           $liClass = $link["fullWidth"] ? "purdue-home-button-wrap--full" : "";
         ?>
-          <li class="<?= $liClass; ?>">
+          <<?= $buttonWrapper ?> class="<?= $liClass; ?>">
             <a class="<?= $buttonClass; ?>" href="<?= $link["linkURL"]; ?>" <?= $target; ?>>
               <?= trim($link["linkText"]); ?>
             </a>
-          </li>
+          </<?= $buttonWrapper ?>>
         <?php endforeach; ?>
-      </ul>
+      </<?= $buttonList ?>>
     <?php endif; ?>
   </div>
 </div>

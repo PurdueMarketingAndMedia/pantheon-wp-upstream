@@ -275,7 +275,7 @@ title="posts by '.get_the_author_meta( 'display_name', $author_id ).'">
                         </div>
                     </div>
                     <div class="slider-controls">
-                        <button class="glide__arrow arrow--left">prev</button>
+                        <button class="glide__arrow arrow--left">previous</button>
                         <div class="glide__bullets" data-glide-el="controls[nav]">
                             <?php
 							foreach ( $results as $key => $card ) {  

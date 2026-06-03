@@ -559,7 +559,7 @@ a.purdue-home-cta-card.purdue-home-cta-card--story {
     transition: all 0.25s cubic-bezier(1, 0.25, 0, 0.75) 0s;
     background: $railway-gray;
   }
-  &:hover {
+  &:hover, &:focus {
     &:after {
       transform: scaleX(1);
     }

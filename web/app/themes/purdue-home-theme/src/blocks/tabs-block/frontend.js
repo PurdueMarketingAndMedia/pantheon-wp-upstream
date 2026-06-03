@@ -16,16 +16,32 @@ tabGroups.forEach((tabs)=>{
         clHeader.classList.remove("purdue-home-tabs__header")
         clHeader.classList.add("purdue-home-tabs__header-mobile")
         clHeader.setAttribute("role", "button")
+        clHeader.removeAttribute('aria-selected');
         panelsContainer.insertBefore(clHeader, panels[index])
     })
     let newHeaders=[...tabs.querySelectorAll(".purdue-home-tabs__header-mobile")]
 
     headers.forEach((header, index)=>{
+        moveTab = (head, index, direction) => {
+            const totalHeaders = head.length;
+            let moveIndex = 0;
+            if(direction === 'home') {
+                moveIndex = 0;
+            } else if(direction === 'end') {
+                moveIndex = totalHeaders-1;
+            } else if(direction === 'left') {
+                moveIndex = Math.max(0, index-1);
+            } else if (direction === 'right') {
+                moveIndex = Math.min(index+1, totalHeaders-1)
+            }
+            head[moveIndex].focus();
+            //head[moveIndex].click();
+        }
+
         header.addEventListener('click', ()=>{
             panels.forEach((panel,i)=>{
                 if(index===i){
-                    panel.classList.add('active')   
-
+                    panel.classList.add('active')
                 }else{
                     panel.classList.remove('active')
                 }
@@ -33,26 +49,66 @@ tabGroups.forEach((tabs)=>{
             headers.forEach((h,i)=>{
                 if(index===i){
                     h.classList.add('active')
-                    h.setAttribute('aria-selected',"true")            
+                    h.setAttribute('aria-selected',"true")
+                    h.setAttribute('tabindex', 0);
                 }else{
                     h.classList.remove('active')
                     h.setAttribute('aria-selected',"false")
+                    h.setAttribute('tabindex', -1);
                 }
             })
             newHeaders.forEach((h,i)=>{
                 if(index===i){
                     h.classList.add('active')
-                    h.setAttribute('aria-selected',"true")            
+                    h.setAttribute('aria-expanded',"true")
                 }else{
                     h.classList.remove('active')
-                    h.setAttribute('aria-selected',"false")
+                    h.setAttribute('aria-expanded',"false")
                 }
             })
             if(arrow){
                 arrow.style.top=header.offsetTop+header.offsetHeight/2+"px"
             }
         })
+        header.addEventListener('keydown', (e) => {
+            const target = e.currentTarget;
+            const key = e.key;
+
+            const currentIndex = headers.indexOf(e.currentTarget);
+
+            switch (key) {
+                case 'ArrowUp':
+                    moveTab(headers, currentIndex, 'left');
+                    e.stopPropagation();
+                    e.preventDefault();
+                    break;
+
+                case 'ArrowDown':
+                    moveTab(headers, currentIndex, 'right');
+                    e.stopPropagation();
+                    e.preventDefault();
+                    break;
+
+                case 'Home':
+                    moveTab(headers, currentIndex, 'home');
+                    e.stopPropagation();
+                    e.preventDefault();
+                    break;
+
+                case 'End':
+                    moveTab(headers, currentIndex, 'end');
+                    e.stopPropagation();
+                    e.preventDefault();
+                    break;
+
+                default:
+                    break;
+            }
+
+
+        });
     })
+
     newHeaders.forEach((header, index) => {
         header.addEventListener('click', (e) => {
             panels.forEach((panel, i) => {
@@ -63,26 +119,32 @@ tabGroups.forEach((tabs)=>{
                 }
             });
             newHeaders.forEach((h, i) => {
+
                 if (index === i) {
                     if (header.classList.contains("active")) {
                         header.classList.remove('active');
-                        header.setAttribute('aria-selected', "false");
+                        header.setAttribute('aria-expanded', "false");
+                        //header.setAttribute('aria-selected', "false");
                     } else {
                         header.classList.add('active');
-                        header.setAttribute('aria-selected', "true");
+                        header.setAttribute('aria-expanded', "true");
+
+                        //header.setAttribute('aria-selected', "true");
                     }
                 } else {
                     h.classList.remove('active');
-                    h.setAttribute('aria-selected', "false");
+                    h.setAttribute('aria-expanded', "false");
                 }
             });
             headers.forEach((h, i) => {
                 if (index === i) {
                     h.classList.add('active');
                     h.setAttribute('aria-selected', "true");
+                    h.setAttribute('tabindex', 0)
                 } else {
                     h.classList.remove('active');
                     h.setAttribute('aria-selected', "false");
+                    h.setAttribute('tabindex', -1)
                 }
             });
 
@@ -101,6 +163,7 @@ tabGroups.forEach((tabs)=>{
 
 
 function updateVerticalTabsFromHash(hash) {
+
     if (hash) {
         const targetDataName = hash.substring(1);
         const allPanels = document.querySelectorAll('.purdue-home-tabs__panel');
@@ -108,40 +171,41 @@ function updateVerticalTabsFromHash(hash) {
         const targetPanel = document.querySelector(`.purdue-home-tabs__panel[data-name="${targetDataName}"]`);
         let targetHeader = null;
 
+        if(!targetPanel)
+            return
+
         // remove "active" class from all panels and headers
         allPanels.forEach(panel => panel.classList.remove('active'));
         allHeaders.forEach(header => header.classList.remove('active'));
 
-        if (targetPanel) {
-            targetPanel.classList.add('active');
+        targetPanel.classList.add('active');
 
-            // Get the id of the target panel
-            const targetPanelId = targetPanel.getAttribute('id');
+        // Get the id of the target panel
+        const targetPanelId = targetPanel.getAttribute('id');
 
-            // Find the header that has an aria-controls attribute matching the target panel's id
-            targetHeader = Array.from(allHeaders).find(header =>
-                header.getAttribute('aria-controls') === targetPanelId
-            );
+        // Find the header that has an aria-controls attribute matching the target panel's id
+        targetHeader = Array.from(allHeaders).find(header =>
+            header.getAttribute('aria-controls') === targetPanelId
+        );
 
-            if (targetHeader) {
-                targetHeader.classList.add('active');
-                targetHeader.setAttribute('aria-selected', 'true');
-                // Update arrow position on hash change
-                const arrowInGroup = targetHeader.closest('.purdue-home-tabs').querySelector('.arrow');
-                if (arrowInGroup) {
-                    arrowInGroup.style.top = targetHeader.offsetTop + targetHeader.offsetHeight / 2 + "px";
-                }
+        if (targetHeader) {
+            targetHeader.classList.add('active');
+            targetHeader.setAttribute('aria-selected', 'true');
+            // Update arrow position on hash change
+            const arrowInGroup = targetHeader.closest('.purdue-home-tabs').querySelector('.arrow');
+            if (arrowInGroup) {
+                arrowInGroup.style.top = targetHeader.offsetTop + targetHeader.offsetHeight / 2 + "px";
             }
+        }
 
-            // find the parent with class "purdue-home-tabs" and scroll to it
-            let parentElement = targetPanel;
-            while (parentElement) {
-                if (parentElement && parentElement.classList.contains('purdue-home-tabs')) {
-                    parentElement.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
-                    break; // stop searching once found
-                }
-                parentElement = parentElement.parentElement;
+        // find the parent with class "purdue-home-tabs" and scroll to it
+        let parentElement = targetPanel;
+        while (parentElement) {
+            if (parentElement && parentElement.classList.contains('purdue-home-tabs')) {
+                parentElement.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+                break; // stop searching once found
             }
+            parentElement = parentElement.parentElement;
         }
     }
 }
@@ -179,7 +243,7 @@ window.onload = function () {
             }
             if (mobileHeaders.length > 0) {
                 mobileHeaders[0].classList.add('active');
-                mobileHeaders[0].setAttribute('aria-selected', 'true');
+                mobileHeaders[0].setAttribute('aria-expanded', 'true');
             }
             updateArrowPosition(tabs);
         });

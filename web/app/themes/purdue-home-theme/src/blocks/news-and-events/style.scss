@@ -40,6 +40,12 @@
       border-radius: 4px;
       color: $white;
     }
+    &.purdue-home-news-events__title{
+      font-size: 1.25rem;
+      line-height: 1.4;
+      margin-bottom: 0.8rem !important;
+      display: block;
+    }
   }
   .align-bottom {
     align-items: flex-end;
@@ -313,6 +319,7 @@ p.purdue-home-news-events__tag {
   font-weight: bold;
   letter-spacing: 0;
   line-height: 1.4;
+  margin-top: 0 !important;
   margin-bottom: 0.8rem !important;
   display: block;
 }

@@ -47,8 +47,11 @@
                     </div>
                 <?php endif; ?>
 
-                <?php if ($attributes['links'] && sizeof($attributes['links']) > 0 && $attributes['links'][0]['linkURL']): ?>
-                    <ul class="purdue-home-button-list">
+                <?php if ($attributes['links'] && sizeof($attributes['links']) > 0 && $attributes['links'][0]['linkURL']): 
+                    $buttonList = sizeof($attributes['links']) > 1 ? "ul" : "div";
+                    $buttonWrapper = sizeof($attributes['links']) > 1 ? "li" : "div";
+                ?>
+                    <<?= $buttonList ?> class="purdue-home-button-list">
                         <?php foreach ($attributes['links'] as $key => $link): ?>
                             <?php
                             $target = $link["external"] ? 'target="_blank"' : 'target="_self"';
@@ -60,9 +63,9 @@
                             }
                             $liClass = $link["fullWidth"] ? "purdue-home-button-wrap--full" : "";
                             ?>
-                            <li class="<?= $liClass ?>"><a class="<?= $buttonClass ?>" href="<?= $link["linkURL"] ?>" <?= $target ?>><?= trim($link["linkText"]) ?></a></li>
+                            <<?= $buttonWrapper ?> class="<?= $liClass ?>"><a class="<?= $buttonClass ?>" href="<?= $link["linkURL"] ?>" <?= $target ?>><?= trim($link["linkText"]) ?></a></<?= $buttonWrapper ?>>
                         <?php endforeach; ?>
-                    </ul>
+                    </<?= $buttonList ?>>
                 <?php endif; ?>
             </div>
         </div>
@@ -82,10 +85,9 @@
                 <video class="<?= $videoClass ?>" autoplay preload="metadata" title="<?= $attributes['mediaTitle'] ?>" <?= $loop ?> muted playsinline="">
                     <source src="<?= $attributes["mediaURL"] ?>#t=0.1">
                 </video>
-                <button class="cta-play" aria-label="play"><i class="fa-regular fa-circle-play cta-play-icon"></i></button>
-                <?php if ($attributes['loopVideo']): ?>
-                <button class="cta-pause is-active" aria-label="pause"><i class="fa-regular fa-circle-pause cta-pause-icon"></i></button>
-            <?php endif; ?>
+                <button class="cta-btnctrl cta-pause" aria-label="Pause Video" data-toggle-label="Play Video">
+                    <i class="fa-regular fa-circle-pause cta-pause-icon"></i>
+                </button>
             <?php endif; ?>
         </div>
     </div>

@@ -44,7 +44,6 @@ if(urlSelects && urlSelects.length>0){
                 if(external==="1"){
                     window.open(value)
                 }else{
-                    window.location.href = value
                     const el = document.querySelector(value);
                     if(el){
                         const select=el.querySelector("select");
@@ -52,6 +51,10 @@ if(urlSelects && urlSelects.length>0){
                             expandSelect(select)
                         }
                     }
+                    el.setAttribute("tabindex", "-1");
+                    el.focus();
+                    el.scrollIntoView({behavior: "instant", block: "start", inline: "nearest"});
+                    window.location.href = value;
                 }
             })
         }

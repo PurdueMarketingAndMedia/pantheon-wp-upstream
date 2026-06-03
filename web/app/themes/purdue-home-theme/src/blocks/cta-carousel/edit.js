@@ -710,7 +710,8 @@ function getVideoId(url) {
                             <div className="purdue-home-cta-carousel__story-wrap">
                               {
                                item.title?
-                                <p className="purdue-home-cta-carousel__story-title">{item.title}</p>:""
+                                header ? <h3 className="purdue-home-cta-carousel__story-title">{item.title}</h3> : <h2 className="purdue-home-cta-carousel__story-title">{item.title}</h2>
+                                :""
                               }
                               {
                                 item.subtext?
@@ -720,7 +721,8 @@ function getVideoId(url) {
                           }
                           {
                             item.type==="quote"&&item.subtext?
-                              <p className="purdue-home-cta-carousel__quote-content">{item.subtext}</p>:""
+                              header ? <h3 className="purdue-home-cta-carousel__quote-content">{item.subtext}</h3> : <h2 className="purdue-home-cta-carousel__quote-content">{item.subtext}</h2>
+                             :""
                           }
 
                           {
@@ -728,7 +730,8 @@ function getVideoId(url) {
                             <div className="purdue-home-cta-carousel__story-wrap cta-profile">
                               {
                                item.title?
-                                <p className="purdue-home-cta-carousel__story-title">{item.title}</p>:""
+                                header ? <h3 className="purdue-home-cta-carousel__story-title">{item.title}</h3> : <h2 className="purdue-home-cta-carousel__story-title">{item.title}</h2>
+                                :""
                               }
                               {
                                 item.subtext?

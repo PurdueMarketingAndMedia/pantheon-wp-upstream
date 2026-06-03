@@ -277,7 +277,7 @@ editorFields = cards.map((item, index) => {
 
                         </div>
                         <div className="flex-container--align-center">
-                          <p className="purdue-home-cta-stack__card-title">{item.title}</p>
+                          {header? <h3 className="purdue-home-cta-stack__card-title">{item.title}</h3> : <h2 className="purdue-home-cta-stack__card-title">{item.title}</h2> }
                           <p className="purdue-home-cta-stack__card-subtext">{item.subtext}</p>
                         </div>
                       </div>

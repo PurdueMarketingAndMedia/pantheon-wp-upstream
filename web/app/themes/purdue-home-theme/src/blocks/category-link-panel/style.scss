@@ -1,0 +1,475 @@
+@import "../../../src/style/front-end/overides/colors";
+@import "../../../src/style/front-end/overides/variables";
+@import '../../../node_modules/bulma/sass/utilities/mixins.sass';
+
+.category-link-panel {
+	.category-link-panel__header {
+		margin-bottom: 2rem;
+	}
+
+	.category-link-panel__column {
+		margin-bottom: 1.5rem;
+	}
+
+	.category-link-panel__card {
+		background-color: #f7f6f4;
+		border: 1px solid #e3e1dc;
+		border-radius: 6px;
+		padding: 1.75rem 1.75rem 1rem;
+		height: 100%;
+		box-sizing: border-box;
+		position: relative;
+
+		&::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 5px;
+			width: 100%;
+			background-color: $boiler-gold;
+			border-radius: 6px 6px 0 0;
+			transform: scaleX(0);
+			transform-origin: left;
+			transition: transform 0.35s ease;
+		}
+
+		&:hover::before {
+			transform: scaleX(1);
+		}
+	}
+
+	.category-link-panel__card-heading {
+		font-family: $acumin-pro;
+		font-size: 1.625rem;
+		font-weight: 700;
+		line-height: 1.2;
+		color: $black;
+		margin-bottom: 1.5rem;
+		padding-bottom: 0;
+		border: none;
+
+		a {
+			display: inline-flex;
+			align-items: flex-start;
+			color: $black;
+			text-decoration: none;
+			font-weight: 700;
+
+			.clp-icon--heading-arrow {
+				margin-left: 0.5rem;
+				margin-top: 0.15em;
+				flex-shrink: 0;
+				stroke: $aged-gold;
+				transition: transform 0.2s ease;
+			}
+
+			&:hover {
+				color: $aged-gold;
+
+				.clp-icon--heading-arrow {
+					transform: translateX(5px);
+				}
+			}
+		}
+	}
+
+	.category-link-panel__links {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.category-link-panel__item {
+		list-style: none;
+		//border-bottom: 1px solid #d9d7d2;
+		padding-bottom: 0;
+
+		&::before {
+			display: none;
+		}
+
+		&:last-child {
+			border-bottom: none;
+		}
+	}
+
+	.category-link-panel__link-row {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		width: 100%;
+		padding: 1rem 0;
+		color: $black;
+		text-decoration: none;
+		font-family: $acumin-pro;
+		font-size: 1.0625rem;
+		font-weight: 400;
+		background: none;
+		border: none;
+		cursor: pointer;
+		text-align: left;
+		gap: 0.75rem;
+
+		&:hover {
+			color: $aged-gold;
+
+			.clp-icon {
+				stroke: $aged-gold;
+			}
+		}
+	}
+
+	.category-link-panel__link-text {
+		flex: 1;
+	}
+
+	// SVG icons
+	.clp-icon {
+		flex-shrink: 0;
+		width: 26px;
+		height: 26px;
+		stroke: $aged-gold;
+		transition: stroke 0.15s ease;
+	}
+
+
+	.clp-icon-wrap {
+		display: flex;
+		align-items: center;
+		flex-shrink: 0;
+	}
+
+	// Plus/minus toggle icons
+	.clp-icon--minus {
+		display: none;
+	}
+
+	.clp-icon--plus {
+		display: block;
+	}
+
+	.has-submenu {
+		position: relative;
+
+		&.is-open {
+			.clp-icon--minus {
+				display: block;
+			}
+
+			.clp-icon--plus {
+				display: none;
+			}
+
+			.category-link-panel__submenu-trigger {
+				position: relative;
+
+				&::after {
+					content: '';
+					position: absolute;
+					bottom: 0;
+					left: 0;
+					width: calc(100% + 1.5rem);
+					margin-left: -.75rem;
+					height: 2px;
+					background-color: $boiler-gold;
+
+				}
+			}
+		}
+	}
+
+	// Submenu
+	.category-link-panel__submenu {
+		list-style: none;
+		position: absolute;
+		left: -.75rem;
+		top: 100%;
+		width: calc(100% + 1.5rem);
+		background-color: #fff;
+		padding: .5rem .75rem 0;
+		border-bottom-right-radius: 4px;
+		border-bottom-left-radius: 4px;
+		z-index: 10;
+
+		.category-link-panel__item {
+			border-color: #d9d7d2;
+
+			&:first-child {
+				border-top: none;
+			}
+		}
+
+		.category-link-panel__sublink-row {
+			font-size: 0.9375rem;
+			color: #444;
+			padding: 0.5rem 0;
+
+			&:hover {
+				color: $aged-gold;
+			}
+		}
+	}
+
+	// Background variants
+	&.has-gold-background {
+		.category-link-panel__card {
+			background-color: darken( $boiler-gold, 8% );
+			border-color: darken( $boiler-gold, 15% );
+		}
+
+		.category-link-panel__card-heading,
+		.category-link-panel__link-row {
+			color: $black;
+		}
+
+		.category-link-panel__item {
+			border-color: darken( $boiler-gold, 20% );
+
+			&:first-child {
+				border-top-color: darken( $boiler-gold, 20% );
+			}
+		}
+	}
+
+	&.has-black-background {
+		.category-link-panel__card {
+			background-color: #1a1a1a;
+			border-color: #333;
+		}
+
+		.category-link-panel__card-heading {
+			color: $white;
+
+			a {
+				color: $white;
+
+				&:hover {
+					color: $boiler-gold;
+				}
+			}
+		}
+
+		.category-link-panel__link-row {
+			color: $white;
+
+			&:hover {
+				color: $boiler-gold;
+			}
+		}
+
+		.category-link-panel__item {
+			border-color: #444;
+
+			&:first-child {
+				border-top-color: #444;
+			}
+		}
+
+		.category-link-panel__submenu .category-link-panel__sublink-row {
+			color: #ccc;
+		}
+	}
+
+	&.has-gray-background {
+		.category-link-panel__card {
+			background-color: $white;
+			border-color: #ccc;
+		}
+	}
+
+	// ─── Feature layout (grid + sidebar) ──────────────────────────────────────
+	&.has-layout-feature {
+		// flex-start (not the default stretch) so neither column is forced to
+		// the other's height — otherwise the aside card's height:100% would
+		// stretch and push the CTA block out the bottom of its column.
+		.category-link-panel__feature {
+			align-items: flex-start;
+		}
+
+		.category-link-panel__feature-main {
+			// Drop the negative .columns margin so the grid sits flush in the column.
+			.category-link-panel__grid {
+				margin: 0;
+			}
+
+			// Left panels span the full main column and stack vertically, rather
+			// than inheriting the is-{12/columns} width (which left a single panel
+			// filling only a fraction of the column with a large gap beside it).
+			// padding: 0 removes the nested column's gutter so the left card aligns
+			// flush — same top and inset as the aside card (which has no inner
+			// column) instead of sitting 12px lower and 12px further in.
+			.category-link-panel__column {
+				flex: 0 0 100%;
+				max-width: 100%;
+				padding: 0;
+			}
+		}
+	}
+
+	.category-link-panel__feature-aside {
+		// Stack the small panel and the CTA block with breathing room between.
+		> * + * {
+			margin-top: 1.5rem;
+		}
+
+		// The aside panel has no surrounding box: transparent background + border
+		// (kept transparent rather than removed so the 1px box-model still matches
+		// the left panel's size) and no gold hover bar. height:auto cancels the
+		// base card's height:100%, which would otherwise stretch the card and push
+		// the CTA out the bottom of the column.
+		.category-link-panel__card {
+			height: auto;
+			background-color: transparent;
+			border-color: transparent;
+
+			// Kill the base card's animated gold top-border on hover.
+			&::before {
+				content: none;
+			}
+		}
+
+		// The submenu popup is white by default, which has no contrast now that
+		// the aside panel sits box-less on the page background. Give it the left
+		// panel's card surface so it reads as a distinct popup.
+		.category-link-panel__submenu {
+			background-color: #f7f6f4;
+			border: 1px solid #e3e1dc;
+		}
+	}
+
+	.category-link-panel__cta {
+		background-color: $black;
+		color: $white;
+		padding: 2rem;
+		border-radius: 6px;
+
+		.category-link-panel__cta-heading {
+			font-family: $acumin-pro;
+			font-size: 2rem;
+			font-weight: 700;
+			line-height: 1.1;
+			color: $white;
+			margin-bottom: 1rem;
+		}
+
+		.category-link-panel__cta-text {
+			font-family: $acumin-pro;
+			font-size: 1.0625rem;
+			line-height: 1.55;
+			color: #e6e6e6;
+			margin-bottom: 1.5rem;
+
+			p {
+				margin-bottom: 0.75rem;
+
+				&:last-child {
+					margin-bottom: 0;
+				}
+			}
+
+			a {
+				color: $boiler-gold;
+				text-decoration: underline;
+			}
+		}
+
+		// Button itself is the global .purdue-home-button--black component.
+		.purdue-home-button {
+			margin-top: 0.5rem;
+		}
+	}
+
+	@include mobile {
+		.category-link-panel__column {
+			margin-bottom: 1rem;
+		}
+	}
+}
+
+// Editor preview styles
+.clp-editor {
+	padding: 1rem;
+	background: #f5f5f5;
+
+	&__section-header {
+		font-size: 1.25rem;
+		margin-bottom: 1rem;
+	}
+
+	&__grid {
+		display: grid;
+		grid-template-columns: repeat( auto-fill, minmax( 280px, 1fr ) );
+		gap: 1rem;
+		margin-bottom: 1rem;
+	}
+
+	&__panel {
+		background: $white;
+		border: 1px solid #ddd;
+		border-radius: 4px;
+		padding: 1rem;
+	}
+
+	&__links {
+		margin-top: 0.5rem;
+	}
+
+	&__link {
+		background: #fafafa;
+		border: 1px solid #eee;
+		border-radius: 3px;
+		padding: 0.75rem;
+		margin-bottom: 0.5rem;
+	}
+
+	&__sublinks {
+		background: #f0f0f0;
+		border-left: 3px solid $boiler-gold;
+		padding: 0.75rem;
+		margin: 0.5rem 0;
+	}
+
+	&__sublinks-label {
+		font-weight: 700;
+		margin-bottom: 0.5rem;
+		font-size: 0.875rem;
+	}
+
+	&__sublink {
+		background: $white;
+		border: 1px solid #ddd;
+		border-radius: 3px;
+		padding: 0.5rem;
+		margin-bottom: 0.5rem;
+	}
+
+	&__sidebar {
+		margin-top: 1.5rem;
+		padding-top: 1.5rem;
+		border-top: 2px dashed #ccc;
+	}
+
+	&__sidebar-label {
+		font-weight: 700;
+		font-size: 0.9rem;
+		margin: 1rem 0 0.5rem;
+	}
+
+	&__rich-label {
+		display: block;
+		font-size: 0.8rem;
+		font-weight: 600;
+		margin-bottom: 0.25rem;
+		text-transform: uppercase;
+	}
+
+	&__rich {
+		background: $white;
+		border: 1px solid #ddd;
+		border-radius: 3px;
+		padding: 0.5rem;
+		margin-bottom: 1rem;
+		min-height: 3rem;
+	}
+}

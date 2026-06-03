@@ -8,9 +8,11 @@
             </video>
         <?php endif; ?>
     </div>
-    <div class="flex-container flex-container--align-center">
-        <span class="cta-link purdue-home-cta-card__link"><?= isset($attributes['buttonText']) && $attributes['buttonText']? $attributes['buttonText']:"Watch Video" ?></span>
-        <img class="cta-icon cta-icon--play" src="<?php echo get_template_directory_uri() ?>/imgs/play_icon_gold.svg" alt="">                                       
+    <div class="flex-container flex-container--align-center lyt-playbtn">
+        <button class="playbtn">
+            <span class="cta-link purdue-home-cta-card__link"><?= isset($attributes['buttonText']) && $attributes['buttonText']? $attributes['buttonText']:"Watch Video" ?></span>
+            <img class="cta-icon cta-icon--play" src="<?php echo get_template_directory_uri() ?>/imgs/play_icon_gold.svg" alt="">
+        </button>                                       
     </div>
     <div class="iframe-container is-sr-only">
         <div class="youtube-video" id="<?= $videoId ?>" data-title="<?= $attributes['mediaTitle'] ?>" data-src="<?= $youtubeurl ?>"></div>

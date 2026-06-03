@@ -825,15 +825,10 @@ function clear_transient_on_post_save($post_id) {
     
             }
         }
-
-       
-            
-        
     }
-    
-
 }
 add_action( 'save_post', 'clear_transient_on_post_save', 20 );
+add_action( 'publish_future_post', 'clear_transient_on_post_save' );
 
 
 add_filter( 'block_editor_rest_api_preload_paths', function( $paths ) {

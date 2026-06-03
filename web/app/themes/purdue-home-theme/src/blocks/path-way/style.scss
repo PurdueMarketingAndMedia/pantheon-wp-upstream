@@ -66,6 +66,8 @@
       position:absolute;
       width: 100%;
       height: 100%;
+      min-height: 0;
+      min-width: 0;
       overflow: hidden;
       box-shadow: 2px 4px 5px -1px rgba(0, 0, 0, 0.3);
       border-radius: 4px;
@@ -88,10 +90,12 @@
     }
     .purdue-home-path-way__content-container{
       position: relative;
-      width: 60%;
+      min-width: 0;
+      min-height: 0;
       background: white;
       padding: 5rem;
       border-radius: 4px;
+      width: clamp(20rem, 60%, 80rem);
       @include touch{
         width:100%;
         padding: 3rem 2rem;
@@ -99,6 +103,7 @@
     }
     .purdue-home-path-way__container--reversed{
       .purdue-home-path-way__content-container{
+        flex-wrap: wrap;
         margin-left:auto;
       }
     }
@@ -206,6 +211,7 @@
           display:flex;
           flex-direction:row;
           justify-content: space-between;
+          flex-wrap: nowrap;
           @include touch{
             flex-direction:column-reverse;          
           }
@@ -218,6 +224,7 @@
             }
             .purdue-home-path-way__content-container{
               width:60%;
+              min-width: 0;
               @include touch{
                 width:100%;
               }
@@ -227,6 +234,7 @@
         .purdue-home-path-way__container--reversed{
           display:flex;
           flex-direction:row-reverse;
+          flex-wrap: wrap;
           @include touch{
             flex-direction:column-reverse;
           }
@@ -241,14 +249,19 @@
           }
         }
         .purdue-home-path-way__image-container{
-          width:45%;
+         // width:45%;
+          flex: 1 0 50%;
+          min-width: 0;
           @include touch{
             width:100%;
           }
         }
         .purdue-home-path-way__content-container{
-          width:45%;
+          //width:45%;
+          flex: 1 0 50%;
           padding-left:5rem;
+          overflow: auto;
+          //min-width: 0;
           @include touch{
             width:100%;
             padding-left:0;
@@ -263,6 +276,7 @@
     }
     &.purdue-home-path-way--has-connector{
       .purdue-home-path-way__container{
+        flex-wrap: wrap;
         margin-left: 3.5rem;
         &:before{
           display: block;
@@ -364,7 +378,7 @@
   }
   &__header{
     font-family: $acumin-pro;
-    font-size: 3.75rem;
+    font-size: clamp(2.5rem, 4vw, 3.75rem);
     font-weight: 700;
     letter-spacing: 0;
     line-height: 1;

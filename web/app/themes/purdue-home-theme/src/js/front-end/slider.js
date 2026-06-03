@@ -1,4 +1,5 @@
 import Glide from "@glidejs/glide";
+import { key } from "@wordpress/icons";
 
 function siblings(node) {
   if (node && node.parentNode) {
@@ -17,6 +18,77 @@ function siblings(node) {
   return [];
 }
 
+
+let isKeyboardNav = false;
+
+// Only treat Tab as “navigation intent”
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.glide:not(.purdue-home-slider--news)').forEach(slider => {
+    slider.querySelectorAll('.glide__slide').forEach(slide => {
+      if (slide.classList.contains('is-active')) {
+          slide.inert = false;
+          slide.setAttribute("aria-hidden", "false");
+          slide.setAttribute("tabindex", "0");
+        } else {
+          slide.inert = true;
+          slide.setAttribute("aria-hidden", "true");
+          slide.setAttribute("tabindex", "-1");
+        }
+    });
+  });
+});
+document.addEventListener('keydown', (e) => {
+   if (e.key === 'Tab' || e.key.startsWith('Arrow')) {
+    isKeyboardNav = true;
+    document.querySelectorAll('.glide:not(.purdue-home-slider--news)').forEach(slider => {
+      slider.querySelectorAll('.glide__slide').forEach(slide => {
+        if (slide.classList.contains('is-active')) {
+          slide.inert = false;
+          slide.setAttribute("aria-hidden", "false");
+          slide.setAttribute("tabindex", "0");
+        } else {
+          slide.inert = true;
+          slide.setAttribute("aria-hidden", "true");
+          slide.setAttribute("tabindex", "-1");
+        }
+      });
+    });
+  }
+});
+
+// Any pointer interaction cancels it
+['mousedown', 'pointerdown', 'touchstart', 'mouseover'].forEach(evt => {
+ 
+    document.querySelectorAll('.glide:not(.purdue-home-slider--news)').forEach(slider => {
+       document.addEventListener(evt, () => {
+        isKeyboardNav = false;
+      slider.querySelectorAll('.glide__slide').forEach(slide => {
+        slide.inert = false;
+        slide.setAttribute("aria-hidden", "false");
+        slide.setAttribute("tabindex", "0");
+      });
+    });
+  });
+});
+
+['mouseup', 'pointerup', 'touchend', 'mouseout'].forEach(evt => {
+ 
+    document.querySelectorAll('.glide:not(.purdue-home-slider--news)').forEach(slider => {
+       document.addEventListener(evt, () => {
+        isKeyboardNav = false;
+      slider.querySelectorAll('.glide__slide').forEach(slide => {
+        slide.inert = true;
+        slide.setAttribute("aria-hidden", "true");
+        slide.setAttribute("tabindex", "-1");
+      });
+    });
+  });
+});
+
+
+
+
 const check_resize = (glide) => {
   if (glide.slides_count <= glide.settings.perView) {
     glide.update({ startAt: 0 }).disable();
@@ -34,24 +106,56 @@ const CustomActiveClass = (Glide, Components, Events) => {
     },
 
     changeActiveSlide() {
+
       const slide = Components.Html.slides[Glide.index];
       const bullets = Components.Controls.items[0];
       const bullet = [...bullets.children].find(
         (bullet) => bullet.getAttribute("data-glide-dir") === `=${Glide.index}`
       );
 
+      const slideType = Glide.settings.type;
+      let useInert = false;
+      if (slideType === "slide" && isKeyboardNav) {
+        useInert = true;
+      }
+
       if (bullet) {
         bullet.classList.remove("is-next", "is-prev");
         bullet.classList.add("is-active");
+        bullet.setAttribute("aria-current", "true");
       }
+
       slide.classList.remove("is-next", "is-prev");
       slide.classList.add("is-active");
+      slide.setAttribute("aria-current", "true");
+      if (useInert) {
+        slide.inert = false;
+        slide.setAttribute("aria-hidden", "false");
+      } else {
+        slide.setAttribute("aria-hidden", "false");
+      }
+      //slide.inert = false;
+      slide.setAttribute("tabindex", "0");
+
+
 
       siblings(slide).forEach((sibling) => {
         sibling.classList.remove("is-active", "is-next", "is-prev");
+        sibling.removeAttribute("aria-current");
+        if (useInert) {
+          sibling.inert = true;
+          sibling.setAttribute("aria-hidden", "true");
+        } else {
+          sibling.setAttribute("aria-hidden", "true");
+        }
+        //sibling.inert = true;
+        sibling.setAttribute("tabindex", "-1");
+
+
       });
       siblings(bullet).forEach((sibling) => {
         sibling.classList.remove("is-active", "is-next", "is-prev");
+        sibling.removeAttribute("aria-current");
       });
 
       if (slide.nextElementSibling) {
@@ -68,6 +172,7 @@ const CustomActiveClass = (Glide, Components, Events) => {
       if (bullet && bullet.previousElementSibling) {
         bullet.previousElementSibling.classList.add("is-prev");
       }
+
     },
   };
 
@@ -77,6 +182,33 @@ const CustomActiveClass = (Glide, Components, Events) => {
 
   return Component;
 };
+
+const changeFocusOnSlideChange = (Glide, Components, Events) => {
+
+  const Component = {
+
+
+    changeFocus() {
+      const activeSlide = Components.Html.slides[Glide.index];
+
+      if (!activeSlide) return;
+
+      activeSlide.tabIndex = 0;
+      activeSlide.inert = false;
+      activeSlide.focus();
+
+    },
+  };
+
+  Events.on('run.after', () => {
+    Component.changeFocus();
+  });
+
+
+  return Component;
+};
+
+
 
 const link_cards = document.querySelectorAll(".purdue-home-link-cards__slider");
 if (link_cards && link_cards.length > 0) {
@@ -102,6 +234,7 @@ if (link_cards && link_cards.length > 0) {
           perView: 1,
         },
       },
+      keyboard: false,
     });
     const nextButton = link_cards[i].querySelector(".arrow--left");
     const prevButton = link_cards[i].querySelector(".arrow--right");
@@ -122,9 +255,9 @@ if (link_cards && link_cards.length > 0) {
       check_resize(glide);
     });
 
-    glide.mount({ CustomActiveClass });
+    glide.mount({ CustomActiveClass, changeFocusOnSlideChange });
     check_resize(glide);
   }
 }
 
-export { check_resize, CustomActiveClass };
+export { check_resize, CustomActiveClass, changeFocusOnSlideChange };

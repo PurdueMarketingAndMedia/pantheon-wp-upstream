@@ -2,7 +2,11 @@
 @import "../../../src/style/front-end/overides/variables";
 @import '../../../node_modules/bulma/sass/utilities/mixins.sass';
 
-.purdue-home-mixed-rtb{
+.purdue-home-mixed-rtb {
+  .purdue-home-cta-card--horizontal{
+    flex-grow: 1;
+    background-color: #000;
+  }
   img,video{
     object-fit: cover;
   }
@@ -131,7 +135,7 @@
     .cta-link.purdue-home-cta-card__link{
       &:before{
         content:"";
-        width: calc(100% + 10rem);
+        width: calc(100% + 2rem);
         height: calc(100% + 2rem);
         background: linear-gradient(0deg, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.55) 75%, rgba(0, 0, 0, 0.45) 100%);
         z-index: -1;
@@ -168,9 +172,10 @@
       }
       .cta-link.purdue-home-cta-card__link{
         color:$black;
+        width:100%;
         &:before{
           content:"";
-          width: calc(100% + 10rem);
+          width: calc(100% + 2rem);
           height: calc(100% + 3rem);
           background: linear-gradient(0deg, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.55) 75%, rgba(255, 255, 255, 0) 100%);
           z-index: -1;
@@ -361,4 +366,54 @@
 
   }
 
+}
+
+.purdue-home-cta-card--video{
+  flex-grow: 1;
+  background-color: #000;
+  &:focus{
+    .image img, .image:after{
+      top: 0.5rem;
+    }
+  }
+}
+
+
+
+  .dialog-trigger{
+    outline:none;
+    border:none;
+    background:transparent;
+    inset:0;
+    &:hover {
+      cursor: pointer;
+    }
+    &:focus{
+      margin-top: 0;
+      outline: 2px solid var(--wp--preset--color--aged-gold);
+      outline-offset: -5px;
+    }
+  }
+
+.dialog{
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+
+  &[open]{
+    display: flex;
+  }
+
+  button:focus{
+    outline: 2px solid $boiler-gold;
+    outline-offset: 2px;  
+  }
+}
+
+dialog:modal {
+  max-width: 100vw;
+  max-height: 100%;
 }

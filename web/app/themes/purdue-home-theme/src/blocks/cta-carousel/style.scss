@@ -44,7 +44,7 @@
             flex-direction: column;
           }
       &.has-black-background{
-        p:not(.tagged-header){
+        p:not(.tagged-header), h2{
           color: #000;
         }
       }
@@ -205,7 +205,7 @@
         font-family: $acumin-pro;
         font-size: 1.125rem;
     }
-    ul.purdue-home-button-list {
+    .purdue-home-button-list {
         padding-left:0;
         padding-top:1.5rem;
         align-self: flex-end;

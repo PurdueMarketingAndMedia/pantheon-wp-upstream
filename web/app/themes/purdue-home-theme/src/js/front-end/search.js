@@ -116,9 +116,7 @@ searchbars.forEach((searchbar) => {
       .map((value) => {
         return value.trim();
       });
-    console.log(
-      searchbar.querySelector(".search-field").getAttribute("placeholder")
-    );
+
     var sp = new SuperPlaceholder({
       placeholders: placeholders,
       preText: "",

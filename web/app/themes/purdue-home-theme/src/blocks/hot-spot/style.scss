@@ -2,184 +2,309 @@
 @import "../../../src/style/front-end/overides/variables";
 @import '../../../node_modules/bulma/sass/utilities/mixins.sass';
 
-.purdue-home-hot-spot{
+.purdue-home-hot-spot {
   z-index: 2;
   position: relative;
-  .section.has-padding-top-small{
+  padding-bottom: 7.25rem;
+
+  @include mobile {
+    padding-bottom: 3.25rem;
+  }
+
+  .section.has-padding-top-small {
     position: absolute;
     z-index: 10;
-    width:100%;
+    width: 100%;
   }
+
   .purdue-home-cta-card {
     position: relative;
-    figcaption{
+
+    figcaption {
       position: absolute;
       bottom: 0;
       right: 0;
       color: #fff;
       z-index: 1;
       width: 100%;
-      background: rgba(0,0,0,.75);
+      background: rgba(0, 0, 0, .75);
       border-left: none;
-     max-width: 100%;
-     padding: 3rem 1.5rem 0.75rem !important;
-     background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);  
-     text-align: right;
+      max-width: 100%;
+      padding: 3rem 1.5rem 0.75rem !important;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
+      text-align: right;
     }
   }
-  .purdue-home-cta-card--horizontal .image:after{
-    background: linear-gradient(180deg,transparent,rgba(0,0,0,.35));
+
+  .purdue-home-cta-card--horizontal .image:after {
+    background: linear-gradient(180deg, transparent, rgba(0, 0, 0, .35));
   }
-  .purdue-home-cta-card--stack .image:after{
-    content:none;
+
+  .purdue-home-cta-card--stack .image:after {
+    content: none;
   }
-  .purdue-home-slide__hot-spot-desktop{
-    display:block;
-    .purdue-home-cta-card--horizontal{
-      &>.image{
-        padding-top:50%;
+
+  .purdue-home-slide__hot-spot-desktop {
+    display: block;
+
+    .purdue-home-cta-card--horizontal {
+      &>.image {
+        padding-top: 50%;
       }
     }
-    @include mobile{
-      display:none;
+
+    @include mobile {
+      display: none;
     }
   }
-  .purdue-home-slide__hot-spot-mobile{
-    display:none;
-    @include mobile{
-      display:block;
+
+  .purdue-home-slide__hot-spot-mobile {
+    display: none;
+
+    @include mobile {
+      display: block;
+      padding-bottom: 4rem;
       overflow: hidden;
     }
-    .purdue-home-cta-card--horizontal{
-      &>.image{
-        padding-top:0;
-        height:min(calc(100vh - 88px), 716px);
+
+    .purdue-home-cta-card--horizontal {
+      &>.image {
+        padding-top: 0;
+        height: min(calc(100vh - 88px), 716px);
       }
-      figcaption{
+
+      figcaption {
         font-size: 0.875rem;
         padding: 1.5rem 1.5rem 0.25rem !important;
         text-align: center !important;
       }
     }
-    .hot-spot-content{
-      display:flex;
+
+    .hot-spot-content {
+      display: flex;
       position: absolute;
       left: 0;
       top: 0;
       background: none;
-      padding:4.5rem 1.125rem 5rem;
-      width:100%;
+      padding: 4.5rem 1.125rem 5rem;
+      width: 100%;
       align-items: center;
       justify-content: center;
-      height:100%;
-      .purdue-home-cta-card.purdue-home-cta-card--stack{
-        width:100%;
+      height: 100%;
+
+      .purdue-home-cta-card.purdue-home-cta-card--stack {
+        width: 100%;
       }
     }
   }
-  .hot-spot{
-    position:absolute;
-    padding:0;
+
+  .hot-spot {
+    position: absolute;
+    padding: 0;
   }
-  .purdue-home-cta-card--stack{
-    background:$white;
-    color:$black;
-    .flex-container{
-      padding:2rem;
-      @include mobile{
-        padding:1.5rem;
+
+  .purdue-home-cta-card--stack {
+    background: $white;
+    color: $black;
+
+    .flex-container {
+      padding: 2rem;
+
+      @include mobile {
+        padding: 1.5rem;
       }
     }
   }
-  .purdue-home-cta-card__tag{
+
+  .purdue-home-cta-card__tag {
     color: $aged-gold;
     font-family: $united-sans-condensed;
     font-size: 1rem;
     font-weight: 900;
     letter-spacing: 2.5px;
-    margin-bottom:0.3rem;
+    margin-bottom: 0.3rem;
     text-transform: uppercase;
-  }  
-  .purdue-home-cta-card__title{
+  }
+
+  .purdue-home-cta-card__title {
     font-family: $acumin-pro-semicondensed;
     font-size: 1.5rem;
     font-weight: bold;
     letter-spacing: 0;
-    line-height:1.4;
-    margin-bottom:1rem;
-    @include mobile{
-      font-size:1.25rem;
-      line-height:1.5;
-    }
-  }
-  .purdue-home-cta-card__content{
-    margin-bottom:1.5rem;
-  }
-  .cta-link{
-    display:inline-block;
-    &:after{
-      border: 1px solid $aged-gold;
-      background: $aged-gold;
-    }
-  }
-  .hot-spot-content{
-    position:absolute;
-    overflow: hidden;
-    height:0;
-    width:0;
-    display:block;
-    transition: width 0.3s;
-    z-index:11;
-    box-shadow: $box-shadow;
+    line-height: 1.4;
+    margin-bottom: 1rem;
 
-    .purdue-home-cta-card.purdue-home-cta-card--stack{
-      width:345px;
-    }
-    &.is-active{
-      height:auto;
-      width:345px;
+    @include mobile {
+      font-size: 1.25rem;
+      line-height: 1.5;
     }
   }
-  .hot-spot-button{
-    position:relative;
+
+  .purdue-home-cta-card__content {
+    margin-bottom: 1.5rem;
+  }
+
+  .cta-link {
+    position: static;
+    display: block;
+    text-align: left;
+
+    &:hover {
+      .cta-link-anchor {
+        text-decoration: none;
+
+        &:after {
+          visibility: visible;
+          transform: scaleX(1);
+        }
+      }
+    }
+
+    &:after {
+      content: none;    
+
+      &:hover {
+        border: none;
+        background: none;
+      }
+    }
+  }
+
+  .cta-link-anchor {
+    text-decoration: none;
+    display: inline-flex;
+    flex-direction: column;
+    color: #000000;
+
+    &:after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: none;
+      background: none;
+      visibility: visible;
+      transform: scaleX(1);
+    }
+
+    &:before {
+      order: 1;
+      content: "";
+      display: block;
+      width: 100%;
+      border: 1px solid #CFB991;
+      background: #CFB991;
+      bottom: 0;
+      left: 0;
+      position: relative;
+      visibility: hidden;
+      transform: scaleX(0);
+      transition: all 0.25s cubic-bezier(1, 0.25, 0, 0.75) 0s;
+      height: 3px;
+    }
+
+    &:hover {
+      &:before {
+        visibility: visible;
+        transform: scaleX(1);
+      }
+
+    }
+  }
+
+  .hot-spot-content {
+    position: absolute;
+    overflow: hidden;
+    height: 0;
+    width: 0;
+    display: block;
+    transition: width 0.3s;
+    z-index: 11;
+    box-shadow: $box-shadow;
+    margin: 0;
+    padding: 0;
+    border: none;
+
+    .purdue-home-cta-card.purdue-home-cta-card--stack {
+      width: 345px;
+    }
+
+    &.is-active {
+      height: auto;
+      width: 345px;
+      overflow: visible;
+    }
+  }
+
+  .hot-spot-button {
+    position: relative;
     border: none;
     background: none;
-    padding:2rem;
+    padding: 2rem;
+    animation: pulse 2s 2 forwards;
     cursor: pointer;
-    &:after{
-      content:"";
-      background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='73.5391052px' height='73.5391052px' viewBox='0 0 73.5391052 73.5391052' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3Eclose_icon_circle%3C/title%3E%3Cg id='Desktop' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='close_icon_circle' transform='translate(36.7696, 36.7696) rotate(-315) translate(-36.7696, -36.7696)translate(10.7696, 10.7696)' stroke='%23ffffff' stroke-width='4'%3E%3Ccircle id='Oval-Copy-3' cx='26' cy='26' r='24'%3E%3C/circle%3E%3Cline x1='26.5' y1='14' x2='26.5' y2='38' id='Path-6' stroke-linecap='round' stroke-linejoin='round'%3E%3C/line%3E%3Cline x1='25.6896552' y1='14.5116279' x2='25.6896552' y2='38.6976744' id='Path-6' stroke-linecap='round' stroke-linejoin='round' transform='translate(25.6897, 26.6047) rotate(-90) translate(-25.6897, -26.6047)'%3E%3C/line%3E%3C/g%3E%3C/g%3E%3C/svg%3E");      
+
+    &.hot-spot-button--open.is-active {
+      visibility: hidden;
+    }
+
+    &.hot-spot-button--close {
+      height: 0;
+      width: 0;
+
+       &:after {
+        transform: rotate(45deg);
+      }
+    }
+
+    &:after {
+      content: "";
+      background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='73.5391052px' height='73.5391052px' viewBox='0 0 73.5391052 73.5391052' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3Eclose_icon_circle%3C/title%3E%3Cg id='Desktop' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='close_icon_circle' transform='translate(36.7696, 36.7696) rotate(-315) translate(-36.7696, -36.7696)translate(10.7696, 10.7696)' stroke='%23ffffff' stroke-width='4'%3E%3Ccircle id='Oval-Copy-3' cx='26' cy='26' r='24'%3E%3C/circle%3E%3Cline x1='26.5' y1='14' x2='26.5' y2='38' id='Path-6' stroke-linecap='round' stroke-linejoin='round'%3E%3C/line%3E%3Cline x1='25.6896552' y1='14.5116279' x2='25.6896552' y2='38.6976744' id='Path-6' stroke-linecap='round' stroke-linejoin='round' transform='translate(25.6897, 26.6047) rotate(-90) translate(-25.6897, -26.6047)'%3E%3C/line%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
       width: 60px;
-      height:60px;
+      height: 60px;
       background-repeat: no-repeat;
       background-size: cover;
       position: absolute;
-      animation: pulse 2s infinite;
+      animation: none;
       transform-origin: 50%;
-      color:$white;
+      color: $white;
       font-size: 2.5rem;
       top: 0;
       left: 0;
     }
-    &.is-active{
-      &:after{
-        animation: none;
+
+    &.is-active {
+      &:after {
+        transform: rotate(45deg);
       }
     }
   }
-  .slider-controls{
-    bottom:3rem;
-    position: absolute;
-    width: 100%;
-    @include mobile{
-      bottom:1.5rem;
+
+  /* Pause animation when reduced-motion is set */
+  @media (prefers-reduced-motion: reduce) {
+    .hot-spot-button {
+      animation-play-state: paused !important;
     }
   }
-  .glide__track, .glide__slides,.purdue-home-cta-card{
+
+  .slider-controls {
+    bottom: -4.75rem;
+    position: absolute;
+    width: 100%;
+
+    @include mobile {
+      bottom: -3rem;
+      position: relative;
+    }
+  }
+
+  .glide__track,
+  .glide__slides,
+  .purdue-home-cta-card {
     overflow: visible;
   }
-  .tagged-header{
-    margin-left:10px;
+
+  .tagged-header {
+    margin-left: 10px;
   }
 }
 
@@ -187,12 +312,15 @@
   0% {
     transform: rotate(-45deg) scale(1);
   }
+
   50% {
     transform: rotate(-45deg) scale(1.05);
   }
+
   100% {
     transform: rotate(-45deg) scale(1.1);
   }
+
   50% {
     transform: rotate(-45deg) scale(0.95);
   }

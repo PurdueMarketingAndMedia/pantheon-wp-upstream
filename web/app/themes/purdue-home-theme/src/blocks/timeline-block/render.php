@@ -65,7 +65,8 @@ $id = $attributes['id'] != "" ? ' id="' . $attributes['id'] . '"' : "";
                         
                     }elseif($card['source'] == "vimeo" && $card['vimeo'] != ""){
                         $cardClass.= " purdue-home-timeline__card__vimeo";
-                        $videoId = purdue_get_vimeo_id($card['vimeo']);      
+                        $videoId = purdue_get_vimeo_id($card['vimeo']);
+                        $query = null;
                         if (parse_url($card['vimeo'], PHP_URL_QUERY)){
                             $query = parse_url($card['vimeo'], PHP_URL_QUERY);
                             parse_str($query, $query_params);    
@@ -124,7 +125,14 @@ $id = $attributes['id'] != "" ? ' id="' . $attributes['id'] . '"' : "";
                         <?php
                         }
                         ?>
-                        <p class="purdue-home-timeline__card-title"><?= $card["title"] ?></p>
+                        <?php
+                        $tag = !empty($attributes['header']) ? 'h3' : 'h2';
+                        ?>
+
+                        <<?= $tag; ?> class="purdue-home-cta-grid__card-title">
+                        <?= esc_html($card['title']); ?>
+                        </<?= $tag; ?>>
+
                         <?php
                         if ($card["subtext"]) {
                         ?>
@@ -133,8 +141,18 @@ $id = $attributes['id'] != "" ? ' id="' . $attributes['id'] . '"' : "";
                         }
                         if ($card["linkURL"]) {
                             $target = $card["external"] ? "_blank" : "_self";
+                            $external = isset($card["external"]) && $card["external"] == 'target="_blank"' ? "(Opens in a new tab)" : "";
+                            $ariaLabel = "";
+                            if(isset($card["ariaLabel"]) && $card["ariaLabel"]!==""){
+                                $ariaLabel = 'aria-label="'.$card["ariaLabel"].' '.$external.'"';
+                            }elseif(isset($external) && $external!==""){
+                                $ariaLabel = isset($card["linkText"])? 'aria-label="'.trim($card["linkText"]).' '.$external.'"':'';
+                            }else{
+                                $ariaLabel = "";
+                            }
+                            $buttonClass = isset($card["buttonCSS"]) ? "purdue-home-button ".$card["buttonCSS"] : "purdue-home-button";
                         ?>
-                            <a class="purdue-home-button" href="<?= $card["linkURL"] ?>" target="<?= $target ?>"><?= $card["linkText"] ?></a>
+                            <a class="<?= $buttonClass ?>" href="<?= $card["linkURL"] ?>" target="<?= $target ?>" <?= $ariaLabel ?>><?= $card["linkText"] ?></a>
                         <?php
                         }
                         ?>

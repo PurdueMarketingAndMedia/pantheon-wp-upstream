@@ -15,6 +15,7 @@ const BLOCKS_TEMPLATE = [
 ];
 import {normalizeUuid} from "../../utils/normalizeUuid";
 import { useEffect } from "react";
+import LinkPanelControl from "../../components/linkcomponent";
 
 
 const edit = ( props ) => {
@@ -41,6 +42,7 @@ const edit = ( props ) => {
 		subtext:'',
 		linkURL:'',
 		external:true,
+    ariaLabel: ''
 	}
 
   const initialLink ={
@@ -49,6 +51,8 @@ const edit = ( props ) => {
     buttonColor: 'gold',
     fullWidth: false,
     external:false,
+    ariaLabel:'',
+    buttonCSS:'',
   }
 	const makeLink = () => ({
 		...initialLink,
@@ -126,36 +130,42 @@ const edit = ( props ) => {
 	  );
 	  setAttributes({ links: newLinks });
   }
+
+  const handleAiraLabelChange = (label, id) => {
+		const newLinks = links.map((item) =>
+			item.id === id ? {
+				...item,
+				ariaLabel: label
+			} : item
+		);
+		setAttributes({ links: newLinks });
+	}
+
+
+	const handleButtonCSSChange = (css, id) => {
+		const newLinks = links.map((item) =>
+			item.id === id ? {
+				...item,
+				buttonCSS: css
+			} : item
+		);
+		setAttributes({ links: newLinks });
+	}
+
+
+
 let linksEditorFields;
 linksEditorFields = links.map((item, index) => {   
   return (
     <PanelBody initialOpen={false} key={item.id} title={item.linkText?item.linkText:`link ${index+1}`}>
-      <PanelRow>
-        <TextControl
-          label="Link Text"
-          value={ item.linkText }
-          onChange={ ( val ) => handleLinkTextChange( val, item.id ) }
-        />
-      </PanelRow>
-      <PanelRow>
-        <TextControl
-          label={'Link URL'}
-          type="url"
-          onChange={(val) => {
-            handleLinkURLChange(val, item.id);
-          }}
-          value={item.linkURL}
-        />
-      </PanelRow>
-      <PanelRow>
-        <CheckboxControl
-          label="Open link in new tab?"
-          checked={item.external}
-          onChange={() => {
-            handleLinkExternalChange(item.id);
-          }}
-        />
-      </PanelRow>
+      <LinkPanelControl
+        item={item}
+        onLinkTextChange={(val) => handleLinkTextChange(val, item.id)}
+        onLinkURLChange={(val) => handleLinkURLChange(val, item.id)}
+        onExternalChange={() => handleLinkExternalChange(item.id)}
+        onAiraLabelChange={(val) => handleAiraLabelChange(val, item.id)}
+        onButtonCSSChange={(css) => handleButtonCSSChange(css, item.id)}
+      />
       <PanelRow>
           <SelectControl
             label="Choose a button color"
@@ -244,6 +254,17 @@ linksEditorFields = links.map((item, index) => {
 	  );
 	  setAttributes({ cards: newCards });	  
   }
+
+   const handleCardAriaLabelChange = (label, id) => {
+	  const newCards = cards.map((item) =>
+		  item.id === id ? {
+			  ...item,
+			  ariaLabel: label
+		  } : item
+	  );
+	  setAttributes({ cards: newCards });	  
+  }
+
 let editorFields;
 editorFields = cards.map((item, index) => {   
   return (
@@ -305,6 +326,17 @@ editorFields = cards.map((item, index) => {
           onChange={() => {
             handleExternalChange(item.id);
           }}
+        />
+      </PanelRow>
+      <PanelRow>
+        <TextControl
+          label={"ARIA Label for Link"}
+          onChange={(val) => {
+            handleCardAriaLabelChange(val, item.id);
+          }}
+          value={item.ariaLabel}
+          help="Provide an accessible label for the link. Defaults to the Link Title if left empty."
+
         />
       </PanelRow>
       <Button

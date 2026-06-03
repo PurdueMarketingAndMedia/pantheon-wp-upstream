@@ -1,5 +1,8 @@
 <?php
 $id = $attributes['id'] != "" ? ' id="' . $attributes['id'] . '"' : "";
+$buttonList = sizeof($attributes['links']) > 1 ? "ul" : "div";
+$buttonWrapper = sizeof($attributes['links']) > 1 ? "li" : "div";
+
 if($attributes['type']=="simple"){
     if ($attributes['links'] && sizeof($attributes['links']) > 0){
         $class = "purdue-home-buttons";  
@@ -9,11 +12,20 @@ if($attributes['type']=="simple"){
 
 ?>
 <div <?= $id ?> class="<?= $class ?> <?= $attributes['className'] ?>">
-    <ul class="purdue-home-button-list">
+    <<?= $buttonList; ?> class="purdue-home-button-list">
         <?php foreach ($attributes['links'] as $key => $link):
             $target = $link["external"] ? 'target="_blank"' : 'target="_self"';
+            $external = isset($link["external"]) && $link["external"] == 'target="_blank"' ? "(Opens in a new tab)" : "";
+            $ariaLabel = "";
+            if(isset($link["ariaLabel"]) && $link["ariaLabel"]!==""){
+                $ariaLabel = 'aria-label="'.$link["ariaLabel"].' '.$external.'"';
+            }elseif(isset($external) && $external!=""){
+                $ariaLabel = isset($link["linkText"])? 'aria-label="'.trim($link["linkText"]).' '.$external.'"':'';
+            }else{
+                $ariaLabel = "";
+            }
             $buttonClass = "purdue-home-button";
-            $buttonClass .= $link["buttonCSS"] ? " ".$link["buttonCSS"] : "";
+            $buttonClass .= isset($link["buttonCSS"]) ? " " . $link["buttonCSS"] : "";
             if ($link["buttonColor"] == "black") {
                 $buttonClass .= " purdue-home-button--black";
             }elseif($link["buttonColor"] == "white") {
@@ -21,32 +33,32 @@ if($attributes['type']=="simple"){
             }
             $liClass = $link["fullWidth"] ? "purdue-home-button-wrap--full" : "";
             ?>
-            <li class="<?= $liClass ?>"><a class="<?= $buttonClass ?>" href="<?= $link["linkURL"] ?>" <?= $target ?>><?= trim($link["linkText"]) ?></a></li>
+            <<?= $buttonWrapper ?> class="<?= $liClass ?>"><a class="<?= $buttonClass ?>" href="<?= $link["linkURL"] ?>" <?= $target ?> <?= $ariaLabel ?>><?= trim($link["linkText"]) ?></a></<?= $buttonWrapper ?>>
         <?php endforeach; ?>
-    </ul>
+    </<?= $buttonList; ?>>
 </div>
 <?php }
 }else{ ?>
 <div <?= $id ?> class="purdue-home-button-bar has-<?= $attributes['background'] ?>-background <?= $attributes['className'] ?>">
-    <ul>
+    <<?= $buttonList; ?>>
         <?php   
         foreach ($attributes['links'] as $key => $link):
             $target = $link["external"] ? 'target="_blank"' : 'target="_self"';
             $buttonclass = "purdue-home-button-bar__button";  
-            $buttonclass .= $link["buttonCSS"] ? " ".$link["buttonCSS"] : "";
+            $buttonclass .= isset($link["buttonCSS"]) ? " ".$link["buttonCSS"] : "";
         ?>
-            <li>
+            <<?= $buttonWrapper; ?>>
                 <a class="<?= $buttonclass ?>" href="<?= $link["linkURL"] ?>" <?= $target ?>>
                     <?php if ($link["linkText"]): ?>
-                        <p class="purdue-home-button-bar__button-title"><?= trim($link["linkText"]) ?></p>
+                        <h2 class="purdue-home-button-bar__button-title"><?= trim($link["linkText"]) ?></h2>
                     <?php endif; ?>
                     <?php if ($link["linkSubtext"]): ?>
                         <p class="purdue-home-button-bar__button-content"><?= $link["linkSubtext"] ?></p>
                     <?php endif; ?>
                 </a>
-            </li>
+            </<?= $buttonWrapper; ?>>
         <?php endforeach; ?>
-    </ul>
+    </<?= $buttonList ?>>
 </div>
 <?php }
  ?>

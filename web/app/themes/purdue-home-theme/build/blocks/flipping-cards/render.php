@@ -67,8 +67,12 @@ if($attributes['content'] != ""){
             <div class="<?= $columnClass; ?>">
                 <div class="flipping-card">
                     <div class="flipping-card-inner">
-                        <div class="flipping-card-front">
-                        <div class="flipping-icon front"></div>
+                        <?php
+                            $frontId = 'flippingcard-' . uniqid();
+                            $backId = 'flippingcard-' . uniqid();
+                        ?>
+                        <div id="<?= $frontId; ?>" class="flipping-card-front" aria-hidden="false">
+                            <button class="flipping-icon front" aria-label="Flip to back" aria-controls="<?= $backId ?>"></button>
                             <figure class="image">
                                 <img src="<?= $card['mediaURL']; ?>" alt="<?= $card['mediaAlt']; ?>" />
                             </figure>
@@ -80,8 +84,8 @@ if($attributes['content'] != ""){
                                 </p>
                             <?php } ?>
                         </div>
-                        <div class="flipping-card-back">
-                            <div class="flipping-icon back"></div>
+                        <div id="<?= $backId; ?>" class="flipping-card-back" aria-hidden="true">
+                            <button class="flipping-icon back" aria-label="Flip to front" tabindex="-1" aria-controls="<?= $frontId ?>"></button>
                             <figure class="image is-3by2">
                                 <img src="<?= $card['backImageURL']; ?>" alt="<?= $card['backImageAlt']; ?>" />
                             </figure>

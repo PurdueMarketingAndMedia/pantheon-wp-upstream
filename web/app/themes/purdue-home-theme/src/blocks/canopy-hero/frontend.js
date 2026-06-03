@@ -1,3 +1,5 @@
+import { flipBtnState } from '../../utils/flipBtnState.js';
+
 const canopyHeros = document.querySelectorAll(".purdue-home-canopy-hero");
 const height = window.innerHeight - 80;
 const width = window.innerWidth;
@@ -13,40 +15,32 @@ if(canopyHeros && canopyHeros.length>0){
                 const time = 5*slides.length;
                 r.style.setProperty('--animationSpeed1', time);
                 r.style.setProperty('--translate1', transform);
-            }  
+            }
             if(sliders[1]){
                 const slides = sliders[1].querySelectorAll('.slide');
                 const transform = slides.length/2*(-284)+'px';
                 const time = 5*slides.length;
                 r.style.setProperty('--animationSpeed2', time);
                 r.style.setProperty('--translate2', transform);
-            }          
+            }
         }
-        const playButton=el.querySelector('.cta-play');
-        const pauseButton=el.querySelector('.cta-pause');
-        let position;
-        if(playButton){
-            playButton.addEventListener("click", ()=>{
-                pauseButton.classList.add("is-active")
-                playButton.classList.remove("is-active")
+
+        const btn = el.querySelector('.cta-btnctrl');
+
+        btn.addEventListener("click", () => {
+            if (btn.classList.contains('cta-play')) {
                 sliders.forEach((slider, index)=>{
-                    const track =slider.querySelector(".slide-track")
+                    const track = slider.querySelector(".slide-track")
                     track.style.animationPlayState="running"
                 })
-
-            })
-        }
-        if(pauseButton){
-            pauseButton.addEventListener("click", ()=>{
-                pauseButton.classList.remove("is-active")
-                playButton.classList.add("is-active")
+            } else {
                 sliders.forEach((slider)=>{
-                    const track =slider.querySelector(".slide-track")
+                    const track = slider.querySelector(".slide-track")
                     track.style.animationPlayState="paused"
                 })
-            
-            })
-        }
+            }
+            flipBtnState(btn);
+        });
     })
 
 }

@@ -159,6 +159,7 @@
         padding-top: 0;
         border-radius: 4px;
         overflow: hidden;
+        width: clamp(20em, 58%, 800px);
         @include touch {
           position: relative;
           width: 100%;
@@ -179,6 +180,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
+        width: clamp(20em, 40%, 800px);
         @include touch {
           width: 100%;
           min-height: 1px;

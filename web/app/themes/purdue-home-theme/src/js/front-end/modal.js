@@ -97,7 +97,7 @@ function closeAllModals() {
 // Add a click event on various child elements to close the parent modal
 (
   document.querySelectorAll(
-    ".modal-close, .modal-card-head .delete, .modal-card-foot .button, .modal-background"
+    ".modal-close, .modal-card-head .delete, .modal-card-foot .button"
   ) || []
 ).forEach((close) => {
   const target = close.closest(".modal");
@@ -199,7 +199,7 @@ if (modals && modals.length > 0) {
     }
   }
 
-  t.addEventListener("keydown", trapFocus);
+  //t.addEventListener("keydown", trapFocus);
   
   document.addEventListener("focusin", function(e) {
     if (t.classList.contains("is-active")) {
@@ -226,7 +226,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
   let id = window.location.hash;
 
   if(id){
-   let element =  document.querySelector(id);
+   id = id.replace("#", "");
+   let element =  document.getElementById(id);
+   if(!element)
+     return;
+
    let modal = element.dataset.target;
    const target = document.getElementById(modal);
    

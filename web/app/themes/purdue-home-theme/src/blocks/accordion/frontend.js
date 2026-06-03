@@ -1,28 +1,6 @@
 import { tabbable, focusable } from 'tabbable';
 
-const accordions = document.querySelectorAll('.purdue-accordion__title > button');
-let id = window.location.hash;
-
-accordions.forEach((el) => {
-	setTabbable(el);
-	el.addEventListener('click', (event) => {
-        const element = el.parentElement.parentElement.parentElement.parentElement.parentElement;
-        const sameLevelAccordions = element.parentElement.querySelectorAll(':scope > .purdue-accordion-wrap');
-        purdueBlocksToggleAccordion(element, (element.classList.contains('is-open')) ? true : false);
-       
-        sameLevelAccordions.forEach((ele) => {
-            const control = ele.querySelector('.purdue-accordion__title > button');
-            if(control !== event.target) {
-                purdueBlocksToggleAccordion(ele, true);
-            }
-        });   
-        
-         element.scrollIntoView({behavior: "instant"});
-    })
-})
-
 function setTabbable(el) {
-
 	const content = el.parentElement.parentElement.querySelector('.purdue-accordion__content');
 	const canTab = el.getAttribute('aria-expanded')
 	let items = [];
@@ -40,7 +18,9 @@ function setTabbable(el) {
 function hashToggleAccordion (id) {
 
     if (id) {
-        const el = document.querySelector(id);  
+		id = id.replace("#", "");
+
+		const el = document.getElementById(id);
         if (el) {
             const element = el.parentElement.parentElement.parentElement;
             el.scrollIntoView({ behavior: "smooth" });
@@ -68,8 +48,26 @@ window.addEventListener("popstate", function() {
 
 
 document.addEventListener("DOMContentLoaded", function(){
+	const accordions = document.querySelectorAll('.purdue-accordion__title > button');
+	let id = window.location.hash;
+	accordions.forEach((el) => {
+		setTabbable(el);
+		el.addEventListener('click', (event) => {
+			const element = el.parentElement.parentElement.parentElement.parentElement.parentElement;
+			const sameLevelAccordions = element.parentElement.querySelectorAll(':scope > .purdue-accordion-wrap');
+			purdueBlocksToggleAccordion(element, (element.classList.contains('is-open')) ? true : false);
 
-       hashToggleAccordion(id);
+			sameLevelAccordions.forEach((ele) => {
+				const control = ele.querySelector('.purdue-accordion__title > button');
+				if(control !== event.target) {
+					purdueBlocksToggleAccordion(ele, true);
+				}
+			});
+
+			element.scrollIntoView({behavior: "instant"});
+		})
+	})
+    hashToggleAccordion(id);
 
 })
 

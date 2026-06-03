@@ -1,11 +1,9 @@
-import {CustomActiveClass, check_resize} from '../../../src/js/front-end/slider';
+import {CustomActiveClass, check_resize, changeFocusOnSlideChange} from '../../../src/js/front-end/slider';
 import Glide from '@glidejs/glide';
 
 window.addEventListener("load",function(){
   //image sliders
   const img_sliders = document.querySelectorAll('.purdue-home-image-slider');
-
-  console.log(img_sliders)
 
   if(img_sliders && img_sliders.length>0){
     for (let i = 0; i < img_sliders.length; i++) {
@@ -25,6 +23,7 @@ window.addEventListener("load",function(){
           perView: 1,
         },
       },
+      keyboard: false,
     });
     const nextButton = img_sliders[i].querySelector('.arrow--left');
     const prevButton = img_sliders[i].querySelector('.arrow--right');
@@ -43,7 +42,7 @@ window.addEventListener("load",function(){
       check_resize(glide);
     });
 
-    glide.mount({CustomActiveClass,});
+    glide.mount({CustomActiveClass,changeFocusOnSlideChange});
 
     check_resize(glide);
 

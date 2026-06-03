@@ -99,8 +99,11 @@ $blockClass .= " " . $attributes['className'];
                         <?php endif; ?>
 
                         <?php if ($attributes['links'] && sizeof($attributes['links']) > 0 && $attributes['links'][0]['linkURL']): ?>
-                            <?php if ($attributes['linkDisplay'] == "buttons"): ?>
-                                <ul class="purdue-home-button-list">
+                            <?php if ($attributes['linkDisplay'] == "buttons"): 
+                                $buttonList = sizeof($attributes['links']) > 1 ? "ul" : "div";
+                                $buttonWrapper = sizeof($attributes['links']) > 1 ? "li" : "div";
+                            ?>
+                                <<?= $buttonList ?>  class="purdue-home-button-list">
                                     <?php foreach ($attributes['links'] as $key => $link): ?>
                                         <?php 
                                             $target = $link["external"] ? 'target="_blank"' : 'target="_self"'; 
@@ -113,9 +116,9 @@ $blockClass .= " " . $attributes['className'];
                                              $buttonClass .= isset($link["linkCSS"]) ? " ".$link["linkCSS"] : "";
                                             $liClass = array_key_exists("fullWidth", $link) && $link["fullWidth"] ? "purdue-home-button-wrap--full" : "";
                                         ?>
-                                         <li class="<?= $liClass; ?>"><a class="<?= $buttonClass; ?>" href="<?= $link["linkURL"] ?>" <?= $target ?>><?= trim($link["linkText"]) ?></a></li>
+                                         <<?= $buttonWrapper ?> class="<?= $liClass; ?>"><a class="<?= $buttonClass; ?>" href="<?= $link["linkURL"] ?>" <?= $target ?>><?= trim($link["linkText"]) ?></a></<?= $buttonWrapper ?>>
                                     <?php endforeach; ?>
-                                </ul>
+                                </<?= $buttonList ?>>
                             <?php else: ?>
                                 <?php $buttonClass = isset($attributes["buttonCSS"]) ? " ".$attributes["buttonCSS"] : ""; ?>
                                 <form class="purdue-home-select">

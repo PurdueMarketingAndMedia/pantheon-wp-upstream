@@ -1,12 +1,24 @@
-import { InnerBlocks } from "@wordpress/block-editor";
+import { InnerBlocks, useBlockProps } from "@wordpress/block-editor";
+
 const save = ( props ) => {
-    return (<div className={ `purdue-home-tabs__panel${props.attributes.editorSelected?" active":""}` }
-      aria-labelledby={`header-${props.attributes.aria}`}
-      id={`panel-${props.attributes.aria}`}
-      {...(props.attributes.anchorId ? { 'data-name': props.attributes.anchorId } : {})}
-      >
-      <InnerBlocks.Content />
-      </div>
+    const { attributes } = props;
+
+    const blockProps = useBlockProps.save({
+        className: `purdue-home-tabs__panel${
+            attributes.editorSelected ? " active" : ""
+        }`,
+        id: `panel-${attributes.aria}`,
+        "aria-labelledby": `header-${attributes.aria}`,
+        "role": "tabpanel",
+        "tabindex": 0,
+        ...(attributes.anchorId && { "data-name": attributes.anchorId }),
+    });
+
+    return (
+        <div {...blockProps}>
+            <InnerBlocks.Content />
+        </div>
     );
-}
+};
+
 export default save;

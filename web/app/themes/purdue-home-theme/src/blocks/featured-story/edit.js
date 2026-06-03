@@ -25,6 +25,7 @@ const BLOCKS_TEMPLATE = [
 import "./editor.scss";
 import {useEffect} from "react";
 import {normalizeUuid} from "../../utils/normalizeUuid";
+import LinkPanelControl from "../../components/linkcomponent";
 
 function getVideoId(url) {
   const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
@@ -133,6 +134,28 @@ const edit = (props) => {
 	  );
 	  setAttributes({ links: newLinks });
   };
+
+  const handleAiraLabelChange = (label, id) => {
+		const newLinks = links.map((item) =>
+			item.id === id ? {
+				...item,
+				ariaLabel: label
+			} : item
+		);
+		setAttributes({ links: newLinks });
+	}
+
+
+	const handleButtonCSSChange = (css, id) => {
+		const newLinks = links.map((item) =>
+			item.id === id ? {
+				...item,
+				buttonCSS: css
+			} : item
+		);
+		setAttributes({ links: newLinks });
+	}
+
   let editorFields;
   editorFields = links.map((item, index) => {
     return (
@@ -141,32 +164,14 @@ const edit = (props) => {
         key={item.id}
         title={item.linkText ? item.linkText : `link ${index + 1}`}
       >
-        <PanelRow>
-          <TextControl
-            label="Link Text"
-            value={item.linkText}
-            onChange={(val) => handleLinkTextChange(val, item.id)}
-          />
-        </PanelRow>
-        <PanelRow>
-          <TextControl
-            label={"Link URL"}
-            type="url"
-            onChange={(val) => {
-              handleLinkURLChange(val, item.id);
-            }}
-            value={item.linkURL}
-          />
-        </PanelRow>
-        <PanelRow>
-          <CheckboxControl
-            label="Open link in new tab?"
-            checked={item.external}
-            onChange={() => {
-              handleExternalChange(item.id);
-            }}
-          />
-        </PanelRow>
+        <LinkPanelControl
+        item={item}
+        onLinkTextChange={(val) => handleLinkTextChange(val, item.id)}
+        onLinkURLChange={(val) => handleLinkURLChange(val, item.id)}
+        onExternalChange={() => handleExternalChange(item.id)}
+        onAiraLabelChange={(val) => handleAiraLabelChange(val, item.id)}
+        onButtonCSSChange={(css) => handleButtonCSSChange(css, item.id)}
+       />
 
         <PanelRow>
           <SelectControl

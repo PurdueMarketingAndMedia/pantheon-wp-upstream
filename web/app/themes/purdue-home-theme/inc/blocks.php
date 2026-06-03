@@ -63,6 +63,11 @@ if (str_contains($current_site_url,"purdue-theme-test.lndo.site") || str_contain
 	$purdueBlocks[] = 'canopy-hero';
 }
 
+if (str_contains($current_site_url,"research.purdue.edu")) {
+	$purdueBlocks[] = 'category-link-panel';
+	$purdueBlocks[] = 'sidebar-content-nav';
+}
+
 function register_layout_category( $categories ) {	
 	$categories[] = array(
 		'slug'  => 'purdue',

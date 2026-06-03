@@ -238,6 +238,17 @@
       transition: all 0.25s cubic-bezier(1, 0.25, 0, 0.75) 0s;
     }
   }
+
+  &.has-white-background{
+    .purdue-home-tabs-horizontal__header-text{
+      color: #000;
+    }
+  }
+  &.has-gray-background{
+    .purdue-home-tabs-horizontal__header-text{
+      color: #000;
+    }
+  }
   &__panel{
     transition: all 0.3s;
     height:0;

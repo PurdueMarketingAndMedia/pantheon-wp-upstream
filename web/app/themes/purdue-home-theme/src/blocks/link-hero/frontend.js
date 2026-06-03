@@ -19,10 +19,13 @@ const expandSelect = (select) =>{
         select.classList.remove('has-select-expand');
     })
 }
-const id=window.location.hash;
+let id=window.location.hash;
+
 if(id){
-    const el = document.querySelector(id);
+    id = id.replace("#", "");
+    const el = document.getElementById(id);
     if(el){
+        el.focus();
         const select=el.querySelector("select");
         if(select){
             expandSelect(select)
@@ -38,6 +41,7 @@ if(links.length>0){
             const hash=link.href.replace(href, "");
             if(hash){
                 link.addEventListener("click", (e)=>{
+
                     const el = document.querySelector(hash);
                     if(el){
                         const select=el.querySelector("select");

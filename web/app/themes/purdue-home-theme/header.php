@@ -70,9 +70,9 @@ if ( !has_nav_menu( 'top-nav' ) ) {
 		<nav class="navbar is-transparent purdue-top-nav<?php if ($headerSetting == 'global'){echo " purdue-top-nav__first-row"; }?>" role="navigation">
 			<?php if ($headerSetting == 'simple'){ ?>	
 				<div class="navbar-brand">
-					<a href="https://www.purdue.edu/" class="navbar-item" rel="home"><img src="<?php echo get_template_directory_uri() ?>/imgs/PU-H-light.svg" alt="Purdue Logo"></a>
+					<a href="https://www.purdue.edu/" class="navbar-item" rel="home"><img src="<?php echo get_template_directory_uri() ?>/imgs/PU-H-light.svg" alt="Purdue University Home"></a>
 					
-					<button class="icon is-large navbar-burger navbar-open" data-target="navbar-find-info" aria-expanded="false" aria-label="Search and menu">
+					<button class="icon is-large navbar-burger navbar-open" data-target="navbar-find-info" aria-haspopup="dialog" aria-label="Search and menu">
 						<span>MENU</span>
 						<img src="<?php echo get_template_directory_uri() ?>/icons/search-menu-icon.png" aria-hidden="true" alt="" class="burger-icon">
 					</button>
@@ -81,14 +81,14 @@ if ( !has_nav_menu( 'top-nav' ) ) {
 					<ul class="navbar-end menu-items">
 						<?php purdueHome_navigation(); ?>
 					</ul>
-					<button class="icon is-large navbar-open" data-target="navbar-find-info" aria-expanded="false" aria-label="open search and menu">
+					<button class="icon is-large navbar-open" data-target="navbar-find-info" aria-haspopup="dialog" aria-label="search and menu">
 						<img src="<?php echo get_template_directory_uri() ?>/icons/search-menu-icon.png" aria-hidden="true" alt="" class="burger-icon">
 					</button>
 				</div>
 				<?php }else{ ?>
 					<div class="navbar-brand">
 						<div class="navbar-logo">
-							<a href="https://www.purdue.edu/" class="navbar-item" rel="home"><img src="<?php echo get_template_directory_uri() ?>/imgs/PU-H-light.svg" alt="Purdue Logo"></a>
+							<a href="https://www.purdue.edu/" class="navbar-item" rel="home"><img src="<?php echo get_template_directory_uri() ?>/imgs/PU-H-light.svg" alt="Purdue University Home"></a>
 							<a href="<?php echo get_bloginfo( 'url' ); ?>" class="navbar-site-name" rel="home"><?php echo $blogName; ?></a>
 						</div>
 						<div class="navbar-buttons <?= $flexClass; ?>">
@@ -99,7 +99,7 @@ if ( !has_nav_menu( 'top-nav' ) ) {
 									}
 								}
 							?>
-							<button class="icon is-large navbar-burger navbar-open is-active" data-target="navbar-find-info" aria-expanded="false" aria-label="Search and menu">
+							<button class="icon is-large navbar-burger navbar-open is-active" data-target="navbar-find-info" aria-haspopup="dialog" aria-label="Search and menu">
 								<img src="<?php echo get_template_directory_uri() ?>/icons/search-menu-icon.png" aria-hidden="true" alt="" class="burger-icon">
 							</button>
 							<button class="icon is-large navbar-close is-hidden" data-target="navbar-find-info" aria-label="close search and menu">	
@@ -169,7 +169,7 @@ if ( !has_nav_menu( 'top-nav' ) ) {
 				</button>
 				<div class="navbar-find-info__items">
 					<div class="nav-brand">
-						<img src="<?php echo get_template_directory_uri() ?>/imgs/PU-H.svg" alt="Purdue Logo">
+						<img src="<?php echo get_template_directory_uri() ?>/imgs/PU-H.svg" alt="Purdue University Home">
 					</div>
 					<div class="form-group search-box">
 						<?php get_search_form(); ?>

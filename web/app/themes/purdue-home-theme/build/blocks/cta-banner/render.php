@@ -48,8 +48,10 @@
                 
 
             <?php if ($attributes['links'] && sizeof($attributes['links']) > 0):
+                    $buttonList = sizeof($attributes['links']) > 1 ? "ul" : "div";
+                    $buttonWrapper = sizeof($attributes['links']) > 1 ? "li" : "div";
                 if ($attributes['linkDisplay'] == "buttons"): ?>
-                    <ul class="purdue-home-button-list">
+                    <<?= $buttonList ?> class="purdue-home-button-list">
                         <?php foreach ($attributes['links'] as $key => $link):
                             $target = $link["external"] ? 'target="_blank"' : 'target="_self"';
                             $buttonClass = "purdue-home-button";
@@ -63,9 +65,9 @@
                             }
                             $liClass = $link["fullWidth"] ? "purdue-home-button-wrap--full" : "";
                             ?>                            
-                            <li class="<?= $liClass ?>"><a class="<?= $buttonClass ?>" href="<?= $link["linkURL"] ?>" <?= $target ?>><?= trim($link["linkText"]) ?></a></li>
+                            <<?= $buttonWrapper ?> class="<?= $liClass ?>"><a class="<?= $buttonClass ?>" href="<?= $link["linkURL"] ?>" <?= $target ?>><?= trim($link["linkText"]) ?></a></<?= $buttonWrapper ?>>
                         <?php endforeach; ?>
-                    </ul>
+                    </<?= $buttonList ?>>
                 <?php else: ?>
                     <form class="purdue-home-select">
                         <label for="<?= $attributes['fieldId'] ?>" class="is-sr-only">Choose a link:</label>

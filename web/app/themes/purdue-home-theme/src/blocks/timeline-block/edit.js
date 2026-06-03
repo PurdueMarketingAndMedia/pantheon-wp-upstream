@@ -7,7 +7,7 @@ import {
 	SelectControl,
 	Button,
 } from "@wordpress/components"
-import {__} from "@wordpress/i18n";
+import { __ } from "@wordpress/i18n";
 import {
 	InspectorControls,
 	MediaUploadCheck,
@@ -16,12 +16,14 @@ import {
 	RichText,
 	useBlockProps
 } from "@wordpress/block-editor";
-import {ReactSortable} from 'react-sortablejs';
-import {normalizeUuid} from "../../utils/normalizeUuid";
-import {useEffect} from "react";
+import { ReactSortable } from 'react-sortablejs';
+import { normalizeUuid } from "../../utils/normalizeUuid";
+import { useEffect } from "react";
+import LinkPanelControl from "../../components/linkcomponent";
+
 
 const BLOCKS_TEMPLATE = [
-	['core/paragraph', {placeholder: 'Body content copy'}],
+	['core/paragraph', { placeholder: 'Body content copy' }],
 ];
 
 function getVideoId(url) {
@@ -42,14 +44,14 @@ function getVimeoId(url) {
 }
 
 const edit = (props) => {
-	const {className, setAttributes} = props;
-	const {header, hasIntro, descText, cards, paddingTop, paddingBottom, id} = props.attributes;
+	const { className, setAttributes } = props;
+	const { header, hasIntro, descText, cards, paddingTop, paddingBottom, id } = props.attributes;
 	const blockProps = useBlockProps();
 	const removeCard = (identifier) => {
 		const newCards = cards.filter((item) => {
 			return item.id !== identifier;
 		});
-		setAttributes({cards: newCards});
+		setAttributes({ cards: newCards });
 	};
 
 	const makeCard = () => ({
@@ -77,7 +79,7 @@ const edit = (props) => {
 	const handleAddNew = () => {
 		let newCards = [...cards];
 		newCards.push(makeCard());
-		setAttributes({cards: newCards});
+		setAttributes({ cards: newCards });
 	}
 	const handleCardChangeImage = (img, id) => {
 		const newCards = cards.map((item) =>
@@ -154,6 +156,28 @@ const edit = (props) => {
 		);
 		setAttributes({ cards: newCards });
 	}
+
+	const handleAiraLabelChange = (label, id) => {
+		const newCards = cards.map((item) =>
+			item.id === id ? {
+				...item,
+				ariaLabel: label
+			} : item
+		);
+		setAttributes({ cards: newCards });
+	}
+
+
+	const handleButtonCSSChange = (css, id) => {
+		const newCards = cards.map((item) =>
+			item.id === id ? {
+				...item,
+				buttonCSS: css
+			} : item
+		);
+		setAttributes({ cards: newCards });
+	}
+
 	const handleCardAlign = (align, id) => {
 		const newCards = cards.map((item) =>
 			item.id === id ? {
@@ -199,7 +223,7 @@ const edit = (props) => {
 		} else {
 			obj = normalizeUuid(structuredClone(cards));
 		}
-		setAttributes({cards: obj});
+		setAttributes({ cards: obj });
 		console.log(cards);
 	}, []);
 
@@ -212,8 +236,8 @@ const edit = (props) => {
 						value={item.width}
 						options={
 							[
-								{value: 'align', label: 'Align'},
-								{value: 'full', label: 'Full'},
+								{ value: 'align', label: 'Align' },
+								{ value: 'full', label: 'Full' },
 							]
 						}
 						onChange={(width) => handleCardWidth(width, item.id)}
@@ -226,8 +250,8 @@ const edit = (props) => {
 						value={item.align}
 						options={
 							[
-								{value: 'left', label: 'Left'},
-								{value: 'right', label: 'Right'},
+								{ value: 'left', label: 'Left' },
+								{ value: 'right', label: 'Right' },
 							]
 						}
 						onChange={(align) => handleCardAlign(align, item.id)}
@@ -239,9 +263,9 @@ const edit = (props) => {
 						value={item.source}
 						options={
 							[
-								{value: 'upload', label: 'Upload'},
-								{value: 'youtube', label: 'Youtube'},
-								{value: 'vimeo', label: 'Vimeo'},
+								{ value: 'upload', label: 'Upload' },
+								{ value: 'youtube', label: 'Youtube' },
+								{ value: 'vimeo', label: 'Vimeo' },
 							]
 						}
 						onChange={(source) => handleMediaSource(source, item.id)}
@@ -277,11 +301,11 @@ const edit = (props) => {
 					<MediaUploadCheck>
 						<MediaUpload
 							onSelect={(img) => handleCardChangeImage(img, item.id)}
-							render={({open}) => {
+							render={({ open }) => {
 								return item.mediaURL !== '' ? (
 									<div>
 										{item.mediaType === 'image' ?
-											<img src={item.mediaURL}/>
+											<img src={item.mediaURL} />
 											: ""}
 										{item.mediaType === 'video' ?
 											<Disabled>
@@ -328,34 +352,16 @@ const edit = (props) => {
 						onChange={(val) => handleSubtextChange(val, item.id)}
 					/>
 				</PanelRow>
-				<PanelRow>
-					<TextControl
-						label="Link Text"
-						value={item.linkText}
-						onChange={(val) => handleLinkTextChange(val, item.id)}
-					/>
-				</PanelRow>
-				<PanelRow>
-					<TextControl
-						label={'Link URL'}
-						type="url"
-						onChange={(val) => {
-							handleLinkURLChange(val, item.id);
-						}}
-						value={item.linkURL}
-					/>
-				</PanelRow>
-				<PanelRow>
-					<CheckboxControl
-						label="Open link in new tab?"
-						checked={item.external}
-						onChange={() => {
-							handleExternalChange(item.id);
-						}}
-					/>
-				</PanelRow>
+				<LinkPanelControl
+					item={item}
+					onLinkTextChange={(val) => handleLinkTextChange(val, item.id)}
+					onLinkURLChange={(val) => handleLinkURLChange(val, item.id)}
+					onExternalChange={() => handleExternalChange(item.id)}
+					onAiraLabelChange={(val) => handleAiraLabelChange(val, item.id)}
+					onButtonCSSChange={(css) => handleButtonCSSChange(css, item.id)}
+				/>				
 				<Button
-					style={{marginTop: '5px'}}
+					style={{ marginTop: '5px' }}
 					isSecondary
 					onClick={() => {
 						removeCard(item.id);
@@ -374,7 +380,7 @@ const edit = (props) => {
 						label="Include an introduction section?"
 						checked={hasIntro}
 						onChange={() => {
-							setAttributes({hasIntro: !hasIntro})
+							setAttributes({ hasIntro: !hasIntro })
 						}}
 					/>
 				</PanelRow>
@@ -384,14 +390,14 @@ const edit = (props) => {
 						value={paddingTop}
 						options={
 							[
-								{value: 'has-padding-top-none', label: 'None'},
-								{value: 'has-padding-top-small', label: 'Small'},
-								{value: '', label: 'Medium'},
-								{value: 'has-padding-top-large', label: 'Large'},
+								{ value: 'has-padding-top-none', label: 'None' },
+								{ value: 'has-padding-top-small', label: 'Small' },
+								{ value: '', label: 'Medium' },
+								{ value: 'has-padding-top-large', label: 'Large' },
 							]
 						}
 						onChange={(paddingTop) => {
-							setAttributes({paddingTop})
+							setAttributes({ paddingTop })
 						}}
 					/>
 				</PanelRow>
@@ -401,14 +407,14 @@ const edit = (props) => {
 						value={paddingBottom}
 						options={
 							[
-								{value: 'has-padding-bottom-none', label: 'None'},
-								{value: 'has-padding-bottom-small', label: 'Small'},
-								{value: '', label: 'Medium'},
-								{value: 'has-padding-bottom-large', label: 'Large'},
+								{ value: 'has-padding-bottom-none', label: 'None' },
+								{ value: 'has-padding-bottom-small', label: 'Small' },
+								{ value: '', label: 'Medium' },
+								{ value: 'has-padding-bottom-large', label: 'Large' },
 							]
 						}
 						onChange={(paddingBottom) => {
-							setAttributes({paddingBottom})
+							setAttributes({ paddingBottom })
 						}}
 					/>
 				</PanelRow>
@@ -451,7 +457,7 @@ const edit = (props) => {
 						label="HTML Anchor"
 						help="Enter a word without spaces to make a unique web address just for this block, called an “anchor.” It must be unique from any other anchors on the page. Then, you’ll be able to link directly to this section of your page."
 						value={id}
-						onChange={(id) => setAttributes({id})}
+						onChange={(id) => setAttributes({ id })}
 					/>
 				</PanelRow>
 			</PanelBody>
@@ -469,7 +475,7 @@ const edit = (props) => {
 										value={header}
 										className={`purdue-home-intro-text__header header-font-united purdue-home-cta-grid__header purdue-home-timeline__header`}
 										onChange={(header) => {
-											setAttributes({header});
+											setAttributes({ header });
 										}}
 										placeholder="Add header"
 									></RichText>
@@ -495,7 +501,7 @@ const edit = (props) => {
 											mediaURL = `https://vumbnail.com/${videoId}.jpg`;
 										}
 										return <div key={index}
-													className={`purdue-home-timeline__card animate card-width-${item.width} content-align-${item.align}${mediaURL ? " has-thumbnail" : ""}`}>
+											className={`purdue-home-timeline__card animate card-width-${item.width} content-align-${item.align}${mediaURL ? " has-thumbnail" : ""}`}>
 											<div className="purdue-home-timeline__card-content">
 												{mediaURL ?
 													<div
@@ -510,7 +516,7 @@ const edit = (props) => {
 														{item.mediaType === 'video' ?
 															<Disabled>
 																<video muted playsinline="" title={item.title}
-																	   src={mediaURL}>
+																	src={mediaURL}>
 																</video>
 															</Disabled>
 															: ""}
@@ -525,7 +531,7 @@ const edit = (props) => {
 													{item.subtitle ?
 														<p className="purdue-home-timeline__card-subtitle">{item.subtitle}</p> : ""
 													}
-													<p className="purdue-home-timeline__card-title">{item.title}</p>
+													<h3 className="purdue-home-timeline__card-title">{item.title}</h3>
 													{item.subtext ?
 														<p className="purdue-home-timeline__card-subtext">{item.subtext}</p> : ""
 													}

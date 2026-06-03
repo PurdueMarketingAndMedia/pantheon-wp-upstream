@@ -154,10 +154,11 @@ if ($attributes['links'] && sizeof($attributes['links']) > 0 && $attributes['lin
             <video class="<?= $videoClass ?>" autoplay preload="metadata" title="<?= $attributes['mediaTitle'] ?>" <?= $loop ?> muted playsinline="">
                 <source src="<?= $attributes["mediaURL"] ?>#t=0.1">
             </video>
-            <button class="cta-play" aria-label="play"><i class="fa-regular fa-circle-play cta-play-icon"></i></button>
-            <?php if ($attributes['loopVideo']): ?>
-            <button class="cta-pause is-active" aria-label="pause"><i class="fa-regular fa-circle-pause cta-pause-icon"></i></button>
-            <?php endif; ?>
+
+            <button class="cta-btnctrl cta-pause" aria-label="Pause Video" data-toggle-label="Play Video">
+                <i class="fa-regular fa-circle-pause cta-pause-icon"></i>
+            </button>
+
         <?php endif; ?>
     </div>
 </div>

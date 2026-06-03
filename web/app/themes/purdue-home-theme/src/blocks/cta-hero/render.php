@@ -41,7 +41,7 @@
 
                 <?php if(sizeof($headerAnimate)>0) { ?>
                     <div class="controls">
-                        <button class="cta-btnctrl cta-pause" aria-label="Pause Animation">
+                        <button class="cta-btnctrl cta-pause" aria-label="Pause Animation" data-toggle-label="Play Animation">
                             <i class="fa-regular fa-circle-pause cta-pause-icon"></i>
                         </button>
                     </div>
@@ -51,12 +51,24 @@
             <div class="purdue-home-cta-hero__content">
                 <?= $content ?>
             </div>
-             <?php if ($attributes['links'] && sizeof($attributes['links']) > 0 && $attributes['links'][0]['linkURL']): ?>
-                <ul class="purdue-home-button-list">
+            <?php if ($attributes['links'] && sizeof($attributes['links']) > 0 && $attributes['links'][0]['linkURL']): 
+                 $buttonList = sizeof($attributes['links']) > 1 ? "ul" : "div";
+                 $buttonWrapper = sizeof($attributes['links']) > 1 ? "li" : "div";
+            ?>
+                <<?= $buttonList ?> class="purdue-home-button-list">
                     <?php foreach ($attributes['links'] as $key => $link): ?>
                         <?php
                         $target = $link["external"] ? 'target="_blank"' : 'target="_self"';
                         $buttonClass = "purdue-home-button";
+                        $external = isset($link["external"]) && $link["external"] == 'target="_blank"' ? "(Opens in a new tab)" : "";
+                        $ariaLabel = "";
+                        if(isset($link["ariaLabel"]) && $link["ariaLabel"]!==""){
+                            $ariaLabel = 'aria-label="'.$link["ariaLabel"].' '.$external.'"';
+                        }elseif(isset($external) && $external!==""){
+                            $ariaLabel = isset($link["linkText"])? 'aria-label="'.trim($link["linkText"]).' '.$external.'"':'';
+                        }else{
+                            $ariaLabel = "";
+                        }
                         if ($link["buttonColor"] == "black") {
                             $buttonClass .= " purdue-home-button--black";
                         }elseif($link["buttonColor"] == "white") {
@@ -64,13 +76,13 @@
                         }
                         $liClass = $link["fullWidth"] ? "purdue-home-button-wrap--full" : "";
                         ?>
-                        <li class="<?= $liClass; ?>">
-                            <a class="<?= $buttonClass; ?>" href="<?= $link["linkURL"]; ?>" <?= $target; ?>>
+                        <<?= $buttonWrapper ?> class="<?= $liClass; ?>">
+                            <a class="<?= $buttonClass; ?>" href="<?= $link["linkURL"]; ?>" <?= $target; ?> <?= $ariaLabel; ?>>
                                 <?= trim($link["linkText"]); ?>
                             </a>
-                        </li>
+                        </<?= $buttonWrapper ?>>
                     <?php endforeach; ?>
-                </ul>
+                </<?= $buttonList ?>>
             <?php endif; ?>
             
             <?php 
@@ -100,16 +112,29 @@
                         <?php foreach ($attributes['cards'] as $card) : ?>
                             <div class="column">
                                 <?php $cardClass = "purdue-home-cta-card purdue-home-cta-card--horizontal has-content-bottom"; ?>
-                                <?php $target = $card["external"] ? 'target="_blank"' : 'target="_self"'; ?>
-                                <a class="<?= $cardClass ?>" href="<?= $card["linkURL"] ?>" <?= $target ?>>
-                                    <div class="image is-16by9">
-                                        <img class="purdue-home-background-image" alt="" src="<?= $card["mediaURL"] ?>" />
-                                    </div>
-                                    <div class="flex-container flex-container--align-bottom">
-                                        <p class="purdue-home-cta-hero__card-title"><?= $card["title"] ?></p>
-                                        <p class="purdue-home-cta-hero__card-subtext"><?= $card["subtext"] ?></p>
-                                    </div>
-                                </a>
+                                <?php 
+                                    
+                                    $target = $card["external"] ? 'target="_blank"' : 'target="_self"';     
+                                    $external = isset($card["external"]) && $card["external"] == 'target="_blank"' ? "(Opens in a new tab)" : "";
+                                    $ariaLabel = "";
+                                    if(isset($card["ariaLabel"]) && $card["ariaLabel"]!==""){
+                                        $ariaLabel = 'aria-label="'.$card["ariaLabel"].' '.$external.'"';
+                                    }elseif(isset($external) && $external!=""){
+                                        $ariaLabel = isset($card["title"])? 'aria-label="'.trim($card["title"]).' '.$external.'"':'';
+                                    }else{
+                                        $ariaLabel = "";
+                                    }
+                                ?>
+                                <div class="<?= $cardClass ?>">
+                                    
+                                        <div class="image is-16by9">
+                                            <img class="purdue-home-background-image" alt="" src="<?= $card["mediaURL"] ?>" />
+                                        </div>
+                                        <div class="flex-container flex-container--align-bottom">
+                                            <a class="purdue-home-cta-hero__card-title" href="<?= $card["linkURL"] ?>" <?= $target ?> <?= $ariaLabel ?>><p class=""><?= $card["title"] ?></p></a>
+                                            <p class="purdue-home-cta-hero__card-subtext"><?= $card["subtext"] ?></p>
+                                        </div>
+                                </div>
                             </div>
                         <?php endforeach; ?>
                     </div>

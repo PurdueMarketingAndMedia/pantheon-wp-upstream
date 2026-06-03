@@ -1,3 +1,21 @@
+// Skip link - visible on keyboard focus, hidden otherwise via is-sr-only
+.skip-link:focus {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1001;
+  background: #000;
+  color: #fff;
+  padding: 0.5em 1em;
+  display: inline-block;
+  clip: auto !important;
+  clip-path: none;
+  width: auto !important;
+  height: auto !important;
+  overflow: visible !important;
+  white-space: normal !important;
+}
+
 $thetransition: all 0.25s cubic-bezier(1, 0.25, 0, 0.75) 0s;
 @keyframes fadeOutHeader {
   0% {
@@ -1022,7 +1040,7 @@ $thetransition: all 0.25s cubic-bezier(1, 0.25, 0, 0.75) 0s;
       content: "";
       position: absolute;
       top: calc(50% - 6px);
-      right: 1.25rem;
+      right: -1rem;
       width: 18px;
       height: 12px;
       transition: transform 0.3s ease;
