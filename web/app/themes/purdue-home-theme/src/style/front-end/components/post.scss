@@ -198,7 +198,7 @@
 }
 .post-related-stories{
   overflow: hidden;
-  h2{
+  > .container > h2{
     text-align: center;
   }
   .purdue-home-link-cards__slider{

@@ -238,7 +238,10 @@ $currentPage = null;
                                                 $query_terms = [];
                                                 $terms = [];
                                                 $index = array_search($tax, $names);
-                                                $collapse = array_key_exists($tax, $taxesPanelCollapse);
+                                                $collapse = isset($taxesPanelCollapse[$tax]) ? $taxesPanelCollapse[$tax] : false;
+
+
+
                                                 $dropdown = array_key_exists($tax, $taxesDropDown);
                                                 if ($attributes['hasSelectedTax'] && sizeof($attributes['selectedTaxTerms']) > 0 && !empty($args['tax_query'])) {
                                                     foreach ($args['tax_query'] as $query_tax) {
@@ -736,8 +739,9 @@ $currentPage = null;
                                     $posts = get_posts([
                                         'post__in' => $cached_ids,
                                         'post_type'   => 'any',
-                                        'posts_per_page' => -1,
-                                        'orderby'   => 'post__in'
+                                        'orderby' => $orderBy,
+                                        'order' => $order,
+                                        'numberposts' => $posts_per_page, // Don't limit again, you're already slicing
                                     ]);
 
                                     foreach ($posts as $post) {

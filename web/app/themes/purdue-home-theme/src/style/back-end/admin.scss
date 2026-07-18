@@ -173,3 +173,8 @@ html.wp-toolbar {
 h1.wp-block-post-title {
   margin-bottom: 2rem;
 }
+
+// This is a reset because bulma blocks is greedy and overrides the admin area
+table.table-view-list.media {
+ display: table;
+}

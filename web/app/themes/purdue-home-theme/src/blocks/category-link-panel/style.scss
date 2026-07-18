@@ -3,8 +3,17 @@
 @import '../../../node_modules/bulma/sass/utilities/mixins.sass';
 
 .category-link-panel {
+	// Content width is controlled by surrounding container blocks, so the block's
+	// own Bulma .section padding isn't needed. (has-padding-* attribute classes
+	// still override vertical padding if an editor opts in — higher specificity.)
+	padding: 0;
+
 	.category-link-panel__header {
 		margin-bottom: 2rem;
+
+		.category-link-panel__section-heading {
+			text-wrap: balance;
+		}
 	}
 
 	.category-link-panel__column {
@@ -13,8 +22,8 @@
 
 	.category-link-panel__card {
 		background-color: #f7f6f4;
-		border: 1px solid #e3e1dc;
-		border-radius: 6px;
+		border-radius: 4px;
+		box-shadow: 0 2px 5px 0 rgba(0,0,0,.15);
 		padding: 1.75rem 1.75rem 1rem;
 		height: 100%;
 		box-sizing: border-box;
@@ -28,7 +37,7 @@
 			height: 5px;
 			width: 100%;
 			background-color: $boiler-gold;
-			border-radius: 6px 6px 0 0;
+			border-radius: 4px 4px 0 0;
 			transform: scaleX(0);
 			transform-origin: left;
 			transition: transform 0.35s ease;
@@ -48,6 +57,7 @@
 		margin-bottom: 1.5rem;
 		padding-bottom: 0;
 		border: none;
+		text-wrap: balance;
 
 		a {
 			display: inline-flex;
@@ -65,7 +75,7 @@
 			}
 
 			&:hover {
-				color: $aged-gold;
+				color: #8b6c3c; // slightly darker than aged gold for WCAG 2.1 AA
 
 				.clp-icon--heading-arrow {
 					transform: translateX(5px);
@@ -110,9 +120,10 @@
 		cursor: pointer;
 		text-align: left;
 		gap: 0.75rem;
+		text-wrap: pretty;
 
 		&:hover {
-			color: $aged-gold;
+			color: #8b6c3c;
 
 			.clp-icon {
 				stroke: $aged-gold;
@@ -188,6 +199,10 @@
 		width: calc(100% + 1.5rem);
 		background-color: #fff;
 		padding: .5rem .75rem 0;
+		// Border on the sides + bottom only; the trigger's gold underline
+		// (.is-open ::after) forms the top edge where the popup meets the row.
+		border: 1px solid #d9d7d2;
+		border-top: none;
 		border-bottom-right-radius: 4px;
 		border-bottom-left-radius: 4px;
 		z-index: 10;
@@ -206,7 +221,7 @@
 			padding: 0.5rem 0;
 
 			&:hover {
-				color: $aged-gold;
+				color: #8b6c3c;
 			}
 		}
 	}
@@ -322,6 +337,7 @@
 			height: auto;
 			background-color: transparent;
 			border-color: transparent;
+			box-shadow: none;
 
 			// Kill the base card's animated gold top-border on hover.
 			&::before {
@@ -334,7 +350,17 @@
 		// panel's card surface so it reads as a distinct popup.
 		.category-link-panel__submenu {
 			background-color: #f7f6f4;
-			border: 1px solid #e3e1dc;
+		}
+
+		// Dividers between the top-level sidebar items only. The `>` combinator
+		// excludes submenu popup children (they live in a nested <ul>). Last item
+		// has no divider.
+		.category-link-panel__links > .category-link-panel__item {
+			border-bottom: 1px solid #ccc;
+
+			&:last-child {
+				border-bottom: none;
+			}
 		}
 	}
 
@@ -342,7 +368,7 @@
 		background-color: $black;
 		color: $white;
 		padding: 2rem;
-		border-radius: 6px;
+		border-radius: 4px;
 
 		.category-link-panel__cta-heading {
 			font-family: $acumin-pro;
@@ -351,6 +377,7 @@
 			line-height: 1.1;
 			color: $white;
 			margin-bottom: 1rem;
+			text-wrap: balance;
 		}
 
 		.category-link-panel__cta-text {
@@ -359,6 +386,7 @@
 			line-height: 1.55;
 			color: #e6e6e6;
 			margin-bottom: 1.5rem;
+			text-wrap: pretty;
 
 			p {
 				margin-bottom: 0.75rem;

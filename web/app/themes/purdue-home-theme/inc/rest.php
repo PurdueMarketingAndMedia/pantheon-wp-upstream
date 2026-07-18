@@ -201,6 +201,7 @@ function purdue_get_posts($request) {
 
     while ($query->have_posts()) {
         $query->the_post();
+        $attributes['showThumbnail'] = true; // This is a workaround for story.php
 		if($columns==4){
 			require __DIR__ . '../../build/blocks/post-grid/inc/story-grid-2.php';
 		}else{

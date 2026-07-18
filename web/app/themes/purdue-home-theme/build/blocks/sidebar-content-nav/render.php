@@ -105,17 +105,41 @@ if ( ! function_exists( 'scn_render_menu' ) ) {
 				$l1_item_class   = 'scn-nav__item scn-nav__item--l1 scn-nav__item--expandable' . ( $is_expanded_l1 ? ' is-open' : '' ) . ( $is_current_l1 ? ' is-active' : '' );
 				$l1_aria_expand  = $is_expanded_l1 ? 'true' : 'false';
 				$l1_hidden_attr  = $is_expanded_l1 ? '' : ' hidden';
-				$l1_link_cls     = 'scn-nav__link scn-nav__link--l1' . ( $is_current_l1 ? ' is-active' : '' );
-				$l1_aria_current = $is_current_l1 ? ' aria-current="page"' : '';
-				$l1_toggle_label = esc_attr( 'Toggle ' . wp_strip_all_tags( $parent->title ) . ' submenu' );
 
-				// Parent item: the label is a real link to its page; a separate caret button toggles the children.
+				// Expandable parents are toggle-only: the whole row is a single button that
+				// expands/collapses the children (no link to a page). The visible label is
+				// the button's accessible name, so no aria-label (it would override the name).
 				$output .= '<li class="' . $l1_item_class . '">';
-				$output .= '<a href="' . $url . '" class="' . $l1_link_cls . '"' . $l1_aria_current . '>' . $text . '</a>';
-				$output .= '<button type="button" class="scn-nav__trigger scn-nav__trigger--l1" aria-expanded="' . $l1_aria_expand . '" aria-controls="' . $controls_id . '" aria-label="' . $l1_toggle_label . '">';
+				$output .= '<button type="button" class="scn-nav__trigger scn-nav__trigger--l1" aria-expanded="' . $l1_aria_expand . '" aria-controls="' . $controls_id . '">';
+				$output .= '<span class="scn-nav__label">' . $text . '</span>';
 				$output .= $plus_icon . $minus_icon;
 				$output .= '</button>';
 				$output .= '<ul id="' . $controls_id . '" class="scn-nav__children"' . $l1_hidden_attr . '>';
+
+				// Auto "Overview" child: surface the parent's own page as the first child
+				// link, since the toggle no longer links to it. Only when the parent points
+				// at a real page (not a bare category / '#'), and skipped if a real child
+				// already links to that URL (de-dupe against a manually-added overview).
+				$raw_parent_url = $parent->url;
+				$has_overview   = $raw_parent_url && '#' !== $raw_parent_url;
+				if ( $has_overview ) {
+					foreach ( $kids as $maybe_dupe ) {
+						if ( untrailingslashit( $maybe_dupe->url ) === untrailingslashit( $raw_parent_url ) ) {
+							$has_overview = false;
+							break;
+						}
+					}
+				}
+				if ( $has_overview ) {
+					$ov_current      = scn_is_current_item( $raw_parent_url, $current_path );
+					$ov_url          = esc_url( $raw_parent_url );
+					$ov_item_class   = 'scn-nav__item scn-nav__item--l2' . ( $ov_current ? ' is-active' : '' );
+					$ov_link_class   = 'scn-nav__link scn-nav__link--l2' . ( $ov_current ? ' is-active' : '' );
+					$ov_aria_current = $ov_current ? ' aria-current="page"' : '';
+					$output .= '<li class="' . $ov_item_class . '">';
+					$output .= '<a href="' . $ov_url . '" class="' . $ov_link_class . '" data-href="' . $ov_url . '"' . $ov_aria_current . '>Overview</a>';
+					$output .= '</li>';
+				}
 
 				foreach ( $kids as $child ) {
 					$child_id   = (int) $child->ID;

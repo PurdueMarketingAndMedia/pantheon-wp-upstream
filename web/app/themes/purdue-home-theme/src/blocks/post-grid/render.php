@@ -238,7 +238,10 @@ $currentPage = null;
                                                 $query_terms = [];
                                                 $terms = [];
                                                 $index = array_search($tax, $names);
-                                                $collapse = array_key_exists($tax, $taxesPanelCollapse);
+                                                $collapse = isset($taxesPanelCollapse[$tax]) ? $taxesPanelCollapse[$tax] : false;
+
+
+
                                                 $dropdown = array_key_exists($tax, $taxesDropDown);
                                                 if ($attributes['hasSelectedTax'] && sizeof($attributes['selectedTaxTerms']) > 0 && !empty($args['tax_query'])) {
                                                     foreach ($args['tax_query'] as $query_tax) {

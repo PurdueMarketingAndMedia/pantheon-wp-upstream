@@ -184,36 +184,19 @@
     }
   }
 
-  // L1 parent row: label link grows, caret toggle sits at the right, children wrap below.
-  .scn-nav__item--l1.scn-nav__item--expandable {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+  // L1 expandable parents are toggle-only: the whole row is a single full-width
+  // button (label + caret), with the children <ul> stacking below in normal flow.
+  .scn-nav__trigger--l1 {
+    @extend %scn-l1-base;
 
-    // flex-basis: 0 (not auto) + min-width: 0 so a long label wraps WITHIN its
-    // own column instead of contributing its full single-line width to the flex
-    // line-break calc — otherwise the label claims the whole row and pushes the
-    // caret toggle onto its own line (e.g. "Research Security & Export Controls").
-    > a.scn-nav__link--l1 { flex: 1 1 0; min-width: 0; width: auto; }
-    > .scn-nav__children  { flex: 0 0 100%; }
+    // Long labels wrap within the row; the +/- icon (flex-shrink:0 via .scn-nav__icon)
+    // stays pinned to the right instead of dropping to its own line.
+    .scn-nav__label { flex: 1 1 0; min-width: 0; }
   }
 
-  // Caret toggle button for L1 parents (icon only; the label is a separate <a>).
-  .scn-nav__trigger--l1 {
-    flex: 0 0 auto;
-    display: flex;
-    align-items: center;
-    width: auto;
-    padding: 0.75rem 0 0.75rem 0.5rem;
-    margin: 0;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: $black;
-    transition: color 0.15s ease;
-
-    &:hover,
-    &:focus { color: $aged-gold; }
+  // Highlight the toggle when its section's overview page is the current page.
+  .scn-nav__item--l1.is-active > .scn-nav__trigger--l1 {
+    color: $aged-gold;
   }
 
   a.scn-nav__link--l1 {
@@ -274,10 +257,10 @@
     text-decoration: none;
   }
 
-  // Current-page appearance for L2/L3 leaf links: bold weight + a solid
-  // gold left accent. No background — the gray bg is reserved for hover/focus
-  // so the two states are visually unambiguous. Border width stays at 2px
-  // (matching the default gray bar) so layout doesn't shift between states.
+  // Current-page appearance for L2 links: bold weight + a gold left accent
+  // (recolors the gray rule). No background — the gray bg is reserved for
+  // hover/focus so the two states stay visually distinct. The accent is widened
+  // to 4px on L2 to match the L3 active bar; see a.scn-nav__link--l2 below.
   %scn-child-current {
     font-weight: 600;
     border-left-color: $boiler-gold;
@@ -325,6 +308,10 @@
     &.is-active,
     &[aria-current="page"] {
       @extend %scn-child-current;
+      // Widen the gold accent to 4px to match the L3 active bar. padding-left
+      // drops by the extra 3px so the label doesn't shift between states.
+      border-left-width: 4px;
+      padding-left: calc(1rem - 3px);
     }
   }
 
@@ -488,6 +475,7 @@
     font-size: 1rem;
     font-weight: 700;
     line-height: 1.3;
+    text-wrap: pretty;
     transition: color 0.15s ease;
 
     &::after {

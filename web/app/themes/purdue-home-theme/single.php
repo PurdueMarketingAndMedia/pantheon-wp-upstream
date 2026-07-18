@@ -263,7 +263,9 @@ title="posts by '.get_the_author_meta( 'display_name', $author_id ).'">
 						$results[]="post";
 						?>
                             <div class="glide__slide">
+
                                 <?php
+                                $attributes['showThumbnail'] = true;
 						require __DIR__ . '/src/blocks/post-grid/inc/story.php';
 						?>
                             </div>

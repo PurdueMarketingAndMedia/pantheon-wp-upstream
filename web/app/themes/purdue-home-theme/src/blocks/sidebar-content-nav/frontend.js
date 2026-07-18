@@ -94,6 +94,43 @@ document.addEventListener( 'DOMContentLoaded', () => {
 		} );
 	} );
 
+	// ── Scroll current item into view ─────────────────────────────────────────
+	// The sidebar is its own scroll container (overflow-y: auto, capped height).
+	// On a deep menu the current page's link can sit below the fold, so nudge the
+	// container's scroll position to reveal it. We scroll the container directly
+	// (not element.scrollIntoView, which would also scroll the page/window) and
+	// center the item in the area below the sticky filter bar so its ancestors
+	// stay visible above it for context.
+	document.querySelectorAll( '.scn-block' ).forEach( ( block ) => {
+		// Not scrollable (e.g. mobile, where the block is static/visible) → nothing to do.
+		if ( block.scrollHeight <= block.clientHeight ) return;
+
+		const active = block.querySelector(
+			'.scn-nav__link.is-active, .scn-nav__link[aria-current="page"]'
+		);
+		if ( ! active ) return;
+
+		const blockRect  = block.getBoundingClientRect();
+		const activeRect = active.getBoundingClientRect();
+
+		// Already fully visible within the viewport → leave it be.
+		if ( activeRect.top >= blockRect.top && activeRect.bottom <= blockRect.bottom ) {
+			return;
+		}
+
+		// Height of the sticky filter bar so the item lands below it, not under it.
+		const filter  = block.querySelector( '.scn-filter' );
+		const filterH = filter ? filter.offsetHeight : 0;
+
+		// Offset of the active item from the top of the scrollable content.
+		const activeOffset = activeRect.top - blockRect.top + block.scrollTop;
+		// Center it in the visible area beneath the filter bar.
+		const visibleH = block.clientHeight - filterH;
+		const target   = activeOffset - filterH - Math.max( 0, ( visibleH - activeRect.height ) / 2 );
+
+		block.scrollTop = Math.max( 0, target );
+	} );
+
 	// ── Filter ───────────────────────────────────────────────────────────────
 	document.querySelectorAll( '.scn-block' ).forEach( ( block ) => {
 		const input = block.querySelector( '.scn-filter__input' );

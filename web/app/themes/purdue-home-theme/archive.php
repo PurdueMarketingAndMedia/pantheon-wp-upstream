@@ -24,6 +24,7 @@
                 <?php
                 if (have_posts()) :
                     while (have_posts()) : the_post();
+                        $attributes['showThumbnail'] = true; // This is a workaround for story.php
                         require __DIR__ . '/src/blocks/post-grid/inc/story-grid.php';
                     endwhile;
 

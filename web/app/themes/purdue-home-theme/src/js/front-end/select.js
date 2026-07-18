@@ -43,19 +43,19 @@ if(urlSelects && urlSelects.length>0){
                 const external = selected.dataset.external;
                 if(external==="1"){
                     window.open(value)
-                }else{
+                } else if (value.startsWith("#")) {
                     const el = document.querySelector(value);
                     if(el){
                         const select=el.querySelector("select");
                         if(select){
                             expandSelect(select)
                         }
+                        el.setAttribute("tabindex", "-1");
+                        el.focus();
+                        el.scrollIntoView({behavior: "instant", block: "start", inline: "nearest"});
                     }
-                    el.setAttribute("tabindex", "-1");
-                    el.focus();
-                    el.scrollIntoView({behavior: "instant", block: "start", inline: "nearest"});
-                    window.location.href = value;
                 }
+                window.location.href = value;
             })
         }
     })

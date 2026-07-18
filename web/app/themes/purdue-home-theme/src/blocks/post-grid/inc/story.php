@@ -61,7 +61,7 @@ if ($image_url == "" && get_post_thumbnail_id($postID)) {
 ?>
 
 <article class="<?= $cardClass ?>">
-    <?php if ($image_url != "" && (isset($attributes['showThumbnail']) && $attributes['showThumbnail'] == true) || !isset($attributes['showThumbnail'])) { ?>
+    <?php if ($image_url != "" && (isset($attributes['showThumbnail']) && $attributes['showThumbnail'] == true)) { ?>
         <figure class="<?= $figClass ?>">
             <img class="purdue-home-background-image" alt="<?= $image_alt ?>" src="<?= $image_url ?>"/>
         </figure>
