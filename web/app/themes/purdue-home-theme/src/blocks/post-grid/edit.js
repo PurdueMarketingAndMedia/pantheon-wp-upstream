@@ -866,11 +866,11 @@ function toTitleCase(str){
                             }}
                           />
                           ) : (
-                            <CheckboxControl
-                            label={`Collapse ${toTitleCase(item.slug)} Panel?`}
-                            value={taxPanelCollapse[item.slug]}
-                            onChange={(val) => handleTaxPanelChange(val, item.slug)}
-                          />
+                              <CheckboxControl
+                                  label={`Collapse ${toTitleCase(item.slug)} Panel?`}
+                                  checked={!!taxPanelCollapse[item.slug]}
+                                  onChange={(val) => handleTaxPanelChange(val, item.slug)}
+                              />
 
                           )}
                         </PanelRow>
@@ -959,12 +959,16 @@ function toTitleCase(str){
           catFilterName,
           taxFilterName,
           postsPerPage,
+          postPanelCollapse,
+          catPanelCollapse,
           columns,
           headerStyle,
           buttonText,
           background,
           paddingTop,
           paddingBottom,
+          taxPanelCollapse,
+          datePanelCollapse
         }}
       />
     </div>,

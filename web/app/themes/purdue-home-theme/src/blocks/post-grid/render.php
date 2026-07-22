@@ -240,9 +240,7 @@ $currentPage = null;
                                                 $index = array_search($tax, $names);
                                                 $collapse = isset($taxesPanelCollapse[$tax]) ? $taxesPanelCollapse[$tax] : false;
 
-
-
-                                                $dropdown = array_key_exists($tax, $taxesDropDown);
+                                                $dropdown = !empty($taxesDropDown[$tax]);
                                                 if ($attributes['hasSelectedTax'] && sizeof($attributes['selectedTaxTerms']) > 0 && !empty($args['tax_query'])) {
                                                     foreach ($args['tax_query'] as $query_tax) {
                                                         if (is_array($query_tax) && $query_tax['taxonomy'] == $tax) {
@@ -268,11 +266,11 @@ $currentPage = null;
                                                     <button class="field-title field-control <?php echo $collapse ? 'collapse' : 'collapse is-open'; ?>"
                                                             aria-disabled="false"
                                                             aria-controls="<?php echo esc_attr($tax); ?>-field-<?php echo $rand; ?>"
-                                                            aria-expanded="<?php echo $collapse ? 'false' : 'true'; ?>">
+                                                            aria-expanded="<?php echo !$collapse ? 'true' : 'false'; ?>">
                                                         <span>Filter by: </span>
                                                         <?php echo esc_attr($label); ?></button>
                                                     <div id="<?php echo esc_attr($tax); ?>-field-<?php echo $rand; ?>"
-                                                         class="field-content <?= $dropdown ? 'year-month-filter' : ''; ?> ">
+                                                         class="field-content <?= $dropdown ? 'year-month-filter' : ''; ?> <?= $collapse ? 'hide' : ''; ?>">
                                                         <?php
                                                         if ($dropdown){
                                                         ?>
@@ -356,7 +354,7 @@ $currentPage = null;
                                                 <span>Filter by: </span>
                                                 <?php echo esc_html($label); ?>
                                             </button>
-                                            <div id="category-field-<?php echo $rand; ?>" class="field-content">
+                                            <div id="category-field-<?php echo $rand; ?>" class="field-content <?= $attributes['catPanelCollapse'] ? 'hide' : ''; ?>">
                                                 <?php
                                                 foreach ($cats as $term) {
                                                     $labelid = 'lbl-' . microtime();
@@ -416,6 +414,8 @@ $currentPage = null;
                                             }
                                         }
                                         $label = $attributes['postTypeFilterName'] ? $attributes['postTypeFilterName'] : "Post Types";
+
+
                                         ?>
                                         <fieldset style="order: <?php echo $index + 1; ?>">
                                             <legend class="is-sr-only">Filter by <?= $label; ?></legend>
@@ -426,7 +426,7 @@ $currentPage = null;
                                                 <span>Filter by: </span>
                                                 <?= $label ?>
                                             </button>
-                                            <div id="post-type-field-<?php echo $rand; ?>" class="field-content">
+                                            <div id="post-type-field-<?php echo $rand; ?>" class="field-content <?= $attributes['postPanelCollapse'] ? 'hide' : ''; ?>">
                                                 <?php
                                                 foreach ($postTypes as $term) {
                                                     $labelid = 'lbl-' . microtime();
@@ -523,7 +523,7 @@ $currentPage = null;
                                             </button>
                                             <?php $label = 'Year'; ?>
                                             <div id="year-month-field-<?php echo $rand; ?>"
-                                                 class="year-month-filter field-content">
+                                                 class="year-month-filter field-content <?php echo $attributes['datePanelCollapse'] ? 'hide' : ''; ?>">
                                                 <label for="year-field" class="is-sr-only date-label">Filter
                                                     by <?= $label; ?></label>
                                                 <select id="year-field" name="year-field"
