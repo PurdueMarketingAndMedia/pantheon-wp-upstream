@@ -95,6 +95,7 @@
           #fff 20%,
           rgba(255, 255, 255, 0) 0%);
     }
+    
 
     @include touch {
       display: none;
@@ -146,6 +147,18 @@
     }
   }
 
+
+  &.has-gold-background, &.has-gray-background, &.has-white-background{
+    .purdue-home-link-hero__list-desc{
+      color: #000 !important;
+    }
+    .purdue-home-link-hero__list--desktop:after{
+       background-image: linear-gradient(to right,
+          #000 20%,
+           rgba(255, 255, 255, 0) 0%);
+      }
+  }
+
   .purdue-home-link-hero__subtext+ul.purdue-home-button-list {
     margin-top: -1.5rem;
   }
@@ -185,6 +198,7 @@
     }
   }
 }
+
 
 
 /* Pause animation when reduced-motion is set */

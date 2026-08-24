@@ -240,12 +240,12 @@
   }
 
   &.has-white-background{
-    .purdue-home-tabs-horizontal__header-text{
+    .purdue-home-tabs-horizontal__header-text, .purdue-home-tabs-horizontal__panel{
       color: #000;
     }
   }
   &.has-gray-background{
-    .purdue-home-tabs-horizontal__header-text{
+    .purdue-home-tabs-horizontal__header-text, .purdue-home-tabs-horizontal__panel{
       color: #000;
     }
   }

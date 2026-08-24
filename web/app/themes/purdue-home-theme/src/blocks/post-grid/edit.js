@@ -164,13 +164,12 @@ useEffect(() => {
       // Don't touch until filterOrder is loaded
       return;
   }
-
   const idealSlugs = sortableItems.map(item => item.slug).sort();
-    const currentSlugs = filterOrder.map(item => item.slug).sort();
+  const currentSlugs = filterOrder.map(item => item.slug).sort();
 
-    const isMismatch = 
-      idealSlugs.length !== currentSlugs.length ||
-      idealSlugs.some((slug, index) => slug !== currentSlugs[index]);
+  const isMismatch =
+    idealSlugs.length !== currentSlugs.length ||
+    idealSlugs.some((slug, index) => slug !== currentSlugs[index]);
 
   if (isMismatch) {
      setAttributes({ filterOrder: [...sortableItems] });
@@ -179,7 +178,7 @@ useEffect(() => {
 
 
 const handleSort = (newOrder) => {  
-
+  console.log('handlesort', newOrder);
   setAttributes({
     filterOrder: newOrder,
   });
@@ -371,6 +370,7 @@ function toTitleCase(str){
               label="Columns for all posts"
               value={columns}
               options={[
+                { label: "2", value: "2" },
                 { label: "3", value: "3" },
                 { label: "4", value: "4" },
               ]}
@@ -378,7 +378,7 @@ function toTitleCase(str){
             />
           </PanelRow>
         )}
-        {blockType === "all" && columns === "3" ? (
+        {blockType === "all" && columns === "3" || blockType === "all" && columns === "2" ? (
           <PanelRow>
             <SelectControl
               label="Rows for all posts"
@@ -443,6 +443,7 @@ function toTitleCase(str){
             options={[
               { label: "Story", value: "story" },
               { label: "Faculty", value: "faculty" },
+              { label: "Directory", value: "directory" },
             ]}
             onChange={(cardType) => setAttributes({ cardType })}
           />
@@ -793,9 +794,9 @@ function toTitleCase(str){
                 label="Choose the Taxonomies filters"
                 value={selectedTaxFilters}
                 options={taxes}
-                onChange={(selectedTaxFilters) =>
+                onChange={(selectedTaxFilters) => {
                   setAttributes({ selectedTaxFilters })
-                }
+                }}
               />
             </PanelRow>
           ) : (
@@ -818,8 +819,6 @@ function toTitleCase(str){
                   className="sortable-posts"
                 >
                   {filterOrder.map((item) => {
-                    //console.log("Rendering item:", item);
-
                     return (
                       <PanelBody
                         title={item.type === "postType" ? "Post Type Filter" : toTitleCase(item.slug)}

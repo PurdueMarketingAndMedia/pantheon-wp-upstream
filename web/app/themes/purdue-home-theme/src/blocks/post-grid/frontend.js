@@ -1,1070 +1,66 @@
 document.addEventListener("DOMContentLoaded", () => {
 	const postGrids = document.querySelectorAll(".purdue-home-post-grid");
-	const url = window.location.href;
-	const regex = /[?&]([^=#]+)=([^&#]*)/g;
-
-	if (postGrids.length > 0) {
-		postGrids.forEach((grid) => {
-			const forms = grid.querySelectorAll(".purdue-home-post-grid__filter");
-			const searchForm = grid.querySelector(".search-form");
-			const selectedTermsContainer = grid.querySelector(
-				".purdue-home-cta-grid__grid__filters-selected"
-			);
-			const postsContainer = grid.querySelector(
-				".purdue-home-cta-grid__cards .columns"
-			);
-			const paginationContainer = grid.querySelector(
-				".purdue-home-pagination .nav-links"
-			);
-			const message = grid.querySelector(".purdue-home-cta-grid__message");
-			const loadPostsBtn = grid.querySelector('.load');
-			const width = window.innerWidth;
-			const queryArg = JSON.parse(
-				grid.querySelector(".purdue-home-cta-grid__grid").dataset.args
-			);
-			let args = JSON.parse(JSON.stringify(queryArg));
-
-			const excludeCat = args["excludeCat"];
-
-			args["requestURL"] = window.location.href;
-			const fields = grid.querySelectorAll(
-				".purdue-home-post-grid__filter-field"
-			);
-			const buttonContainer = grid.querySelector(
-				".purdue-home-post-grid__filter-button"
-			);
-			const submitButton = grid.querySelector(
-				".purdue-home-post-grid__filter-button .purdue-home-button"
-			);
-			const clearButton = grid.querySelector(
-				".purdue-home-post-grid__filter-button .form-clear-button"
-			);
-			// const filterButton=grid.querySelector('.purdue-home-post-grid__filter-control')
-			const controlButtons = grid.querySelectorAll(".field-control");
-
-			const collapseButtons = grid.querySelectorAll(".field-title.collapse");
-
-			const alphaFilter = grid.querySelectorAll(".filter-letter:not(.is-disabled)");
-
-			const addAutoComplete = args["addAutoComplete"];
-
-			const post_per_page = args['posts_per_page'];
-
-			let orgPage = args["paged"];
-
-
-			if (alphaFilter) {
-				alphaFilter.forEach((letter) => {
-					letter.addEventListener("click", (e) => {
-						e.preventDefault();
-						alphaFilter.forEach((letter) => {
-							if (letter.classList.contains('active')) {
-								letter.classList.remove('active');
-							}
-						})
-
-						letter.classList.add('active');
-						args['alpha'] = letter.dataset.alpha;
-						args = updateArgs(grid, fields, queryArg, args, 1);
-						args['orgPaged'] = 1;
-						args['paged'] = 1;
-						getPosts(
-							postsContainer,
-							paginationContainer,
-							message,
-							queryArg,
-							args,
-							grid
-						);
-						selectItems(
-							grid,
-							postsContainer,
-							paginationContainer,
-							message,
-							fields,
-							queryArg,
-							args,
-							selectedTermsContainer,
-							buttonContainer
-						);
-					})
-				})
-			}
-
-			const isInfinite = args["infiniteScroll"];
-			const pagePattern = /\/page\/\d+\b/;
-			let load = "";
-
-			if (forms && forms.length > 0) {
-
-				let match;
-				let urlPara = [];
-				let tax_query = [];
-				while ((match = regex.exec(url))) {
-
-					args = updateArgsFromURL(match[1], match[2], grid, args, 1, tax_query);
-
-					if (isInfinite) {
-						if (pagePattern.test(url)) {
-							load = "infinite";
-							args['orgPaged'] = orgPage;
-							args['orgpost_Per_Page'] = post_per_page;
-						} else {
-							load = "infinite"
-							args['orgPaged'] = orgPage;
-							args['paged'] = 1;
-						}
-					}
-
-
-					urlPara.push(match[1]);
-					tax_query = args['tax_query'];
-				}
-
-				if (urlPara.length > 0) {
-					getPosts(
-						postsContainer,
-						paginationContainer,
-						message,
-						queryArg,
-						args,
-						grid,
-						load
-					);
-				}
-				if (fields.length > 0) {
-					selectItems(
-						grid,
-						postsContainer,
-						paginationContainer,
-						message,
-						fields,
-						queryArg,
-						args,
-						selectedTermsContainer,
-						buttonContainer
-					);
-
-
-					fields.forEach((field) => {
-						field.addEventListener("change", () => {
-							if (
-								field && (field.classList.contains("search-field") ||
-									field.classList.contains("order-field"))
-							) {
-								args['autocomplete'] = false;
-								args = updateArgs(grid, fields, queryArg, args, 1);
-								getPosts(
-									postsContainer,
-									paginationContainer,
-									message,
-									queryArg,
-									args,
-									grid
-								);
-							}
-							checkClearButton(grid, buttonContainer);
-						});
-
-						if (field && field.classList.contains("search-field")) {
-
-							let resultsContainer = "";
-
-							if (addAutoComplete) {
-
-								resultsContainer = document.createElement("ul");
-								resultsContainer.id = 'autocomplete-results';
-								resultsContainer.classList.add("autocomplete-results", "hide");
-								searchForm.appendChild(resultsContainer);
-
-								let searchLive = searchForm.querySelector('span.search-live');
-
-								if (!searchLive) {
-									searchLive = document.createElement('span');
-									searchLive.classList.add('search-live');
-									searchLive.classList.add('is-sr-only');
-									searchLive.setAttribute('aria-live', 'polite')
-									searchLive.setAttribute('role', 'status');
-									searchForm.appendChild(searchLive);
-								}
-
-								field.addEventListener("input", () => {
-
-									if (field.value.length < 2) {
-										resultsContainer.innerHTML = "";
-										resultsContainer.classList.add("hide");
-										field.setAttribute('aria-expanded', false);
-										searchLive.innerText = "No results";
-										return;
-									} else {
-										resultsContainer.classList.remove("hide");
-
-										args['p'] = field.value.trim();
-										field.setAttribute('aria-expanded', true);
-										args['post_per_page'] = 16;
-										args = updateArgs(grid, fields, queryArg, args, 1);
-										args['autocomplete'] = true;
-										autoComplete(
-											resultsContainer,
-											field,
-											message,
-											queryArg,
-											args,
-											grid
-										);
-
-
-									}
-
-									const observer = new MutationObserver(() => {
-										args = updateArgs(grid, fields, queryArg, args, 1);
-										getPosts(
-											postsContainer,
-											paginationContainer,
-											message,
-											queryArg,
-											args,
-											grid
-										);
-									});
-
-									observer.observe(field, { attributes: true, attributeFilter: ["value"] });
-
-								});
-
-							}
-
-							let searchField = grid.querySelector(".search-field");
-							let pos = 0;
-
-							/*					searchField.addEventListener("keydown", function (event) {
-													if (["ArrowLeft", "ArrowRight", "Backspace", "Delete", "Home", "End"].includes(event.key)) {
-														pos = this.selectionStart;
-													}
-												});
-					
-												searchField.addEventListener("input", function (event) {
-													pos = this.selectionStart;
-												});*/
-
-							// Add event listener for the 'keyup' event
-
-							searchField.addEventListener("keydown", function (event) {
-
-								if (!addAutoComplete) return;
-
-								const items = resultsContainer.querySelectorAll('li');
-								if (items.length === 0) return;
-								if (items.length === 1 && items[0].classList.contains('no-results')) return;
-
-								const activeIndex = [...items].findIndex(el => el.classList.contains('active'));
-
-								const setActiveItem = (newIndex) => {
-									if (activeIndex !== -1) items[activeIndex].classList.remove('active');
-									items[newIndex].classList.add('active');
-									items[newIndex].focus();
-									searchField.setAttribute('aria-activedescendant', items[newIndex].id);
-								};
-
-								switch (event.key) {
-									case "ArrowDown":
-										event.preventDefault();
-										setActiveItem(activeIndex === -1 ? 0 : Math.min(activeIndex + 1, items.length - 1));
-										break;
-									case "ArrowUp":
-										event.preventDefault();
-										setActiveItem(activeIndex === -1 ? 0 : Math.max(activeIndex - 1, 0));
-										break;
-									case "Enter":
-										if (activeIndex !== -1) {
-											event.preventDefault();
-											resultsContainer.classList.add("hide");
-											searchField.value = items[activeIndex].innerText;
-											searchField.removeAttribute('aria-activedescendant');
-										}
-										break;
-								}
-							});
-
-							if (addAutoComplete && resultsContainer) {
-
-								resultsContainer.addEventListener("keydown", function (event) {
-
-									const items = resultsContainer.querySelectorAll('li');
-									if (items.length === 0) return;
-									if (items.length === 1 && items[0].classList.contains('no-results')) return;
-
-									const activeIndex = [...items].findIndex(el => el.classList.contains('active'));
-
-									const setActiveItem = (newIndex) => {
-										if (activeIndex !== -1) items[activeIndex].classList.remove('active');
-										items[newIndex].classList.add('active');
-										items[newIndex].focus();
-										searchField.setAttribute('aria-activedescendant', items[newIndex].id);
-									};
-
-									switch (event.key) {
-										case "Escape":
-											searchField.focus();
-											resultsContainer.classList.add("hide");
-											break;
-										case "ArrowDown":
-											event.preventDefault();
-											setActiveItem(activeIndex === -1 ? 0 : Math.min(activeIndex + 1, items.length - 1));
-											break;
-										case "ArrowUp":
-											event.preventDefault();
-											setActiveItem(activeIndex === -1 ? 0 : Math.max(activeIndex - 1, 0));
-											break;
-										case "Enter":
-											if (activeIndex !== -1) {
-												event.preventDefault();
-												resultsContainer.classList.add("hide");
-												searchField.value = items[activeIndex].innerText;
-												searchField.removeAttribute('aria-activedescendant');
-											}
-											break;
-									}
-
-									if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
-										searchField.focus();
-										searchField.setSelectionRange(pos, pos); // Restore cursor position
-									}
-
-								});
-
-								resultsContainer.addEventListener("keydown", function (event) {
-
-									if (event.key === "Home") {
-										event.preventDefault();
-										pos = 0;
-										searchField.focus();
-										searchField.setSelectionRange(pos, pos); // Restore cursor position
-									}
-
-									if (event.key === "End") {
-										event.preventDefault();								
-										searchField.focus();	
-									}
-
-								})
-							}
-
-
-						}
-					});
-
-					if (submitButton) {
-						submitButton.addEventListener("click", () => {
-							args = updateArgs(grid, fields, queryArg, args, 1);
-							args['orgPaged'] = 1;
-							args['paged'] = 1;
-							orgPage = 1;
-							page = 2;
-							getPosts(
-								postsContainer,
-								paginationContainer,
-								message,
-								queryArg,
-								args,
-								grid
-							);
-							selectItems(
-								grid,
-								postsContainer,
-								paginationContainer,
-								message,
-								fields,
-								queryArg,
-								args,
-								selectedTermsContainer,
-								buttonContainer
-							);
-						});
-					}
-					if (grid.querySelector(".search-button")) {
-						grid
-							.querySelector(".search-button")
-							.addEventListener("click", () => {
-								args = updateArgs(grid, fields, queryArg, args, 1);
-								getPosts(
-									postsContainer,
-									paginationContainer,
-									message,
-									queryArg,
-									args,
-									grid
-								);
-							});
-					}
-
-					let resultsContainer = grid.querySelector(".autocomplete-results");
-
-					if (grid.querySelector(".clear-button")) {
-						grid
-							.querySelector(".clear-button")
-							.addEventListener("click", () => {
-								args = updateArgs(grid, fields, queryArg, args, 1);
-								getPosts(
-									postsContainer,
-									paginationContainer,
-									message,
-									queryArg,
-									args,
-									grid
-								);
-								if (resultsContainer) {
-									resultsContainer.classList.add("hide");
-								}
-							});
-					}
-					if (clearButton) {
-						clearButton.addEventListener("click", () => {
-
-							if (isInfinite && pagePattern.test(url)) {
-								const modifiedUrl = url.replace(/\/page\/\d+\b.*/, "");
-								window.location.href = modifiedUrl;
-							}
-
-							if (alphaFilter) {
-
-								alphaFilter.forEach((letter) => {
-									if (letter.classList.contains('active')) {
-										letter.classList.remove('active');
-									}
-								})
-
-								args['alpha'] = "";
-
-							}
-
-							if (resultsContainer) {
-								resultsContainer.classList.add("hide");
-							}
-
-							const checkedFields = grid.querySelectorAll(
-								`input[type=checkbox]:checked`
-							);
-							const selects = grid.querySelectorAll("select");
-
-							if (checkedFields.length > 0) {
-								checkedFields.forEach((field) => {
-									field.checked = false;
-								});
-							}
-
-
-							if (selects.length > 0) {
-								selects.forEach((field) => {
-									field.value = "";
-								});
-							}
-
-
-							queryArg['paged'] = 1;
-
-							args = updateArgs(grid, fields, queryArg, args, 1);
-
-
-							getPosts(
-								postsContainer,
-								paginationContainer,
-								message,
-								queryArg,
-								args,
-								grid
-							);
-							selectItems(
-								grid,
-								postsContainer,
-								paginationContainer,
-								message,
-								fields,
-								queryArg,
-								args,
-								selectedTermsContainer,
-								buttonContainer
-							);
-
-							yearMonthFilter.querySelectorAll(".year-field, .month-field").forEach((select) => {
-				
-								const label = yearMonthFilter.querySelector(`label[for="${select.id}"]`);
-
-								label.classList.add("is-sr-only");
-							});
-
-						});
-
-					}
-
-
-					if (controlButtons.length > 0) {
-						controlButtons.forEach((button) => {
-							if (width < 1024) {
-								button.setAttribute("aria-diabled", "false");
-								button.setAttribute("aria-expanded", "false");
-								if (button.nextElementSibling) {
-									button.nextElementSibling.classList.add("hide");
-								}
-							}
-							button.addEventListener("click", () => {
-								const width = window.innerWidth;
-								if (width < 1024) {
-									toggleAccordion(button);
-								}
-							});
-						});
-					}
-
-					if (collapseButtons.length > 0) {
-						collapseButtons.forEach((button) => {
-							if (width > 1024 && !button.classList.contains("is-open")) {
-								button.setAttribute("aria-disabled", "false");
-								button.setAttribute("aria-expanded", "false");
-								if (button.nextElementSibling) {
-									button.nextElementSibling.classList.add("hide");
-								}
-							}
-							button.addEventListener("click", () => {
-								const width = window.innerWidth;
-								if (width > 1024) {
-									toggleAccordion(button);
-								}
-							});
-						});
-					}
-
-					window.addEventListener("resize", () => {
-						const width = window.innerWidth;
-						if (width >= 1024) {
-							if (controlButtons.length > 0) {
-
-								let filterControlButtons = Array.from(controlButtons).filter(el => !el.classList.contains('collapse'));
-
-								filterControlButtons.forEach((button) => {
-									if (button)
-										button.setAttribute("aria-disabled", "true");
-									button.setAttribute("aria-expanded", "true");
-									if (button.nextElementSibling) {
-										button.nextElementSibling.classList.remove("hide");
-									}
-									button.classList.remove("is-open");
-								});
-							}
-						} else {
-							if (controlButtons.length > 0) {
-								controlButtons.forEach((button) => {
-									button.setAttribute("aria-disabled", "false");
-									button.setAttribute("aria-expanded", "false");
-									if (button.nextElementSibling) {
-										button.nextElementSibling.classList.add("hide");
-									}
-									button.classList.remove("is-open");
-								});
-							}
-						}
-					});
-				}
-				forms.forEach((form) => {
-					if (
-						form.parentElement.classList.contains(
-							"purdue-home-cta-grid__grid__filters-checkbox"
-						) &&
-						form.offsetHeight + 150 > window.innerHeight
-					) {
-						form.style.position = "relative";
-						form.style.top = "0";
-					}
+	postGrids.forEach((grid) => {
+		const form = grid.querySelector("form");   // or grid.closest("form")
+		if (form) {
+			form.addEventListener('change', () => {
+				const filterButton = form.querySelector('.purdue-home-post-grid__filter-button');
+				if (filterButton) filterButton.classList.remove('hide');
+			});
+			const filters = form.querySelectorAll("fieldset > button");
+			filters.forEach((x) => {
+				x.addEventListener("click", () => toggleAccordion(x));
+			});
+			const order = form.querySelectorAll('.order-field');
+			order.forEach((x) => {
+				x.addEventListener('click', (e) => {
+					form.submit();
 				});
-			}
+			})
 
+			// Selected-filter chips: clear the matching field, then submit.
+			const chips = form.querySelectorAll('.filter-elected-term');
+			chips.forEach((chip) => {
+				chip.addEventListener('click', (e) => {
+					e.preventDefault();
 
-			if (isInfinite) {
-				const container = document.querySelector('.purdue-home-cta-grid__grid__content');
-				let page = ""
+					const category = chip.dataset.category;
+					if (!category) return; // e.g. the static "Purdue News" chip
 
-				// let page = 2; // Start from page 2 as the first page is already loaded
-				let isFetching = false;
+					const value = chip.value;
+					const safeValue = (window.CSS && CSS.escape) ? CSS.escape(value) : value;
 
-				if (parseInt(orgPage) >= parseInt(args['paged']) && pagePattern.test(url)) {
-					page = orgPage + 1
-					args['paged'] = args['orgPaged']
-					args['posts_per_page'] = post_per_page;
-					args['orgPaged'] = page;
-					args = updateArgs(grid, fields, queryArg, args, page);
-					loadPostsBtn.classList.remove("hide");
-					orgPage = "1";
-				} else {
-
-					page = 2
-					args = updateArgs(grid, fields, queryArg, args, page);
-				}
-
-				if (submitButton) {
-					submitButton.addEventListener("click", () => {
-						page = 2;
-					})
-				}
-
-				if (alphaFilter) {
-					alphaFilter.forEach((letter) => {
-						letter.addEventListener("click", (e) => {
-							page = 2;
-						})
-					})
-				}
-
-				const loadPosts = () => {
-					if (isFetching) return;
-					isFetching = true;
-
-					//page
-					args['orgPaged'] = page;
-					args = updateArgs(grid, fields, queryArg, args, page);
-					load = "infinite";
-					getPosts(
-						postsContainer,
-						paginationContainer,
-						message,
-						queryArg,
-						args,
-						grid,
-						load
+					// Checkbox group: name="<category>[]" (category / taxonomy / custom_post_type)
+					const checkbox = form.querySelector(
+						`input[type="checkbox"][name="${category}[]"][value="${safeValue}"]`
 					);
-					page++;
-					isFetching = false;
-				};
 
-				loadPostsBtn.addEventListener("click", (e) => {
-					e.stopImmediatePropagation();
-					loadPosts();
-				});
-
-			}
-
-			if (paginationContainer && !isInfinite) {
-				const paginationLinks = paginationContainer.querySelectorAll("a");
-				if (paginationLinks.length > 0) {
-					const current = parseInt(
-						paginationContainer.querySelector(".current").innerHTML,
-						10
-					);
-					paginationLinks.forEach((link) => {
-						link.addEventListener("click", (e) => {
-							e.preventDefault();
-							let paged = 1;
-							if (link.classList.contains("prev")) {
-								paged = current - 1;
-							} else if (link.classList.contains("next")) {
-								paged = current + 1;
-							} else {
-								paged = parseInt(link.innerHTML, 10);
-							}
-							args = updateArgs(grid, fields, queryArg, args, paged);
-							getPosts(
-								postsContainer,
-								paginationContainer,
-								message,
-								queryArg,
-								args,
-								grid
-							);
-							let sectionTop = grid.offsetTop;
-							scrollTo(sectionTop, 300);
-						});
-					});
-				}
-			}
-
-			let yearMonthFilter = grid.querySelector(".year-month-filter");
-
-			if (yearMonthFilter) {
-				
-				yearMonthFilter.querySelectorAll(".year-field, .month-field").forEach((select) => {
-					
-					const label = yearMonthFilter.querySelector(`label[for="${select.id}"]`);
-
-					if (select.value !== "") {
-						label.classList.remove("is-sr-only");
+					if (checkbox) {
+						checkbox.checked = false;
 					} else {
-						label.classList.add("is-sr-only");
+						const field = form.querySelector(`[name="${category}"]`);
+						if (!field) return; // nothing to clear -> don't reload
+						field.value = '';
 					}
 
-					select.addEventListener("change", () => {
-						if(select.value !== ""){
-							label.classList.remove("is-sr-only");
-						}else{
-							label.classList.add("is-sr-only");
-						}
-					})
+					form.submit();
+				});
+			});
+
+			// Clear-button next to the search input: empty the field, then submit.
+			const clearButton = form.querySelector('.clear-button');
+			if (clearButton) {
+				clearButton.addEventListener('click', () => {
+					const searchField = form.querySelector('.search-field');
+					if (searchField) searchField.value = '';
+					form.submit();
 				});
 			}
-
-		});
-	}
-
+		}
+		initLoadMore(grid);
+		initAutocomplete(grid);
+	});
 });
-
-
-const updateArgs = (grid, fields, queryArg, args, paged) => {
-	const oldArgs = JSON.parse(JSON.stringify(queryArg));
-	const newArgs = JSON.parse(JSON.stringify(args));
-
-	if (fields) {
-		fields.forEach((field) => {
-			const value = field.value;
-			const name = field.name;
-			if (value) {
-				if (field.classList.contains("search-field")) {
-					newArgs["p"] = value;
-				} else if (field.classList.contains("postType-field")) {
-					if (field.checked) {
-						if (!newArgs["post_type"].includes(value)) {
-							newArgs["post_type"].push(value);
-						}
-					} else {
-						if (
-							grid.querySelectorAll(
-								`input[type=checkbox][name=${name}]:checked`
-							).length === 0
-						) {
-							if (oldArgs["post_type"] !== "") {
-								newArgs["post_type"] = [...oldArgs["post_type"]];
-							} else {
-								newArgs["post_type"] = "";
-							}
-						} else {
-							if (newArgs["post_type"].includes(value)) {
-								newArgs["post_type"] = newArgs["post_type"].filter(
-									(item) => item !== value
-								);
-							}
-						}
-					}
-				} else if (field.classList.contains("tax-field")) {
-
-					const isSelect = field.tagName === "SELECT";
-					const isChecked = field.checked;
-					const hasValue = value !== "";
-					const taxonomy = field.name;
-
-					if (isChecked && hasValue) {
-
-						let hasCat = false;
-						let count = 0;
-						for (const prop in newArgs["tax_query"]) {
-							if (
-								newArgs["tax_query"][prop]["taxonomy"] &&
-								newArgs["tax_query"][prop]["taxonomy"] === name
-							) {
-								if (!newArgs["tax_query"][prop]["terms"].includes(value)) {
-									newArgs["tax_query"][prop]["terms"].push(value);
-								}
-								hasCat = true;
-							}
-							count++;
-						}
-
-						if (!hasCat) {
-							newArgs["tax_query"][count] = {
-								taxonomy: name,
-								field: "slug",
-								terms: [value],
-							};
-						}
-					} else if (isSelect && hasValue) {
-
-						for (const prop in newArgs["tax_query"]) {
-							if (newArgs["tax_query"][prop]["taxonomy"] === taxonomy) {
-								delete newArgs["tax_query"][prop];
-							}
-						}
-
-						newArgs["tax_query"] = Object.values(newArgs["tax_query"]);
-
-						newArgs["tax_query"].push({
-							taxonomy: taxonomy,
-							field: "slug",
-							terms: [value],
-						});
-
-
-					} else {
-						if (
-							grid.querySelectorAll(
-								`input[type=checkbox][name=${name}]:checked`
-							).length === 0
-						) {
-							let hasCat = false;
-							for (const prop in oldArgs["tax_query"]) {
-								if (
-									oldArgs["tax_query"][prop]["taxonomy"] &&
-									oldArgs["tax_query"][prop]["taxonomy"] === name
-								) {
-									for (const newprop in newArgs["tax_query"]) {
-										if (
-											newArgs["tax_query"][newprop]["taxonomy"] &&
-											newArgs["tax_query"][newprop]["taxonomy"] === name
-										) {
-											newArgs["tax_query"][newprop] = {
-												...oldArgs["tax_query"][prop],
-											};
-										}
-									}
-									hasCat = true;
-								}
-							}
-							if (!hasCat) {
-								for (const newprop in newArgs["tax_query"]) {
-									if (
-										newArgs["tax_query"][newprop]["taxonomy"] &&
-										newArgs["tax_query"][newprop]["taxonomy"] === name
-									) {
-										newArgs["tax_query"][newprop] = {};
-									}
-								}
-							}
-						} else {
-							for (const prop in newArgs["tax_query"]) {
-								if (
-									newArgs["tax_query"][prop]["taxonomy"] &&
-									newArgs["tax_query"][prop]["taxonomy"] === name
-								) {
-									if (newArgs["tax_query"][prop]["terms"].includes(value)) {
-										newArgs["tax_query"][prop]["terms"] = newArgs["tax_query"][
-											prop
-										]["terms"].filter((item) => item !== value);
-									}
-								}
-							}
-						}
-					}
-				} else if (field.classList.contains("order-field")) {
-					if (field.checked) {
-						newArgs["order"] = value;
-					}
-				} else if (field.classList.contains("year-field")) {
-					if (value) {
-						newArgs["year"] = value;
-					}
-				} else if (field.classList.contains("month-field")) {
-					if (value) {
-						newArgs["month"] = value;
-					}
-				}
-			} else {
-				if (field.classList.contains("search-field")) {
-					newArgs["p"] = "";
-				} else if (field.classList.contains("year-field")) {
-					newArgs["year"] = "";
-				} else if (field.classList.contains("month-field")) {
-					newArgs["month"] = "";
-				} else if (field.classList.contains("tax-field")) {
-					// Remove related taxonomy from tax_query
-					for (const prop in newArgs["tax_query"]) {
-						if (
-							newArgs["tax_query"][prop]["taxonomy"] === field.name
-						) {
-							delete newArgs["tax_query"][prop];
-						}
-					}
-					// Re-index tax_query
-					newArgs["tax_query"] = Object.values(newArgs["tax_query"]);
-				}
-			}
-		});
-	}
-	newArgs["paged"] = paged ? paged : 1;
-	// newArgs['autocomplete'] = autocomplete ? autoComplete : false;
-
-	return newArgs;
-
-
-};
-
-const updateArgsFromURL = (name, value, grid, args, paged, existingTaxQuery = []) => {
-
-
-	const newArgs = JSON.parse(JSON.stringify(args));
-
-	let taxArgs = [];
-
-	let utm = args.utm ? [...args.utm] : [];
-
-	if (existingTaxQuery.length > 0) {
-
-		taxArgs = [...existingTaxQuery.filter(q => q.taxonomy !== name && !q.relation)];
-
-	}
-
-	if (name === "p") {
-		const searchField = grid.querySelector(
-			".purdue-home-post-grid__filter-field.search-field"
-		);
-		if (searchField) {
-			//Replace '&' with &amp;
-			const decodedValue = decodeURIComponent(value).replace(/&/g, "&amp;");
-			searchField.value = decodeURIComponent(value);
-			newArgs["p"] = decodedValue;
-		}
-	} else if (name === "custom_post_type") {
-		const postTypeField = grid.querySelectorAll(
-			".purdue-home-post-grid__filter-field.postType-field"
-		);
-		const post_types = value.replace(/%2C/g, ",").split(",");
-		if (postTypeField.length > 0) {
-			postTypeField.forEach((field) => {
-				field.checked = false;
-				post_types.forEach((type) => {
-					if (field.value === type) {
-						field.checked = true;
-					}
-				});
-			});
-			newArgs["post_type"] = post_types;
-		}
-	} else if (name === "order") {
-		const orderField = grid.querySelectorAll(
-			".purdue-home-post-grid__filter-field.order-field"
-		);
-		if (orderField.length > 0) {
-			orderField.forEach((field) => {
-				if (field.value === value) {
-					field.checked = true;
-				} else {
-					field.checked = false;
-				}
-			});
-			newArgs["order"] = value;
-		}
-	} else if (name === "filter_year") {
-
-		const yearField = grid.querySelector(`select[name=year-field]`);
-		if (yearField) {
-			yearField.value = value;
-			yearField.selected = true;
-			newArgs["year"] = value;
-		}
-	} else if (name === "filter_month") {
-		const monthField = grid.querySelector(`select[name=month-field]`);
-		if (monthField) {
-			monthField.value = convertToMonth(value);
-			monthField.selected = true;
-			newArgs["month"] = convertToMonth(value);
-		}
-	} else if (name === "paged") {
-		newArgs["paged"] = paged ? paged : 1;
-	} else if (name === "alpha") {
-		const alphaFilter = grid.querySelectorAll(".filter-letter:not(.is-disabled)");
-
-		alphaFilter.forEach((letter) => {
-			if (letter.dataset.alpha.match(value)) {
-				letter.classList.add("active");
-			}
-		})
-
-		newArgs["alpha"] = value;
-	} else if (name === "orderby") {
-
-	} else if (name.includes("utm_") || name.includes("gtm_") || name.includes("_gl") || name.includes("_ga")) {
-		// Skip UTM parameters
-		utm.push("&" + name + "=" + value);
-		newArgs['utm'] = utm;
-
-	} else {
-
-		const elements = grid.querySelectorAll(`input[name=${name}]`);
-		let tax_terms = value.replace(/%2C/g, ",").split(",");
-		tax_terms = tax_terms.filter(item => item !== "date");
-
-		// if (elements && elements.length > 0) {
-
-
-		/* elements.forEach((field) => {
-		   field.checked = false;
-		   tax_terms.forEach((type) => {
-			 if (field.value === type) {
-			   field.checked = true;
-			 }else{
-			   field.value = value;
-			 }
-		   });
-		 });*/
-
-		const checkboxFields = grid.querySelectorAll(`input[type=checkbox][name=${name}]`);
-		if (checkboxFields.length > 0) {
-			checkboxFields.forEach((field) => {
-				field.checked = tax_terms.includes(field.value);
-
-			});
-		}
-
-		const selectFields = grid.querySelectorAll(`select.tax-field`);
-		// const tax_terms_new = value.replace(/%2C/g, ",").split(",").map(decodeURIComponent);
-
-		if (selectFields && tax_terms.length > 0) {
-
-			selectFields.forEach((selectField) => {
-				const matchedTerm = tax_terms.find(term =>
-					Array.from(selectField.options).some(opt => opt.value === term)
-				);
-
-				if (matchedTerm) {
-
-					selectField.value = matchedTerm;
-				}
-			});
-
-		}
-
-		let hasTax = false;
-		let count = 0;
-
-
-		for (const prop in newArgs["tax_query"]) {
-			if (newArgs["tax_query"][prop]["taxonomy"] === name) {
-				newArgs["tax_query"][prop]["terms"] = tax_terms;
-				hasTax = true;
-			}
-			count++;
-		}
-		if (!hasTax) {
-			taxArgs.push({
-				taxonomy: name,
-				field: "slug",
-				terms: tax_terms,
-			});
-			/*  newArgs["tax_query"][count] = {
-				taxonomy: name,
-				field: "slug",
-				terms: tax_terms,
-			  };*/
-		}
-		// }
-	}
-
-	newArgs["tax_query"] = [...taxArgs];
-
-
-	if (!newArgs["tax_query"].some(q => q.relation)) {
-		newArgs["tax_query"].unshift({ relation: "AND" });
-	}
-
-
-	const isInfinite = args["infiniteScroll"];
-	const post_per_page = args['posts_per_page'];
-
-
-	if (isInfinite) {
-		newArgs["posts_per_page"] = (parseInt(args["paged"]) * parseInt(post_per_page));
-		newArgs["paged"] = 1;
-	}
-
-
-	return newArgs;
-
-
-};
 
 
 const autoComplete = async (
@@ -1144,144 +140,320 @@ const autoComplete = async (
 	}
 }
 
-const getPosts = async (
-	postsContainer,
-	paginationContainer,
-	message,
-	queryArg,
-	args,
-	grid,
-	load
-) => {
+// Search autocomplete: as the visitor types, fetch title suggestions from
+// purdue_get_posts (rest.php) using the grid's data-args (so suggestions respect
+// the block's filters), render them in an accessible listbox under the field, and
+// trap keyboard focus inside the search box (small built-in trap) while the
+// list is open. Arrow keys move real focus between the input and the suggestions.
+// Reuses autoComplete() for the fetch + list rendering; enabled only when the
+// block's addAutoComplete attribute is on.
+const initAutocomplete = (grid) => {
+	const searchField = grid.querySelector(".search-field");
+	if (!searchField) return;
 
-	const excludeCats = queryArg.excludeCat;
-	const infiniteScroll = queryArg.infiniteScroll;
+	const gridData = grid.querySelector(".purdue-home-cta-grid__grid");
+	let baseArgs = {};
+	try {
+		baseArgs = JSON.parse((gridData && gridData.dataset.args) || "{}") || {};
+	} catch (e) {
+		baseArgs = {};
+	}
 
-	let queryArgs = JSON.parse(JSON.stringify(args));
+	// Only run when the block opted in.
+	if (!baseArgs.addAutoComplete) return;
 
-	queryArgs.excludeCat = excludeCats;
+	const searchForm = grid.querySelector(".search-form");
+	if (!searchForm) return;
 
-	const response = await fetch(
-		siteHomeURL + "/wp-json/purdue-home/v1/post-select/",
-		{
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
+	// Build (or reuse) the dropdown + screen-reader live region.
+	let resultsContainer = searchForm.querySelector("#autocomplete-results");
+	if (!resultsContainer) {
+		resultsContainer = document.createElement("ul");
+		resultsContainer.id = "autocomplete-results";
+		resultsContainer.className = "autocomplete-results hide";
+		resultsContainer.setAttribute("role", "listbox");
+		searchForm.appendChild(resultsContainer);
+	}
+
+	let searchLive = searchForm.querySelector("span.search-live");
+	if (!searchLive) {
+		searchLive = document.createElement("span");
+		searchLive.className = "search-live is-sr-only";
+		searchLive.setAttribute("aria-live", "polite");
+		searchLive.setAttribute("role", "status");
+		searchForm.appendChild(searchLive);
+	}
+
+	// Minimal, dependency-free focus trap. While active, Tab/Shift+Tab cycle
+	// through the focusable elements inside the search box instead of leaving it.
+	// Built lazily and only bound while the dropdown is open. (Escape is handled by
+	// the keydown logic below, which closes the list and frees focus.)
+	let trap = null;
+	const ensureTrap = () => {
+		if (trap) return trap;
+
+		const focusableSelector =
+			'a[href], button:not([disabled]), input:not([disabled]), ' +
+			'select:not([disabled]), textarea:not([disabled]), ' +
+			'[tabindex]:not([tabindex="-1"])';
+
+		const focusable = () =>
+			Array.from(searchForm.querySelectorAll(focusableSelector)).filter(
+				(el) =>
+					el.offsetWidth > 0 ||
+					el.offsetHeight > 0 ||
+					el === document.activeElement
+			);
+
+		const onKeydown = (event) => {
+			if (event.key !== "Tab") return;
+			const items = focusable();
+			if (!items.length) return;
+			const first = items[0];
+			const last = items[items.length - 1];
+			const active = document.activeElement;
+			if (event.shiftKey) {
+				if (active === first || !searchForm.contains(active)) {
+					event.preventDefault();
+					last.focus();
+				}
+			} else if (active === last || !searchForm.contains(active)) {
+				event.preventDefault();
+				first.focus();
+			}
+		};
+
+		trap = {
+			enable() {
+				// Idempotent: openList runs on every keystroke, so avoid stacking.
+				searchForm.removeEventListener("keydown", onKeydown);
+				searchForm.addEventListener("keydown", onKeydown);
 			},
-			body: JSON.stringify(queryArgs),
+			disable() {
+				searchForm.removeEventListener("keydown", onKeydown);
+			},
+		};
+		return trap;
+	};
+
+	// The selectable suggestions (excludes the "no results" placeholder).
+	const suggestions = () =>
+		Array.from(resultsContainer.querySelectorAll("li")).filter(
+			(li) => !li.classList.contains("no-results")
+		);
+
+	const openList = () => {
+		resultsContainer.classList.remove("hide");
+		searchField.setAttribute("aria-expanded", "true");
+		ensureTrap().enable();
+	};
+
+	const closeList = () => {
+		resultsContainer.innerHTML = "";
+		resultsContainer.classList.add("hide");
+		searchField.setAttribute("aria-expanded", "false");
+		if (trap) trap.disable();
+	};
+
+	const focusItem = (idx) => {
+		const items = suggestions();
+		if (!items.length) return;
+		const i = ((idx % items.length) + items.length) % items.length;
+		items.forEach((el) => el.classList.remove("active"));
+		items[i].classList.add("active");
+		items[i].focus();
+	};
+
+	const selectItem = (li) => {
+		if (!li) return;
+		searchField.value = li.textContent;
+		closeList();
+		searchField.focus();
+		const form = searchField.closest('form');
+		form.submit();
+	};
+
+	let debounce;
+	searchField.addEventListener("input", () => {
+		const term = searchField.value.trim();
+		window.clearTimeout(debounce);
+
+		if (term.length < 2) {
+			closeList();
+			searchLive.innerText = "";
+			return;
 		}
-	);
-	const result = await response
-		.json()
-		.catch((error) => console.error("Error parsing JSON:", error));
-	const html = result["html"] || "";
-	const pagination = result.pagination || "";
-	const newURL = result.url || false;
-	const excludeCatResult = result.excludeCat;
-	let loadPostsBtn = grid.querySelector('.load');
-	let postTotal = grid.querySelector('.post-total');
 
-	if (postTotal) {
-		postTotal.innerHTML = result.total;
-	}
-
-
-	if (infiniteScroll && (parseInt(queryArgs['posts_per_page']) > parseInt(queryArgs['orgpost_Per_Page'])) && load == "infinite") {
-
-		postsContainer.innerHTML = html;
-
-	} else if (infiniteScroll && load == "infinite" && queryArgs['paged'] !== 1) {
-
-		postsContainer.insertAdjacentHTML("beforeend", html);
-
-	} else {
-
-		postsContainer.innerHTML = html;
-
-	}
-
-	let currentPage = "";
-	if (queryArgs['orgPaged']) {
-		currentPage = queryArgs['orgPaged'];
-	} else {
-		currentPage = result.current;
-	}
-
-
-	if (loadPostsBtn) {
-		if (currentPage >= result.pages || !html) {
-			loadPostsBtn.classList.add("hide");
-		} else {
-			loadPostsBtn.classList.remove("hide");
-		}
-
-		if ((parseInt(queryArgs['posts_per_page']) > parseInt(queryArgs['orgpost_Per_Page'])) && parseInt(queryArgs['posts_per_page']) < result.total) {
-			loadPostsBtn.classList.remove("hide");
-		}
-
-	}
-
-
-	if (!html) {
-		message.classList.remove("hide");
-	} else {
-		message.classList.add("hide");
-	}
-
-	if (paginationContainer) {
-		paginationContainer.innerHTML = pagination;
-		const paginationLinks = paginationContainer.querySelectorAll("a");
-		if (paginationLinks.length > 0) {
-			const current = parseInt(
-				paginationContainer.querySelector(".current").innerHTML,
-				10
-			);
-
-			const fields = grid.querySelectorAll(
-				".purdue-home-post-grid__filter-field"
-			);
-			paginationLinks.forEach((link) => {
-				link.addEventListener("click", (e) => {
-					e.preventDefault();
-					let paged = 1;
-					if (link.classList.contains("prev")) {
-						paged = current - 1;
-					} else if (link.classList.contains("next")) {
-						paged = current + 1;
-					} else {
-						paged = parseInt(link.innerHTML, 10);
-					}
-					args = updateArgs(grid, fields, queryArg, args, paged);
-					args["requestURL"] = window.location.href;
-					getPosts(
-						postsContainer,
-						paginationContainer,
-						message,
-						queryArg,
-						args,
-						grid
-					);
-					let sectionTop = grid.offsetTop;
-					scrollTo(sectionTop, 300);
-				});
+		debounce = window.setTimeout(() => {
+			// Replay the grid's query with the typed term in autocomplete mode.
+			const args = Object.assign({}, baseArgs, {
+				search: term,
+				autocomplete: true,
+				paged: 1,
+				posts_per_page: 16,
 			});
+
+			openList();
+
+			autoComplete(resultsContainer, searchField, null, baseArgs, args, grid).then(
+				() => {
+					// Make each suggestion a focusable listbox option: tabindex 0 so
+					// it can receive real focus AND so the focus trap counts it as
+					// tabbable (otherwise the trap would yank focus back to the input).
+					suggestions().forEach((li, i) => {
+						li.setAttribute("role", "option");
+						li.setAttribute("tabindex", "0");
+						if (!li.id) {
+							li.id = "autocomplete-option-" + i;
+						}
+					});
+				}
+			);
+		}, 200);
+	});
+
+	// Arrow-key navigation moves real focus between the input and the suggestions.
+	// Bound to the form so it fires whether focus is on the input or on an option.
+	searchForm.addEventListener("keydown", (event) => {
+		if (resultsContainer.classList.contains("hide")) return;
+
+		const items = suggestions();
+		if (!items.length) return;
+
+		const focusedIndex = items.indexOf(document.activeElement);
+		const onField = document.activeElement === searchField;
+
+		switch (event.key) {
+			case "ArrowDown":
+				event.preventDefault();
+				focusItem(onField ? 0 : focusedIndex + 1);
+				break;
+			case "ArrowUp":
+				event.preventDefault();
+				if (onField) {
+					focusItem(items.length - 1);
+				} else if (focusedIndex <= 0) {
+					items.forEach((el) => el.classList.remove("active"));
+					searchField.focus();
+				} else {
+					focusItem(focusedIndex - 1);
+				}
+				break;
+			case "Enter":
+				// On a focused suggestion, select it; otherwise let the form submit
+				// and run the normal search.
+				if (focusedIndex > -1) {
+					event.preventDefault();
+					selectItem(items[focusedIndex]);
+				}
+				break;
+			case "Escape":
+				event.preventDefault();
+				closeList();
+				searchField.focus();
+				break;
 		}
-	}
+	});
 
-	let utmParams = args["utm"];
-
-	let paramURL = newURL;
-
-	if (utmParams && utmParams.length > 0) {
-		if (paramURL) {
-			let separator = newURL.includes('?') ? '&' : '?';
-			paramURL += separator + utmParams.map(param => param.replace(/^&/, '')).join('&');
+	// Selecting a suggestion by mouse closes the list and returns focus to input.
+	resultsContainer.addEventListener("click", (event) => {
+		const li = event.target.closest("li");
+		if (li && !li.classList.contains("no-results")) {
+			selectItem(li);
 		}
+	});
+
+	// Dismiss the suggestions when a click lands outside the search box.
+	document.addEventListener("click", (event) => {
+		if (!searchForm.contains(event.target)) {
+			closeList();
+		}
+	});
+
+	// Wire the little "x" clear button to reset the field + suggestions.
+	const clearButton = searchForm.querySelector(".clear-button");
+	if (clearButton) {
+		clearButton.addEventListener("click", () => {
+			searchField.value = "";
+			closeList();
+			searchField.focus();
+		});
 	}
+};
 
-	history.pushState(null, "post archive", paramURL);
+// Infinite-scroll "Load More": replays the page-1 query (read from the grid's
+// data-args) for the next page via purdue_get_posts (rest.php), then appends the
+// returned cards. Only the `paged` value changes between requests, so each click
+// advances the WP_Query offset by one page.
+const initLoadMore = (grid) => {
+	const loadMoreBtn = grid.querySelector(".load");
+	if (!loadMoreBtn) return;
 
-	return response;
+	const gridData = grid.querySelector(".purdue-home-cta-grid__grid");
+	const cardsContainer = grid.querySelector(
+		".purdue-home-cta-grid__cards .columns"
+	);
+	if (!gridData || !cardsContainer) return;
+
+	let baseArgs;
+	try {
+		baseArgs = JSON.parse(gridData.dataset.args || "{}");
+	} catch (e) {
+		return;
+	}
+	if (!baseArgs || typeof baseArgs !== "object") return;
+
+	let currentPaged = parseInt(baseArgs.paged, 10) || 1;
+	let isFetching = false;
+
+	const endpoint =
+		(typeof siteHomeURL !== "undefined" ? siteHomeURL : "") +
+		"/wp-json/purdue-home/v1/post-select/";
+
+	const postTotal = grid.querySelector(".post-total");
+
+	loadMoreBtn.addEventListener("click", async (e) => {
+		e.preventDefault();
+		e.stopImmediatePropagation();
+		if (isFetching) return;
+		isFetching = true;
+		loadMoreBtn.classList.add("is-loading");
+
+		const nextPaged = currentPaged + 1;
+		const body = Object.assign({}, baseArgs, {
+			paged: nextPaged,
+			autocomplete: false,
+		});
+
+		try {
+			const response = await fetch(endpoint, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(body),
+			});
+			const result = await response.json();
+			const html = result && result.html ? result.html : "";
+
+			if (html) {
+				cardsContainer.insertAdjacentHTML("beforeend", html);
+				currentPaged = nextPaged;
+			}
+
+			if (postTotal && result && typeof result.total !== "undefined") {
+				postTotal.innerHTML = result.total;
+			}
+
+			const totalPages = result ? parseInt(result.pages, 10) : 0;
+			if (!html || (totalPages && currentPaged >= totalPages)) {
+				loadMoreBtn.classList.add("hide");
+			}
+		} catch (err) {
+			console.error("Load more failed:", err);
+		} finally {
+			isFetching = false;
+			loadMoreBtn.classList.remove("is-loading");
+		}
+	});
 };
 
 const toggleAccordion = (header) => {
@@ -1296,171 +468,3 @@ const toggleAccordion = (header) => {
 		content.classList.toggle("hide");
 	}
 };
-
-const selectItems = (
-	grid,
-	postsContainer,
-	paginationContainer,
-	message,
-	fields,
-	queryArg,
-	args,
-	selectedTermsContainer,
-	clearButton
-) => {
-	const checkboxes = Array.from(
-		grid.querySelectorAll("input[type=checkbox]:checked")
-	);
-	const selects = Array.from(grid.querySelectorAll("select")).filter(
-		(select) => select.value !== ""
-	);
-
-	const letters = Array.from(grid.querySelectorAll('.filter-letter.active'));
-
-	const terms = [...checkboxes, ...selects, ...letters];
-
-	const buttons = selectedTermsContainer
-		? selectedTermsContainer.querySelectorAll("button")
-		: [];
-	if (buttons && buttons.length > 0) {
-		buttons.forEach((button) => button.remove());
-	}
-	if (terms && terms.length > 0) {
-		selectedTermsContainer.classList.remove("p-0");
-
-
-		terms.forEach((term) => {
-			let newButton = document.createElement("button");
-			newButton.classList.add("filter-elected-term");
-			if (term.tagName === "A") {
-				newButton.setAttribute("data-value", term.dataset.alpha);
-				newButton.setAttribute('aria-label', `Clear filter - ${term.dataset.alpha}`)
-			} else {
-				newButton.setAttribute("data-value", term.value);
-			}
-			if (term.dataset.label) {
-				newButton.setAttribute('aria-label', `Clear filter ${term.dataset.label} - ${term.value.replace(/-/g, ' ')}`)
-			}
-
-			if (term.tagName === "SELECT") {
-
-				let tagName = term.value.replaceAll("-", " ");
-				let titleCase = tagName
-					.split(' ')
-					.map(word => word.charAt(0).toUpperCase() + word.slice(1))
-					.join(' ');
-
-				newButton.innerHTML = titleCase;
-			} else if (term.tagName === "A") {
-				newButton.innerHTML = term.dataset.alpha;
-			} else {
-				newButton.innerHTML = term.parentElement.textContent;
-			}
-			newButton.addEventListener("click", () => {
-				if (term.tagName === "SELECT") {
-					term.value = "";
-				} else {
-					term.checked = false;
-				}
-
-				if (term.tagName === "A") {
-					const letter = grid.querySelector(".filter-letter.active");
-					if (letter) {
-						letter.classList.remove('active');
-					}
-					args['alpha'] = "";
-				}
-
-				newButton.remove();
-
-				args = updateArgs(grid, fields, queryArg, args, 1);
-				queryArg['orgPaged'] = 1;
-				args['orgPaged'] = 1;
-				getPosts(
-					postsContainer,
-					paginationContainer,
-					message,
-					queryArg,
-					args,
-					grid
-				);
-				checkClearButton(grid, clearButton, selectedTermsContainer);
-			});
-			selectedTermsContainer.appendChild(newButton);
-		});
-	} else {
-		if (selectedTermsContainer) {
-			selectedTermsContainer.classList.add("p-0");
-		}
-	}
-
-	if (selectedTermsContainer) {
-		checkClearButton(grid, clearButton, selectedTermsContainer)
-	}
-};
-
-const checkClearButton = (grid, clearButton, selectedTermsContainer) => {
-	const checkboxes = Array.from(
-		grid.querySelectorAll("input[type=checkbox]:checked")
-	);
-	const selects = Array.from(grid.querySelectorAll("select")).filter(
-		(select) => select.value !== ""
-	);
-	const letters = Array.from(grid.querySelectorAll('.filter-letter.active'));
-
-	const terms = [...checkboxes, ...selects, ...letters];
-
-	if (terms && terms.length > 0) {
-		clearButton ? clearButton.classList.remove("hide") : "";
-	} else {
-		selectedTermsContainer ? selectedTermsContainer.classList.add("p-0") : "";
-		clearButton ? clearButton.classList.add("hide") : "";
-	}
-};
-
-
-// Helper function for smooth scrolling
-function scrollTo(to, duration) {
-	var start = window.scrollY || window.pageYOffset;
-	var change = to - start;
-	var startTime = new Date().getTime();
-
-	function easeInOutQuad(t, b, c, d) {
-		t /= d / 2;
-		if (t < 1) return (c / 2) * t * t + b;
-		t--;
-		return (-c / 2) * (t * (t - 2) - 1) + b;
-	}
-
-	function animateScroll() {
-		var currentTime = new Date().getTime();
-		var elapsed = currentTime - startTime;
-
-		window.scrollTo(0, easeInOutQuad(elapsed, start, change, duration));
-
-		if (elapsed < duration) {
-			requestAnimationFrame(animateScroll);
-		}
-	}
-
-	animateScroll();
-}
-
-function convertToMonth(monthNumber) {
-	const months = {
-		"01": "January",
-		"02": "February",
-		"03": "March",
-		"04": "April",
-		"05": "May",
-		"06": "June",
-		"07": "July",
-		"08": "August",
-		"09": "September",
-		10: "October",
-		11: "November",
-		12: "December",
-	};
-
-	return months[monthNumber];
-}

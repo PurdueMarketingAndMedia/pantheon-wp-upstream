@@ -134,7 +134,7 @@ if ($image_url == "" && get_post_thumbnail_id($postID)) {
             }
         }
         ?>
-        <a href="<?= the_permalink() ?>" <?= $target; ?> <?= (count($ariaDescribedBy) > 0) ? 'aria-describedby=' . implode(' ', $ariaDescribedBy) : ''; ?>
-           class="<?= ($attributes['cardType'] != "faculty") ? 'purdue-home-button' : ''?> <?= $postModal ?>"><?= esc_attr(wp_strip_all_tags($attributes['buttonText'])) ?></a>
+        <a href="<?= esc_url( get_the_permalink() ) ?>" <?= $target ?> <?= ( ! empty($ariaDescribedBy) ) ? 'aria-describedby="' . ( implode(' ', $ariaDescribedBy) ) . '"' : '' ?>
+           class="<?= ( ($attributes['cardType'] ?? '') !== 'faculty' ) ? 'purdue-home-button' : '' ?> <?= $postModal ?>"><?= esc_html( wp_strip_all_tags( $attributes['buttonText'] ?? '' ) ) ?></a>
     </div>
 </article>

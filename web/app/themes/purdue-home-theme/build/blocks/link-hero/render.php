@@ -1,17 +1,31 @@
 <?php
 $id = $attributes['id'] != "" ? ' id="' . $attributes['id'] . '"' : "";
+$backgroundClass = $attributes['background'] != "" ? $attributes['background'] : "";
+$buttonColor = "";
+
+if ($attributes['background'] == "image-background" || $attributes['background'] == "") {
+    $buttonColor = "purdue-home-button--white";
+} elseif ($attributes['background'] == "has-white-background" || $attributes['background'] == "has-gray-background" || $attributes['background'] == "has-gold-background") {
+    $buttonColor = "purdue-home-button--black";
+} else {
+    $buttonColor = "purdue-home-button--gold";
+}
 ?>
 
-<div <?= $id; ?> class="purdue-home-cta-banner purdue-home-link-hero <?= $attributes['className']; ?>">
-    <div class="image">
-        <?php if ($attributes['mediaType'] == "image"): ?>
-            <img alt="<?= $attributes["mediaAlt"]; ?>" src="<?= $attributes["mediaURL"]; ?>"/>
-        <?php elseif ($attributes['mediaType'] == "video"): ?>
-            <video preload="metadata" title="<?= $attributes['mediaTitle']; ?>" muted playsinline="">
-                <source src="<?= $attributes["mediaURL"]; ?>#t=0.1">
-            </video>
-        <?php endif; ?>
-    </div>
+<div <?= $id; ?> class="purdue-home-cta-banner purdue-home-link-hero <?= $attributes['className']; ?> <?= $backgroundClass; ?>">
+
+   <?php if ($attributes['background'] == "image-background" || $attributes['background'] == ""): ?>
+        <div class="image">
+            <?php if ($attributes['mediaType'] == "image"): ?>
+                <img alt="<?= $attributes["mediaAlt"]; ?>" src="<?= $attributes["mediaURL"]; ?>"/>
+            <?php elseif ($attributes['mediaType'] == "video"): ?>
+                <video preload="metadata" title="<?= $attributes['mediaTitle']; ?>" muted playsinline="">
+                    <source src="<?= $attributes["mediaURL"]; ?>#t=0.1">
+                </video>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
+
     <div class="section has-padding-exlarge">
         <div class="container">
             <?php if ($attributes['subheader'] != ""): ?>
@@ -57,9 +71,11 @@ $id = $attributes['id'] != "" ? ' id="' . $attributes['id'] . '"' : "";
             <?php endif; ?>
             <?php if ($attributes['linkType']=="shortCuts" && $attributes['links'] && sizeof($attributes['links']) > 0): ?>
                 <div class="purdue-home-link-hero__list-container">
+                   <?php if ($attributes['descText'] != ""): ?>
                     <span class="purdue-home-link-hero__list-desc tablet-hidden">
                         <?= $attributes['descText']; ?>:
                     </span>
+                    <?php endif; ?>
                      <?php $buttonList = sizeof($attributes['links']) > 1 ? "ul" : "div";
                      $buttonWrapper = sizeof($attributes['links']) > 1 ? "li" : "div"; ?>
                     <<?= $buttonList ?> class="purdue-home-link-hero__list--desktop">
@@ -69,7 +85,7 @@ $id = $attributes['id'] != "" ? ' id="' . $attributes['id'] . '"' : "";
                             $buttonClass = isset($link["buttonCSS"]) ? " ".$link["buttonCSS"] : "";
                             ?>
                             <<?= $buttonWrapper ?>>
-                                <a class="purdue-home-button purdue-home-button--white <?=$buttonClass?>" href="<?= $link["linkURL"]; ?>" <?= $target; ?>>
+                                <a class="purdue-home-button <?= $buttonColor ?> <?= $buttonClass ?>" href="<?= $link["linkURL"]; ?>" <?= $target; ?>>
                                     <?= trim($link["linkText"]); ?>
                                 </a>
                             </<?= $buttonWrapper ?>>

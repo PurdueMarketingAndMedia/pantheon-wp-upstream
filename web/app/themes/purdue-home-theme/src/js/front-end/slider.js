@@ -27,19 +27,19 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.glide:not(.purdue-home-slider--news)').forEach(slider => {
     slider.querySelectorAll('.glide__slide').forEach(slide => {
       if (slide.classList.contains('is-active')) {
-          slide.inert = false;
-          slide.setAttribute("aria-hidden", "false");
-          slide.setAttribute("tabindex", "0");
-        } else {
-          slide.inert = true;
-          slide.setAttribute("aria-hidden", "true");
-          slide.setAttribute("tabindex", "-1");
-        }
+        slide.inert = false;
+        slide.setAttribute("aria-hidden", "false");
+        slide.setAttribute("tabindex", "0");
+      } else {
+        slide.inert = true;
+        slide.setAttribute("aria-hidden", "true");
+        slide.setAttribute("tabindex", "-1");
+      }
     });
   });
 });
 document.addEventListener('keydown', (e) => {
-   if (e.key === 'Tab' || e.key.startsWith('Arrow')) {
+  if (e.key === 'Tab' || e.key.startsWith('Arrow')) {
     isKeyboardNav = true;
     document.querySelectorAll('.glide:not(.purdue-home-slider--news)').forEach(slider => {
       slider.querySelectorAll('.glide__slide').forEach(slide => {
@@ -59,10 +59,10 @@ document.addEventListener('keydown', (e) => {
 
 // Any pointer interaction cancels it
 ['mousedown', 'pointerdown', 'touchstart', 'mouseover'].forEach(evt => {
- 
-    document.querySelectorAll('.glide:not(.purdue-home-slider--news)').forEach(slider => {
-       document.addEventListener(evt, () => {
-        isKeyboardNav = false;
+
+  document.querySelectorAll('.glide:not(.purdue-home-slider--news)').forEach(slider => {
+    document.addEventListener(evt, () => {
+      isKeyboardNav = false;
       slider.querySelectorAll('.glide__slide').forEach(slide => {
         slide.inert = false;
         slide.setAttribute("aria-hidden", "false");
@@ -73,10 +73,10 @@ document.addEventListener('keydown', (e) => {
 });
 
 ['mouseup', 'pointerup', 'touchend', 'mouseout'].forEach(evt => {
- 
-    document.querySelectorAll('.glide:not(.purdue-home-slider--news)').forEach(slider => {
-       document.addEventListener(evt, () => {
-        isKeyboardNav = false;
+
+  document.querySelectorAll('.glide:not(.purdue-home-slider--news)').forEach(slider => {
+    document.addEventListener(evt, () => {
+      isKeyboardNav = false;
       slider.querySelectorAll('.glide__slide').forEach(slide => {
         slide.inert = true;
         slide.setAttribute("aria-hidden", "true");
@@ -209,7 +209,6 @@ const changeFocusOnSlideChange = (Glide, Components, Events) => {
 };
 
 
-
 const link_cards = document.querySelectorAll(".purdue-home-link-cards__slider");
 if (link_cards && link_cards.length > 0) {
   for (let i = 0; i < link_cards.length; i++) {
@@ -255,8 +254,38 @@ if (link_cards && link_cards.length > 0) {
       check_resize(glide);
     });
 
-    glide.mount({ CustomActiveClass, changeFocusOnSlideChange });
+    let mount = false;
+
+    const hasActiveClass = link_cards[i].closest('.purdue-home-tabs-horizontal__panel')?.classList.contains('active');
+    if (hasActiveClass) {
+      glide.mount({ CustomActiveClass, changeFocusOnSlideChange });
+    } else {
+      glide.mount({ CustomActiveClass, changeFocusOnSlideChange });
+    }
     check_resize(glide);
+
+
+    const observer = new MutationObserver(() => {
+      const panel = link_cards[i].closest('.purdue-home-tabs-horizontal__panel');
+
+      if (panel && panel.classList.contains('active')) {
+        let settings = glide.settings;
+        glide.mount({ CustomActiveClass, changeFocusOnSlideChange });
+        glide.on("resize", () => {
+          check_resize(glide);
+        });
+        check_resize(glide);
+        observer.disconnect();
+
+      }
+    });
+
+    observer.observe(document.body, {
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['class']
+    });
+
   }
 }
 

@@ -128,6 +128,7 @@ if (tabGroups && tabGroups.length > 0) {
 				if (activeHeaderCheck && arrow) {
 					let headerLeft = activeHeaderCheck.getBoundingClientRect().left;
 					let headerWidth = activeHeaderCheck.getBoundingClientRect().width;
+					headerWidth = headerWidth - 48; // Adjust for padding and arrow width
 					headerpos = headerLeft - tabsOffSet + (headerWidth / 2);
 					arrow.style.left = headerpos + "px";
 				}
@@ -310,15 +311,17 @@ if (tabGroups && tabGroups.length > 0) {
 function updateTabsFromHash(hash) {
 	if (hash) {
 		const targetDataName = hash.substring(1);
-		const button = document.getElementById(targetDataName);
-		const container = button.closest('.purdue-home-tabs-horizontal');
-		const allPanels = container.querySelectorAll('.purdue-home-tabs-horizontal__panel');
-		const allHeaders = container.querySelectorAll('.purdue-home-tabs-horizontal__header');
-		const panelId = button.getAttribute('aria-controls');
-		const targetPanel = document.getElementById(panelId)
-		let targetHeader = null;
-
+		//const button = document.getElementById(targetDataName);
+		const targetPanel = document.querySelector(`.purdue-home-tabs-horizontal__panel[data-name="${targetDataName}"]`);
+		
 		if (targetPanel) {
+			const container = targetPanel.closest('.purdue-home-tabs-horizontal');
+			const allPanels = container.querySelectorAll('.purdue-home-tabs-horizontal__panel');
+			const allHeaders = container.querySelectorAll('.purdue-home-tabs-horizontal__header');
+			const panelId = targetPanel.getAttribute('aria-labelledby');
+			const button = document.getElementById(panelId)
+			let targetHeader = null;
+
 			// remove "active" class from all panels and headers
 			allPanels.forEach((panel) => {
 				panel.classList.remove('active')
@@ -326,21 +329,16 @@ function updateTabsFromHash(hash) {
 			});
 			allHeaders.forEach(header => header.classList.remove('active'));
 
-			targetPanel.classList.add('active');
-			targetPanel.inert = false;
+			button.classList.add('active');
+			button.inert = false;
 
 			// Get the id of the target panel
-			const targetPanelId = targetPanel.getAttribute('id');
+			const targetPanelId = button.getAttribute('id');
 
 			// Find the header that has an aria-controls attribute matching the target panel's id
-			targetHeader = Array.from(allHeaders).find(header =>
-				header.getAttribute('aria-controls') === targetPanelId
-			);
 
-			if (targetHeader) {
-				targetHeader.classList.add('active');
-				targetHeader.setAttribute('aria-selected', 'true');
-			}
+			targetPanel.classList.add('active');
+			targetPanel.setAttribute('aria-selected', 'true');
 
 			// find the parent with class "purdue-home-tabs-horizontal" and scroll to it
 			let parentElement = targetPanel;
@@ -354,7 +352,7 @@ function updateTabsFromHash(hash) {
 					if (arrowInGroup && activeHeaderInGroup && containerInGroup) {
 						const tabsOffSet = containerInGroup.getBoundingClientRect().left;
 						const headerLeft = activeHeaderInGroup.getBoundingClientRect().left;
-						const headerWidth = activeHeaderInGroup.offsetWidth;
+						const headerWidth = activeHeaderInGroup.offsetWidth -48; // Adjust for padding and arrow width
 						const headerpos = headerLeft - tabsOffSet + (headerWidth / 2);
 						arrowInGroup.style.left = headerpos + "px";
 					}

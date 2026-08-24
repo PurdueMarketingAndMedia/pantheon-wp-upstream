@@ -49,16 +49,15 @@ function card($card,$type, $inculdeDesc,$includeThumb, $hasType, $hasTag, $backg
 
     if($card["linkURL"] != "" && !$card['linkURL2']){
         $target = isset($card["external"]) && $card["external"] ? "_blank" : "_self";
-        $external = isset($card["external"]) && $card["external"] ? "(Opens in a new tab)" : "";
         $ariaLabel = "";
         $buttonText = (is_null($card["buttonText"])) ? "Learn More" : $card["buttonText"];
         if(isset($card["ariaLabel"]) && $card["ariaLabel"]!=""){
             $ariaLabel = 'aria-label="'.$card["ariaLabel"].' '.$external.'"';
         }elseif(isset($external) && $external!=""){
             if($type=="story" || $type=="simple"){                
-                $ariaLabel = isset($buttonText)? 'aria-label="'.$buttonText.' '.$external.'"':'';
+                $ariaLabel = isset($buttonText)? 'aria-label="'.$buttonText.'"':'';
             }else{
-                $ariaLabel = isset($card["name"])? 'aria-label="'.$card["name"].' '.$external.'"':'';
+                $ariaLabel = isset($card["name"])? 'aria-label="'. $card["name"] .'"':'';
             }
         }else{
             $ariaLabel = "";

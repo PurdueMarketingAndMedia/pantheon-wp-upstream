@@ -3,209 +3,257 @@
 @import '../../../node_modules/bulma/sass/utilities/mixins.sass';
 
 .purdue-home-mixed-rtb {
-  .purdue-home-cta-card--horizontal{
+  .purdue-home-cta-card--horizontal {
     flex-grow: 1;
     background-color: #000;
   }
-  img,video{
+
+  img,
+  video {
     object-fit: cover;
   }
+
   padding-top:3rem;
   padding-bottom:3rem;
   overflow: hidden;
-  &.has-padding-top-large{
-    padding-top:6rem;
-    @include mobile{
-        padding-top:3rem;
+
+  &.has-padding-top-large {
+    padding-top: 6rem;
+
+    @include mobile {
+      padding-top: 3rem;
     }
   }
-  &.has-padding-bottom-large{
-      padding-bottom:6rem;
-      @include mobile{
-          padding-bottom:3rem;
-      }
+
+  &.has-padding-bottom-large {
+    padding-bottom: 6rem;
+
+    @include mobile {
+      padding-bottom: 3rem;
+    }
   }
-  &.has-padding-top-small{
-      padding-top:2rem;
+
+  &.has-padding-top-small {
+    padding-top: 2rem;
   }
-  &.has-padding-bottom-small{
-      padding-bottom:2rem;
+
+  &.has-padding-bottom-small {
+    padding-bottom: 2rem;
   }
-  &.has-padding-bottom-none{
-      padding-bottom:0;
+
+  &.has-padding-bottom-none {
+    padding-bottom: 0;
   }
-  &.has-padding-top-none{
-      padding-top:0;
+
+  &.has-padding-top-none {
+    padding-top: 0;
   }
-  .section{
+
+  .section {
     padding-top: 0;
     padding-bottom: 0;
-    .container{
-      @include mobile{
+
+    .container {
+      @include mobile {
         padding-top: 2rem;
         padding-bottom: 0.75rem;
-        border-top:2px solid $steam-gray;
+        border-top: 2px solid $steam-gray;
       }
     }
   }
-  .columns{
-    .column{
+
+  .columns {
+    .column {
       display: flex;
       flex-direction: column;
       justify-content: space-around;
-      &.mobile-hidden{
-        @include mobile{
-          display:none;
+
+      &.mobile-hidden {
+        @include mobile {
+          display: none;
         }
 
       }
-      .purdue-home-proofpoint{
-        height:100%;
-        &__lead{
-          top:4.8rem;
-          font-size:2rem;
-          @include until-fullhd{
-            font-size:1.25rem;
+
+      .purdue-home-proofpoint {
+        height: 100%;
+
+        &__lead {
+          top: 4.8rem;
+          font-size: 2rem;
+
+          @include until-fullhd {
+            font-size: 1.25rem;
           }
-          @include until-widescreen{
-            top:2.4rem;
-            font-size:1.125rem;
+
+          @include until-widescreen {
+            top: 2.4rem;
+            font-size: 1.125rem;
           }
-          @include touch{
-            font-size:2rem;
-            top:4.8rem;
+
+          @include touch {
+            font-size: 2rem;
+            top: 4.8rem;
 
           }
         }
-        &__highlighted{
-          @include until-fullhd{
-            font-size:4rem;
+
+        &__highlighted {
+          @include until-fullhd {
+            font-size: 4rem;
           }
-          @include until-widescreen{
-            font-size:3rem;
+
+          @include until-widescreen {
+            font-size: 3rem;
           }
-          @include touch{
-            font-size:5rem;
-          }
-        }
-        &__content{
-          font-size:1.4rem;
-          @include until-fullhd{
-            font-size:1.25rem;
-          }
-          @include until-widescreen{
-            font-size:1.125rem;
-          }
-          @include touch{
-            font-size:1.4rem;
+
+          @include touch {
+            font-size: 5rem;
           }
         }
-        .flex-container--align-center{
-          padding:2rem 1rem;
+
+        &__content {
+          font-size: 1.4rem;
+
+          @include until-fullhd {
+            font-size: 1.25rem;
+          }
+
+          @include until-widescreen {
+            font-size: 1.125rem;
+          }
+
+          @include touch {
+            font-size: 1.4rem;
+          }
+        }
+
+        .flex-container--align-center {
+          padding: 2rem 1rem;
           justify-content: center;
         }
       }
 
     }
   }
-  .purdue-home-cta-card--vertical{
-    .image.is-4by5{
-      &:after{
-        content:none;
+
+  .purdue-home-cta-card--vertical {
+    .image.is-4by5 {
+      &:after {
+        content: none;
       }
 
-      @include tablet{
-        padding-top:116%;
+      @include tablet {
+        padding-top: 116%;
       }
     }
-    .purdue-home-cta-card__cta-text{
+
+    .purdue-home-cta-card__cta-text {
       overflow: visible;
-      color:$boiler-gold;
-      &:before{
-        content:"";
+      color: $boiler-gold;
+
+      &:before {
+        content: "";
         width: calc(100% + 2rem);
         height: calc(100% + 2rem);
         background: linear-gradient(0deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45) 25%, rgba(0, 0, 0, 0.75) 100%);
         z-index: -1;
-        position:absolute;          
-        top: -1rem;          
-        left: -1rem;          
-        }
+        position: absolute;
+        top: -1rem;
+        left: -1rem;
+      }
     }
-    .cta-link.purdue-home-cta-card__link{
-      &:before{
-        content:"";
+
+    .cta-link.purdue-home-cta-card__link {
+      width: 100%;
+      &:before {
+        content: "";
         width: calc(100% + 2rem);
         height: calc(100% + 2rem);
         background: linear-gradient(0deg, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.55) 75%, rgba(0, 0, 0, 0.45) 100%);
         z-index: -1;
-        position:absolute;          
-        bottom: -1rem;          
-        left: -1rem;          
-        }
+        position: absolute;
+        bottom: -1rem;
+        left: -1rem;
+      }
     }
-    &.has-reverse-shade{
-      .image.is-4by5{
-        &:after{
-          content:none;
+
+    &.has-reverse-shade {
+      .image.is-4by5 {
+        &:after {
+          content: none;
         }
       }
-      .purdue-home-cta-card__cta-text{
-        color:$black;
+
+      .purdue-home-cta-card__cta-text {
+        color: $black;
         overflow: visible;
-        &:after{
-          border-color:$black;
+
+        &:after {
+          border-color: $black;
           width: 100%;
           height: 2px;
           background: $black;
         }
-        &:before{
-          content:"";
+
+        &:before {
+          content: "";
           width: calc(100% + 2rem);
           height: calc(100% + 3rem);
           background: linear-gradient(0deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.45) 25%, rgba(255, 255, 255, 0.75) 100%);
           z-index: -1;
-          position:absolute;          
-          top: -1rem;          
-          left: -1rem;          
-          }
+          position: absolute;
+          top: -1rem;
+          left: -1rem;
+        }
       }
-      .cta-link.purdue-home-cta-card__link{
-        color:$black;
-        width:100%;
-        &:before{
-          content:"";
+
+      .cta-link.purdue-home-cta-card__link {
+        color: $black;
+        width: 100%;
+
+        &:before {
+          content: "";
           width: calc(100% + 2rem);
           height: calc(100% + 3rem);
           background: linear-gradient(0deg, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.55) 75%, rgba(255, 255, 255, 0) 100%);
           z-index: -1;
-          position:absolute;          
-          bottom: -1rem;          
-          left: -1rem;          
-          }
+          position: absolute;
+          bottom: -1rem;
+          left: -1rem;
+        }
       }
-      .flex-container.flex-container--align-vertical-between{
-        &:after{
-          background-image:url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 448 512%27%3E%3C%21--%21 Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license %28Commercial License%29 Copyright 2023 Fonticons, Inc. --%3E%3Cpath fill=%27%238e6f3e%27 d=%27M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z%27/%3E%3C/svg%3E");
+
+      .flex-container.flex-container--align-vertical-between {
+        bottom: 0;
+        &:after {
+          background-image: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 448 512%27%3E%3C%21--%21 Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license %28Commercial License%29 Copyright 2023 Fonticons, Inc. --%3E%3Cpath fill=%27%238e6f3e%27 d=%27M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z%27/%3E%3C/svg%3E");
         }
       }
     }
   }
-  .glide__slide{
-    height:auto;
-    .purdue-home-proofpoint,.purdue-home-cta-card{
-      height:100%;
+
+  .glide__slide {
+    height: auto;
+
+    .purdue-home-proofpoint,
+    .purdue-home-cta-card {
+      height: 100%;
     }
-    .purdue-home-cta-card--vertical,.purdue-home-cta-card--horizontal{
-      .image.is-4by5{
-        padding-top:56.25%;
+
+    .purdue-home-cta-card--vertical,
+    .purdue-home-cta-card--horizontal {
+      .image.is-4by5 {
+        padding-top: 56.25%;
       }
     }
-    .purdue-home-cta-card--video{
+
+    .purdue-home-cta-card--video {
       cursor: default;
-      .flex-container--align-center{
-        height:50%;
-        width:50%;
+
+      .flex-container--align-center {
+        height: 50%;
+        width: 50%;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -213,166 +261,201 @@
       }
     }
   }
-  .slider-controls{
-    margin-top:1.5rem;
+
+  .slider-controls {
+    margin-top: 1.5rem;
   }
-  .purdue-home-content-card{
-    height:100%;
-    border:none;
-    &.has-white-background{
-      background:$white;
-      .purdue-home-content-card__title,.purdue-home-content-card__content{
-      color:$black;
+
+  .purdue-home-content-card {
+    height: 100%;
+    border: none;
+
+    &.has-white-background {
+      background: $white;
+
+      .purdue-home-content-card__title,
+      .purdue-home-content-card__content {
+        color: $black;
       }
     }
-    &.has-gray-background{
-        background:$grey-lighter;
-        .purdue-home-content-card__title,.purdue-home-content-card__content{
-          color:$black;
-          }
+
+    &.has-gray-background {
+      background: $grey-lighter;
+
+      .purdue-home-content-card__title,
+      .purdue-home-content-card__content {
+        color: $black;
+      }
     }
-    &.has-gold-background{
-        background:$boiler-gold;
-        .purdue-home-content-card__title,.purdue-home-content-card__content{
-          color:$black;
-          }
+
+    &.has-gold-background {
+      background: $boiler-gold;
+
+      .purdue-home-content-card__title,
+      .purdue-home-content-card__content {
+        color: $black;
+      }
     }
-    &.has-black-background{
-        background:$black;
-        .purdue-home-content-card__title,.purdue-home-content-card__content{
-          color:$white;
-        }
+
+    &.has-black-background {
+      background: $black;
+
+      .purdue-home-content-card__title,
+      .purdue-home-content-card__content {
+        color: $white;
+      }
     }
   }
 }
 
-.purdue-home-proofpoint{
-  width:100%;
-  display:flex;
+.purdue-home-proofpoint {
+  width: 100%;
+  display: flex;
   flex-direction: row;
   justify-content: center;
   border-radius: 4px;
   box-shadow: $box-shadow;
-  &.has-white-background{
-    border:1px solid $black;
+
+  &.has-white-background {
+    border: 1px solid $black;
   }
-  @include mobile{
+
+  @include mobile {
     align-items: center;
   }
-  span{
-    width:100%;
+
+  span {
+    width: 100%;
   }
-  .flex-container--align-center{
-    display:flex;
+
+  .flex-container--align-center {
+    display: flex;
     align-items: center;
     justify-content: center;
-    padding:3rem 1rem;
-    flex-direction:column;
+    padding: 3rem 1rem;
+    flex-direction: column;
     flex: 0 1 auto;
-    max-width:318px;
-    width:100%;
-    margin-left:0;
-    margin-right:0;
+    max-width: 318px;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
     position: relative;
-    @include mobile{
-      max-width:350px;
+
+    @include mobile {
+      max-width: 350px;
 
     }
   }
 
-  &.has-black-background{
-    color:$white;
-    a.purdue-home-proofpoint__source{
-     color:$white !important;
-   }
+  &.has-black-background {
+    color: $white;
+
+    a.purdue-home-proofpoint__source {
+      color: $white !important;
+    }
   }
-  &__highlighted{
+
+  &__highlighted {
     font-size: 5rem;
-    line-height:0.9;
-    margin-bottom:0;
+    line-height: 0.9;
+    margin-bottom: 0;
     margin-top: 0.5rem;
-    text-align:center;
+    text-align: center;
     text-transform: uppercase;
     font-family: $united-sans;
-    font-weight:700;
-    @include mobile{
+    font-weight: 700;
+
+    @include mobile {
       font-size: 3rem;
     }
   }
-  &__lead{
-   font-size:1.5rem;
-   line-height:1.3;
-   font-weight:700;
-   margin-bottom:0;
-   font-family:$acumin-pro;
-   text-align:center;
-   top:2.5rem;
-   left:0;
-   width:100%;
-   text-transform: uppercase;
-   @include mobile{
-    top:1.8rem;
-   }
- }
-  &__content{
-    font-weight:700;
-    font-size:1.25rem;
-    text-align:center;
-    line-height:1.2;
-    white-space:pre-wrap;
+
+  &__lead {
+    font-size: 1.5rem;
+    line-height: 1.3;
+    font-weight: 700;
+    margin-bottom: 0;
     font-family: $acumin-pro;
-    &:not(:last-child){
-     margin-bottom:1rem;
+    text-align: center;
+    top: 2.5rem;
+    left: 0;
+    width: 100%;
+    text-transform: uppercase;
+
+    @include mobile {
+      top: 1.8rem;
     }
   }
-  &__source{
+
+  &__content {
+    font-weight: 700;
+    font-size: 1.25rem;
+    text-align: center;
+    line-height: 1.2;
+    white-space: pre-wrap;
     font-family: $acumin-pro;
-    font-weight:400;
-    font-size:0.875rem;
-    text-align:center;
-    line-height:1.4;
-    font-style:italic;
-    white-space:pre-wrap;
-    margin-bottom:0;
+
+    &:not(:last-child) {
+      margin-bottom: 1rem;
+    }
   }
-  a.purdue-home-proofpoint__source{
-    color:$black;
-    text-decoration:underline;
-    &:hover{
-      text-decoration:none;
+
+  &__source {
+    font-family: $acumin-pro;
+    font-weight: 400;
+    font-size: 0.875rem;
+    text-align: center;
+    line-height: 1.4;
+    font-style: italic;
+    white-space: pre-wrap;
+    margin-bottom: 0;
+  }
+
+  a.purdue-home-proofpoint__source {
+    color: $black;
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
     }
   }
 
 }
-.purdue-home-content-card{
+
+.purdue-home-content-card {
   border: 2px solid $white;
   border-radius: 4px;
-  box-shadow: 1px 1px 1px 0 rgba(0,0,0,0.25);
-  background-color: rgba(0,0,0,0.4);
-  padding:1.25rem;
-  display:flex;
-  flex-direction:column;
+  box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.25);
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  &__title{
-    font-size:1.5rem;
-    font-weight:700;
-    color:$white;
-    margin-bottom:0.5rem !important;
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $white;
+    margin-bottom: 0.5rem !important;
   }
-  &__content{
-    font-size:1.125rem;
-    font-weight:400;
-    color:$white;
+
+  &__content {
+    font-size: 1.125rem;
+    font-weight: 400;
+    color: $white;
 
   }
 
 }
 
-.purdue-home-cta-card--video{
+.purdue-home-cta-card--video {
   flex-grow: 1;
   background-color: #000;
-  &:focus{
-    .image img, .image:after{
+
+  &:focus {
+
+    .image img,
+    .image:after {
       top: 0.5rem;
     }
   }
@@ -380,22 +463,24 @@
 
 
 
-  .dialog-trigger{
-    outline:none;
-    border:none;
-    background:transparent;
-    inset:0;
-    &:hover {
-      cursor: pointer;
-    }
-    &:focus{
-      margin-top: 0;
-      outline: 2px solid var(--wp--preset--color--aged-gold);
-      outline-offset: -5px;
-    }
+.dialog-trigger {
+  outline: none;
+  border: none;
+  background: transparent;
+  inset: 0;
+
+  &:hover {
+    cursor: pointer;
   }
 
-.dialog{
+  &:focus {
+    margin-top: 0;
+    outline: 2px solid var(--wp--preset--color--aged-gold);
+    outline-offset: -5px;
+  }
+}
+
+.dialog {
   width: 100%;
   height: 100%;
   margin: 0;
@@ -403,13 +488,13 @@
   border: none;
   background: none;
 
-  &[open]{
+  &[open] {
     display: flex;
   }
 
-  button:focus{
+  button:focus {
     outline: 2px solid $boiler-gold;
-    outline-offset: 2px;  
+    outline-offset: 2px;
   }
 }
 

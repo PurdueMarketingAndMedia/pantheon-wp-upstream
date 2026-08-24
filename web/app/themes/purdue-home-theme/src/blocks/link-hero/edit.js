@@ -16,7 +16,7 @@ import { useEffect } from "react";
 
 const edit = ( props )=>{
   const { className, setAttributes } = props;
-  const { header, subheader, subtext, descText, linkType, mediaType, mediaURL, mediaAlt, mediaTitle, links, ctalinks, fieldId, id} = props.attributes;
+  const { header, subheader, subtext, descText, linkType, mediaType, mediaURL, mediaAlt, mediaTitle, links, ctalinks, fieldId, id, background} = props.attributes;
   const blockProps = useBlockProps();
 
 
@@ -173,6 +173,7 @@ const edit = ( props )=>{
 let editorFields;
 editorFields = links.map((item, index) => {   
   return (
+    
     <PanelBody initialOpen={false} key={item.id} title={item.linkText?item.linkText:`link ${index+1}`}>
       <PanelRow>
         <TextControl
@@ -300,6 +301,24 @@ ctaLinksEditorFields = ctalinks.map((item, index) => {
     <InspectorControls key="1">
       <PanelBody>
         <PanelRow>
+          <SelectControl
+            label="Background"
+            value={background}
+            options={[
+              { value: "has-white-background", label: "None" },
+              { value: "has-black-background", label: "Black" },
+              { value: "has-gray-background", label: "Gray" },
+              { value: "has-gold-background", label: " Gold" },
+              { value: "image-background", label: "Image" },
+            ]}
+            onChange={(background) => {
+              setAttributes({ background });
+            }}
+          />
+        </PanelRow>
+    </PanelBody>
+      <PanelBody>
+        <PanelRow>
           <TextControl
             label="HTML Anchor"
             help="Enter a word without spaces to make a unique web address just for this block, called an “anchor.” It must be unique from any other anchors on the page. Then, you’ll be able to link directly to this section of your page."
@@ -396,7 +415,8 @@ ctaLinksEditorFields = ctalinks.map((item, index) => {
       </PanelBody>}
     </InspectorControls>,
     <div {...blockProps} key="2">
-    <div className={`purdue-home-cta-banner purdue-home-link-hero purdue-home-link-hero-editor`}>   
+    <div className={`purdue-home-cta-banner purdue-home-link-hero purdue-home-link-hero-editor ${background}`}>   
+        {background === "image-background" ?
         <MediaUploadCheck>
           <MediaUpload
             onSelect={ ( img ) => {
@@ -423,7 +443,8 @@ ctaLinksEditorFields = ctalinks.map((item, index) => {
               );
             } }
           />
-        </MediaUploadCheck>   
+        </MediaUploadCheck>
+        :"" }   
         <div className={`section has-padding-exlarge`}>  
           <div className="container">
             <RichText
@@ -464,7 +485,7 @@ ctaLinksEditorFields = ctalinks.map((item, index) => {
                 <span className="purdue-home-link-hero__list-desc">{descText}:</span>
                 <ul className="purdue-home-link-hero__list--desktop">
                 {links.length>0 && links[0].linkURL?links.map((link, index) => {
-                  return <li key={link.id}><a className="purdue-home-button purdue-home-button--white" href={link.linkURL} target={`${link.external?"_blank":"_self"}`}>{link.linkText.trim()}</a>
+                  return <li key={link.id}><a className={`purdue-home-button ${background==="has-black-background"?" purdue-home-button--gold":""}${background==="image-background"?" purdue-home-button--white":"purdue-home-button--black"}`} href={link.linkURL} target={`${link.external?"_blank":"_self"}`}>{link.linkText.trim()}</a>
                   </li>
                 }):""}
               </ul>

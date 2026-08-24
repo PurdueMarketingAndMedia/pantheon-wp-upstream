@@ -20,6 +20,21 @@
       color: $steel-gray;
     }
   }
+
+  &.has-gold-background{
+    color: #000 !important;
+     a, span {
+      color: #000 !important;
+    }
+  }
+
+  &.has-black-background {
+    color: #fff !important;
+    a, span {
+      color: #fff !important;
+    }
+  }
+
   .current-item {
     font-weight: 700;
   }

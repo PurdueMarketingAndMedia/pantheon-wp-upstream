@@ -202,7 +202,7 @@ if (modals && modals.length > 0) {
   //t.addEventListener("keydown", trapFocus);
   
   document.addEventListener("focusin", function(e) {
-    if (t.classList.contains("is-active")) {
+    if (t.classList.contains("is-active") && !t.classList.contains("notrap")) {
       if (!t.contains(e.target)) {
         // Focus has moved outside the modal, bring it back in
         const focusableElements = t.querySelectorAll(

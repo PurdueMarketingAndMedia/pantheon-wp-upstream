@@ -20,6 +20,16 @@
 		height: 100%;
 		padding: 0;
 		margin: 6rem 3.25rem 6rem 3.25rem;
+
+
+		@include touch{
+			margin: 0;
+			padding: 3rem 1.5rem;
+		}
+
+		@include mobile{
+			padding: 3rem 1.25rem;
+		}
 	}
 
 	@include touch {
@@ -188,7 +198,8 @@
 		max-width: calc(1344px / 2);
 
 		@include touch {
-			max-width: none;
+			max-width: 100%;
+			width: 100%;
 		}
 	}
 
@@ -212,6 +223,11 @@
 		&:last-child {
 			margin-bottom: 0 !important;
 		}
+
+		@include touch {
+			max-width: 100%;
+			width: 100%;
+		}
 	}
 
 	&__subtext {
@@ -225,6 +241,11 @@
 
 		&:last-child {
 			margin-bottom: 2rem !important;
+		}
+
+		@include touch {
+			max-width: 100%;
+			width: 100%;
 		}
 
 		@include mobile {

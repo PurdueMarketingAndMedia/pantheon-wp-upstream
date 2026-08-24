@@ -41,6 +41,42 @@ add_action( 'acf/include_fields', function() {
 				'save_custom' => 0,
 				'custom_choice_button_text' => 'Add new choice',
 			),
+			array(
+				'key' => 'field_64fb44cab7345',
+				'label' => 'Breadcrumb Background Color',
+				'name' => 'breadcrumb_background_color',
+				'aria-label' => '',
+				'type' => 'select',
+				'instructions' => '',
+				'required' => 0,
+				'conditional_logic' => [
+                [
+                    [
+                        'field' => 'field_64fb44cab7344',
+                        'operator' => '!=empty',
+                    ],
+                ],
+				],
+				'wrapper' => array(
+					'width' => '',
+					'class' => '',
+					'id' => '',
+				),
+				'choices' => array(
+					'has-white-background' => 'White',
+					'has-black-background' => 'Black',
+					'has-gold-background' => 'Gold',
+					
+				),
+				'default_value' => array(
+				),
+				'return_format' => 'value',
+				'allow_custom' => 0,
+				'layout' => 'vertical',
+				'toggle' => 0,
+				'save_custom' => 0,
+				'custom_choice_button_text' => 'Add new choice',
+			),
 		),
 		'location' => array(
 			array(

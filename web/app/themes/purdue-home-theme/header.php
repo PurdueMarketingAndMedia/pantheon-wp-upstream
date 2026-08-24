@@ -13,10 +13,11 @@
  $secondnavClass="";
  $hasSecondMenu=[];
  if (function_exists('get_field')) {	
-	 $customCSS = wp_strip_all_tags(html_entity_decode(get_field('custom_styles')));
-	 $hasSecondMenu = get_field('add_second_menu');	
-	 $menuTitle=get_field('menu_title')?get_field('menu_title'):"Additional Links";
-	 $secondnavClass=get_field('make_it_sticky_at_the_top')&&get_field('make_it_sticky_at_the_top')[0]=="Yes"?" second-nav-sticky":"";
+	 $post_id = get_the_ID();
+	 $customCSS = wp_strip_all_tags(html_entity_decode(get_field('custom_styles', $post_id)));
+	 $hasSecondMenu = get_field('add_second_menu', $post_id);	
+	 $menuTitle=get_field('menu_title', $post_id)?get_field('menu_title', $post_id):"Additional Links";
+	 $secondnavClass=get_field('make_it_sticky_at_the_top', $post_id)&&get_field('make_it_sticky_at_the_top', $post_id)[0]=="Yes"?" second-nav-sticky":"";
  }
  $headerSetting = "global";
  $blogName = get_bloginfo( 'name' );
@@ -209,7 +210,7 @@ if ( !has_nav_menu( 'top-nav' ) ) {
 				if (function_exists('get_field')) {	
 					if($hasSecondMenu && $hasSecondMenu[0] == "Yes"){
 						if (function_exists('get_field')) {	
-							$menu_obj = get_field("second_menu");
+							$menu_obj = get_field("second_menu", $post_id);
 							if (!$menu_obj && isset($post->post_parent)) {
 								$menu_obj = get_field("second_menu", $post->post_parent);
 							}

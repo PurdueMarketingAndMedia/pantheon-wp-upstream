@@ -21,8 +21,14 @@ if (function_exists('get_field')&&get_field('add_breadcrumb_to_this_page')) {
 } else {	
 	$breadCrumb = "";
 }
-if(! is_home() &&$breadCrumb=="Yes"): ?>
-<div class="breadcrumbs" typeof="BreadcrumbList" vocab="https://schema.org/" role="navigation">
+if(! is_home() &&$breadCrumb=="Yes"): 
+	$breadCrumbClass = "breadcrumbs";
+	if(get_field('breadcrumb_background_color')){
+		$breadCrumbBackground = get_field('breadcrumb_background_color');
+		$breadCrumbClass .= " ".$breadCrumbBackground;
+	}
+		?>
+<div class="<?= $breadCrumbClass ?>" typeof="BreadcrumbList" vocab="https://schema.org/" role="navigation">
     <?php if(function_exists('bcn_display')){
 			bcn_display(); //breadcrumb from NavXT
 		}else{

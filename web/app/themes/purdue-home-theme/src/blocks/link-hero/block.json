@@ -69,7 +69,11 @@
 		"buttonCSS": {
 			"type": "string",
 			"default": ""
-		}	
+		},
+		"background": {
+			"type": "string",
+			"default": "image-background"
+		}
 	},
 	"textdomain": "link-hero",
 	"editorScript": "file:./index.js",

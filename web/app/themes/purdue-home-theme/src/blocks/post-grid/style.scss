@@ -3,6 +3,7 @@
 @import "../../../node_modules/bulma/sass/utilities/mixins.sass";
 
 @keyframes bounce {
+
 	0%,
 	20%,
 	50%,
@@ -10,9 +11,11 @@
 	100% {
 		transform: translateY(0);
 	}
+
 	40% {
 		transform: translateY(-15px);
 	}
+
 	60% {
 		transform: translateY(-5px);
 	}
@@ -81,6 +84,7 @@
 			display: grid;
 			grid-template-columns: auto 1fr;
 			grid-template-rows: auto auto auto 1fr;
+
 			@include touch {
 				grid-template-columns: auto;
 				grid-template-rows: auto auto auto auto;
@@ -92,10 +96,12 @@
 					grid-row: 1/5;
 					padding-right: 2rem;
 					min-width: 350px;
+
 					@include desktop {
 						min-width: 325px;
 						max-width: 325px;
 					}
+
 					@include touch {
 						padding-right: 0;
 						min-width: 0;
@@ -112,6 +118,7 @@
 				&-search {
 					grid-column: 2/3;
 					grid-row: 1/2;
+
 					@include touch {
 						grid-column: 1/2;
 						grid-row: 1/2;
@@ -123,6 +130,7 @@
 				grid-column: 2/3;
 				grid-row: 2/3;
 				padding-bottom: 2rem;
+
 				@include touch {
 					grid-column: 1/2;
 					grid-row: 3/4;
@@ -196,26 +204,31 @@
 
 				li {
 					list-style-type: none;
+
 					@include touch {
 						padding: 0.25rem;
 					}
 
 					&.is-disabled {
 						padding: 0 0.25rem 1rem;
+
 						@include touch {
 							margin: 0.25rem;
 							padding: 0.25rem;
 						}
+
 						color: $cool-gray;
 					}
 
 					a {
 						padding: 0.25rem;
+
 						@include touch {
 							padding: 0.25rem;
 						}
 
-						&.active, &:hover {
+						&.active,
+						&:hover {
 							background-color: $aged-gold;
 							color: #fff;
 							border-radius: 4px;
@@ -239,6 +252,7 @@
 			.purdue-home-cta-grid__grid__filters-right {
 				grid-column: 2/3;
 				grid-row: 3;
+
 				@include touch {
 					grid-column: 1/2;
 					grid-row: 4;
@@ -248,6 +262,7 @@
 			.purdue-home-cta-grid__grid__content {
 				grid-column: 2/3;
 				grid-row: 4;
+
 				@include touch {
 					grid-column: 1/2;
 					grid-row: 5;
@@ -278,13 +293,16 @@
 							position: absolute;
 							inset: 0;
 						}
+
 						.purdue-home-cta-grid__card-title {
 							margin-top: 0;
+
 							@media screen and (min-width: 1024px) and (max-width: 1215px) {
 								font-size: 1.3rem;
 							}
 						}
 					}
+
 					&--faculty {
 						h2 {
 							z-index: 2;
@@ -292,8 +310,9 @@
 						/*a {
 							text-indent: -999999px;
 							position: absolute;
-							inset:0;
+							inset: 0;
 							z-index: 3;
+
 							&:after {
 								content: "";
 								background-image: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 448 512%27%3E%3C%21--%21 Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license %28Commercial License%29 Copyright 2023 Fonticons, Inc. --%3E%3Cpath fill=%27%23ffffff%27 d=%27M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z%27/%3E%3C/svg%3E");
@@ -307,6 +326,7 @@
 								bottom: 1rem;
 								transition: all .3s ease;
 							}
+
 							&:hover {
 								&:after {
 									transform: translateX(4px);
@@ -314,6 +334,7 @@
 							}
 						}*/
 					}
+
 					&:hover {
 						&:after {
 							transform: scaleX(1);
@@ -331,6 +352,7 @@
 		input {
 			box-shadow: none;
 			border: 0.5px solid $steam-gray;
+
 			@include until-fullhd {
 				padding: 0.5rem 3.5rem;
 			}
@@ -371,14 +393,20 @@
 				border-radius: 4px;
 				margin-bottom: 0.625rem;
 				background: $white;
+
 				@include touch {
 					margin-bottom: 1.25rem;
+				}
+				.field-content {
+					max-height: 350px;
+					overflow-y: auto;
 				}
 			}
 		}
 
 		&-content {
 			padding: 0 0 1.5rem;
+
 			@include touch {
 				border-bottom: 1px solid $primary-background-gray;
 				padding: 0 0 1.5rem;
@@ -444,6 +472,7 @@
 			display: flex;
 			flex-direction: row;
 			padding-bottom: 0.75rem;
+
 			@include touch {
 				flex-direction: column;
 				padding-bottom: 0;
@@ -459,6 +488,7 @@
 				margin-left: 1rem;
 				border-radius: 4px;
 				height: 4rem;
+
 				@include touch {
 					margin-left: 0;
 					justify-content: flex-start;
@@ -496,6 +526,7 @@
 		cursor: default;
 		border-bottom: 1px solid $steam-gray;
 		color: $black;
+
 		@include touch {
 			cursor: pointer;
 			border-bottom: none;
@@ -518,6 +549,7 @@
 			transform: rotate(-45deg);
 			transform-origin: center;
 			width: 0.625em;
+
 			@include touch {
 				display: block;
 			}
@@ -557,7 +589,7 @@
 			padding: 1.5rem;
 		}
 
-		& > *:not(:last-child) {
+		&>*:not(:last-child) {
 			margin-bottom: 0rem;
 		}
 
@@ -615,22 +647,28 @@
 			margin-top: .4rem;
 			cursor: pointer;
 
-			&:checked ~ .checkmark {
+			&:checked~.checkmark {
 				background-color: $white;
 
 				&:after {
 					display: block;
 				}
 			}
+			&[type="checkbox"]:focus {
+				outline: revert;
+
+			}
 		}
 
-		input[type="checkbox"]:checked, input[type="radio"]:checked {
+		input[type="checkbox"]:checked,
+		input[type="radio"]:checked {
 			background-size: 77%;
 			background-position: center;
 			padding: 2px;
 		}
 
-		input[type="checkbox"]:not(:disabled):checked, input[type="radio"]:not(:disabled):checked {
+		input[type="checkbox"]:not(:disabled):checked,
+		input[type="radio"]:not(:disabled):checked {
 			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='10' viewBox='0 0 12 10' fill='none'%3E%3Cpath d='M1 5L4.5 8.5L10.5 1' stroke='%238E6F3E' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
 			background-repeat: no-repeat;
 		}
@@ -696,6 +734,7 @@
 						@include touch {
 							max-width: 50%;
 						}
+
 						@include mobile {
 							max-width: 100%;
 						}
@@ -711,7 +750,7 @@
 		padding: 0.5rem 1rem;
 		font-size: 1rem;
 		background-size: 1rem auto,
-		100%;
+			100%;
 	}
 
 	.date-label {
@@ -727,6 +766,7 @@
 
 	.purdue-home-cta-grid__grid__total {
 		text-align: right;
+
 		@include touch {
 			text-align: left;
 		}
@@ -787,4 +827,83 @@
 .autocomplete-results li:hover {
 	background: #4194FF;
 	color: #fff;
+}
+
+.purdue-home-cta-grid.purdue-home-post-grid .purdue-home-cta-grid__cards.purdue-home-cta-grid__cards--directory {
+
+	.columns {
+		justify-content: space-between !important;
+	}
+
+
+
+	.purdue-home-directory-card {
+		display: block;
+		box-shadow: $box-shadow;
+		margin-bottom: 1.5rem;
+		height: 100%;
+		background: #fff;
+
+		.image {
+			height: 100%;
+		}
+
+		img {
+			object-fit: cover;
+		}
+
+		h2 {
+			font-size: 1.5rem;
+			margin-bottom: 1rem;
+
+			@include mobile {
+				margin-bottom: 0.5rem;
+			}
+		}
+
+		.columns{
+			height: 100%;
+		}
+
+		.is-4-desktop {
+			//max-width: 40%;
+			//align-self: flex-end;
+		}
+
+		.flex-container {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+		}
+
+		.purdue-home-directory__card-subtitle {
+			margin-bottom: 1rem;
+
+			@include mobile {
+				margin-bottom: 0.5rem;
+			}
+		}
+
+		.purdue-home-directory__card-email a {
+			font-size: 0.875rem;
+			font-family: $united-sans;
+			text-transform: uppercase;
+		}
+
+		.purdue-home-directory__card-email {
+			margin-bottom: 0;
+		}
+
+		@include mobile {
+			.columns {
+				display: flex;
+
+				.is-4-desktop {
+					max-width: 40%;
+					//align-self: flex-end;
+				}
+			}
+		}
+	}
+
 }

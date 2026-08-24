@@ -47,7 +47,7 @@
                 <?php endif; ?>
                 
 
-            <?php if ($attributes['links'] && sizeof($attributes['links']) > 0):
+            <?php if ($attributes['links'] && sizeof($attributes['links']) > 0 && ($attributes['links'][0]['linkURL'] && $attributes['links'][0]['linkText'])):
                     $buttonList = sizeof($attributes['links']) > 1 ? "ul" : "div";
                     $buttonWrapper = sizeof($attributes['links']) > 1 ? "li" : "div";
                 if ($attributes['linkDisplay'] == "buttons"): ?>

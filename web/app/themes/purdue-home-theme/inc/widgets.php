@@ -23,7 +23,7 @@ if (!function_exists('purdueBrand_widgets_init')) {
             'name'          => esc_html__('Page Top Alert', 'purdue'),
             'id'            => 'top-alert',
             'description'   => esc_html__('Show alert at page top.', 'purdueBrand'),
-            'before_widget' => '<div id="%1$s" class="widget alert-widget modal is-active %2$s"><div class="modal-close" aria-label="close"></div>',
+            'before_widget' => '<div id="%1$s" class="widget alert-widget modal is-active notrap %2$s"><button class="modal-close" aria-label="close"></button>',
             'after_widget'  => '</div>',
             'before_title'  => '',
             'after_title'   => '',
