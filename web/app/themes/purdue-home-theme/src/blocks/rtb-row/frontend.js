@@ -49,37 +49,21 @@ window.addEventListener("load", function () {
                 check_resize(glide);
             });
 
-            //only mount the slider if the parent tab is active, otherwise wait for the tab to become active
+             glide.mount({ CustomActiveClass, changeFocusOnSlideChange });   
+             check_resize(glide);   
 
-            const hasActiveClass = rtb_sliders[i].closest('.purdue-home-tabs-horizontal__panel')?.classList.contains('active');
-                if (hasActiveClass) {
-                  glide.mount({ CustomActiveClass, changeFocusOnSlideChange });
-                } else {
-                   glide.mount({ CustomActiveClass, changeFocusOnSlideChange });
-                }
-                check_resize(glide);
             
-            
-                const observer = new MutationObserver(() => {
-                  const panel = rtb_sliders[i].closest('.purdue-home-tabs-horizontal__panel');
-            
-                  if (panel && panel.classList.contains('active')) {
-                    let settings = glide.settings;
-                    glide.mount({ CustomActiveClass, changeFocusOnSlideChange });
-                    glide.on("resize", () => {
-                      check_resize(glide);
-                    });
-                    check_resize(glide);
-                    observer.disconnect();
-            
-                  }
-                });
-            
-                observer.observe(document.body, {
-                  subtree: true,
-                  attributes: true,
-                  attributeFilter: ['class']
-                });
+            const observer = new IntersectionObserver((entries, _observer) => {
+            entries.forEach(entry => {    
+                if(entry.isIntersecting) {                                                                          
+                 glide.update();
+                 check_resize(glide);                                                                     
+                }  
+            });
+            });
+                                          
+            observer.observe(rtb_sliders[i]);
+         
             
            
 

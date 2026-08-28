@@ -35,9 +35,9 @@
                     }elseif($link["buttonColor"] == "white") {
                         $buttonClass .= " purdue-home-button--white";
                     }
-                    $liClass = $link["fullWidth"] ? "purdue-home-button-wrap--full" : "";
+                    $liClass = $link["fullWidth"] ? "class='purdue-home-button-wrap--full' " : "";
                 ?>
-                <<?= $buttonWrapper ?> class="<?= $liClass; ?>">
+                <<?= $buttonWrapper ?> <?= $liClass; ?>>
                     <a class="<?= $buttonClass; ?>" href="<?= $link["linkURL"]; ?>" <?= $target; ?>>
                         <?= trim($link["linkText"]); ?>
                     </a>
